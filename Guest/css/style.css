@@ -4,7 +4,7 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
-
+/* Header */
 .img {
     background-size: cover;
     height: 50px;
@@ -73,7 +73,9 @@ body {
         width: 100%;
     }
 }
+/* End header */
 
+/* Body */
 .hero {
     background: linear-gradient(115deg, rgba(14, 60, 110, 0.48) 0%, rgba(27, 116, 212, 0.48) 55%, rgba(27, 116, 212, 0) 87%);
     padding: 100px 0;
@@ -127,7 +129,9 @@ body {
 .stats .stat p {
     color: #0E3C6E;
 }
+/* End body */
 
+/* Footer */
 .footer {
     background-color: #0E3C6E;
     color: #fff;
@@ -154,7 +158,7 @@ body {
     color: #f7b500;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 992px) {
     .navbar-nav {
         text-align: left;
         padding-left: 20px;
@@ -185,28 +189,25 @@ body {
 }
 
 .modal-content {
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 50px;
+    padding: 33px;
     text-align: center;
 }
-
 .modal-header {
     border-bottom: none;
 }
-
 .modal-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: #0E3C6E;
 }
-
 .modal-body .form-select {
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 1.25rem;
     padding: 10px;
+    width: 100%;
 }
-
 .modal-body .btn {
     background-color: #f7b500;
     color: #fff;
@@ -217,11 +218,84 @@ body {
     transition: background-color 0.3s ease;
     font-weight: 700;
 }
-
 .modal-body .btn:hover {
     background-color: #e09e00;
 }
-
 .modal-body .btn i {
     margin-left: 10px;
+}
+
+.custom-select-container {
+    position: relative;
+    width: 100%;
+}
+.form-select-lg {
+    background-color: #d9d9d9; /* Màu xám cho hộp chọn */
+    color: #a2a2a2; /* Màu xám nhạt cho chữ */
+    appearance: none;
+    padding: 10px 40px 10px 15px; /* Khoảng cách để chứa mũi tên */
+    font-size: 1.25rem;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    position: relative;
+}
+.custom-select-container::after {
+    content: "\f0d7"; /* Unicode cho mũi tên từ FontAwesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0e3c6e; /* Màu xanh cho mũi tên */
+    font-size: 1.5rem; /* Kích thước lớn */
+    pointer-events: none; /* Để tránh mũi tên bị click */
+}
+select.form-select-lg:focus {
+    outline: none;
+}
+select.form-select-lg option {
+    color: #000; /* Màu chữ bình thường */
+    padding: 10px;
+    border-bottom: 1px solid #004080; /* Đường viền màu xanh */
+}
+select.form-select-lg option[value="-Select subject-"] {
+    color: #a0a0a0; /* Màu xám nhạt cho tùy chọn mặc định */
+}
+
+.tutor-list {
+    margin-top: 20px;
+}
+
+.tutor-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.tutor-card img {
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.tutor-info {
+    flex: 1;
+}
+
+.tutor-actions {
+    text-align: right;
+}
+
+.btn-primary {
+    background-color: #f7b500;
+    border-color: #f7b500;
+}
+
+.btn-primary:hover {
+    background-color: #e09e00;
+    border-color: #e09e00;
 }

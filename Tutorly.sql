@@ -1,5 +1,5 @@
-﻿--CREATE DATABASE Tutorly
---use Tutorly
+﻿CREATE DATABASE Tutorly
+use Tutorly
 --drop database Tutorly
 CREATE TABLE [User] (
     id INT IDENTITY(1,1) PRIMARY KEY,

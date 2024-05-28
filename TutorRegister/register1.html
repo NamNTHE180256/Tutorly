@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a tutor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <img src="picture/LOGO_Main.png" alt="Tutorly Logo" class="logo">
+    </header>
+    <div class="container">
+        <div class="form-section">
+
+            <h1>Join With Us</h1>
+            <form id="registration-form">
+                <label for="full-name">Full name</label>
+                <input type="text" id="full-name" name="full-name" placeholder="Your full name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Your email" required>
+
+                <label for="grade">Grade</label>
+                <select name="grade" id="grade" required>
+                    <option value="" disabled selected>Choose grade</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+                <label for="subject-name">Subject</label>
+                <select id="subject-name" name="subject-name" required>
+                    <option value="" disabled selected>Subject taught</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Physics">Physics</option>
+                    <option value="English">English</option>
+                    <option value="Literature">Literature</option>
+                    <option value="Chemistry">Chemistry</option>
+
+                    <!-- Add more options as needed -->
+                </select>
+
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Your gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <button type="submit">Save and continue</button>
+            </form>
+        </div>
+        <div class="image-section">
+            <div class="image-content">
+                <h2>Become a <div><span style="color: orange;">part</span> of</div>
+                </h2>
+                <img id="logo-sentence" src="picture/LOGO_TUTORLY.png" alt="logo">
+                <div class="transparent-square"></div>
+            </div>
+            <img src="picture/rightPic.png" alt="Blackboard">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</body>
+
+</html>

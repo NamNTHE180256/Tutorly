@@ -2,10 +2,10 @@
 --use Tutorly
 --drop database Tutorly
 CREATE TABLE [User] (
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(50) NOT NULL,
+    [password] VARCHAR(255) NOT NULL,
+    [role] VARCHAR(50) NOT NULL,
     createdAt DATETIME DEFAULT GETDATE()
 );
 
@@ -20,7 +20,6 @@ CREATE TABLE [Subject] (
     [name] NVARCHAR(255) NOT NULL
 );
 
-
 CREATE TABLE Tutor (
     id INT PRIMARY KEY,
     subjectId INT,
@@ -29,18 +28,23 @@ CREATE TABLE Tutor (
     [image] VARCHAR(255),
     bio VARCHAR(255),
     edu VARCHAR(255),
-    [cert] VARCHAR(255),
     price FLOAT,
     bank VARCHAR(255),
     [status] VARCHAR(50),
 	FOREIGN KEY (subjectId) REFERENCES [Subject](id)
 );
 
+CREATE TABLE [Certificate] (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	tutorId INT,
+	[image] VARCHAR(255),
+	FOREIGN KEY (tutorId) REFERENCES Tutor(id)
+);
 
 CREATE TABLE Rating (
     id INT IDENTITY(1,1) PRIMARY KEY,
+	learnerId INT,
     tutorId INT,
-    learnerId INT,
     rating INT,
     review TEXT,
     createdAt DATETIME DEFAULT GETDATE(),
@@ -48,12 +52,19 @@ CREATE TABLE Rating (
     FOREIGN KEY (learnerId) REFERENCES Learner(id)
 );
 
+CREATE TABLE SavedTutor (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	learnerId INT,
+    tutorId INT,
+	FOREIGN KEY (tutorId) REFERENCES Tutor(id),
+    FOREIGN KEY (learnerId) REFERENCES Learner(id)
+);
+
 CREATE TABLE Class (
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     learnerId INT,
     tutorId INT,
-    meetUrl VARCHAR(255),
-    totalSlots INT,
+    totalSession INT,
     startDate DATE,
     endDate DATE,
     [status] VARCHAR(50),
@@ -61,30 +72,30 @@ CREATE TABLE Class (
     FOREIGN KEY (tutorId) REFERENCES Tutor(id)
 );
 
-CREATE TABLE Slot (
-    id INT IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE [Session] (
+    id VARCHAR(10) PRIMARY KEY,
     startTime TIME,
     endTime TIME,
     [dayOfWeek] VARCHAR(50)
 );
 
-CREATE TABLE Class_Slot (
-    id INT PRIMARY KEY,
+CREATE TABLE Lession (
+    id INT IDENTITY(1,1) PRIMARY KEY,
     classId INT,
-    slotId INT,
+    sessionId VARCHAR(10),
     [date] DATE,
     [status] VARCHAR(50),
     FOREIGN KEY (classId) REFERENCES Class(id),
-    FOREIGN KEY (slotId) REFERENCES Slot(id)
+    FOREIGN KEY (sessionId) REFERENCES [Session](id)
 );
 
 CREATE TABLE TutorAvailability (
     id INT IDENTITY(1,1) PRIMARY KEY,
     tutorId INT,
-    slotId INT,
+    sessionId VARCHAR(10),
 	[status] VARCHAR(50),
     FOREIGN KEY (tutorId) REFERENCES Tutor(id),
-    FOREIGN KEY (slotId) REFERENCES Slot(id)
+    FOREIGN KEY (sessionId) REFERENCES [Session](id)
 );
 
 CREATE TABLE Payment (
@@ -97,38 +108,50 @@ CREATE TABLE Payment (
 
 CREATE TABLE Assignment (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
+	lessionId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
     createdAt DATETIME DEFAULT GETDATE(),
-    class_slotId INT,
-    FOREIGN KEY (class_slotId) REFERENCES Class_Slot(id)
+    FOREIGN KEY (lessionId) REFERENCES Lession(id)
 );
 
 CREATE TABLE Material (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
+	lessionId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
     fileType VARCHAR(50),
     uploadedAt DATETIME DEFAULT GETDATE(),
-    class_slotId INT,
-    FOREIGN KEY (class_slotId) REFERENCES Class_Slot(id)
+    FOREIGN KEY (lessionId) REFERENCES Lession(id)
 );
 
 
 -- Insert into User table
-INSERT INTO [User] (id, email, [password], [role], createdAt)
+INSERT INTO [User] (email, [password], [role], createdAt)
 VALUES 
-(1, 'learner1@example.com', '1', 'learner', GETDATE()),
-(2, 'learner2@example.com', '1', 'learner', GETDATE()),
-(3, 'tutor1@example.com', '2', 'tutor', GETDATE()),
-(4, 'tutor2@example.com', '2', 'tutor', GETDATE()),
-(5, 'admin1@example.com', '3', 'admin', GETDATE());
+('learner1@gmail.com', '1', 'learner', GETDATE()),
+('learner2@gmail.com', '1', 'learner', GETDATE()),
+('learner3@gmail.com', '1', 'learner', GETDATE()),
+('learner4@gmail.com', '1', 'learner', GETDATE()),
+('learner5@gmail.com', '1', 'learner', GETDATE()),
+('learner6@gmail.com', '1', 'learner', GETDATE()),
+('tutor1@example.com', '2', 'tutor', GETDATE()),
+('tutor2@example.com', '2', 'tutor', GETDATE()),
+('tutor3@example.com', '2', 'tutor', GETDATE()),
+('tutor4@example.com', '2', 'tutor', GETDATE()),
+('tutor5@example.com', '2', 'tutor', GETDATE()),
+('tutor6@example.com', '2', 'tutor', GETDATE()),
+('admin1@example.com', '3', 'admin', GETDATE());
 
 -- Insert into Learner table
 INSERT INTO Learner (id, [name], [image])
 VALUES 
 (1, N'Nam Nguyễn', 'image1.jpg'),
-(2, N'Trang Trần', 'image2.jpg');
+(2, N'Trang Trần', 'image2.jpg'),
+(3, N'Đức Anh', 'image1.jpg'),
+(4, N'Lê Dũng', 'image2.jpg'),
+(5, N'Tiến Dũng', 'image1.jpg'),
+(6, N'Tùng Dương', 'image2.jpg')
 
 -- Insert into Subject table
 INSERT INTO Subject ([name])
@@ -149,87 +172,89 @@ VALUES
 (N'Literature 11'),
 (N'Literature 12')
 -- Insert into Tutor table
-INSERT INTO Tutor (id, subjectId, [name], gender, [image], bio, edu, [cert], price, bank, [status])
+INSERT INTO Tutor (id, subjectId, [name], gender, [image], bio, edu, price, bank, [status])
 VALUES 
-(3, 13, N'HiểnDA', 1, 'tutor1.jpg', 'Experienced Math Tutor', 'PhD in Mathematics', 'Math Cert', 300.0, 'Bank1', 'Active'),
-(4, 4, N'Trương Gia Bình', 1, 'tutor2.jpg', 'Physics Specialist', 'MSc in Physics', 'Physics Cert', 250.0, 'Bank2', 'Active');
-
+(7, 13, N'Đặng Anh Hiển', 1, 'tutor1.jpg', 'Experienced Math Tutor', 'FPT University', 300.0, 'Bank1', 'Active'),
+(8, 4, N'Trương Gia Bình', 1, 'tutor2.jpg', 'Physics Specialist', 'HUST', 250.0, 'Bank2', 'Active'),
+(9, 15, N'Nguyễn Phương', 0, 'tutor3.jpg', 'Là một giáo viên dạy văn có kinh nghiệm 10 năm', 'NEU', 400.0, 'Bank2', 'Active'),
+(10, 15, N'Nguyễn Xuân', 0, 'tutor4.jpg', 'I can grow you from zero to hero', 'NEU', 350.0, 'Bank2', 'Active')
 -- Insert into Rating table
-INSERT INTO Rating (tutorId, learnerId, rating, review, createdAt)
+INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 
-(3, 1, 5, 'Thầy dạy hay, vui tính', GETDATE()),
-(4, 2, 4, 'Thầy dạy vui tính, hay', GETDATE());
+(1, 7, 5, 'Thầy dạy hay, vui tính', GETDATE()),
+(2, 8, 4, 'Thầy dạy vui tính, hay', GETDATE());
 
 -- Insert into Class table
-INSERT INTO Class (id, learnerId, tutorId, meetUrl, totalSlots, startDate, endDate, [status])
+INSERT INTO Class (learnerId, tutorId, totalSession, startDate, endDate, [status])
 VALUES 
-(1, 1, 3, 'https://meet.url/1', 10, '2024-05-01', '2024-05-30', 'Ongoing'),
-(2, 2, 4, 'https://meet.url/2', 8, '2024-06-01', '2024-06-30', 'Pending');
+(1, 7, 10, '2024-05-01', '2024-05-30', 'Ongoing'),
+(2, 8, 5, '2024-06-01', '2024-06-30', 'Pending');
 
 -- Insert into Slot table
-INSERT INTO Slot (startTime, endTime, [dayOfWeek])
+INSERT INTO [Session] (id, startTime, endTime, [dayOfWeek])
 VALUES 
-('08:00:00', '09:30:00', 'Monday'),
-('10:00:00', '11:30:00', 'Monday'),
-('14:00:00', '15:30:00', 'Monday'),
-('16:00:00', '17:30:00', 'Monday'),
-('19:00:00', '20:30:00', 'Monday'),
-('08:00:00', '09:30:00', 'Tuesday'),
-('10:00:00', '11:30:00', 'Tuesday'),
-('14:00:00', '15:30:00', 'Tuesday'),
-('16:00:00', '17:30:00', 'Tuesday'),
-('19:00:00', '20:30:00', 'Tuesday'),
-('08:00:00', '09:30:00', 'Wednesday'),
-('10:00:00', '11:30:00', 'Wednesday'),
-('14:00:00', '15:30:00', 'Wednesday'),
-('16:00:00', '17:30:00', 'Wednesday'),
-('19:00:00', '20:30:00', 'Wednesday'),
-('08:00:00', '09:30:00', 'Thursday'),
-('10:00:00', '11:30:00', 'Thursday'),
-('14:00:00', '15:30:00', 'Thursday'),
-('16:00:00', '17:30:00', 'Thursday'),
-('19:00:00', '20:30:00', 'Thursday'),
-('08:00:00', '09:30:00', 'Friday'),
-('10:00:00', '11:30:00', 'Friday'),
-('14:00:00', '15:30:00', 'Friday'),
-('16:00:00', '17:30:00', 'Friday'),
-('19:00:00', '20:30:00', 'Friday'),
-('08:00:00', '09:30:00', 'Saturday'),
-('10:00:00', '11:30:00', 'Saturday'),
-('14:00:00', '15:30:00', 'Saturday'),
-('16:00:00', '17:30:00', 'Saturday'),
-('19:00:00', '20:30:00', 'Saturday'),
-('08:00:00', '09:30:00', 'Sunday'),
-('10:00:00', '11:30:00', 'Sunday'),
-('14:00:00', '15:30:00', 'Sunday'),
-('16:00:00', '17:30:00', 'Sunday'),
-('19:00:00', '20:30:00', 'Sunday')
+('M1', '08:00:00', '09:30:00', 'Monday'),
+('M2', '10:00:00', '11:30:00', 'Monday'),
+('M3', '14:00:00', '15:30:00', 'Monday'),
+('M4', '16:00:00', '17:30:00', 'Monday'),
+('M5', '19:00:00', '20:30:00', 'Monday'),
+('T1', '08:00:00', '09:30:00', 'Tuesday'),
+('T2', '10:00:00', '11:30:00', 'Tuesday'),
+('T3', '14:00:00', '15:30:00', 'Tuesday'),
+('T4', '16:00:00', '17:30:00', 'Tuesday'),
+('T5', '19:00:00', '20:30:00', 'Tuesday'),
+('W1', '08:00:00', '09:30:00', 'Wednesday'),
+('W2', '10:00:00', '11:30:00', 'Wednesday'),
+('W3', '14:00:00', '15:30:00', 'Wednesday'),
+('W4', '16:00:00', '17:30:00', 'Wednesday'),
+('W5', '19:00:00', '20:30:00', 'Wednesday'),
+('R1', '08:00:00', '09:30:00', 'Thursday'),
+('R2', '10:00:00', '11:30:00', 'Thursday'),
+('R3', '14:00:00', '15:30:00', 'Thursday'),
+('R4', '16:00:00', '17:30:00', 'Thursday'),
+('R5', '19:00:00', '20:30:00', 'Thursday'),
+('F1', '08:00:00', '09:30:00', 'Friday'),
+('F2', '10:00:00', '11:30:00', 'Friday'),
+('F3', '14:00:00', '15:30:00', 'Friday'),
+('F4', '16:00:00', '17:30:00', 'Friday'),
+('F5', '19:00:00', '20:30:00', 'Friday'),
+('SA1', '08:00:00', '09:30:00', 'Saturday'),
+('SA2', '10:00:00', '11:30:00', 'Saturday'),
+('SA3', '14:00:00', '15:30:00', 'Saturday'),
+('SA4', '16:00:00', '17:30:00', 'Saturday'),
+('SA5', '19:00:00', '20:30:00', 'Saturday'),
+('SU1', '08:00:00', '09:30:00', 'Sunday'),
+('SU2', '10:00:00', '11:30:00', 'Sunday'),
+('SU3', '14:00:00', '15:30:00', 'Sunday'),
+('SU4', '16:00:00', '17:30:00', 'Sunday'),
+('SU5', '19:00:00', '20:30:00', 'Sunday');
+
 -- Insert into Class_Slot table
-INSERT INTO Class_Slot (id, classId, slotId, [date], [status])
+INSERT INTO Lession (classId, sessionId, [date], [status])
 VALUES 
-(1, 1, 1, '2024-05-06', 'Scheduled'),
-(2, 2, 2, '2024-06-10', 'Scheduled');
+(1, 'M1', '2024-05-06', 'Scheduled'),
+(2, 'SA1', '2024-06-10', 'Scheduled');
 
 -- Insert into TutorAvailability table
-INSERT INTO TutorAvailability (tutorId, slotId, [status])
+INSERT INTO TutorAvailability (tutorId, sessionId, [status])
 VALUES 
-(4, 1, 'Available'),
-(4, 3, 'Available'),
-(4, 5, 'Available'),
-(4, 7, 'Available'),
-(4, 9, 'Available'),
-(4, 14, 'Available'),
-(4, 19, 'Available'),
-(4, 20, 'Available'),
-(4, 24, 'Available'),
-(3, 2, 'Available'),
-(3, 5, 'Available'),
-(3, 7, 'Available'),
-(3, 13, 'Available'),
-(3, 17, 'Available'),
-(3, 22, 'Available'),
-(3, 28, 'Available'),
-(3, 35, 'Available')
+(7, 'M1', 'Available'),
+(7, 'M4', 'Available'),
+(7, 'T2', 'Available'),
+(7, 'SA1', 'Available'),
+(8, 'SU3', 'Available'),
+(8, 'F5', 'Available'),
+(8, 'R3', 'Available'),
+(8, 'M4', 'Available'),
+(9, 'T3', 'Available'),
+(9, 'W1', 'Available'),
+(9, 'SA5', 'Available'),
+(9, 'F5', 'Available'),
+(10, 'T2', 'Available'),
+(10, 'F4', 'Available'),
+(10, 'SU5', 'Available'),
+(10, 'SA5', 'Available'),
+(10, 'M5', 'Available');
 
 -- Insert into Payment table
 INSERT INTO Payment (classId, amount, [date])
@@ -238,13 +263,13 @@ VALUES
 (2, 2000.0, '2024-06-02');
 
 -- Insert into Assignment table
-INSERT INTO Assignment ([fileName], filePath, createdAt, class_slotId)
+INSERT INTO Assignment ([fileName], filePath, createdAt, lessionId)
 VALUES 
 (N'Assignment1.docx', 'path/to/assignment1.docx', GETDATE(), 1),
 (N'Assignment2.docx', 'path/to/assignment2.docx', GETDATE(), 2);
 
 -- Insert into Material table
-INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, class_slotId)
+INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessionId)
 VALUES 
 (N'Material1.pdf', 'path/to/material1.pdf', 'PDF', GETDATE(), 1),
 (N'Material2.pptx', 'path/to/material2.pptx', 'PPTX', GETDATE(), 2);

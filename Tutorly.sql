@@ -1,5 +1,5 @@
 ﻿--CREATE DATABASE Tutorly
---use Tutorly
+use Tutorly
 --drop database Tutorly
 CREATE TABLE [User] (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -196,7 +196,11 @@ VALUES
     N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
     N'Đại học Kinh tế Quốc dân', 400.0, 'Bank2', 'Pending');
 
+<<<<<<< HEAD
 DELETE FROM Tutor WHERE id = 																			
+=======
+																			
+>>>>>>> 2668d73a852ea550eafa9ca536a81000ad149629
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 

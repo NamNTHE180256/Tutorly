@@ -1,0 +1,110 @@
+
+.todo{
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 20px;
+}
+.todo .todohead{
+    
+    background-color: #F7B500;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 30px;
+    color: white;
+    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+.todo .todonumber{
+    text-align: center;
+    font-size: 80px;
+}
+
+.todo .foot{
+    text-align: center;
+    color: #A2A2A2;
+    padding-bottom: 10px;
+}
+
+.classofstudent{
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 20px;  
+}
+.classofstudent .classofstudenthead{
+    background-color: #F7B500;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 30px;
+    color: white;
+    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+.classofstudent ul{
+    display: inline-flex;
+    text-decoration: none;
+}
+
+.classofstudent li{
+    text-decoration: none;
+    
+}
+.classofstudent .classongoing {
+    text-align: center;
+    font-size: 80px;
+}
+
+.classofstudent .classongoingfoot {
+    text-align: center;
+    color: #A2A2A2;
+    padding-bottom: 10px;
+}
+
+.classofstudent .classcomplete {
+    text-align: center;
+    font-size: 80px;
+}
+
+.classofstudent .classcompletefoot {
+    text-align: center;
+    color: #A2A2A2;
+    padding-bottom: 10px;
+}
+.ongoingclass{
+    margin-left: 40px;
+}
+.completedclass{
+    margin-right: 40px;
+}
+.upcommingclass{
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding: 40px;
+}
+
+.upcommingclasstitle{
+    color: #0E3C6E;
+    font-weight: bold;
+}
+.upcommingclassnote{
+    color: #A2A2A2;
+}
+.upcommingclassdedtails{
+    background-color:#E6E6E6;
+    border-radius: 20px;
+}
+
+.leftupcoming h4{
+    color: #0E3C6E;
+}
+
+.leftupcoming p{
+    color: #0E3C6E;
+}
+
+.rightupcoming h4{
+    color: #0E3C6E;
+}

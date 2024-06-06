@@ -6,13 +6,10 @@ package DAO;
 
 import Model.User;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
-/**
- *
- * @author TRANG
- */
+
 public class UserDAO extends DBContext{
     public User getUserById(int id) {
         User user = null;
@@ -32,5 +29,10 @@ public class UserDAO extends DBContext{
             e.printStackTrace();
         }
         return user;
+    }
+    public static void main(String[] args) {
+        UserDAO udao = new UserDAO();
+        User u = udao.getUserById(1);
+        System.out.println(u.getCreatedAt());
     }
 }

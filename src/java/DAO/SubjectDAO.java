@@ -5,8 +5,8 @@
 package DAO;
 
 import Model.Subject;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -15,9 +15,10 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author TRANG
+ * @author Admin
  */
 public class SubjectDAO extends DBContext{
+
     public Subject getSubjectById(int id) {
         String sql = "SELECT * FROM Subject WHERE id =" + id;
         try {
@@ -129,7 +130,4 @@ public class SubjectDAO extends DBContext{
         }
         return n;
     }
-
-    
-
 }

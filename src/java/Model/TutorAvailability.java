@@ -24,9 +24,7 @@ public class TutorAvailability {
         this.session = session;
         this.status = status;
     }
-
     
-
     // Getters and Setters
     public int getId() {
         return id;

@@ -15,10 +15,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-/**
- *
- * @author TRANG
- */
+
 public class SessionDAO extends DBContext{
     public SessionDAO() {
         // Initialize your database connection here

@@ -48,6 +48,7 @@ public class Learner {
         this.image = image;
     }
     
+
     public User getUserInfo(){
         UserDAO uDAO = new UserDAO();
         return uDAO.getUserById(id);
@@ -56,6 +57,7 @@ public class Learner {
     @Override
     public String toString() {
         return "Learner{" + "id=" + id + ", name=" + name + ", image=" + image + '}';
+
     }
     
 }

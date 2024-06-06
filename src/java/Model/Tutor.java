@@ -4,6 +4,11 @@
  */
 package Model;
 
+import DAO.TutorDAO;
+import DAO.UserDAO;
+import java.util.Map;
+import java.util.Vector;
+
 /**
  *
  * @author Admin
@@ -116,4 +121,20 @@ public class Tutor {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public User getUserInfo() {
+        UserDAO uDao = new UserDAO();
+        return uDao.getUserById(id);
+    }
+    
+    public double getAvgRating() {
+        TutorDAO tDao = new TutorDAO();
+        return tDao.getAvgRateById(id);
+    }
+    
+    public Vector<TutorAvailability> getAvailabilities() {
+        TutorDAO tDao = new TutorDAO();
+        return tDao.getTutorAvailabilityByTutorId(id);
+    }
+    
 }

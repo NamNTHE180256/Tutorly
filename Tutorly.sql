@@ -1,4 +1,4 @@
-﻿CREATE DATABASE Tutorly
+﻿--CREATE DATABASE Tutorly
 use Tutorly
 --drop database Tutorly
 CREATE TABLE [User] (
@@ -26,8 +26,8 @@ CREATE TABLE Tutor (
     [name] NVARCHAR(255) NOT NULL,
     gender BIT,
     [image] VARCHAR(255),
-    bio VARCHAR(255),
-    edu VARCHAR(255),
+    bio NTEXT,
+    edu NVARCHAR(255),
     price FLOAT,
     bank VARCHAR(255),
     [status] VARCHAR(50),
@@ -67,7 +67,7 @@ CREATE TABLE Class (
     totalSession INT,
     startDate DATE,
     endDate DATE,
-    [status] VARCHAR(50),
+    [status] VARCHAR(50), --ongoing, finished, trial
     FOREIGN KEY (learnerId) REFERENCES Learner(id),
     FOREIGN KEY (tutorId) REFERENCES Tutor(id)
 );
@@ -111,6 +111,8 @@ CREATE TABLE Assignment (
 	lessionId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
+	score FLOAT,
+	[status] VARCHAR(20),
     createdAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (lessionId) REFERENCES Lession(id)
 );
@@ -146,12 +148,12 @@ VALUES
 -- Insert into Learner table
 INSERT INTO Learner (id, [name], [image])
 VALUES 
-(1, N'Nam Nguyễn', 'image1.jpg'),
-(2, N'Trang Trần', 'image2.jpg'),
-(3, N'Đức Anh', 'image1.jpg'),
-(4, N'Lê Dũng', 'image2.jpg'),
-(5, N'Tiến Dũng', 'image1.jpg'),
-(6, N'Tùng Dương', 'image2.jpg')
+(1, N'Nam Nguyễn', 'learner1.jpg'),
+(2, N'Trang Trần', 'learner2.jpg'),
+(3, N'Đức Anh', 'learner3.jpg'),
+(4, N'Lê Dũng', 'learner4.jpg'),
+(5, N'Tiến Dũng', 'learner5.jpg'),
+(6, N'Tùng Dương', 'learner6.jpg')
 
 -- Insert into Subject table
 INSERT INTO Subject ([name])
@@ -174,21 +176,38 @@ VALUES
 -- Insert into Tutor table
 INSERT INTO Tutor (id, subjectId, [name], gender, [image], bio, edu, price, bank, [status])
 VALUES 
-(7, 13, N'Đặng Anh Hiển', 1, 'tutor1.jpg', 'Experienced Math Tutor', 'FPT University', 300.0, 'Bank1', 'Active'),
-(8, 4, N'Trương Gia Bình', 1, 'tutor2.jpg', 'Physics Specialist', 'HUST', 250.0, 'Bank2', 'Active'),
-(9, 15, N'Nguyễn Phương', 0, 'tutor3.jpg', 'Là một giáo viên dạy văn có kinh nghiệm 10 năm', 'NEU', 400.0, 'Bank2', 'Active'),
-(10, 15, N'Nguyễn Xuân', 0, 'tutor4.jpg', 'I can grow you from zero to hero', 'NEU', 350.0, 'Bank2', 'Active')
+
+(7, 2, N'Đặng Anh Hiển', 1, 'tutor1.jpg', 
+    N'Với hơn 15 năm kinh nghiệm giảng dạy Toán học tại các trường đại học hàng đầu, tôi, Đặng Anh Hiển, luôn tự hào về khả năng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi. Phương pháp giảng dạy của tôi không chỉ tập trung vào việc giải thích các khái niệm khó một cách dễ hiểu mà còn khơi gợi sự hứng thú và đam mê học tập ở mỗi học sinh. Tôi tin rằng mỗi học sinh đều có tiềm năng và nhiệm vụ của tôi là giúp các em phát huy tối đa khả năng của mình.', 
+    N'Đại học FPT', 300.0, 'Bank1', 'Active'),
+(8, 4, N'Trương Gia Bình', 1, 'tutor2.jpg', 
+    N'Tôi là Trương Gia Bình, một chuyên gia Vật lý với hơn 20 năm kinh nghiệm giảng dạy và nghiên cứu. Với niềm đam mê và sự kiên trì, tôi luôn nỗ lực truyền đạt những kiến thức vật lý phức tạp một cách đơn giản và thú vị. Tôi đã có nhiều công trình nghiên cứu được công bố trên các tạp chí khoa học uy tín, và tôi tin rằng, sự hiểu biết sâu rộng cùng phương pháp giảng dạy sáng tạo của mình sẽ giúp học sinh không chỉ học tốt mà còn yêu thích môn Vật lý.', 
+    N'Đại học Bách Khoa Hà Nội', 250.0, 'Bank2', 'Active'),
+(10, 15, N'Nguyễn Xuân', 0, 'tutor4.jpg', 
+    N'Với phương châm "Từ zero đến hero", tôi, Nguyễn Xuân, đã giúp đỡ nhiều học sinh từ mất gốc trở thành xuất sắc trong môn học. Phong cách giảng dạy của tôi linh hoạt, phù hợp với từng đối tượng học sinh, và tôi luôn sẵn sàng hỗ trợ các em vượt qua mọi khó khăn trong học tập. Tôi tin rằng sự nỗ lực và kiên trì sẽ đem lại kết quả tốt đẹp cho mọi học sinh.', 
+    N'Đại học Kinh tế Quốc dân', 350.0, 'Bank2', 'Active'),
+(11, 10, N'Phạm Quang Huy', 1, 'tutor5.jpg', 
+    N'Tôi là Phạm Quang Huy, giáo viên dạy Tiếng Anh với hơn 12 năm kinh nghiệm. Tôi đã giúp nhiều học sinh đạt được chứng chỉ tiếng Anh quốc tế như IELTS, TOEFL với điểm số cao. Với phương pháp giảng dạy sáng tạo và sử dụng nhiều công cụ hiện đại, tôi luôn cố gắng mang đến cho học viên những bài học thú vị và hiệu quả. Tôi tin rằng với sự hướng dẫn của mình, các em sẽ tự tin hơn trong việc sử dụng tiếng Anh và đạt được mục tiêu của mình.', 
+    N'Đại học Ngoại thương', 300.0, 'Bank3', 'Pending'),
+(13, 5, N'Trần Hữu Dũng', 1, 'tutor6.jpg', 
+    N'Tôi là Trần Hữu Dũng, giảng viên Vật lý ứng dụng với hơn 18 năm kinh nghiệm. Tôi tin rằng việc kết hợp lý thuyết với thực hành là cách tốt nhất để học sinh hiểu và yêu thích môn Vật lý. Tôi luôn tìm cách áp dụng các hiện tượng vật lý vào thực tiễn, giúp học sinh không chỉ học tốt mà còn thấy được sự kỳ diệu và ứng dụng của Vật lý trong cuộc sống hàng ngày.', 
+    N'Đại học Sư phạm Hà Nội', 320.0, 'Bank3', 'Pending'),
+(9, 13, N'Nguyễn Phương', 0, 'tutor3.jpg', 
+    N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
+    N'Đại học Kinh tế Quốc dân', 400.0, 'Bank2', 'Pending');
+
+																			
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 
-(1, 7, 5, 'Thầy dạy hay, vui tính', GETDATE()),
-(2, 8, 4, 'Thầy dạy vui tính, hay', GETDATE());
+(1, 7, 5, N'Thầy dạy hay, vui tính', GETDATE()),
+(2, 8, 4, N'Thầy dạy vui tính, hay', GETDATE());
 
 -- Insert into Class table
 INSERT INTO Class (learnerId, tutorId, totalSession, startDate, endDate, [status])
 VALUES 
-(1, 7, 10, '2024-05-01', '2024-05-30', 'Ongoing'),
-(2, 8, 5, '2024-06-01', '2024-06-30', 'Pending');
+(1, 7, 10, '2024-05-01', '2024-05-30', 'ongoing'),
+(2, 8, 5, '2024-06-01', '2024-06-30', 'finished');
 
 -- Insert into Slot table
 INSERT INTO [Session] (id, startTime, endTime, [dayOfWeek])
@@ -232,8 +251,23 @@ VALUES
 -- Insert into Class_Slot table
 INSERT INTO Lession (classId, sessionId, [date], [status])
 VALUES 
-(1, 'M1', '2024-05-06', 'Scheduled'),
-(2, 'SA1', '2024-06-10', 'Scheduled');
+(1, 'M1', '2024-05-06', 'Finished'),
+(1, 'M1', '2024-05-13', 'Finished'),
+(1, 'M1', '2024-05-20', 'Finished'),
+(1, 'M1', '2024-05-27', 'Finished'),
+(1, 'M1', '2024-06-03', 'Finished'),
+(1, 'M1', '2024-06-10', 'Scheduled'),
+(1, 'M1', '2024-06-17', 'Scheduled'),
+(1, 'M1', '2024-06-24', 'Scheduled'),
+(1, 'M1', '2024-07-01', 'Scheduled'),
+(2, 'SA1', '2024-05-11', 'Finished'),
+(2, 'SA1', '2024-05-18', 'Finished'),
+(2, 'SA1', '2024-05-25', 'Finished'),
+(2, 'SA1', '2024-06-01', 'Finished'),
+(2, 'SA1', '2024-06-08', 'Scheduled'),
+(2, 'SA1', '2024-06-15', 'Scheduled'),
+(2, 'SA1', '2024-06-22', 'Scheduled');
+
 
 -- Insert into TutorAvailability table
 INSERT INTO TutorAvailability (tutorId, sessionId, [status])
@@ -263,10 +297,24 @@ VALUES
 (2, 2000.0, '2024-06-02');
 
 -- Insert into Assignment table
-INSERT INTO Assignment ([fileName], filePath, createdAt, lessionId)
+INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessionId)
 VALUES 
-(N'Assignment1.docx', 'path/to/assignment1.docx', GETDATE(), 1),
-(N'Assignment2.docx', 'path/to/assignment2.docx', GETDATE(), 2);
+(N'Assignment1', 'path/to/assignment1.docx', 9.5, 'done', GETDATE(), 1),
+(N'Assignment2', 'path/to/assignment2.docx', 8.5, 'done', GETDATE(), 2),
+(N'Assignment3', 'path/to/assignment3.docx', 7.5, 'done', GETDATE(), 3),
+(N'Assignment4', 'path/to/assignment4.docx', 6.5, 'done', GETDATE(), 4),
+(N'Assignment5', 'path/to/assignment5.docx', 5.5, 'done', GETDATE(), 5),
+(N'Assignment6', 'path/to/assignment6.docx', null, 'todo', GETDATE(), 6),
+(N'Assignment7', 'path/to/assignment7.docx', null, 'todo', GETDATE(), 7),
+(N'Assignment8', 'path/to/assignment8.docx', null, 'todo', GETDATE(), 8),
+(N'Assignment9', 'path/to/assignment9.docx', null, 'todo', GETDATE(), 9),
+(N'Assignment10', 'path/to/assignment10.docx', null, 'done', GETDATE(), 10),
+(N'Assignment11', 'path/to/assignment11.docx', null, 'done', GETDATE(), 11),
+(N'Assignment12', 'path/to/assignment12.docx', null, 'done', GETDATE(), 12),
+(N'Assignment13', 'path/to/assignment13.docx', null, 'done', GETDATE(), 13),
+(N'Assignment14', 'path/to/assignment14.docx', null, 'todo', GETDATE(), 14),
+(N'Assignment15', 'path/to/assignment15.docx', null, 'todo', GETDATE(), 15),
+(N'Assignment16', 'path/to/assignment16.docx', null, 'todo', GETDATE(), 16);
 
 -- Insert into Material table
 INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessionId)

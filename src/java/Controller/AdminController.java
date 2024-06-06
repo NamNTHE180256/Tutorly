@@ -39,12 +39,12 @@ public class AdminController extends HttpServlet {
             LearnerDAO learnerDao = new LearnerDAO();
             ArrayList<Learner> learners = learnerDao.getAllLearners();
             request.setAttribute("learners", learners);
-            request.getRequestDispatcher("AdminLearner.jsp").forward(request, response);
+            request.getRequestDispatcher("/View/AdminLearner.jsp").forward(request, response);
         } else if (action.equals("tutor")) {
             TutorDAO tutorDao = new TutorDAO();
             ArrayList<Tutor> tutors = tutorDao.getAllTutors();
             request.setAttribute("tutors", tutors);
-            request.getRequestDispatcher("AdminTutor.jsp").forward(request, response);
+            request.getRequestDispatcher("/View/AdminTutor.jsp").forward(request, response);
         }
         
     } 

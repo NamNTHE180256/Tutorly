@@ -16,6 +16,14 @@
             .modal-xl {
                 max-width: 75% !important;
             }
+            .stu_image {
+                width: 100px;  /* Set the desired width */
+                height: 100px; /* Set the desired height */
+                object-fit: cover; /* Ensures the image covers the specified width and height while maintaining aspect ratio */
+                border-radius: 50%; /* Optional: If you want the image to be circular */
+                border: 2px solid #ccc; /* Optional: Add a border */
+            }
+
         </style>
     </head>
     <body>
@@ -46,7 +54,7 @@
                             <c:forEach var="tutor" items="${tutors}">
                                 <tr id="tutorRow${tutor.id}">
                                     <td>${tutor.id}</td>
-                                    <td><img src="${tutor.image}" class="stu_image"></td>
+                                    <td><img src="image/${tutor.image}" class="stu_image"></td>
                                     <td><strong>${tutor.name}</strong></td>
                                     <td>${tutor.getUserInfo().email}</td>
                                     <td>${tutor.subject.name}</td>

@@ -17,7 +17,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #0E3C6E;">
         <a class="navbar-brand" href="#">
-            <img src="Image/LOGO_TUTORLY (1).png" style="height: 50px" alt="Logo">
+            <img src="image/LOGO_TUTORLY (1).png" style="height: 50px" alt="Logo">
         </a>
 
         <!-- Centered Links -->

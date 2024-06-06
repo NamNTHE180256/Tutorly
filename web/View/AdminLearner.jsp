@@ -47,7 +47,7 @@
                             <c:forEach var="learner" items="${learners}">
                                 <tr>
                                     <td>${learner.id}</td>
-                                    <td><img src="Image/${learner.image}" class="stu_image"></td>
+                                    <td><img src="image/${learner.image}" class="stu_image"></td>
                                     <td><strong>${learner.name}</strong> </td>
                                     <td>${learner.getUserInfo().email}</td>
                                     <td>1</td>

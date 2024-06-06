@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/Tutorly/Tutorly/src/java/Controller/AdminController.java</file>
+            <file>file:/D:/Tutorly/Tutorly/src/java/Model/Tutor.java</file>
+            <file>file:/D:/Tutorly/Tutorly/web/AdminHeader.jsp</file>
+            <file>file:/D:/Tutorly/Tutorly/src/java/DAO/UserDAO.java</file>
+            <file>file:/D:/Tutorly/Tutorly/web/AdminLearner.jsp</file>
+            <file>file:/D:/Tutorly/Tutorly/web/AdminTutor.jsp</file>
+            <file>file:/D:/Tutorly/Tutorly/web/timetable.jsp</file>
+            <file>file:/D:/Tutorly/Tutorly/src/java/Controller/ApproveTutor.java</file>
+            <file>file:/D:/Tutorly/Tutorly/src/java/Controller/RejectTutor.java</file>
+            <file>file:/D:/Tutorly/Tutorly/src/java/DAO/TutorDAO.java</file>
+        </group>
+    </open-files>
+</project-private>

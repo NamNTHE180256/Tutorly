@@ -4,6 +4,8 @@
  */
 package Model;
 
+import DAO.UserDAO;
+
 /**
  *
  * @author Admin
@@ -44,6 +46,11 @@ public class Learner {
 
     public void setImage(String image) {
         this.image = image;
+    }
+    
+    public User getUserInfo() {
+        UserDAO uDao = new UserDAO();
+        return uDao.getUserById(id);
     }
     
 }

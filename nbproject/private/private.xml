@@ -6,5 +6,11 @@
             <file>file:/D:/Tutorly/src/java/Controller/DashboardController.java</file>
             <file>file:/D:/Tutorly/web/View/Dashboard.jsp</file>
         </group>
+        <group name="Tutorly">
+            <file>file:/E:/5.%20Kì%205/SWP391/Tutorly/src/java/Controller/TutorController.java</file>
+            <file>file:/E:/5.%20Kì%205/SWP391/Tutorly/web/View/HomePage.jsp</file>
+            <file>file:/E:/5.%20Kì%205/SWP391/Tutorly/web/js/newjavascript.js</file>
+            <file>file:/E:/5.%20Kì%205/SWP391/Tutorly/web/View/HPGuest.jsp</file>
+        </group>
     </open-files>
 </project-private>

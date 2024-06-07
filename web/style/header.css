@@ -1,0 +1,172 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 3, 2024, 2:44:02 PM
+    Author     : Tung Duong
+*/
+
+.tutor-list {
+    margin-top: 20px;
+}
+
+.tutor-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.tutor-card img {
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.tutor-info {
+    flex: 1;
+}
+
+.tutor-actions {
+    text-align: right;
+}
+
+.btn-primary {
+    background-color: #f7b500;
+    border-color: #f7b500;
+}
+
+.btn-primary:hover {
+    background-color: #e09e00;
+    border-color: #e09e00;
+}
+
+.btn-outline-secondary {
+    border-color: #0E3C6E;
+    color: #0E3C6E;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #0E3C6E;
+    color: white;
+}
+
+.dropdown-menu {
+    min-width: 0;
+    padding: 0.5rem 1rem;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    margin-top: 50px;
+}
+
+.filter-container .dropdown-toggle {
+    border-radius: 20px;
+    border: 1px solid #0E3C6E;
+    color: #0E3C6E;
+    background-color: white;
+}
+
+.filter-container .dropdown-toggle:hover {
+    background-color: #0E3C6E;
+    color: white;
+}
+
+.filter-container .btn-outline-secondary {
+    border-color: #0E3C6E;
+    color: #0E3C6E;
+}
+
+.filter-container .btn-outline-secondary:hover {
+    background-color: #0E3C6E;
+    color: white;
+}
+
+.filter-container .input-group-text {
+    background-color: white;
+    border-color: #0E3C6E;
+    color: #0E3C6E;
+    border-radius: 20px 0 0 20px;
+}
+
+.filter-container .form-control {
+    border-color: #0E3C6E;
+    border-radius: 0 20px 20px 0;
+}
+
+.filter-container .dropdown-menu {
+    min-width: 250px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.availability-times {
+    border: 1px solid #0E3C6E;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+}
+
+.availability-times .times-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.availability-times .d-flex div {
+    text-align: center;
+}
+.rating-row {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 24px;
+    color: #ccc; /* Gray color for stars */
+    margin-right: 5px;
+    transition: color 0.2s;
+}
+
+.star:hover,
+.star.selected {
+    color: #f7b500; /* Gold color for stars */
+}
+
+.star:hover ~ .star {
+    color: #ccc; /* Gray out the stars after the hovered one */
+}
+
+/*Chinh khung khi thu nho*/
+@media (max-width: 767px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .filter-container .btn-group,
+    .filter-container .input-group,
+    .filter-container span {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .tutor-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .tutor-card img {
+        margin: 0 auto 10px auto;
+    }
+    .tutor-actions {
+        text-align: center;
+        margin-top: 10px;
+    }
+}

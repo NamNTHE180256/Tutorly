@@ -1,5 +1,7 @@
 package Controller;
 
+import Config.EmailConfig;
+import DAO.LearnerDAO;
 import Model.User;
 import DAO.UserDAO;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import org.apache.commons.mail.SimpleEmail;
 @WebServlet(name = "AuthorizeControllers", urlPatterns = {"/authorize"})
 public class AuthorizeControllers extends HttpServlet {
 
+    EmailConfig email = new EmailConfig();
     private static int doGetCounter = 0;
 
     /**
@@ -65,7 +68,7 @@ public class AuthorizeControllers extends HttpServlet {
             throws ServletException, IOException {
         UserDAO dao = new UserDAO();
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("LearnerRegister");
+        User user = (User) session.getAttribute("userRegister");
         String action = request.getParameter("action");
         User userForgotPassword = dao.GetUserWithEmail(request.getParameter("email_for_get_new_password"));
         User userForgotPasswordFromSession = (User) session.getAttribute("User_Forgotpassword");
@@ -78,15 +81,15 @@ public class AuthorizeControllers extends HttpServlet {
 
                 boolean emailSent = false;
                 if (user != null) {
-                    emailSent = sendEmail(user.getEmail(), covert);
+                    emailSent = email.sendEmail(user.getEmail(), covert);
                 }
                 boolean emailGetNewPassword = false;
                 if (userForgotPassword != null) {
-                    emailGetNewPassword = sendEmail(userForgotPassword.getEmail(), covert);
+                    emailGetNewPassword = email.sendEmail(userForgotPassword.getEmail(), covert);
                 }
                 boolean emailGetNewPasswordFromSession = false;
                 if (userForgotPasswordFromSession != null) {
-                    emailGetNewPasswordFromSession = sendEmail(userForgotPasswordFromSession.getEmail(), covert);
+                    emailGetNewPasswordFromSession = email.sendEmail(userForgotPasswordFromSession.getEmail(), covert);
                 }
 
                 if (emailSent || emailGetNewPassword || emailGetNewPasswordFromSession) {
@@ -125,45 +128,6 @@ public class AuthorizeControllers extends HttpServlet {
         }
     }
 
-    private boolean sendEmail(String recipientEmail, String code) {
-        String emailUsername = "anhndhe182179@fpt.edu.vn"; // email cua ban than
-        String emailPassword = "bven xitn hlno foix"; // mat khau ung dung
-
-        try {
-            Email email = new SimpleEmail();
-            email.setHostName("smtp.gmail.com");
-            email.setSmtpPort(587);
-            email.setAuthenticator(new DefaultAuthenticator(emailUsername, emailPassword));
-            email.setStartTLSEnabled(true);
-            email.setFrom(emailUsername, "Tutorly.com"); // Nguoi gui
-            email.setSubject("Xác nhận Email"); // Tieu de
-            email.setMsg("Mã xác nhận của bạn là: " + code); // Noi dung
-            email.addTo(recipientEmail); // Dia chi email can gui toi
-            email.send(); // gui
-            return true; // tra ve true
-        } catch (EmailException e1) {
-            e1.printStackTrace();
-            System.err.println("Failed to send email via port 587. Attempting via port 465.");
-            try {
-                Email email = new SimpleEmail();
-                email.setHostName("smtp.gmail.com");
-                email.setSmtpPort(465);
-                email.setAuthenticator(new DefaultAuthenticator(emailUsername, emailPassword));
-                email.setSSLOnConnect(true);
-                email.setFrom(emailUsername, "Tutorly.com");
-                email.setSubject("Xác nhận Email");
-                email.setMsg("Mã xác nhận của bạn là: " + code);
-                email.addTo(recipientEmail);
-                email.send();
-                return true;
-            } catch (EmailException e2) {
-                e2.printStackTrace();
-                System.err.println("Failed to send email via port 465. Error: " + e2.getMessage());
-                return false;
-            }
-        }
-    }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -175,12 +139,12 @@ public class AuthorizeControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        LearnerDAO ldao = new LearnerDAO();
         UserDAO udao = new UserDAO();
         String codeAuthorize = request.getParameter("codeAuthorize");
         HttpSession session = request.getSession();
         String covert = (String) session.getAttribute("code");
-        User user = (User) session.getAttribute("LearnerRegister");
+        User user = (User) session.getAttribute("userRegister");
 
         // Check for null values
         if (codeAuthorize == null || covert == null || user == null) {
@@ -194,9 +158,15 @@ public class AuthorizeControllers extends HttpServlet {
             // Register the user
             int x = udao.register(user);
             if (x > 0) {  // Ensure that register method returns the correct number of affected rows
-                session.setAttribute("LearnerLogin", user);
-                session.removeAttribute("LearnerRegister");
-                request.getRequestDispatcher("/TutorController").forward(request, response); // 
+
+                if (user.getRole().equalsIgnoreCase("learner")) {
+                    int status = ldao.RegisterLearner(user);
+                    if (status > 0) {
+                        session.setAttribute("LearnerLogin", user);
+                        session.removeAttribute("userRegister");
+                        request.getRequestDispatcher("/TutorController").forward(request, response);
+                    }
+                }// 
             } else {
                 request.setAttribute("errorMessage", "Đăng ký thất bại. " + x);// gui tam neu co gi thi mai sau chuyen den 1 trang khac
                 request.getRequestDispatcher("/View/error.jsp").forward(request, response);

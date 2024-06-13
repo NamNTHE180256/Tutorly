@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.http.client.fluent.Response;
 
 /**
  *
@@ -38,19 +41,19 @@ public class RegisterController extends HttpServlet {
             if (password1.equals(passwordConfirm)) {
                 if (userDao.GetUserWithEmail(email) == null) {
                     User user = new User(email, password_hash, type);
-                    session.setAttribute("LearnerRegister", user);
+                    session.setAttribute("userRegister", user);
                     response.sendRedirect(request.getContextPath() + "/authorize?action=register");
                 } else {
                     request.setAttribute("messageError", "Email already exists");
-                    request.getRequestDispatcher("/View/register.jsp").forward(request, response);
+                    request.getRequestDispatcher("/View/Register.jsp").forward(request, response);
                 }
             } else {
                 request.setAttribute("messageError", "Passwords do not match");
-                request.getRequestDispatcher("/View/register.jsp").forward(request, response);
+                request.getRequestDispatcher("/View/Register.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("messageError", "Invalid email format");
-            request.getRequestDispatcher("/View/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/View/Register.jsp").forward(request, response);
         }
     }
 
@@ -69,9 +72,16 @@ public class RegisterController extends HttpServlet {
         }
     }
 
-    private boolean checkEmail(String email) {
-        // Basic email format validation, you can improve this with a regex
-        return email != null && email.contains("@");
+   public boolean checkEmail(String email) {
+        String EMAIL_PATTERN = "^[\\w.-]+@(gmail\\.com|lookup\\.com)$";
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/View/Register.jsp").forward(req, resp);
     }
 
     @Override

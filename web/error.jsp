@@ -15,5 +15,6 @@
         <h1>${requestScope.errorMessage}</h1>
         <p> ${sessionScope.LearnerRegister.toString()}</p>
         <p> ${requestScope.LearnerRegister.toString()}</p>
+           <p> ${requestScope.status}</p>
     </body>
 </html>

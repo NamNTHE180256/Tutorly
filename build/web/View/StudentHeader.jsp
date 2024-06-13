@@ -85,7 +85,7 @@
                 <ul class="navbar-nav mr-auto">
                     <!-- Find tutor -->
                     <li class="nav-item head_link">
-                        <a class="nav-link" href="../Tutorly/TutorController">Finding a tutor</a>
+                        <a class="nav-link" href="../TutorController">Finding a tutor</a>
                     </li>
                 </ul>
 
@@ -111,13 +111,13 @@
                     </li>
                     <!-- List of favorite tutors -->
                     <li class="nav-item">
-                        <a class="nav-link" href="../Tutorly/DashboardController">
+                        <a class="nav-link" href="../DashboardController">
                             <i class="fa-regular fa-heart head_icon"></i>     
                         </a>
                     </li>
                     <!-- Student name -->
                     <li class="nav-item">
-                         <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${linfo.name}</p></a>
+                         <a href="../StudentProfileController"><p class="nav-link learnername"> ${linfo.name}</p></a>
                     </li>
                     <!-- Student profile image -->
                     <li class="nav-item">
@@ -139,7 +139,7 @@
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Schedule -->
-                    <a class="nav-link" href="#">Schedule</a>
+                    <a class="nav-link" href="../Tutorly/ScheduleController">Schedule</a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Material -->

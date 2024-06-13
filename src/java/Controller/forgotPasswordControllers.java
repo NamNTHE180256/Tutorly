@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import DAO.UserDAO;
 import Model.User;
+import jakarta.servlet.annotation.WebServlet;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -20,6 +21,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Acer
  */
+@WebServlet(name="forgotPasswordControllers", urlPatterns={"/forgotPassword"})
 public class forgotPasswordControllers extends HttpServlet {
 
     /**

@@ -13,7 +13,7 @@ class Iconstant { // File config google
 
     public static final String GOOGLE_CLIENT_SECRET = "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";
 
-    public static final String GOOGLE_REDIRECT_URI = "http://localhost:9999/tutorly/LoginGoogle";
+    public static final String GOOGLE_REDIRECT_URI = "http://localhost:9999/Tutorly/LoginGoogle";
 
     public static final String GOOGLE_GRANT_TYPE = "authorization_code";
 

@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import GoogleLoginConfig.GoogleAccount;
 import Model.User;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,8 +14,8 @@ import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+public class UserDAO extends DBContext {
 
-public class UserDAO extends DBContext{
     public User getUserById(int id) {
         User user = null;
         String sql = "Select * from [User] where id = ?";
@@ -34,7 +35,8 @@ public class UserDAO extends DBContext{
         }
         return user;
     }
-     public User GetUserWithEmail(String email_login) {
+
+    public User GetUserWithEmail(String email_login) {
         String sql = "SELECT * FROM [User] WHERE email = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, email_login);
@@ -45,7 +47,7 @@ public class UserDAO extends DBContext{
                 String password = rs.getString("password");
                 String role = rs.getString("role");
                 String createdAt = rs.getString("createdAt");
-               User user = new User(email, password, role);
+                User user = new User(email, password, role);
                 return user;
             }
         } catch (SQLException e) {
@@ -72,27 +74,27 @@ public class UserDAO extends DBContext{
     }
 
     public User Login(String email_login, String password_login) {
-    String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
-    try {
-        PreparedStatement st = connection.prepareStatement(sql);
-        st.setString(1, email_login);
-        st.setString(2, password_login);
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
-            int id = rs.getInt("id");
-            String email = rs.getString("email");
-            String password = rs.getString("password");
-            String role = rs.getString("role");
-            String createAt = rs.getString("createdAt");
-            User user = new User(email, password, role);
-            return user;
+        String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email_login);
+            st.setString(2, password_login);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String role = rs.getString("role");
+                String createAt = rs.getString("createdAt");
+                User user = new User(email, password, role);
+                return user;
+            }
+        } catch (SQLException e) {
+            // Log the exception (consider using a logging framework)
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        // Log the exception (consider using a logging framework)
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}
 
     public int register(User user) {
         LocalDateTime now = LocalDateTime.now();
@@ -126,28 +128,24 @@ public class UserDAO extends DBContext{
         }
     }
 
-//    public int registerLearnerUsingGoogle(GoogleAccount acc) {
-//        if (GetUserWithEmail(acc.getEmail()) != null) {
-//            return 1;
-//        } else {
-//            LocalDateTime now = LocalDateTime.now();
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String sql = "INSERT INTO [dbo].[User] ([email], [password], [role], [createdAt]) VALUES (?, ?, ?, ?)";
-//
-//            try (PreparedStatement st = conn.prepareStatement(sql)) {
-//                st.setString(1, acc.getEmail());
-//                st.setString(2, ""); // Setting the password as NULL safely
-//                st.setString(3, "learner");
-//                st.setString(4, now.format(formatter));
-//                return st.executeUpdate();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                System.err.println("Error during user registration: " + e.getMessage());
-//            }
-//            
-//            return 0;
-//        }
-//    }
+    public int registerLearnerUsingGoogle(GoogleAccount acc) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String sql = "INSERT INTO [dbo].[User] ([email], [password], [role], [createdAt]) VALUES (?, '', ?, ?)";
+
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, acc.getEmail());
+            st.setString(2, "learner");
+            st.setString(3, now.format(formatter));
+            return st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error during user registration: " + e.getMessage());
+        }
+
+        return 0;
+    }
+
     public static void main(String[] args) {
         UserDAO udao = new UserDAO();
         User u = udao.getUserById(1);

@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LearnerDAO extends DBContext {
+
     public ArrayList<Learner> getAllLearners() {
         ArrayList<Learner> learners = new ArrayList<>();
         String sql = "SELECT * FROM Learner";
@@ -40,7 +41,36 @@ public class LearnerDAO extends DBContext {
         }
         return learners;
     }
-    
+
+public int RegisterLearner(User user) {
+    String sql = "INSERT INTO [dbo].[Learner] ([id], [name], [image]) VALUES (?, ?, ' ')";
+    int newId = generateNewId();
+
+    try (PreparedStatement sp = connection.prepareStatement(sql)) {
+        sp.setInt(1, newId);
+        sp.setString(2, user.getEmail());
+        sp.executeUpdate();
+        return newId;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.err.println("Error during learner registration: " + e.getMessage());
+    }
+    return 0;
+}
+
+public int generateNewId() {
+    String query = "SELECT MAX(id) AS max_id FROM [dbo].[Learner]";
+    try (PreparedStatement sp = connection.prepareStatement(query); ResultSet rs = sp.executeQuery()) {
+        if (rs.next()) {
+            return rs.getInt("max_id") + 1;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.err.println("Error generating new ID: " + e.getMessage());
+    }
+    return 1; // Default to 1 if there are no records
+}
+
     public Learner getLearnerById(int id) {
         Learner learner = null;
         String sql = "SELECT * FROM Learner WHERE id = ?";
@@ -109,7 +139,6 @@ public class LearnerDAO extends DBContext {
             return false;
         }
     }
-
 
     public Vector<Learner> displayAllStudents() {
         Vector<Learner> vector = new Vector<>();
@@ -180,21 +209,20 @@ public class LearnerDAO extends DBContext {
         }
         return n;
     }
-    
-    public int updateStudentName(int studentId, String newName) {
-    int n = 0;
-    String sql = "UPDATE Learner SET name = ? WHERE id = ?";
-    try {
-        PreparedStatement pre = connection.prepareStatement(sql);
-        pre.setString(1, newName);
-        pre.setInt(2, studentId);
-        n = pre.executeUpdate();
-    } catch (SQLException ex) {
-        Logger.getLogger(LearnerDAO.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return n;
-}
 
+    public int updateStudentName(int studentId, String newName) {
+        int n = 0;
+        String sql = "UPDATE Learner SET name = ? WHERE id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, newName);
+            pre.setInt(2, studentId);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(LearnerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
 
     // Method to delete a student
     public int removeStudent(int studentId) {
@@ -208,6 +236,7 @@ public class LearnerDAO extends DBContext {
         }
         return n;
     }
+
     public static void main(String[] args) {
         LearnerDAO l = new LearnerDAO();
 //        Learner le = l.getStudentById(1);

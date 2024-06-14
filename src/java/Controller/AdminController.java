@@ -9,6 +9,7 @@ import DAO.LearnerDAO;
 import DAO.TutorDAO;
 import Model.Learner;
 import Model.Tutor;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,6 +17,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -35,6 +37,13 @@ public class AdminController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String action = request.getParameter("action");
+        HttpSession session1 = request.getSession();
+        User user = (User) session1.getAttribute("user");   
+         if (user == null) {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        if (user.getRole().equalsIgnoreCase("admin")) {
         if (action.equals("learner")) {
             LearnerDAO learnerDao = new LearnerDAO();
             ArrayList<Learner> learners = learnerDao.getAllLearners();
@@ -47,7 +56,8 @@ public class AdminController extends HttpServlet {
             request.getRequestDispatcher("/View/AdminTutor.jsp").forward(request, response);
         }
         
-    } 
+    }  else{request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);}}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

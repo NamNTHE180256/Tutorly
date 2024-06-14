@@ -86,16 +86,16 @@ public class LoginControllers extends HttpServlet {
         
         if (password1 != null && email != null) {
             
-            String password_hash = computeMD5Hash(password1);
-            User userLogin = userDao.Login(email, password_hash);
+       
+            User userLogin = userDao.Login(email, password1);
             
             if (userLogin != null) {
                 if (userLogin.getRole().equalsIgnoreCase("Learner")) {
-                    session.setAttribute("LearnerLogin", userLogin);
+                    session.setAttribute("user", userLogin);
                     request.getRequestDispatcher("TutorController").forward(request, response);
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
-                      session.setAttribute("TutorLogin", userLogin);
-//                      request.getRequestDispatcher("/")
+                      session.setAttribute("user", userLogin);
+                      request.getRequestDispatcher("TutorController").forward(request, response);//TUng DUONg
                 } //Adjust path as necessary
             } else {
                 request.setAttribute("messageError", "Incorrect email or password!");

@@ -69,6 +69,7 @@ public class ApproveTutor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        
         int tutorId = Integer.parseInt(request.getParameter("id"));
 
         TutorDAO tutorDao = new TutorDAO();

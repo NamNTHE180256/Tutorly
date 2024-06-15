@@ -15,8 +15,7 @@ public class Assignment {
     private String filePath;
     private Date createdAt;
     private String status;
-
-   
+    // Constructors
     public Assignment() {}
 
     public Assignment(long id, Lesson lession, String fileName, String filePath, Date createdAt, String status) {
@@ -32,10 +31,17 @@ public class Assignment {
         this.lession = lession;
         this.fileName = fileName;
         this.filePath = filePath;
-        this.createdAt = new Date();  // Default to current date/time
     }
 
-    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    // Getters and Setters
     public long getId() {
         return id;
     }
@@ -76,24 +82,9 @@ public class Assignment {
         this.createdAt = createdAt;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
-        return "Assignment{" +
-                "id=" + id +
-                ", lession=" + lession +
-                ", fileName='" + fileName + '\'' +
-                ", filePath='" + filePath + '\'' +
-                ", createdAt=" + createdAt +
-                ", status='" + status + '\'' +
-                '}';
+        return "Assignment{" + "id=" + id + ", lession=" + lession + ", fileName=" + fileName + ", filePath=" + filePath + ", createdAt=" + createdAt + ", status=" + status + '}';
     }
     
 }

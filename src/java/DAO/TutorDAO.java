@@ -390,18 +390,14 @@ public class TutorDAO extends DBContext {
     public static void main(String[] args) {
         TutorDAO t = new TutorDAO();
         String name = "hien";
-        int subjectId = 2;
-        int id = 1;
-        Vector<Tutor> v = t.displayAllTutors();
+        int subjectId = 15;
+        int id = 9;
+        Vector<Tutor> v = t.getTutors("SELECT *\n"
+                    + "FROM Tutor\n"
+                    + "WHERE subjectId ="+ subjectId 
+                    + "AND id <> "+id);
         for(Tutor tu : v){
-            v.toString();
+            System.out.println(t);
         }
-//        Vector<Tutor> v = t.getTutors("SELECT *\n"
-//                    + "FROM Tutor\n"
-//                    + "WHERE subjectId ="+ subjectId 
-//                    + "AND id <> "+id);
-//        for(Tutor tu : v){
-//            System.out.println(t);
-//        }
     }
 }

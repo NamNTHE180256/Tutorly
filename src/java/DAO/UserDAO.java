@@ -149,6 +149,6 @@ public class UserDAO extends DBContext {
     public static void main(String[] args) {
         UserDAO udao = new UserDAO();
         User u = udao.getUserById(1);
-        System.out.println(udao.Login("learner1@gmail.com", "1"));
+        System.out.println(udao.Login("tutor3@example.com", "2"));
     }
 }

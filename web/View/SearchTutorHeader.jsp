@@ -4,6 +4,7 @@
     Author     : TRANG
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -72,6 +73,7 @@
     </head>
     <body>
         <header class="head">
+            
             <nav class="navbar navbar-expand-sm navheader">
                 <a href="../Tutorly/TutorController"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
                 <!-- Left -->
@@ -94,21 +96,39 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fa-regular fa-heart head_icon"></i></a>
                     </li>
-                    <!-- Student name -->
-                    <li class="nav-item">
-                        <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> Nam Nguyễn</p></a>
-                    </li>
-                    <!-- Student profile image -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
-                    </li>
+                    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+                    <!-- Check if the user is logged in -->
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.user}">
+                            <!-- Display student name and profile image if logged in -->
+                            <li class="nav-item">
+                                <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername">Nam Nguyễn</p></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- Display Login and Register links if not logged in -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="View/Login.jsp">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="View/Register.jsp">Register</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+
+
                 </ul>
             </nav>
             <hr />
         </header>
         <!--menu-->
+        
         <nav class="navbar navbar-expand-sm navbarmenu">
-            <!-- Links -->
+            <!-- Links --><c:if test="${not empty sessionScope.user}">
             <ul class="navbar-nav">
                 <li class="nav-item navmenuitem">
                     <!-- Dashboard -->
@@ -125,7 +145,7 @@
                 <li class="nav-item navmenuitem">
                     <!-- Assignment -->
                     <a class="nav-link" href="../Tutorly/AssignmentController">Assignment</a>
-                </li>
+                </li></c:if>
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->
                     <a class="nav-link" href="#">Save list tutors</a>

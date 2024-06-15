@@ -10,6 +10,7 @@ import DAO.LessonDAO;
 import Model.Assignment;
 import Model.Learner;
 import Model.Lesson;
+import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,9 +19,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 
 /**
+ * learner
  *
  * @author TRANG
  */
@@ -38,30 +41,41 @@ public class ScheduleController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String service = request.getParameter("service");
-        response.setContentType("text/html;charset=UTF-8");
-        LessonDAO lDAO = new LessonDAO();
-        AssignmentDAO aDAO = new AssignmentDAO();
-        Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
-        LearnerDAO leDAO = new LearnerDAO();
-        Learner linfo = leDAO.getStudentById(1);
-
-        if (service == null || service.isEmpty()) {
-            request.setAttribute("linfo", linfo);
-            request.setAttribute("lesson_vector", lesson_vector);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
-            dispatcher.forward(request, response);
-        }else if (service.equals("viewLessonDetail")){
-            int lessonid = Integer.parseInt(request.getParameter("lessonid"));
-            Vector<Assignment> assignmentoflesson = aDAO.getTodoAssignmentsByLessonId(lessonid);
-             request.setAttribute("service", "viewLessonDetail");
-            request.setAttribute("assignmentoflesson", assignmentoflesson);
-            request.setAttribute("linfo", linfo);
-            request.setAttribute("lesson_vector", lesson_vector);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
-            dispatcher.forward(request, response);
+        HttpSession session1 = request.getSession();
+        User user = (User) session1.getAttribute("user");
+        if (user == null) {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
+        if (user.getRole().equalsIgnoreCase("learner")) {
+            String service = request.getParameter("service");
+            response.setContentType("text/html;charset=UTF-8");
+            LessonDAO lDAO = new LessonDAO();
+            AssignmentDAO aDAO = new AssignmentDAO();
+            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
+            LearnerDAO leDAO = new LearnerDAO();
+            Learner linfo = leDAO.getStudentById(1);
 
+            if (service == null || service.isEmpty()) {
+                request.setAttribute("linfo", linfo);
+                request.setAttribute("lesson_vector", lesson_vector);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
+                dispatcher.forward(request, response);
+            } else if (service.equals("viewLessonDetail")) {
+                int lessonid = Integer.parseInt(request.getParameter("lessonid"));
+                Vector<Assignment> assignmentoflesson = aDAO.getTodoAssignmentsByLessonId(lessonid);
+                request.setAttribute("service", "viewLessonDetail");
+                request.setAttribute("assignmentoflesson", assignmentoflesson);
+                request.setAttribute("linfo", linfo);
+                request.setAttribute("lesson_vector", lesson_vector);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
+                dispatcher.forward(request, response);
+            }
+
+        } else {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

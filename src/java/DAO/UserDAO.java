@@ -73,24 +73,25 @@ public class UserDAO extends DBContext {
         return 0;
     }
 
-    public User Login(String email_login, String password_login) {
+        public User Login(String email, String password) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, email_login);
-            st.setString(2, password_login);
+            st.setString(1, email);
+            st.setString(2, computeMD5Hash(password));
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
-                String email = rs.getString("email");
-                String password = rs.getString("password");
+                String emailDB = rs.getString("email");
+                String passwordDB = rs.getString("password");
                 String role = rs.getString("role");
                 String createAt = rs.getString("createdAt");
-                User user = new User(email, password, role);
+                User user = new User(emailDB, passwordDB, role);
+                user.setId(id);
+                user.setCreatedAt(rs.getTimestamp("createdAt"));
                 return user;
             }
         } catch (SQLException e) {
-            // Log the exception (consider using a logging framework)
             e.printStackTrace();
         }
         return null;

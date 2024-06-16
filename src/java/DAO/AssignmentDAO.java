@@ -285,4 +285,8 @@ public class AssignmentDAO extends DBContext{
             System.out.println(assignment.toString());
         }
     }
+
+    public Vector<Assignment> getTodoAssignmentsByLessonId(int lessonid) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -148,8 +148,10 @@ public class UserDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        UserDAO udao = new UserDAO();
-        User u = udao.getUserById(1);
-        System.out.println(udao.Login("tutor3@example.com", "2"));
+        UserDAO uDao = new UserDAO();
+        String password = "3";
+        String passAfterMD5 = uDao.computeMD5Hash(password);
+        System.out.println(passAfterMD5);
+        
     }
 }

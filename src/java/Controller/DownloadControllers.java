@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @author Acer
  */
 @WebServlet(name = "DowloadControllers", urlPatterns = {"/download"})
-public class DowloadControllers extends HttpServlet {
+public class DownloadControllers extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +39,7 @@ public class DowloadControllers extends HttpServlet {
     int slotid = Integer.parseInt(request.getParameter("slotid"));
     int fileid = Integer.parseInt(request.getParameter("id"));
     int classid = Integer.parseInt(request.getParameter("classId"));
-    Material mate = mDao.getAllMaterialinLession(classid, fileid, slotid);
+    Material mate = mDao.getAllMaterialWithlesson(classid, fileid, slotid);
     ArrayList<Material> list = mDao.getAllMaterialWithID(classid, slotid);
     String filePath = mate.getFilePath();
     String downloadLink = generateDownloadLink(request, filePath);

@@ -103,7 +103,7 @@
                             <li class="nav-item">
                                 <a href="../Tutorly/StudentProfileController"> 
                                     <p class="nav-link learnername">${sessionScope.learner.name}</p>
-                                    <c:out value="${sessionScope.learner.name}"/>
+                                   
                                 </a>
                             </li>
                             <li class="nav-item">

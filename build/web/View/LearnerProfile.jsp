@@ -131,14 +131,15 @@
                                             <!-- Modal body -->
                                             <div class="modal-body">
                                                 <div class="container-fluid mt-3">
-                                                    <form>
+                                                    <form action="${pageContext.request.contextPath}/changePassword" method="post">
                                                         <!-- Vertical -->
                                                         <div class="form-group">
                                                             <label for="myEmail">Current Password</label>
-                                                            <input type="email" id = "myEmail" class="form-control" placeholder="Email">
+                                                            <input type="password" name="Currentpass" id = "myEmail" class="form-control"  placeholder="Current Password"required>
                                                             <label for="myPassword">Password</label>
-                                                            <input type="password" id="myPassword" class="form-control" placeholder="Password" style="margin-bottom: 5px">
-                                                            <input type="password" id="myPassword" class="form-control" placeholder="Enter password again" style="margin-bottom: 5px">
+                                                            <input type="hidden" name="email" value="${sessionScope.user.email}">
+                                                            <input type="password" name="newpass" id="myPassword" class="form-control" placeholder="Password" style="margin-bottom: 5px" required>
+                                                            <input type="password" name="newpass2" id="myPassword" class="form-control" placeholder="Enter password again" style="margin-bottom: 5px" required>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                         </div>
                                                     </form>

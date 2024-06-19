@@ -295,7 +295,7 @@
                                         {
                                         title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                         start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                        url: 'http://google.com/',
+                                                                        url: 'http://localhost:9999/Tutorly/MaterialControllers?Slotid=${v.getId()}&classId=${v.getAClass().getId()}',
                                                                         end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                                         className: 'custom-event'
                                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}

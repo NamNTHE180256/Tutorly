@@ -70,6 +70,7 @@ public class StudentProfileController extends HttpServlet {
                     lDAO.updateStudent(linfo);
 
                 }
+                request.setAttribute("error", request.getAttribute("error"));
                 request.setAttribute("linfo", linfo);
                 request.setAttribute("scp_vector", scp_vector);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/LearnerProfile.jsp");

@@ -103,8 +103,14 @@ public class LoginControllers extends HttpServlet {
                     Tutor tutor = tDao.getTutorById(userLogin.getId());
                     session.setAttribute("tutor", tutor);
                     session.setAttribute("user", userLogin);
-                    request.getRequestDispatcher("TutorController").forward(request, response);//TUng DUONg
+                    request.getRequestDispatcher("TutorDetailController").forward(request, response);//TUng DUONg
                 } //Adjust path as necessary
+                else if (userLogin.getRole().equalsIgnoreCase("admin")) {
+                    Tutor tutor = tDao.getTutorById(userLogin.getId());
+                    session.setAttribute("tutor", tutor);
+                    session.setAttribute("user", userLogin);
+                    request.getRequestDispatcher("AdminController").forward(request, response);//TUng DUONg
+                } //A
             } else {
                 request.setAttribute("messageError", "Incorrect email or password!");
                 request.getRequestDispatcher("View/Login.jsp").forward(request, response);

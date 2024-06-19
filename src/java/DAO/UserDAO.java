@@ -62,7 +62,7 @@ public class UserDAO extends DBContext {
                 + "   SET [password] = ?\n"
                 + " WHERE email = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, password);
+            pstmt.setString(1, computeMD5Hash(password));
             pstmt.setString(2, email);
             int x = pstmt.executeUpdate();
             return x;
@@ -150,6 +150,6 @@ public class UserDAO extends DBContext {
     public static void main(String[] args) {
         UserDAO udao = new UserDAO();
         User u = udao.getUserById(1);
-        System.out.println(udao.Login("tutor3@example.com", "2"));
+        System.out.println(udao.Login("learner1@gmail.com", "1"));
     }
 }

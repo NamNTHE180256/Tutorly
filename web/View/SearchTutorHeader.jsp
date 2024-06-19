@@ -73,7 +73,7 @@
     </head>
     <body>
         <header class="head">
-            
+
             <nav class="navbar navbar-expand-sm navheader">
                 <a href="../Tutorly/TutorController"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
                 <!-- Left -->
@@ -96,18 +96,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fa-regular fa-heart head_icon"></i></a>
                     </li>
-                    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 
                     <!-- Check if the user is logged in -->
                     <c:choose>
-                        <c:when test="${not empty sessionScope.user}">
+                        <c:when test="${not empty sessionScope.user && sessionScope.user.role == 'learner'}">
                             <!-- Display student name and profile image if logged in -->
                             <li class="nav-item">
-                                <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername">Nam Nguyễn</p></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
-                            </li>
+                                <a href="../Tutorly/StudentProfileController"> <p class="nav-link learnername">${sessionScope.learner.name}</p></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
+                                </li>
                         </c:when>
                         <c:otherwise>
                             <!-- Display Login and Register links if not logged in -->
@@ -126,30 +126,32 @@
             <hr />
         </header>
         <!--menu-->
-        
-        <nav class="navbar navbar-expand-sm navbarmenu">
-            <!-- Links --><c:if test="${not empty sessionScope.user}">
-            <ul class="navbar-nav">
-                <li class="nav-item navmenuitem">
-                    <!-- Dashboard -->
-                    <a class="nav-link" href="../Tutorly/DashboardController">Dashboard</a>
-                </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Schedule -->
-                    <a class="nav-link" href="#">Schedule</a>
-                </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Material -->
-                    <a class="nav-link" href="#">Material</a>
-                </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Assignment -->
-                    <a class="nav-link" href="../Tutorly/AssignmentController">Assignment</a>
-                </li></c:if>
-                <li class="nav-item navmenuitem">
-                    <!-- Save list -->
-                    <a class="nav-link" href="#">Save list tutors</a>
-                </li>
+        <c:if test="${not empty sessionScope.user && sessionScope.user.role == 'learner'}">
+            <nav class="navbar navbar-expand-sm navbarmenu">
+                <!-- Links -->
+                <ul class="navbar-nav">
+                    <li class="nav-item navmenuitem">
+                        <!-- Dashboard -->
+                        <a class="nav-link" href="../Tutorly/DashboardController">Dashboard</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Schedule -->
+                        <a class="nav-link" href="#">Schedule</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Material -->
+                        <a class="nav-link" href="../Tutorly/MaterialControllers">Material</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Assignment -->
+                        <a class="nav-link" href="../Tutorly/AssignmentController">Assignment</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Save list -->
+                        <a class="nav-link" href="#">Save list tutors</a>
+                    </li>
+                </c:if>
+
             </ul>
         </nav>
     </body>

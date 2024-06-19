@@ -73,7 +73,6 @@
     </head>
     <body>
         <header class="head">
-
             <nav class="navbar navbar-expand-sm navheader">
                 <a href="../Tutorly/TutorController"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
                 <!-- Left -->
@@ -97,17 +96,31 @@
                         <a class="nav-link" href="#"><i class="fa-regular fa-heart head_icon"></i></a>
                     </li>
 
-
                     <!-- Check if the user is logged in -->
                     <c:choose>
                         <c:when test="${not empty sessionScope.user && sessionScope.user.role == 'learner'}">
                             <!-- Display student name and profile image if logged in -->
                             <li class="nav-item">
-                                <a href="../Tutorly/StudentProfileController"> <p class="nav-link learnername">${sessionScope.learner.name}</p></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
-                                </li>
+                                <a href="../Tutorly/StudentProfileController"> 
+                                    <p class="nav-link learnername">${sessionScope.learner.name}</p>
+                                    <c:out value="${sessionScope.learner.name}"/>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
+                            </li>
+                        </c:when>
+                        <c:when test="${not empty sessionScope.user && sessionScope.user.role == 'tutor'}">
+                            <!-- Display tutor name and profile image if logged in -->
+                            <li class="nav-item">
+                                <a href="../Tutorly/StudentProfileController"> 
+                                    <p class="nav-link learnername">${sessionScope.tutor.name}</p>
+                                    <c:out value="${sessionScope.tutor.name}"/>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
+                            </li>
                         </c:when>
                         <c:otherwise>
                             <!-- Display Login and Register links if not logged in -->
@@ -119,14 +132,12 @@
                             </li>
                         </c:otherwise>
                     </c:choose>
-
-
                 </ul>
             </nav>
             <hr />
         </header>
         <!--menu-->
-        <c:if test="${not empty sessionScope.user && sessionScope.user.role == 'learner'}">
+        <c:if test="${not empty sessionScope.user && (sessionScope.user.role == 'learner' || sessionScope.user.role == 'tutor')}">
             <nav class="navbar navbar-expand-sm navbarmenu">
                 <!-- Links -->
                 <ul class="navbar-nav">
@@ -150,9 +161,8 @@
                         <!-- Save list -->
                         <a class="nav-link" href="#">Save list tutors</a>
                     </li>
-                </c:if>
-
-            </ul>
-        </nav>
+                </ul>
+            </nav>
+        </c:if>
     </body>
 </html>

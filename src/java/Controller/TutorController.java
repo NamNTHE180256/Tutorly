@@ -42,7 +42,11 @@ public class TutorController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session1 = request.getSession();
         User user = (User) session1.getAttribute("user");
-        
+         if (user == null) {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        if (user.getRole().equalsIgnoreCase("learner")) {
             TutorDAO tDAO = new TutorDAO();
             SubjectDAO sDAO = new SubjectDAO();
             Vector<Tutor> tutor_vector = tDAO.displayAllTutors(); // Method to get all tutors
@@ -68,9 +72,9 @@ public class TutorController extends HttpServlet {
                         tutor_vector = tDAO.getTutors("SELECT * FROM Tutor WHERE price > 400");
                         break;
                 }
-
+                
             }
-
+            
             String session_raw = request.getParameter("session");
             if (session_raw != null && !session_raw.isEmpty()) {
                 int session = Integer.parseInt(session_raw);
@@ -103,9 +107,9 @@ public class TutorController extends HttpServlet {
                                 + "    ta.sessionId LIKE '%5%';");
                         break;
                 }
-
+                
             }
-
+            
             String star_w = request.getParameter("star");
             if (star_w != null && !star_w.isEmpty()) {
                 int star = Integer.parseInt(star_w);
@@ -127,7 +131,7 @@ public class TutorController extends HttpServlet {
                         break;
                 }
             }
-
+            
             String name = request.getParameter("tutorname");
             if (name != null && !name.isEmpty()) {
                 tutor_vector = tDAO.getTutors("SELECT *\n"
@@ -142,8 +146,11 @@ public class TutorController extends HttpServlet {
             // Forward to JSP
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorList.jsp");
             dispatcher.forward(request, response);
-      
-    }
+        } else {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+            }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

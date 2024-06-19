@@ -17,85 +17,6 @@
             crossorigin="anonymous"></script>
     <style>
         .header {
-            margin: 0 44%;
-        }
-
-        .documenet-list {
-            list-style: none;
-        }
-
-        .type1 {
-            margin: 0 188%;
-            margin-top: -113px;
-        }
-
-        .type2 {
-            margin: 0px -161%;
-            margin-top: -113px;
-        }
-
-        .head {
-            margin: 0;
-            padding: 0;
-        }
-
-        .navheader {
-            margin: 0 20px;
-            padding: 0;
-        }
-
-        .logo_img {
-            height: 40px;
-        }
-
-        .head_link a {
-            color: #0E3C6E;
-        }
-
-        .head_icon {
-            margin-top: 15px;
-            margin-right: 5px;
-            font-size: 20px;
-            color: #0E3C6E;
-        }
-
-        .student_profile_image {
-            margin-top: 15px;
-            height: 50px;
-        }
-
-        .learnername {
-            margin-top: 15px;
-            color: #0E3C6E;
-        }
-
-        .navbarmenu {
-            margin: 0 20px 10px;
-        }
-
-        .navmenuitem {
-            margin-right: 25px;
-            background-color: #0E3C6E;
-            border-radius: 10px;
-            box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
-        }
-
-        .navmenuitem a {
-            color: aliceblue;
-        }
-
-        .content {
-            padding-top: 20px;
-            background-color: #E6E6E6;
-        }
-
-        .vertical-line {
-            border-left: 2px solid #ccc;
-            height: 200px;
-            align-self: stretch;
-        }
-
-        .header {
             text-align: center;
             margin: 20px 0;
         }
@@ -113,10 +34,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-
             margin: 91px;
         }
-
 
         .document-list h2 {
             font-size: 1.5rem;
@@ -146,29 +65,30 @@
 </head>
 <body>
     <!--Menu-->
-    <%@ include file = "SearchTutorHeader.jsp" %>
+    <%@ include file="SearchTutorHeader.jsp" %>
 
     <hr/>
-    <h1 style="text-align: center;">Material</h1>
+    <h1 class="header">Material</h1>
     <div class="layout">
         <main class="layout-main px-4">
             <object class="pdf"
-                    data="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
+                    data="${downloadLink}"
                     width="800"
-                    height="500">
+                    height="500"
+                    type="application/pdf">
             </object>
         </main>
+                  
         <aside class="layout-sidebar bd-h-60 border-end">
             <ul class="list-group" style="width:250px">
               <c:forEach var="x" items="${requestScope.listMaterial}">
                     <li class="list-group-item list-group-item-action">
-                        <a href="download?id=${x.getId()}">${x.getFileName()}</a>
+                        <a href="download?slotid=${requestScope.slotid}&id=${x.getId()}&classId=${requestScope.classId}">${x.getFileName()}</a>
                     </li>
+                     
                 </c:forEach>
             </ul>
         </aside>
     </div>
-    
-   
 </body>
 </html>

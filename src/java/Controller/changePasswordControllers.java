@@ -9,6 +9,7 @@ import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Acer
  */
+@WebServlet(name = "changePasswordControllers", urlPatterns = {"/changePassword"})
 public class changePasswordControllers extends HttpServlet {
     
     UserDAO udao = new UserDAO();
@@ -48,6 +50,7 @@ public class changePasswordControllers extends HttpServlet {
                 session.setAttribute("user", user2);
             } else {
                 request.setAttribute("error", "Change password Failed");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
             }
             
         }

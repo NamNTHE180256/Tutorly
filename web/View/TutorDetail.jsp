@@ -368,10 +368,10 @@ body{margin-top:20px;
         </style>
         <title>JSP Page</title>
     </head>
-    <body>
-        
+     <body>
+
         <%@ include file = "SearchTutorHeader.jsp" %>
-         <div class="container-fluid">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 " style="background-color: white; margin: 20px; margin-left: 40px; border-radius: 20px; padding: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
                     <!-- Tutor information -->
@@ -394,7 +394,7 @@ body{margin-top:20px;
                             </li>
                         </ul>
                     </nav>
-                                
+
                     <div> 
                         <nav class="navbar navbar-expand-sm ">
                             <!-- Links -->
@@ -409,7 +409,7 @@ body{margin-top:20px;
                         </nav>
                         <p>${tutor.getBio()}</p>
                     </div>
-                    
+
                     <!--Schedule-->    
                     <nav class="navbar navbar-expand-sm ">
                         <!-- Links -->
@@ -460,7 +460,7 @@ body{margin-top:20px;
                                                     <td class="bg-light-gray"></td>
                                                 </c:otherwise>
                                             </c:choose>
-                                        
+
                                         </c:forEach>
                                     </tr>
 
@@ -479,7 +479,7 @@ body{margin-top:20px;
                                                     <td class="bg-light-gray"></td>
                                                 </c:otherwise>
                                             </c:choose>
-                                        
+
                                         </c:forEach>
                                     </tr>
 
@@ -500,7 +500,7 @@ body{margin-top:20px;
                                                     <td class="bg-light-gray"></td>
                                                 </c:otherwise>
                                             </c:choose>
-                                        
+
                                         </c:forEach>
 
 
@@ -519,7 +519,7 @@ body{margin-top:20px;
                                                     <td class="bg-light-gray"></td>
                                                 </c:otherwise>
                                             </c:choose>
-                                        
+
                                         </c:forEach>
                                     </tr>
 
@@ -539,110 +539,106 @@ body{margin-top:20px;
                                                     <td class="bg-light-gray"></td>
                                                 </c:otherwise>
                                             </c:choose>
-                                        
+
                                         </c:forEach>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    
-                    
-                    
+
+
+
                     <!--RATE-->    
                     <div class="container">
-    <p class="title" >What students say</p>
-    <div id="reviews" class="review-section">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h4 class="m-0">${ratings.size()} Reviews</h4>
-        </div>
-            <c:forEach var="ratecount" items="${ratecount}">
-                <div class="row">
-                    <div class="col-md-6">
-                        <table class="stars-counters">
-                            <tbody>
-                                <c:forEach begin="1" end="5" var="star">
-                                    <tr class="">
-                                        <td>
-                                            <span>
-                                                <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">${star} Stars</button>
-                                            </span>
-                                        </td>
-                                        <td class="progress-bar-container">
-                                            <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
-                                                <div class="fit-progressbar-background">
-                                                    <c:choose>
-                                                        <c:when test="${ratecount.rate == star}">
-                                                            <span class="progress-fill" style="width: ${ratecount.percentage}%;"></span>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <span class="progress-fill" style="width: 0%;"></span>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="star-num">
-                                            <c:choose>
-                                                <c:when test="${ratecount.rate == star}">
-                                                    (${ratecount.count})
-                                                </c:when>
-                                                <c:otherwise>
-                                                    (0)
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </c:forEach>
-    </div>
-                  
+                        <p class="title">What students say</p>
+                        <div id="reviews" class="review-section">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h4 class="m-0">${ratings.size()} Reviews</h4>
+                            </div>
 
-                        <!--RATE comment-->    
-                        <div class="review-list">
-                            <ul>
-                                <li>
-                                   <c:forEach var="rating" items="${ratings}">
-                                        <div class="d-flex">
-                                            <div class="left">
-                                                <span>
-                                                    <img src="image/${rating.learner.image}" class="profile-pict-img img-fluid" alt="${rating.learner.name}'s photo" />
-                                                </span>
-                                            </div>
-                                            <div class="right">
-                                                <h4>
-                                                    ${rating.learner.name}
-                                                    <span class="gig-rating text-body-2">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
-                                                        <path
-                                                            fill="currentColor"
-                                                            d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"
-                                                            ></path>
-                                                        </svg>
-                                                        ${rating.rating}
+                            <!-- Star Counter Section -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="stars-counters">
+                                        <tbody>
+                                            <c:forEach begin="1" end="5" var="star">
+                                                <tr class="">
+                                                    <td>
+                                                        <span>
+                                                            <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">${star} Stars</button>
+                                                        </span>
+                                                    </td>
+                                                    <td class="progress-bar-container">
+                                                        <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                                            <div class="fit-progressbar-background">
+                                                                <c:set var="starPercentage" value="0" />
+                                                                <c:forEach var="ratecount" items="${ratecount}">
+                                                                    <c:if test="${ratecount.rate == star}">
+                                                                        <c:set var="starPercentage" value="${ratecount.percentage}" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <span class="progress-fill" style="width: ${starPercentage}%;"></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="star-num">
+                                                        <c:set var="starCount" value="0" />
+                                                        <c:forEach var="ratecount" items="${ratecount}">
+                                                            <c:if test="${ratecount.rate == star}">
+                                                                <c:set var="starCount" value="${ratecount.count}" />
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        (${starCount})
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Rate Comment Section -->
+                            <div class="review-list">
+                                <ul>
+                                    <c:forEach var="rating" items="${ratings}">
+                                        <li>
+                                            <div class="d-flex">
+                                                <div class="left">
+                                                    <span>
+                                                        <img src="image/${rating.learner.image}" class="profile-pict-img img-fluid" alt="${rating.learner.name}'s photo" />
                                                     </span>
-                                                </h4>
-
-                                                <div class="review-description">
-                                                    <p>
-                                                        ${rating.review}
-                                                    </p>
                                                 </div>
-                                                <span class="publish py-3 d-inline-block w-100">Published ${rating.createdAt}</span>
+                                                <div class="right">
+                                                    <h4>
+                                                        ${rating.learner.name}
+                                                        <span class="gig-rating text-body-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                                                            <path
+                                                                fill="currentColor"
+                                                                d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"
+                                                                ></path>
+                                                            </svg>
+                                                            ${rating.rating}
+                                                        </span>
+                                                    </h4>
+
+                                                    <div class="review-description">
+                                                        <p>
+                                                            ${rating.review}
+                                                        </p>
+                                                    </div>
+                                                    <span class="publish py-3 d-inline-block w-100">Published ${rating.createdAt}</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </li>
                                     </c:forEach>
-                                </li>
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
-                </div>
-        
-        
-                <!--Cetificate-->    
+                    </div>
+
+                    <!--Cetificate-->    
                     <p class="title">Cetificate</p>
                     <div class="container mt-3">
                         <ul class="list-group">
@@ -652,46 +648,46 @@ body{margin-top:20px;
                     <!--Suggest-->    
                     <p class="title">Suggest</p>
                 </div>    
-        
-        
-        
-        
-        
-        
-                 <div class="col-md-3 leftconttent" style="background-color: white; margin: 20px;border-radius: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
-                     <div class="col-md-3 text-right ">
-                         <nav class="navbar navbar-expand-sm ">
-                                <!-- Links -->
 
-                                <ul class="navbar-nav">
-                                    <c:choose>
-                                        <c:when test="${tutorRatings.NewTutor == null}">
-                                            <li class="nav-item">
-                                                <div class="rating mt-2">
-                                                    <div>
-                                                        <i class="fa-solid fa-star text-warning"></i>
-                                                        <span class="rate" style="font-size: 35px;">${tutorRatings.avgRate}</span>
-                                                    </div>
-                                                    <p class="ratedby">rated by ${tutorRatings.rateCount} learner(s)</p>
+
+
+
+
+
+                <div class="col-md-3 leftconttent" style="background-color: white; margin: 20px;border-radius: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
+                    <div class="col-md-3 text-right ">
+                        <nav class="navbar navbar-expand-sm ">
+                            <!-- Links -->
+
+                            <ul class="navbar-nav">
+                                <c:choose>
+                                    <c:when test="${tutorRatings.NewTutor == null}">
+                                        <li class="nav-item">
+                                            <div class="rating mt-2">
+                                                <div>
+                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                    <span class="rate" style="font-size: 35px;">${tutorRatings.avgRate}</span>
                                                 </div>
-                                            </li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <p>New tutor</p>
-                                        </c:otherwise>
-                                    </c:choose>
-
-
-                                    <li class="nav-item">
-                                        <div>
-                                            <div class="fee"><i class="fa-solid fa-money-check-dollar mr-2"></i>
-                                                <h2>${tutor.price}k</h2>
+                                                <p class="ratedby">rated by ${tutorRatings.rateCount} learner(s)</p>
                                             </div>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p>New tutor</p>
+                                    </c:otherwise>
+                                </c:choose>
 
-                                            <p>per session</p>
 
+                                <li class="nav-item">
+                                    <div>
+                                        <div class="fee"><i class="fa-solid fa-money-check-dollar mr-2"></i>
+                                            <h2>${tutor.price}k</h2>
                                         </div>
-                                    </li>
+
+                                        <p>per session</p>
+
+                                    </div>
+                                </li>
                                 <li class="nav-item">
                                     <i class="fa-regular fa-heart heart ml-2" style="font-size: 30px;"></i>
                                 </li>
@@ -703,15 +699,15 @@ body{margin-top:20px;
                             <button class="btn btn-primary btn-trial">Book trial lesson</button>
                             <button class="btn btn-secondary btn-register">Register class</button>
                         </div>
-                     </div> 
-                 </div>
-                    
-                    
-                    
-                    
-                    
-                    
+                    </div> 
+                </div>
+
+
+
+
+
+
             </div>
-         </div>
+        </div>
     </body>
 </html>

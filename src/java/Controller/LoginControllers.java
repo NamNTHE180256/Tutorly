@@ -49,7 +49,7 @@ public class LoginControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginControllers</title>");            
+            out.println("<title>Servlet LoginControllers</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginControllers at " + request.getContextPath() + "</h1>");
@@ -121,14 +121,14 @@ public class LoginControllers extends HttpServlet {
             request.getRequestDispatcher("View/Login.jsp").forward(request, response);
         }
     }
-    
+
     public boolean checkEmail(String email) {
         String EMAIL_PATTERN = "^[\\w.-]+@(gmail\\.com|lookup\\.com)$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-    
+
     public String computeMD5Hash(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

@@ -73,24 +73,25 @@ public class UserDAO extends DBContext {
         return 0;
     }
 
-    public User Login(String email_login, String password_login) {
+        public User Login(String email, String password) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, email_login);
-            st.setString(2, computeMD5Hash(password_login));
+            st.setString(1, email);
+            st.setString(2, computeMD5Hash(password));
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
-                String email = rs.getString("email");
-                String password = rs.getString("password");
+                String emailDB = rs.getString("email");
+                String passwordDB = rs.getString("password");
                 String role = rs.getString("role");
                 String createAt = rs.getString("createdAt");
-                User user = new User(email, password, role);
+                User user = new User(emailDB, passwordDB, role);
+                user.setId(id);
+                user.setCreatedAt(rs.getTimestamp("createdAt"));
                 return user;
             }
         } catch (SQLException e) {
-            // Log the exception (consider using a logging framework)
             e.printStackTrace();
         }
         return null;
@@ -146,11 +147,23 @@ public class UserDAO extends DBContext {
         return 0;
     }
 
-    public static void main(String[] args) {
-        UserDAO udao = new UserDAO();
-        User u = udao.getUserById(1);
-        System.out.println(udao.Login("learner5@gmail.com", "1234"));
-        System.out.println(udao.computeMD5Hash("1234"));
-        
-    }
+//    public static void main(String[] args) {
+//<<<<<<< HEAD
+//        UserDAO udao = new UserDAO();
+//        User u = udao.getUserById(1);
+//<<<<<<< HEAD
+//        System.out.println(udao.Login("learner5@gmail.com", "1234"));
+//        System.out.println(udao.computeMD5Hash("1234"));
+//        
+//=======
+//        System.out.println(udao.Login("learner1@gmail.com", "1"));
+//=======
+//        UserDAO uDao = new UserDAO();
+//        String password = "3";
+//        String passAfterMD5 = uDao.computeMD5Hash(password);
+//        System.out.println(passAfterMD5);
+//        
+//>>>>>>> bcf475e5a416004d96226e39b60d957e85a1a7bd
+//>>>>>>> 6a4e6a403c1f8ed00a9c9b12aa381ac10eae0541
+//    }
 }

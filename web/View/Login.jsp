@@ -67,7 +67,7 @@
                         <br />
 
                         <div class="options-container" style="padding-top: 34px;">
-                            <a href="" class="option">Become a <b style="color:chocolate; font-family: 'Inter'">tutor</b></a>
+                            <a href="${pageContext.request.contextPath}/View/register1.jsp" class="option">Become a <b style="color:chocolate; font-family: 'Inter'">tutor</b></a>
                             <a href="${pageContext.request.contextPath}/View/Register.jsp" class="option">Become a <b style="color: brown; font-family: 'Inter';">Learner</b></a>
                         </div>
                         <div style="margin:0 36%" class="g-signin2" data-onsuccess="onSignIn"></div>

@@ -13,6 +13,7 @@ import Model.Rating;
 import Model.RatingCountPercentage;
 import Model.Tutor;
 import Model.TutorAvailability;
+import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,11 +22,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Vector;
 
 /**
- *
+ *learner
  * @author TRANG
  */
 @WebServlet(name="TutorDetailController", urlPatterns={"/TutorDetailController"})
@@ -40,6 +42,9 @@ public class TutorDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+                HttpSession session1 = request.getSession();
+    
+      
         TutorDAO tDAO = new TutorDAO();
         RatingDAO rDAO = new RatingDAO();
         TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
@@ -74,8 +79,7 @@ public class TutorDetailController extends HttpServlet {
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorDetail.jsp");
         dispatcher.forward(request, response);
-    } 
-
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.

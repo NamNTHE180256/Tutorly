@@ -43,7 +43,7 @@ public class GoogleLoginControllers extends HttpServlet {
         }
 
         if (status > 0) {
-            session.setAttribute("LearnerLogin", userLoginGoogle);
+            session.setAttribute("user", userLoginGoogle);
             response.sendRedirect("TutorController");
         } else {
             request.setAttribute("errorMessage", "Google login failed.");

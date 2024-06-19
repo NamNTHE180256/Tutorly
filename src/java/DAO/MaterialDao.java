@@ -19,15 +19,16 @@ import java.util.logging.Logger;
  * @author Acer
  */
 public class MaterialDAO extends DBContext {
+    
 
-    public ArrayList<Material> getAllMaterialWithID(int classid, int lessonid) {
+    public ArrayList<Material> getAllMaterialWithID(int classid , int lessonid) {
         ArrayList<Material> list = new ArrayList<>();
 
-        String query = "SELECT m.*\n"
-                + "FROM Material m\n"
-                + "JOIN Lession l ON m.lessionId = l.id\n"
-                + "JOIN Class c ON l.classId = c.id\n"
-                + "WHERE c.id = ? AND m.lessionId = ?;";
+        String query = "SELECT m.*\n" +
+"FROM Material m\n" +
+"JOIN Lession l ON m.lessionId = l.id\n" +
+"JOIN Class c ON l.classId = c.id\n" +
+"WHERE c.id = ? AND m.lessionId = ?;";
 
         try {
             PreparedStatement st = connection.prepareStatement(query);
@@ -38,7 +39,7 @@ public class MaterialDAO extends DBContext {
                 int id = rs.getInt("id");
                 int lessonID = rs.getInt("lessionID");
                 String name = rs.getString("fileName");
-                String filePath = rs.getString("filePath");
+               String filePath = rs.getString("filePath");
                 String fileType = rs.getString("filetype");
                 String uploadedAt = rs.getString("uploadedAt");
 
@@ -52,38 +53,7 @@ public class MaterialDAO extends DBContext {
         return list;
     }
 
-    public Material getAllMaterialinLession(int classid, int id_mate, int lession_id) {
-        Material mate = null;
 
-        String query = "SELECT m.*\n"
-                + "FROM Material m\n"
-                + "JOIN Lession l ON m.lessionId = l.id\n"
-                + "JOIN Class c ON l.classId = c.id\n"
-                + "WHERE c.id = ? AND m.id = ? And m.lessionId=?;";
-
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1, classid);
-            st.setInt(2, id_mate);
-            st.setInt(3, lession_id);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                int id = rs.getInt("id");
-                int lessonID = rs.getInt("lessionID");
-                String name = rs.getString("fileName");
-                String filePath = rs.getString("filePath");
-                String fileType = rs.getString("filetype");
-                String uploadedAt = rs.getString("uploadedAt");
-
-                mate = new Material(id, name, filePath, fileType, uploadedAt, lessonID);
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Proper error logging
-        }
-
-        return mate;
-    }
 
     public FileData downloadFileFromDatabase(int fileId) {
         FileData fileData = null;
@@ -128,9 +98,8 @@ public class MaterialDAO extends DBContext {
 
     public static void main(String[] args) {
         MaterialDAO dao = new MaterialDAO();
-//        for (Material mate : dao.getAllMaterialWithID(1,1)) {
-//            System.out.println(mate);
-//        }
-        System.out.println(dao.getAllMaterialinLession(1, 3, 1));
+        for (Material mate : dao.getAllMaterialWithID(1,1)) {
+            System.out.println(mate);
+        }
     }
 }

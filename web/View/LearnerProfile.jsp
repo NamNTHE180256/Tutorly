@@ -59,8 +59,8 @@
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <img src="image/${linfo.image}" alt="Admin" class="rounded-circle p-1 " width="110">
                                     <div class="mt-3">
-                                        <h4>${linfo.name}</h4>
-                                        <p class="text-secondary mb-1">${linfo.getUserInfo().role}</p>
+                                        <h4>${sessionScope.learner.name}</h4>
+                                        <p class="text-secondary mb-1">${sessionScope.learner.name}</p>
 
                                     </div>
                                 </div>
@@ -77,16 +77,16 @@
                                         <h6 class="mb-0">ID</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.id}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.user.id}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                        <h6 class="mb-0">Name</h6>
                                     </div>
 
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.name}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.learner.name}">
                                         <a href="StudentProfileController?service=updateRequest"><i class="fa-solid fa-pen"></i></a>
                                     </div>
 
@@ -99,7 +99,7 @@
                                         <h6 class="mb-0">Email</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.getUserInfo().email}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.user.email}">
                                     </div>
                                 </div>
 
@@ -108,7 +108,7 @@
                                         <h6 class="mb-0">Join Date</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.getUserInfo().createdAt}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.user.createdAt}">
                                     </div>
                                 </div>
                                 <div class="row">

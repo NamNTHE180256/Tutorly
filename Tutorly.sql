@@ -131,19 +131,19 @@ CREATE TABLE Material (
 -- Insert into User table
 INSERT INTO [User] (email, [password], [role], createdAt)
 VALUES 
-('learner1@gmail.com', '1', 'learner', GETDATE()),
-('learner2@gmail.com', '1', 'learner', GETDATE()),
-('learner3@gmail.com', '1', 'learner', GETDATE()),
-('learner4@gmail.com', '1', 'learner', GETDATE()),
-('learner5@gmail.com', '1', 'learner', GETDATE()),
-('learner6@gmail.com', '1', 'learner', GETDATE()),
-('tutor1@example.com', '2', 'tutor', GETDATE()),
-('tutor2@example.com', '2', 'tutor', GETDATE()),
-('tutor3@example.com', '2', 'tutor', GETDATE()),
-('tutor4@example.com', '2', 'tutor', GETDATE()),
-('tutor5@example.com', '2', 'tutor', GETDATE()),
-('tutor6@example.com', '2', 'tutor', GETDATE()),
-('admin1@example.com', '3', 'admin', GETDATE());
+('learner1@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'learner', GETDATE()), --Password = 1
+('learner2@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'learner', GETDATE()),--Password = 1 
+('learner3@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'learner', GETDATE()),--Password = 1
+('learner4@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'learner', GETDATE()),--Password = 1
+('learner5@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'learner', GETDATE()),--Password = 1
+('learner6@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'learner', GETDATE()),--Password = 1
+('tutor1@example.com', 'c81e728d9d4c2f636f067f89cc14862c', 'tutor', GETDATE()),--Password = 2
+('tutor2@example.com', 'c81e728d9d4c2f636f067f89cc14862c', 'tutor', GETDATE()),--Password = 2
+('tutor3@example.com', 'c81e728d9d4c2f636f067f89cc14862c', 'tutor', GETDATE()),--Password = 2
+('tutor4@example.com', 'c81e728d9d4c2f636f067f89cc14862c', 'tutor', GETDATE()),--Password = 2
+('tutor5@example.com', 'c81e728d9d4c2f636f067f89cc14862c', 'tutor', GETDATE()),--Password = 2
+('tutor6@example.com', 'c81e728d9d4c2f636f067f89cc14862c', 'tutor', GETDATE()),--Password = 2
+('admin1@example.com', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'admin', GETDATE());--Password = 3
 
 -- Insert into Learner table
 INSERT INTO Learner (id, [name], [image])
@@ -196,11 +196,11 @@ VALUES
     N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
     N'Đại học Kinh tế Quốc dân', 400.0, 'Bank2', 'Pending');
 
-<<<<<<< HEAD
-DELETE FROM Tutor WHERE id = 																			
-=======
+--<<<<<<< HEAD
+--DELETE FROM Tutor WHERE id = 																			
+--=======
 																			
->>>>>>> 2668d73a852ea550eafa9ca536a81000ad149629
+-->>>>>>> 2668d73a852ea550eafa9ca536a81000ad149629
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 

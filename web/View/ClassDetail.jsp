@@ -236,7 +236,7 @@
             <!--Content-->
             <div class="container-fluid content">
                 <div class="row" style="flex-grow: 1; display: flex;">
-                    <div class="col-sm-4 d-flex flex-column">
+                    <div class="col-sm-3 d-flex flex-column">
                         <div class="todo">
                             <p class="todohead" style="font-size: 20px;font-weight: bold">                    
                                 <c:choose>
@@ -272,7 +272,7 @@
 
                     </div>
                     <!-- Session occur in 5 hours -->
-                    <div class="col-sm-8 d-flex flex-column">
+                    <div class="col-sm-9 d-flex flex-column">
                         <div class="upcommingclass flex-grow-1">
                             <!--HEAD-->
                             <nav class="navbar navbar-expand-sm">

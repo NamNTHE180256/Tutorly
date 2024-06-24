@@ -4,7 +4,11 @@
  */
 package Controller;
 
+import DAO.LearnerDAO;
+import DAO.TutorDAO;
 import DAO.UserDAO;
+import Model.Learner;
+import Model.Tutor;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,7 +49,7 @@ public class LoginControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginControllers</title>");            
+            out.println("<title>Servlet LoginControllers</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginControllers at " + request.getContextPath() + "</h1>");
@@ -83,38 +87,48 @@ public class LoginControllers extends HttpServlet {
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String password1 = request.getParameter("password");
-        
+        LearnerDAO ldao = new LearnerDAO();
+        TutorDAO tDao = new TutorDAO();
         if (password1 != null && email != null) {
-            
-       
+
             User userLogin = userDao.Login(email, password1);
-            
+
             if (userLogin != null) {
                 if (userLogin.getRole().equalsIgnoreCase("Learner")) {
+                    Learner learner = ldao.getLearnerById(userLogin.getId());
+                    session.setAttribute("learner", learner);
                     session.setAttribute("user", userLogin);
                     request.getRequestDispatcher("TutorController").forward(request, response);
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
-                      session.setAttribute("user", userLogin);
-                      request.getRequestDispatcher("TutorController").forward(request, response);//TUng DUONg
+                    Tutor tutor = tDao.getTutorById(userLogin.getId());
+                    session.setAttribute("tutor", tutor);
+                    session.setAttribute("user", userLogin);
+                    request.getRequestDispatcher("TutorDetailController").forward(request, response);//TUng DUONg
                 } //Adjust path as necessary
+                else if (userLogin.getRole().equalsIgnoreCase("admin")) {
+                    Tutor tutor = tDao.getTutorById(userLogin.getId());
+                    session.setAttribute("tutor", tutor);
+                    session.setAttribute("user", userLogin);
+                    request.getRequestDispatcher("AdminController").forward(request, response);//TUng DUONg
+                } //A
             } else {
                 request.setAttribute("messageError", "Incorrect email or password!");
                 request.getRequestDispatcher("View/Login.jsp").forward(request, response);
             }
-            
+
         } else {
             request.setAttribute("messageError", "Passwords do not match!");
             request.getRequestDispatcher("View/Login.jsp").forward(request, response);
         }
     }
-    
+
     public boolean checkEmail(String email) {
         String EMAIL_PATTERN = "^[\\w.-]+@(gmail\\.com|lookup\\.com)$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-    
+
     public String computeMD5Hash(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

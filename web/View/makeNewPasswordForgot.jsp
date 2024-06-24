@@ -38,7 +38,7 @@
                     </div>
                     <div class="login-container mt-5">
                         <h1 style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 30px; line-height: 45px; vertical-align: middle;">
-                            Register
+ Enter new Password!
                         </h1>
 
                         <form class="register-form" action="${pageContext.request.contextPath}/forgotPassword" method="post">

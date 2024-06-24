@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>${requestScope.errorMessage}</h1>
+        <h1>${requestScope.error}</h1>
         <p> ${sessionScope.LearnerRegister.toString()}</p>
         <p> ${requestScope.LearnerRegister.toString()}</p>
            <p> ${requestScope.status}</p>

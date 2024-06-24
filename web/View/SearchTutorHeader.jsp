@@ -4,6 +4,7 @@
     Author     : TRANG
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -94,43 +95,74 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fa-regular fa-heart head_icon"></i></a>
                     </li>
-                    <!-- Student name -->
-                    <li class="nav-item">
-                        <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> Nam Nguyễn</p></a>
-                    </li>
-                    <!-- Student profile image -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
-                    </li>
+
+                    <!-- Check if the user is logged in -->
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.user && sessionScope.user.role == 'learner'}">
+                            <!-- Display student name and profile image if logged in -->
+                            <li class="nav-item">
+                                <a href="../Tutorly/StudentProfileController"> 
+                                    <p class="nav-link learnername">${sessionScope.learner.name}</p>
+                                   
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
+                            </li>
+                        </c:when>
+                        <c:when test="${not empty sessionScope.user && sessionScope.user.role == 'tutor'}">
+                            <!-- Display tutor name and profile image if logged in -->
+                            <li class="nav-item">
+                                <a href="../Tutorly/StudentProfileController"> 
+                                    <p class="nav-link learnername">${sessionScope.tutor.name}</p>
+                                    <c:out value="${sessionScope.tutor.name}"/>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- Display Login and Register links if not logged in -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="View/Login.jsp">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="View/Register.jsp">Register</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </nav>
             <hr />
         </header>
         <!--menu-->
-        <nav class="navbar navbar-expand-sm navbarmenu">
-            <!-- Links -->
-            <ul class="navbar-nav">
-                <li class="nav-item navmenuitem">
-                    <!-- Dashboard -->
-                    <a class="nav-link" href="../Tutorly/DashboardController">Dashboard</a>
-                </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Schedule -->
-                    <a class="nav-link" href="#">Schedule</a>
-                </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Material -->
-                    <a class="nav-link" href="#">Material</a>
-                </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Assignment -->
-                    <a class="nav-link" href="../Tutorly/AssignmentController">Assignment</a>
-                </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Save list -->
-                    <a class="nav-link" href="#">Save list tutors</a>
-                </li>
-            </ul>
-        </nav>
+        <c:if test="${not empty sessionScope.user && (sessionScope.user.role == 'learner' || sessionScope.user.role == 'tutor')}">
+            <nav class="navbar navbar-expand-sm navbarmenu">
+                <!-- Links -->
+                <ul class="navbar-nav">
+                    <li class="nav-item navmenuitem">
+                        <!-- Dashboard -->
+                        <a class="nav-link" href="../Tutorly/DashboardController">Dashboard</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Schedule -->
+                        <a class="nav-link" href="#">Schedule</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Material -->
+                        <a class="nav-link" href="../Tutorly/MaterialControllers">Material</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Assignment -->
+                        <a class="nav-link" href="../Tutorly/AssignmentController">Assignment</a>
+                    </li>
+                    <li class="nav-item navmenuitem">
+                        <!-- Save list -->
+                        <a class="nav-link" href="#">Save list tutors</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
     </body>
 </html>

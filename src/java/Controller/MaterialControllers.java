@@ -1,76 +1,70 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import DAO.MaterialDAO;
 import Model.Material;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
-/**
- *
- * @author Acer
- */
 @WebServlet(name = "MaterialControllers", urlPatterns = {"/MaterialControllers"})
 public class MaterialControllers extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MaterialControllers</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MaterialControllers at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+        String action = request.getParameter("action");
+        MaterialDAO mDao = new MaterialDAO();
+        ArrayList<Material> list = null;
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
         try {
             int slotid = Integer.parseInt(request.getParameter("Slotid"));
-            int classId = Integer.parseInt(request.getParameter("classId"));
-            MaterialDAO dao = new MaterialDAO();
-            ArrayList<Material> list = dao.getAllMaterialWithID(classId, slotid);
-            request.setAttribute("listMaterial", list);
-            request.setAttribute("classId", classId);
-            request.setAttribute("slotid", slotid);
-            request.getRequestDispatcher("View/Material.jsp").forward(request, response);
-            if (!list.isEmpty()) {
-                System.out.println(list.get(0));
+            int classid = Integer.parseInt(request.getParameter("classId"));
+
+            if (action != null && action.equalsIgnoreCase("getall")) {
+                list = mDao.getAllMaterialWithID(classid, slotid);
+                request.setAttribute("listMaterial", list);
+                request.setAttribute("classId", classid);
+                request.setAttribute("slotid", slotid);
+                request.getRequestDispatcher("View/Material.jsp").forward(request, response);
+            } else if (action != null && action.equalsIgnoreCase("download")) {
+                int fileid = Integer.parseInt(request.getParameter("id"));
+                Material material = mDao.getAllMaterialWithlesson(classid, fileid, slotid);
+
+                if (material != null) {
+                    MaterialDAO.FileData fileData = mDao.getFileAsBinary(fileid);
+
+                    if (fileData != null) {
+                        String fileName = fileData.getFileName();
+                        InputStream fileContent = fileData.getFileContent();
+
+                        // Set the response headers to facilitate file download
+                        response.setContentType("application/octet-stream");
+                        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+                        // Write the file content to the response output stream
+                        try (OutputStream os = response.getOutputStream()) {
+                            byte[] buffer = new byte[1024];
+                            int bytesRead;
+                            while ((bytesRead = fileContent.read(buffer)) != -1) {
+                                os.write(buffer, 0, bytesRead);
+                            }
+                        }
+
+                        fileContent.close();
+                    } else {
+                        response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
+                    }
+                } else {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
             }
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid slot ID or class ID");
@@ -79,28 +73,20 @@ public class MaterialControllers extends HttpServlet {
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

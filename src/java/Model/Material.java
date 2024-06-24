@@ -7,24 +7,24 @@ import java.sql.Timestamp;
 
 public class Material {
 
-    private int id;
+     private int id;
     private String fileName;
-    private String filePath;
+    private byte[] fileData;
     private String fileType;
     private String uploadedAt;
-    private int lessionID;
+    private int lessonID; // Corrected variable name
 
     // Constructor
-    public Material(int id, String fileName, String filePath, String fileType, String uploadedAt, int lessionID) {
+
+    public Material(int id, String fileName, byte[] fileData, String fileType, String uploadedAt, int lessonID) {
         this.id = id;
         this.fileName = fileName;
-        this.filePath = filePath;
+        this.fileData = fileData;
         this.fileType = fileType;
         this.uploadedAt = uploadedAt;
-        this.lessionID = lessionID;
+        this.lessonID = lessonID;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }
@@ -41,13 +41,15 @@ public class Material {
         this.fileName = fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public byte[] getFileData() {
+        return fileData;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
     }
+
+ 
 
     public String getFileType() {
         return fileType;
@@ -65,17 +67,13 @@ public class Material {
         this.uploadedAt = uploadedAt;
     }
 
-    public void setLessionID(int lessionID) {
-        this.lessionID = lessionID;
+    public int getLessonID() {
+        return lessonID;
     }
 
-    public int getLessionID() {
-        return lessionID;
+    public void setLessonID(int lessonID) {
+        this.lessonID = lessonID;
     }
-
-    @Override
-    public String toString() {
-        return "Material{" + "id=" + id + ", fileName=" + fileName + ", filePath=" + filePath + ", fileType=" + fileType + ", uploadedAt=" + uploadedAt + ", lessionID=" + lessionID + '}';
-    }
+   
 
 }

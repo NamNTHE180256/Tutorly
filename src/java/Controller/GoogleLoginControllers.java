@@ -44,6 +44,7 @@ public class GoogleLoginControllers extends HttpServlet {
 
         if (status > 0) {
             session.setAttribute("user", userLoginGoogle);
+//            session.setAttribute("learner", lDao.getLearnerById());
             response.sendRedirect("TutorController");
         } else {
             request.setAttribute("errorMessage", "Google login failed.");

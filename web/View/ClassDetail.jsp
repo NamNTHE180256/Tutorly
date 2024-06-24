@@ -294,7 +294,7 @@
                                     {
                                     title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                 start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                            url: 'http://localhost:9999/Tutorly/MaterialControllers?Slotid=${v.getId()}&classId=${v.getAClass().getId()}',
+                                                            url: 'http://localhost:8080/Tutorly/MaterialControllers?Slotid=${v.getId()}&classId=${v.getAClass().getId()}&action=getall',
                                                             end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                         className: 'custom-event'
                                                                         }${status.last ? '' : ','}

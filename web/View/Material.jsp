@@ -64,28 +64,25 @@
     </style>
 </head>
 <body>
-    <!--Menu-->
-    <%@ include file="SearchTutorHeader.jsp" %>
+    <%@ include file="StudentHeader.jsp" %>
 
     <hr/>
     <h1 class="header">Material</h1>
     <div class="layout">
         <main class="layout-main px-4">
-            <object class="pdf"
-                    data="${downloadLink}"
-                    width="800"
-                    height="500"
-                    type="application/pdf">
-            </object>
+            <c:if test="${not empty linkdownload}">
+                <iframe src="../File/${linkdownload}" width="800" height="500" frameborder="0"></iframe>
+            </c:if>
         </main>
                   
         <aside class="layout-sidebar bd-h-60 border-end">
             <ul class="list-group" style="width:250px">
-              <c:forEach var="x" items="${requestScope.listMaterial}">
+                <c:forEach var="x" items="${requestScope.listMaterial}">
                     <li class="list-group-item list-group-item-action">
-                        <a href="download?slotid=${requestScope.slotid}&id=${x.getId()}&classId=${requestScope.classId}">${x.getFileName()}</a>
+                        <a href="MaterialControllers?action=download&Slotid=${requestScope.slotid}&id=${x.id}&classId=${requestScope.classId}">
+                            ${x.fileName}
+                        </a>
                     </li>
-                     
                 </c:forEach>
             </ul>
         </aside>

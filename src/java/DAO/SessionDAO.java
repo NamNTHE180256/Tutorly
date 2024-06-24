@@ -16,7 +16,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SessionDAO extends DBContext{
+public class SessionDAO extends DBContext {
+
     public SessionDAO() {
         // Initialize your database connection here
         // For example:
@@ -80,6 +81,29 @@ public class SessionDAO extends DBContext{
 
                 Session session = new Session(id, startTime, endTime, dayOfWeek);
                 return session;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Session getSessionByClassId(int classId) {
+        String sql = "SELECT top 1 s.id, s.startTime, s.endTime, s.dayOfWeek "
+                + "FROM Session s "
+                + "JOIN Lession l ON s.id = l.sessionId "
+                + "WHERE l.classId = ? ";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, classId);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                String id = rs.getString("id");
+                String startTime = rs.getString("startTime");
+                String endTime = rs.getString("endTime");
+                String dayOfWeek = rs.getString("dayOfWeek");
+
+                return new Session(id, startTime, endTime, dayOfWeek);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);

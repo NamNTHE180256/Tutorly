@@ -18,11 +18,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author TRANG
  */
-public class AClassDAO extends DBContext{
+public class AClassDAO extends DBContext {
+
     public Vector<AClass> displayAllClasses() {
         Vector<AClass> vector = new Vector<>();
         String sql = "SELECT * FROM Class";
@@ -77,6 +79,44 @@ public class AClassDAO extends DBContext{
             Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public int countClassByStatus(String status, int id) {
+        int n = 0;
+        String sql = "Select count(*) as count_class from class where status = ? and tutorId = ? ";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, status);
+            pre.setInt(2, id);
+
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                n = rs.getInt("count_class");
+                return n;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    public int countClassByStatusLearner(String status, int id) {
+        int n = 0;
+        String sql = "Select count(*) as count_class from class where status = ? and learnerId = ? ";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, status);
+            pre.setInt(2, id);
+
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                n = rs.getInt("count_class");
+                return n;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
 
     // Method to add a new class

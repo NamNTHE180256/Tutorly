@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Model.Subject;
 import Model.SubjectCountPercentage;
 import java.util.Vector;
 import java.sql.Statement;
@@ -15,11 +16,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author TRANG
  */
-public class SubjectCountPercentageDAO extends DBContext{
+public class SubjectCountPercentageDAO extends DBContext {
+
     public Vector<SubjectCountPercentage> getSubjectCountPercentage(int learnerId) {
         Vector<SubjectCountPercentage> vector = new Vector<>();
         String sql = """
@@ -83,6 +86,31 @@ public class SubjectCountPercentageDAO extends DBContext{
             Logger.getLogger(SubjectCountPercentageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public Vector<Subject> getSubjectsTaughtByTutor(int tutorId) {
+        Vector<Subject> subjects = new Vector<>();
+        String sql = """
+            Select * from Subject s JOIN Tutor t 
+            ON t.subjectId = s.id
+            WHERE t.id = ?
+        """;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, tutorId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int subjectId = rs.getInt("id");
+                String subjectName = rs.getString("name");
+                Subject subject = new Subject();
+                subject.setId(subjectId);
+                subject.setName(subjectName);
+                subjects.add(subject);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectCountPercentageDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return subjects;
     }
 
     public static void main(String[] args) {

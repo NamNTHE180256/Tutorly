@@ -14,127 +14,137 @@ import java.util.Vector;
  * @author Admin
  */
 public class Tutor {
-    private int id;
-    private Subject subject;
-    private String name;
-    private boolean gender;
-    private String image;
-    private String bio;
-    private String edu;
-    private float price;
-    private String bank;
-    private String status;
+ private int id;
+ private Subject subject;
+ private String name;
+ private boolean gender;
+ private String image;
+ private String bio;
+ private String edu;
+ private float price;
+ private String bank;
+ private String status;
 
-    // Constructors
-    public Tutor() {}
+ // Constructors
+ public Tutor() {}
 
-    public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status) {
-        this.id = id;
-        this.subject = subject;
-        this.name = name;
-        this.gender = gender;
-        this.image = image;
-        this.bio = bio;
-        this.edu = edu;
-        this.price = price;
-        this.bank = bank;
-        this.status = status;
-    }
+ public Tutor(int id, String name) {
+ this.id = id;
+ this.name = name;
+ }
 
-    // Getters and Setters
-    public int getId() {
-        return id;
-    }
+ public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status) {
+ this.id = id;
+ this.subject = subject;
+ this.name = name;
+ this.gender = gender;
+ this.image = image;
+ this.bio = bio;
+ this.edu = edu;
+ this.price = price;
+ this.bank = bank;
+ this.status = status;
+ }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+ // Getters and Setters
+ public int getId() {
+ return id;
+ }
 
-    public Subject getSubject() {
-        return subject;
-    }
+ public void setId(int id) {
+ this.id = id;
+ }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
+ public Subject getSubject() {
+ return subject;
+ }
 
-    public String getName() {
-        return name;
-    }
+ public void setSubject(Subject subject) {
+ this.subject = subject;
+ }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+ public String getName() {
+ return name;
+ }
 
-    public boolean isGender() {
-        return gender;
-    }
+ public void setName(String name) {
+ this.name = name;
+ }
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
+ public boolean isGender() {
+ return gender;
+ }
 
-    public String getImage() {
-        return image;
-    }
+ public void setGender(boolean gender) {
+ this.gender = gender;
+ }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+ public String getImage() {
+ return image;
+ }
 
-    public String getBio() {
-        return bio;
-    }
+ public void setImage(String image) {
+ this.image = image;
+ }
 
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
+ public String getBio() {
+ return bio;
+ }
 
-    public String getEdu() {
-        return edu;
-    }
+ public void setBio(String bio) {
+ this.bio = bio;
+ }
 
-    public void setEdu(String edu) {
-        this.edu = edu;
-    }
+ public String getEdu() {
+ return edu;
+ }
 
-    public float getPrice() {
-        return price;
-    }
+ public void setEdu(String edu) {
+ this.edu = edu;
+ }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
+ public float getPrice() {
+ return price;
+ }
 
-    public String getBank() {
-        return bank;
-    }
+ public void setPrice(float price) {
+ this.price = price;
+ }
 
-    public void setBank(String bank) {
-        this.bank = bank;
-    }
+ public String getBank() {
+ return bank;
+ }
 
-    public String getStatus() {
-        return status;
-    }
+ public void setBank(String bank) {
+ this.bank = bank;
+ }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
-    public User getUserInfo() {
-        UserDAO uDao = new UserDAO();
-        return uDao.getUserById(id);
-    }
-    
-    public double getAvgRating() {
-        TutorDAO tDao = new TutorDAO();
-        return tDao.getAvgRateById(id);
-    }
-    
-    public Vector<TutorAvailability> getAvailabilities() {
-        TutorDAO tDao = new TutorDAO();
-        return tDao.getTutorAvailabilityByTutorId(id);
-    }
-    
+ public String getStatus() {
+ return status;
+ }
+
+ public void setStatus(String status) {
+ this.status = status;
+ }
+
+ public User getUserInfo() {
+ UserDAO uDao = new UserDAO();
+ return uDao.getUserById(id);
+ }
+
+ public double getAvgRating() {
+ TutorDAO tDao = new TutorDAO();
+ return tDao.getAvgRateById(id);
+ }
+
+ public Vector<TutorAvailability> getAvailabilities() {
+ TutorDAO tDao = new TutorDAO();
+ return tDao.getTutorAvailabilityByTutorId(id);
+ }
+
+ @Override
+ public String toString() {
+ return "Tutor{" + "id=" + id + ", subject=" + subject + ", name=" + name + ", gender=" + gender + ", image=" + image + ", bio=" + bio + ", edu=" + edu + ", price=" + price + ", bank=" + bank + ", status=" + status + '}';
+ }
+
 }

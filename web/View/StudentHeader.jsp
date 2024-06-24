@@ -153,6 +153,14 @@
                     <!-- Save list -->
                     <a class="nav-link" href="#">Save list tutors</a>
                 </li>
+                <li class="nav-item navmenuitem">
+                    <!-- View classes -->
+                    <a class="nav-link" href="StdudentDashboard">View Class</a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- History -->
+                    <a class="nav-link" href="history">History</a>
+                </li>
             </ul>
         </nav>
     </body>

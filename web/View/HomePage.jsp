@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="login-icon">
-                    <a href="#" class="login-button">
+                    <a href="Login.jsp" class="login-button">
                         <span class="button-icon">
                             <i class="fa-solid fa-arrow-right-to-bracket"></i>
                         </span>
@@ -73,7 +73,7 @@
                     <div class="col-md-6">
                         <div class="hero-content">
                             <h1 style="font-weight: 750; font-size: 53px;">Unlock your potential <br> with the best <br> tutors.</h1>
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subjectModal">Get started <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="Login.jsp" class="btn btn-primary">Get started <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
@@ -116,7 +116,7 @@
             <div class="row">
                 <div class="col-md-4 text-center text-md-start">
                     <div class="logo-footer">
-                        <a href="#" class="img me-auto">
+                        <a href="../View/HomePage.jsp" class="img me-auto">
                             <img src="../image/LOGO_TUTORLY_W.png" style="max-height: 50px;">
                         </a>
                     </div>
@@ -140,7 +140,7 @@
     </footer>
     <!-- End Footer -->
 
-    <!-- Pop-up Modal -->
+<!--     Pop-up Modal 
     <div class="modal fade" id="subjectModal" tabindex="-1" aria-labelledby="subjectModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 50px;">
@@ -164,7 +164,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

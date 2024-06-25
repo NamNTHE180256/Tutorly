@@ -139,7 +139,7 @@
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Schedule -->
-                    <a class="nav-link" href="../Tutorly/ClassDetail"">Schedule</a>
+                    <a class="nav-link" href="../Tutorly"">Schedule</a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Material -->

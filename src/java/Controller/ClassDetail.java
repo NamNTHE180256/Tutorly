@@ -46,22 +46,26 @@ public class ClassDetail extends HttpServlet {
         HttpSession session1 = request.getSession();
         User user = (User) session1.getAttribute("user");
         if (user == null) {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.setAttribute("errorMessage", "You don't have permission to access this page");
             request.getRequestDispatcher("error.jsp").forward(request, response);
+            return; // Ensure no further processing happens
         }
+
         if (user.getRole().equalsIgnoreCase("learner") || user.getRole().equalsIgnoreCase("tutor")) {
             response.setContentType("text/html;charset=UTF-8");
 
+            int classId = Integer.parseInt(request.getParameter("classId"));
+
             LessonDAO lDAO = new LessonDAO();
             AssignmentDAO aDAO = new AssignmentDAO();
-            Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(1);
-            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
+            Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(classId);
+            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(classId);
 
             LearnerDAO leDAO = new LearnerDAO();
-            Learner linfo = leDAO.getStudentById(1);
+            Learner linfo = leDAO.getStudentById(classId);
 
             AClassDAO classDAO = new AClassDAO();
-            AClass aClass = classDAO.getClassById(1);
+            AClass aClass = classDAO.getClassById(classId);
 
             request.setAttribute("linfo", linfo);
             request.setAttribute("todoassignment", classAssignmentsToDo.size());

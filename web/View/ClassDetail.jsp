@@ -11,8 +11,8 @@
 <%@ page import="DAO.*" %>
 <%
     // Get class ID from request
-//    int classId = Integer.parseInt(request.getParameter("classId"));
-    int classId = 1;
+int classId = Integer.parseInt(request.getParameter("classId"));
+ 
     // Fetch class details using the provided function
    AClassDAO classDAO = new AClassDAO();
     AClass aClass = classDAO.getClassById(classId);
@@ -30,7 +30,9 @@
     String subjectName = aClass.getTutor().getSubject().getName();
     int attendance = 10; // This should be fetched dynamically based on attended sessions
     int progress = (attendance * 100) / totalSlots;
-
+    
+    User user = (User) session.getAttribute("user");
+    
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -226,9 +228,13 @@
         </style>
         <title>Dashboard</title>
     </head>
- <body>
+    <body>
         <header>
-            <%@ include file = "StudentHeader.jsp" %>
+            <% if (user.getRole().equalsIgnoreCase("tutor")) { %>
+            <%@ include file="TutorHeader.jsp" %>
+            <% } else { %>
+            <%@ include file="StudentHeader.jsp" %>
+            <% } %>
         </header>
 
         <main style="background-color: #D9D9D9; flex-grow: 1; display: flex; flex-direction: column;">
@@ -290,7 +296,7 @@
                                     document.addEventListener('DOMContentLoaded', function () {
                                     var calendarEl = document.getElementById('calendar');
                                     var events = [
-<<<<<<< HEAD
+
                                     <c:choose>
                                         <c:when test="${sessionScope.user.role == 'tutor'}">
                                             <c:forEach items="${lesson_vector}" var="v">
@@ -315,7 +321,6 @@
                                             </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
-
                                                                                             ];
                                                                                             var calendar = new FullCalendar.Calendar(calendarEl, {
                                                                                             height: '100%',
@@ -338,40 +343,6 @@
                                                                                             });
                                                                                             calendar.render();
                                                                                             });
-=======
-                                    <c:forEach items="${lesson_vector}" var="v" varStatus="status">
-                                    {
-                                    title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
-                                                start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                            url: 'http://localhost:8080/Tutorly/MaterialControllers?Slotid=${v.getId()}&classId=${v.getAClass().getId()}&action=getall',
-                                                            end: '${v.getDate()}T${v.getSession().getEndTime()}',
-                                                                        className: 'custom-event'
-                                                                        }${status.last ? '' : ','}
-                                    </c:forEach>
-
-                                                                ];
-                                                                var calendar = new FullCalendar.Calendar(calendarEl, {
-                                                                height: '100%',
-                                                                        expandRows: true,
-                                                                        slotMinTime: '08:00',
-                                                                        slotMaxTime: '21:00',
-                                                                        headerToolbar: {
-                                                                        left: 'prev,next today',
-                                                                                center: 'title',
-                                                                                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                                                                        },
-                                                                        initialView: 'dayGridMonth',
-                                                                        initialDate: new Date().toISOString().split('T')[0], // Current date
-                                                                        navLinks: true, // can click day/week names to navigate views
-                                                                        editable: false,
-                                                                        selectable: false,
-                                                                        nowIndicator: true,
-                                                                        dayMaxEvents: true, // allow "more" link when too many events
-                                                                        events: events
-                                                                });
-                                                                calendar.render();
-                                                                });
->>>>>>> bf851effa7d536c52963a90e802b8b647cd0247c
                                 </script>
                                 <div id='calendar-container'>
                                     <div id='calendar'></div>

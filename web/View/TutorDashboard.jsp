@@ -195,7 +195,7 @@
                                             <c:forEach var="c" items="${classes}">
                                                 <tr>
                                                     <td>
-                                                        <a href="${pageContext.request.contextPath}/history?class=${c.id}">${c.learner.name} - ${c.tutor.subject.name}</a>
+                                                        <a href="${pageContext.request.contextPath}/ClassDetail?classId=${c.id}">${c.learner.name} - ${c.tutor.subject.name}</a>
                                                     </td>
                                                     <c:set var="session" value="${sessionData[c.id]}" />
                                                     <td><fmt:formatDate value="${c.startDate}" pattern="dd/MM/yyyy"/></td>

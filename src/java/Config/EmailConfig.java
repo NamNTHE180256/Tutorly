@@ -25,8 +25,8 @@ public class EmailConfig {
             email.setAuthenticator(new DefaultAuthenticator(emailUsername, emailPassword));
             email.setStartTLSEnabled(true);
             email.setFrom(emailUsername, "Tutorly.com"); // Nguoi gui
-            email.setSubject("Xác nhận Email"); // Tieu de
-            email.setMsg("Mã xác nhận của bạn là: " + code); // Noi dung
+            email.setSubject("Confirmation"); // Tieu de
+            email.setMsg("Your verification code is : " + code); // Noi dung
             email.addTo(recipientEmail); // Dia chi email can gui toi
             email.send(); // gui
             return true; // tra ve true

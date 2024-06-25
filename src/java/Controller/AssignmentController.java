@@ -21,7 +21,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 
 /**
- * learner
  *
  * @author TRANG
  */
@@ -29,16 +28,14 @@ import java.util.Vector;
 public class AssignmentController extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         HttpSession session1 = request.getSession();
         User user = (User) session1.getAttribute("user");
         if (user == null) {
@@ -104,7 +101,6 @@ public class AssignmentController extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -118,7 +114,6 @@ public class AssignmentController extends HttpServlet {
 
     /**
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

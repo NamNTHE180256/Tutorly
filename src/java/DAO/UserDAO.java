@@ -62,7 +62,7 @@ public class UserDAO extends DBContext {
                 + "   SET [password] = ?\n"
                 + " WHERE email = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, password);
+            pstmt.setString(1, computeMD5Hash(password));
             pstmt.setString(2, email);
             int x = pstmt.executeUpdate();
             return x;
@@ -147,11 +147,23 @@ public class UserDAO extends DBContext {
         return 0;
     }
 
-    public static void main(String[] args) {
-        UserDAO uDao = new UserDAO();
-        String password = "3";
-        String passAfterMD5 = uDao.computeMD5Hash(password);
-        System.out.println(passAfterMD5);
-        
-    }
+//    public static void main(String[] args) {
+//<<<<<<< HEAD
+//        UserDAO udao = new UserDAO();
+//        User u = udao.getUserById(1);
+//<<<<<<< HEAD
+//        System.out.println(udao.Login("learner5@gmail.com", "1234"));
+//        System.out.println(udao.computeMD5Hash("1234"));
+//        
+//=======
+//        System.out.println(udao.Login("learner1@gmail.com", "1"));
+//=======
+//        UserDAO uDao = new UserDAO();
+//        String password = "3";
+//        String passAfterMD5 = uDao.computeMD5Hash(password);
+//        System.out.println(passAfterMD5);
+//        
+//>>>>>>> bcf475e5a416004d96226e39b60d957e85a1a7bd
+//>>>>>>> 6a4e6a403c1f8ed00a9c9b12aa381ac10eae0541
+//    }
 }

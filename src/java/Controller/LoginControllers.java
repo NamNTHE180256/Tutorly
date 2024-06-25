@@ -101,18 +101,22 @@ public class LoginControllers extends HttpServlet {
                     request.getRequestDispatcher("TutorController").forward(request, response);
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
                     Tutor tutor = tDao.getTutorById(userLogin.getId());
-                    session.setAttribute("tutor", tutor);
-                    session.setAttribute("user", userLogin);
-                    request.getRequestDispatcher("TutorController").forward(request, response);//TUng DUONg
-                } //Adjust path as necessary
+                    if (tutor != null) {
+                        session.setAttribute("tutor", tutor);
+                        session.setAttribute("user", userLogin);
+                        response.sendRedirect("tutor-dashboard");
+                    } else {
+                        request.setAttribute("messageError", "Tutor not found!");
+                        request.getRequestDispatcher("View/Login.jsp").forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("messageError", "Incorrect email or password!");
+                    request.getRequestDispatcher("View/Login.jsp").forward(request, response);
+                }
             } else {
                 request.setAttribute("messageError", "Incorrect email or password!");
                 request.getRequestDispatcher("View/Login.jsp").forward(request, response);
             }
-
-        } else {
-            request.setAttribute("messageError", "Passwords do not match!");
-            request.getRequestDispatcher("View/Login.jsp").forward(request, response);
         }
     }
 

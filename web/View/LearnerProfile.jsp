@@ -59,8 +59,8 @@
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <img src="image/${linfo.image}" alt="Admin" class="rounded-circle p-1 " width="110">
                                     <div class="mt-3">
-                                        <h4>${linfo.name}</h4>
-                                        <p class="text-secondary mb-1">${linfo.getUserInfo().role}</p>
+                                        <h4>${sessionScope.learner.name}</h4>
+                                        <p class="text-secondary mb-1">${sessionScope.learner.name}</p>
 
                                     </div>
                                 </div>
@@ -77,16 +77,16 @@
                                         <h6 class="mb-0">ID</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.id}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.user.id}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                        <h6 class="mb-0">Name</h6>
                                     </div>
 
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.name}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.learner.name}">
                                         <a href="StudentProfileController?service=updateRequest"><i class="fa-solid fa-pen"></i></a>
                                     </div>
 
@@ -99,7 +99,7 @@
                                         <h6 class="mb-0">Email</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.getUserInfo().email}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.user.email}">
                                     </div>
                                 </div>
 
@@ -108,7 +108,7 @@
                                         <h6 class="mb-0">Join Date</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.getUserInfo().createdAt}">
+                                        <input type="text" readonly class="form-control" value="${sessionScope.user.createdAt}">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -131,14 +131,15 @@
                                             <!-- Modal body -->
                                             <div class="modal-body">
                                                 <div class="container-fluid mt-3">
-                                                    <form>
+                                                    <form action="${pageContext.request.contextPath}/changePassword" method="post">
                                                         <!-- Vertical -->
                                                         <div class="form-group">
                                                             <label for="myEmail">Current Password</label>
-                                                            <input type="email" id = "myEmail" class="form-control" placeholder="Email">
+                                                            <input type="password" name="Currentpass" id = "myEmail" class="form-control"  placeholder="Current Password"required>
                                                             <label for="myPassword">Password</label>
-                                                            <input type="password" id="myPassword" class="form-control" placeholder="Password" style="margin-bottom: 5px">
-                                                            <input type="password" id="myPassword" class="form-control" placeholder="Enter password again" style="margin-bottom: 5px">
+                                                            <input type="hidden" name="email" value="${sessionScope.user.email}">
+                                                            <input type="password" name="newpass" id="myPassword" class="form-control" placeholder="Password" style="margin-bottom: 5px" required>
+                                                            <input type="password" name="newpass2" id="myPassword" class="form-control" placeholder="Enter password again" style="margin-bottom: 5px" required>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                         </div>
                                                     </form>

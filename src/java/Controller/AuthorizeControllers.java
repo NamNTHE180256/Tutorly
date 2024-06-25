@@ -65,7 +65,7 @@ public class AuthorizeControllers extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException{
         UserDAO dao = new UserDAO();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("userRegister");

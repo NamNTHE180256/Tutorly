@@ -51,7 +51,7 @@
                                     <input style="width: 68%; padding: 7px; border-radius: 6px;" type="number" name="codeAuthorize" placeholder="Enter a code" required>
                                     <input type="hidden" name="action" value="register">
                                     <button style="margin-bottom: 5px;" type="submit" class="btn btn-primary btn-sm register-button">
-                                        Register
+                                        Send
                                     </button>
                                 </form>
                                 <a id="send-again-btn" href="authorize?action=register" class="btn btn-link" style="margin-left: 10px; color:red">

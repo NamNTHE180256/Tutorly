@@ -1,46 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
-import java.util.Date;
-/**
- *
- * @author Admin
- */
+import java.sql.Timestamp;
+
+
+
+
+
 public class Material {
-    private long id;
-    private Lesson lession;
+
+     private int id;
     private String fileName;
-    private String filePath;
+    private byte[] fileData;
     private String fileType;
-    private Date uploadedAt;
+    private String uploadedAt;
+    private int lessonID; // Corrected variable name
 
-    // Constructors
-    public Material() {}
+    // Constructor
 
-    public Material(Lesson lession, String fileName, String filePath, String fileType) {
-        this.lession = lession;
+    public Material(int id, String fileName, byte[] fileData, String fileType, String uploadedAt, int lessonID) {
+        this.id = id;
         this.fileName = fileName;
-        this.filePath = filePath;
+        this.fileData = fileData;
         this.fileType = fileType;
+        this.uploadedAt = uploadedAt;
+        this.lessonID = lessonID;
     }
 
-    // Getters and Setters
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public Lesson getLession() {
-        return lession;
-    }
-
-    public void setLession(Lesson lession) {
-        this.lession = lession;
     }
 
     public String getFileName() {
@@ -51,13 +41,15 @@ public class Material {
         this.fileName = fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public byte[] getFileData() {
+        return fileData;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
     }
+
+ 
 
     public String getFileType() {
         return fileType;
@@ -67,11 +59,21 @@ public class Material {
         this.fileType = fileType;
     }
 
-    public Date getUploadedAt() {
+    public String getUploadedAt() {
         return uploadedAt;
     }
 
-    public void setUploadedAt(Date uploadedAt) {
+    public void setUploadedAt(String uploadedAt) {
         this.uploadedAt = uploadedAt;
     }
+
+    public int getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(int lessonID) {
+        this.lessonID = lessonID;
+    }
+   
+
 }

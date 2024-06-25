@@ -226,7 +226,7 @@
         </style>
         <title>Dashboard</title>
     </head>
-    <body>
+ <body>
         <header>
             <%@ include file = "StudentHeader.jsp" %>
         </header>
@@ -290,6 +290,7 @@
                                     document.addEventListener('DOMContentLoaded', function () {
                                     var calendarEl = document.getElementById('calendar');
                                     var events = [
+<<<<<<< HEAD
                                     <c:choose>
                                         <c:when test="${sessionScope.user.role == 'tutor'}">
                                             <c:forEach items="${lesson_vector}" var="v">
@@ -337,6 +338,40 @@
                                                                                             });
                                                                                             calendar.render();
                                                                                             });
+=======
+                                    <c:forEach items="${lesson_vector}" var="v" varStatus="status">
+                                    {
+                                    title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
+                                                start: '${v.getDate()}T${v.getSession().getStartTime()}',
+                                                            url: 'http://localhost:8080/Tutorly/MaterialControllers?Slotid=${v.getId()}&classId=${v.getAClass().getId()}&action=getall',
+                                                            end: '${v.getDate()}T${v.getSession().getEndTime()}',
+                                                                        className: 'custom-event'
+                                                                        }${status.last ? '' : ','}
+                                    </c:forEach>
+
+                                                                ];
+                                                                var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                                height: '100%',
+                                                                        expandRows: true,
+                                                                        slotMinTime: '08:00',
+                                                                        slotMaxTime: '21:00',
+                                                                        headerToolbar: {
+                                                                        left: 'prev,next today',
+                                                                                center: 'title',
+                                                                                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                                                                        },
+                                                                        initialView: 'dayGridMonth',
+                                                                        initialDate: new Date().toISOString().split('T')[0], // Current date
+                                                                        navLinks: true, // can click day/week names to navigate views
+                                                                        editable: false,
+                                                                        selectable: false,
+                                                                        nowIndicator: true,
+                                                                        dayMaxEvents: true, // allow "more" link when too many events
+                                                                        events: events
+                                                                });
+                                                                calendar.render();
+                                                                });
+>>>>>>> bf851effa7d536c52963a90e802b8b647cd0247c
                                 </script>
                                 <div id='calendar-container'>
                                     <div id='calendar'></div>

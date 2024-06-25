@@ -25,9 +25,8 @@ hs_err_pid*
 replay_pid*
 
 ### NetBeans ###
-**/nbproject/private/
-**/nbproject/Makefile-*.mk
-**/nbproject/Package-*.bash
+nbproject/private/private.xml
+nbproject/
 build/
 nbbuild/
 dist/

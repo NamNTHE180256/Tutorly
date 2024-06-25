@@ -12,23 +12,91 @@
         <title>Manage Tutor</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
         <style>
             .modal-xl {
                 max-width: 75% !important;
             }
             .stu_image {
-                width: 100px;  /* Set the desired width */
-                height: 100px; /* Set the desired height */
+                width: 50px;  /* Set the desired width */
+                height: 50px; /* Set the desired height */
                 object-fit: cover; /* Ensures the image covers the specified width and height while maintaining aspect ratio */
                 border-radius: 50%; /* Optional: If you want the image to be circular */
                 border: 2px solid #ccc; /* Optional: Add a border */
+            }
+            .status-active {
+                color: green;
+            }
+
+            .status-pending {
+                color: #F7B500;
+            }
+            
+            .search {
+                width: 40%;
+                height: 40px;
+                background-color: #fff;
+                padding: 5px;
+                border-radius: 5px;
+            }
+
+            .search-input {
+                color: white;
+                border: 0;
+                outline: 0;
+                background: none;
+                width: 0;
+                caret-color: transparent;
+                line-height: 30px;
+                transition: width 0.4s linear
+            }
+
+            .search .search-input {
+                padding: 0 10px;
+                width: 100%;
+                caret-color: #536bf6;
+                font-size: 19px;
+                font-weight: 300;
+                color: black;
+                transition: width 0.4s linear;
+            }
+
+
+            .search-icon {
+                height: 34px;
+                width: 34px;
+                float: right;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                background-color: #536bf6;
+                font-size: 10px;
+                bottom: 30px;
+                position: relative;
+                border-radius: 5px;
+            }
+
+            .search-icon:hover{
+
+                color: #fff !important;
             }
 
         </style>
     </head>
     <body>
         <%@ include file="AdminHeader.jsp" %>
-        <div class="container">
+        </br>
+        <div class="container" style="background-color: #eee">
+            <div class="col d-flex justify-content-end align-items-center" >
+                <form class="search" action="AdminController" style="margin-top: 15px">
+                    <input type="hidden" name="action" value="searchTutor"/>
+                    <input type="text" class="search-input" placeholder="Search..." name="searchTutor" value="${param.searchTutor}">
+                    <button type="submit" class="search-icon">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="row">
@@ -61,15 +129,21 @@
                                     <td>${tutor.price}K</td>
                                     <td><i class="fa-solid fa-star text-warning"></i> ${tutor.getAvgRating()}</td>
                                     <td id="tutorStatus${tutor.id}">
-                                        <span class="dot" data-status="${tutor.status}" style="
-                        height: 10px;
-                        width: 10px;
-                        background-color: #00ff4c;
-                        border-radius: 50%;
-                        display: inline-block;"></span>${tutor.status}
+                                        <c:choose>
+                                            <c:when test="${tutor.status == 'Active'}">
+                                                <span class="status-active">
+                                                    ${tutor.status} <i class="fa-regular fa-circle-check"></i>
+                                                </span>
+                                            </c:when>
+                                            <c:when test="${tutor.status == 'Pending'}">
+                                                <span class="status-pending">
+                                                    ${tutor.status} <i class="fa-regular fa-clock"></i>
+                                                </span>
+                                            </c:when>
+                                        </c:choose>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TutorDetail${tutor.id}">Detail</button>
+                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#TutorDetail${tutor.id}">Detail</button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -258,11 +332,11 @@
                                     <div class="modal-footer d-flex justify-content-between">
                                         <div>
                                             <c:if test="${tutor.status == 'Pending'}">
-                                                <button type="button" class="btn btn-success" onclick="approveTutor(${tutor.id})">Approve</button>
-                                                <button type="button" class="btn btn-warning" onclick="rejectTutor(${tutor.id})">Reject</button>
+                                                <button type="button" class="btn btn-outline-success" onclick="approveTutor(${tutor.id})">Approve</button>
+                                                <button type="button" class="btn btn-outline-warning" onclick="rejectTutor(${tutor.id})">Reject</button>
                                             </c:if>
                                         </div>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -275,32 +349,8 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var dots = document.querySelectorAll('.dot');
-
-                dots.forEach(function (dot) {
-                    var status = dot.getAttribute('data-status');
-
-                    switch (status) {
-                        case 'Pending':
-                            dot.style.backgroundColor = '#FFFF00';
-                            break;
-                        case 'Active':
-                            dot.style.backgroundColor = '#00ff4c';  // green
-                            break;
-                        case 'Blocked':
-                            dot.style.backgroundColor = 'red';
-                            break;
-                        default:
-                            dot.style.backgroundColor = 'grey';  // Default color if status is unknown
-                            break;
-                    }
-                });
-            });
-        </script>
-        <script>
             function approveTutor(tutorId) {
-                alert('Approve tutor with ID: ' + tutorId);
+                confirm('Approve tutor with ID: ' + tutorId);
 
                 $.ajax({
                     url: 'approveTutor', // Your backend URL to approve tutor
@@ -321,7 +371,7 @@
             }
 
             function rejectTutor(tutorId) {
-                alert('Reject tutor with ID: ' + tutorId);
+                confirm('Reject tutor with ID: ' + tutorId);
 
                 $.ajax({
                     url: 'rejectTutor', // Your backend URL to reject tutor

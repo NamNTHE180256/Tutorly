@@ -1,174 +1,158 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-    <script src='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-    <link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
-    <link rel="stylesheet" href="../style/test.css">
+    <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
+    
+        <style>
+        .card {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-body {
+            position: relative;
+            z-index: 2;
+            color: black; /* Changed to black for better readability */
+        }
+        .card-title {
+            font-size: 1.5rem;
+        }
+        .card-quantity {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6%;
+            height: 100%;
+            z-index: 1;
+        }
+        .card-tutor .card-overlay {
+            background-color: #007bff;
+        }
+        .card-tutor .card-title {
+            color: #007bff;
+        }
+        .card-learner .card-overlay {
+            background-color: #28a745;
+        }
+        .card-learner .card-title {
+            color: #28a745;
+        }
+        .card-manager .card-overlay {
+            background-color: #ffc107;
+        }
+        .card-manager .card-title {
+            color: #ffc107;
+        }
+        .card-classes .card-overlay {
+            background-color: #dc3545;
+        }
+        .card-classes .card-title {
+            color: #dc3545;
+        }
+    </style>
 </head>
-
 <body>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
-    <div class="container">
-        <div class="col-md-12">
-            <div class="page-people-directory">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="list-group" id="myScrollspy">
-                            <a class="list-group-item" href="#content-javascript">General</a>
-                            <a class="list-group-item" href="#content-javascript">Student</a>
-                            <a class="list-group-item" href="#content-css">Tutor</a>
-                            <a class="list-group-item" href="#content-bootstrap">Subject</a>
-                        </div>
-
-                        
+    <%@ include file="AdminHeader.jsp" %>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card text-center card-tutor">
+                    <div class="card-overlay"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Tutor</h5>
+                        <p class="card-quantity" id="tutor-quantity">${tutorQuantity}</p>
                     </div>
-                    <div class="col-md-9">
-                        
-                        <div class="well">
-                            <div class="row">
-                                <div class="col-md-7">
-
-                                </div>
-                                <div class="col-md-5">
-                                    <form class="form-inline" action="/somepage">
-                                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                                        <button class="btn btn-success" type="submit"
-                                            style="background-color: #0E3C6E;">Search</button>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3>All Student</h3>
-                            </div>
-
-                        </div>
-
-                        <table class="table">
-                            <thead style="background-color: #0E3C6E; color: white;">
-                                <tr>
-                                    <th>Student ID</th>
-                                    <th>Avatar</th>
-                                    <th>Student Name</th>
-                                    <th>Student Email</th>
-                                    <th>No. Class</th>
-                                    <th>Detail</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><img src="../asset/test_img.png" class="stu_image"></td>
-                                    <td><strong>Cu trang beo</strong> </td>
-                                    <td>cutrangbeo@top1vutru.gmail</td>
-                                    <td>12</td>
-                                    <td><a href="#"><i class="fa-solid fa-eye" style=" color: #0E3C6E;"></i>View Details</a></td>
-                                    <td><i class="fa-solid fa-trash" style=" color: red;"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3>All Tutor</h3>
-                            </div>
-
-                        </div>
-
-                        <table class="table">
-                            <thead style="background-color: #0E3C6E; color: white;">
-                                <tr>
-                                    <th>Tutor ID</th>
-                                    <th></th>
-                                    <th>Tutor Name</th>
-                                    <th>Tutor Email</th>
-                                    <th>Subject</th>
-                                    <th>Status</th>
-                                    <th>Edit</th>
-                                    <th>Detail</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><img src="../asset/test_img.png" class="stu_image"></td>
-                                    <td><strong>Cu trang beo</strong> </td>
-                                    <td>cutrangbeo@top1vutru.gmail</td>
-                                    <td>Maths</td>
-                                    <td><span class="dot" style=" height: 10px;
-                                        width: 10px;
-                                        background-color: #00ff4c;
-                                        border-radius: 50%;
-                                        display: inline-block;"></span>Active</td>
-                                    <td><a href="#"><i class="fa-solid fa-eye" style=" color: #0E3C6E;"></i>View Details</a></td>
-                                    <td><i class="fa-solid fa-pen" style=" color: #0E3C6E;"></i></td>
-                                    <td><i class="fa-solid fa-trash" style=" color: red;"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td><img src="../asset/test_img.png" class="stu_image"></td>
-                                    <td><strong>Cu trang beo</strong> </td>
-                                    <td>cutrangbeo@top1vutru.gmail</td>
-                                    <td>Maths</td>
-                                    <td><span class="dot" style=" height: 10px;
-                                        width: 10px;
-                                        background-color: #F7B500;
-                                        border-radius: 50%;
-                                        display: inline-block;"></span>Pending</td>
-                                    <td><a href="#"><i class="fa-solid fa-eye" style=" color: #0E3C6E;"></i>View Details</a></td>
-                                    <td><i class="fa-solid fa-pen" style=" color: #0E3C6E;"></i></td>
-                                    <td><i class="fa-solid fa-trash" style=" color: red;"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td><img src="../asset/test_img.png" class="stu_image"></td>
-                                    <td><strong>Cu trang beo</strong> </td>
-                                    <td>cutrangbeo@top1vutru.gmail</td>
-                                    <td>Maths</td>
-                                    <td><span class="dot" style=" height: 10px;
-                                        width: 10px;
-                                        background-color: red;
-                                        border-radius: 50%;
-                                        display: inline-block;"></span>Lock</td>
-                                    <td><a href="#"><i class="fa-solid fa-eye" style=" color: #0E3C6E;"></i>View Details</a></td>
-                                    <td><i class="fa-solid fa-pen" style=" color: #0E3C6E;"></i></td>
-                                    <td><i class="fa-solid fa-trash" style=" color: red;"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center card-learner">
+                    <div class="card-overlay"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Learner</h5>
+                        <p class="card-quantity" id="learner-quantity">${learnerQuantity}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center card-manager">
+                    <div class="card-overlay"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Manager</h5>
+                        <p class="card-quantity" id="manager-quantity">${managerQuantity}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center card-classes">
+                    <div class="card-overlay"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Class</h5>
+                        <p class="card-quantity" id="classes-quantity">${classQuantity}</p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <canvas id="subjectsPieChart"></canvas>
+            </div>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Parse the JSON string from the servlet
+            var subjectTutorCounts = JSON.parse('${subjectTutorCountsJson}');
 
+            var labels = [];
+            var quantities = [];
+            var backgroundColors = ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6c757d', '#17a2b8', '#6610f2', '#e83e8c', '#fd7e14', '#20c997'];
+
+            for (var subject in subjectTutorCounts) {
+                if (subjectTutorCounts.hasOwnProperty(subject)) {
+                    labels.push(subject);
+                    quantities.push(subjectTutorCounts[subject]);
+                }
+            }
+
+            var ctx = document.getElementById('subjectsPieChart').getContext('2d');
+            var subjectsPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: quantities,
+                        backgroundColor: backgroundColors.slice(0, labels.length),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Subjects Ratio'
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

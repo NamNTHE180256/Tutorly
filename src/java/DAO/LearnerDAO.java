@@ -41,6 +41,35 @@ public class LearnerDAO extends DBContext {
         return learners;
     }
     
+    public ArrayList<Learner> searchLearners(String searchQuery) {
+        ArrayList<Learner> learners = new ArrayList<>();
+        String sql = "SELECT Learner.* FROM Learner JOIN \n"
+                + "	[User] ON Learner.id = [User].id\n"
+                + "	WHERE Learner.id LIKE ? \n"
+                + "		OR Learner.[name] LIKE ?\n"
+                + "		OR [User].email LIKE ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            String searchPattern = "%" + searchQuery + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Learner learner = new Learner();
+                learner.setId(rs.getInt("id"));
+                learner.setName(rs.getString("name"));
+                learner.setImage(rs.getString("image"));
+                learners.add(learner);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return learners;
+    }
+    
     public Learner getLearnerById(int id) {
         Learner learner = null;
         String sql = "SELECT * FROM Learner WHERE id = ?";
@@ -213,6 +242,6 @@ public class LearnerDAO extends DBContext {
 //        Learner le = l.getStudentById(1);
 //        System.out.println(le.toString());
 //        System.out.println(le.getUserInfo().toString());
-        System.out.println(l.displayAllStudents().toString());
+        System.out.println(l.searchLearners("mail"));
     }
 }

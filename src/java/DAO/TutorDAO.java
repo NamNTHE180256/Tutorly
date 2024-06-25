@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+import Model.Learner;
 import Model.Session;
 import Model.Tutor;
 import Model.TutorAvailability;
@@ -44,6 +45,43 @@ public class TutorDAO extends DBContext {
             }
             rs.close();
             sp.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tutors;
+    }
+    
+    public ArrayList<Tutor> searchTutors(String searchQuery) {
+        ArrayList<Tutor> tutors = new ArrayList<>();
+        SubjectDAO sDao = new SubjectDAO();
+        String sql = "SELECT Tutor.* FROM Tutor JOIN \n"
+                + "	[User] ON Tutor.id = [User].id\n"
+                + "	WHERE Tutor.id LIKE ? \n"
+                + "		OR Tutor.[name] LIKE ?\n"
+                + "		OR [User].email LIKE ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            String searchPattern = "%" + searchQuery + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Tutor tutor = new Tutor();
+                tutor.setId(rs.getInt("id"));
+                tutor.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
+                tutor.setName(rs.getString("name"));
+                tutor.setGender(rs.getBoolean("gender"));
+                tutor.setImage(rs.getString("image"));
+                tutor.setBio(rs.getString("bio"));
+                tutor.setEdu(rs.getString("edu"));
+                tutor.setPrice(rs.getFloat("price"));
+                tutor.setBank(rs.getString("bank"));
+                tutor.setStatus(rs.getString("status"));
+                tutors.add(tutor);
+            }
+            rs.close();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -399,5 +437,6 @@ public class TutorDAO extends DBContext {
         for(Tutor tu : v){
             System.out.println(t);
         }
+        System.out.println(t.searchTutors("1"));
     }
 }

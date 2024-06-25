@@ -129,13 +129,18 @@
                 padding: 5px;
                 border-radius: 5px;
             }
-
             .scheduled {
                 color: black;
                 background-color: #FFC107;
                 padding: 5px;
                 border-radius: 5px;
             }
+            .title{
+                color: #0E3C6E;
+                font-size: 26px;
+                font-weight: 700;
+            }
+
         </style>
     </head>
     <body>

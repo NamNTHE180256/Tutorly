@@ -5,9 +5,11 @@
 package Controller;
 
 import DAO.LearnerDAO;
+import DAO.ManagerDAO;
 import DAO.TutorDAO;
 import DAO.UserDAO;
 import Model.Learner;
+import Model.Manager;
 import Model.Tutor;
 import Model.User;
 import java.io.IOException;
@@ -89,6 +91,7 @@ public class LoginControllers extends HttpServlet {
         String password1 = request.getParameter("password");
         LearnerDAO ldao = new LearnerDAO();
         TutorDAO tDao = new TutorDAO();
+        ManagerDAO mDao = new ManagerDAO();
         if (password1 != null && email != null) {
 
             User userLogin = userDao.Login(email, password1);
@@ -109,13 +112,17 @@ public class LoginControllers extends HttpServlet {
                         request.setAttribute("messageError", "Tutor not found!");
                         request.getRequestDispatcher("View/Login.jsp").forward(request, response);
                     }
+                } else if (userLogin.getRole().equalsIgnoreCase("admin")) {
+                    session.setAttribute("admin", userLogin);
+                    response.sendRedirect("AdminController?action=dashboard");
+                } else if (userLogin.getRole().equalsIgnoreCase("manager")) {
+                    Manager manager = mDao.getManagerById(userLogin.getId());
+                    session.setAttribute("manager", manager);
+                    response.sendRedirect("AdminController?action=viewTutor");
                 } else {
                     request.setAttribute("messageError", "Incorrect email or password!");
                     request.getRequestDispatcher("View/Login.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("messageError", "Incorrect email or password!");
-                request.getRequestDispatcher("View/Login.jsp").forward(request, response);
+                } 
             }
         }
     }

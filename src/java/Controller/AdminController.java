@@ -14,6 +14,7 @@ import Model.Learner;
 import Model.Manager;
 import Model.Subject;
 import Model.Tutor;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -27,7 +28,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 /**
- *
+ *admin
  * @author Admin
  */
 @WebServlet(name="AdminController", urlPatterns={"/AdminController"})
@@ -177,8 +178,7 @@ public class AdminController extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
                 break;
         }
-        
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

@@ -117,7 +117,7 @@
                     </li>
                     <!-- Student name -->
                     <li class="nav-item">
-                         <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${linfo.name}</p></a>
+                        <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${sessionScope.learner.name}</p></a>
                     </li>
                     <!-- Student profile image -->
                     <li class="nav-item">
@@ -139,7 +139,7 @@
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Schedule -->
-                    <a class="nav-link" href="#">Schedule</a>
+                    <a class="nav-link" href="../Tutorly"">Schedule</a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Material -->
@@ -152,6 +152,14 @@
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->
                     <a class="nav-link" href="#">Save list tutors</a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- View classes -->
+                    <a class="nav-link" href="StdudentDashboard">View Class</a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- History -->
+                    <a class="nav-link" href="history">History</a>
                 </li>
             </ul>
         </nav>

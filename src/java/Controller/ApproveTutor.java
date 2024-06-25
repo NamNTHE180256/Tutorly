@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
 import DAO.TutorDAO;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -20,8 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet(name="ApproveTutor", urlPatterns={"/approveTutor"})
 public class ApproveTutor extends HttpServlet {
-   
-    /** 
+
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -29,24 +30,24 @@ public class ApproveTutor extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ApproveTutor</title>");  
+            out.println("<title>Servlet ApproveTutor</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ApproveTutor at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -55,11 +56,11 @@ public class ApproveTutor extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -69,15 +70,27 @@ public class ApproveTutor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int tutorId = Integer.parseInt(request.getParameter("id"));
+        HttpSession session1 = request.getSession();
+        User user = (User) session1.getAttribute("user");
+        if (user == null) {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        if (user.getRole().equalsIgnoreCase("learner")) {
+            int tutorId = Integer.parseInt(request.getParameter("id"));
 
-        TutorDAO tutorDao = new TutorDAO();
-        tutorDao.setStatus(tutorId, "Active");
+            TutorDAO tutorDao = new TutorDAO();
+            tutorDao.setStatus(tutorId, "Active");
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"status\":\"success\"}");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\":\"success\"}");
+        } else {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
     }
+
 
     /** 
      * Returns a short description of the servlet.

@@ -87,6 +87,29 @@ public class SessionDAO extends DBContext{
         return null;
     }
 
+    public Session getSessionByClassId(int classId) {
+        String sql = "SELECT top 1 s.id, s.startTime, s.endTime, s.dayOfWeek "
+                + "FROM Session s "
+                + "JOIN Lession l ON s.id = l.sessionId "
+                + "WHERE l.classId = ? ";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, classId);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                String id = rs.getString("id");
+                String startTime = rs.getString("startTime");
+                String endTime = rs.getString("endTime");
+                String dayOfWeek = rs.getString("dayOfWeek");
+
+                return new Session(id, startTime, endTime, dayOfWeek);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     // Method to add a new session
     public int addSession(Session session) {
         int n = 0;

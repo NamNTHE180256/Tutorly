@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
 import java.util.Date;
 
-/**
- *
- * @author Admin
- */
 public class AClass {
 
     private int id;
@@ -19,9 +11,12 @@ public class AClass {
     private Date startDate;
     private Date endDate;
     private String status;
-
+    private Subject subject;
+    
     // Constructors
-    public AClass() {}
+    public AClass() {
+        this.subject = new Subject(); // Ensure subject is initialized
+    }
 
     public AClass(Learner learner, Tutor tutor, int totalSession, Date startDate, Date endDate, String status) {
         this.learner = learner;
@@ -30,6 +25,7 @@ public class AClass {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.subject = new Subject(); // Ensure subject is initialized
     }
 
     // Getters and Setters
@@ -87,6 +83,19 @@ public class AClass {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public String toString() {
+        return "AClass{" + "id=" + id + ", learner=" + learner + ", tutor=" + tutor + ", totalSession=" + totalSession + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + ", subject=" + subject + '}';
     }
     
 }

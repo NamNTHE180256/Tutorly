@@ -3,12 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-import Model.Learner;
 import Model.Session;
 import Model.Tutor;
 import Model.TutorAvailability;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +14,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Admin
  */
 public class TutorDAO extends DBContext {
+
     public ArrayList<Tutor> getAllTutors() {
         ArrayList<Tutor> tutors = new ArrayList<>();
         SubjectDAO sDao = new SubjectDAO();
@@ -87,7 +87,7 @@ public class TutorDAO extends DBContext {
         }
         return tutors;
     }
-    
+
     public Tutor getTutorById(int id) {
         Tutor tutor = null;
         SubjectDAO sDao = new SubjectDAO();
@@ -118,23 +118,24 @@ public class TutorDAO extends DBContext {
     }
 
     public boolean insertTutor(Tutor tutor) {
-        String sql = "INSERT INTO Tutor (subjectId, name, gender, image, bio, edu, price, bank, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Tutor (id,subjectId, name, gender, image, bio, edu, price, bank, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
-            sp.setInt(1, tutor.getSubject().getId());
-            sp.setString(2, tutor.getName());
-            sp.setBoolean(3, tutor.isGender());
-            sp.setString(4, tutor.getImage());
-            sp.setString(5, tutor.getBio());
-            sp.setString(6, tutor.getEdu());
-            sp.setFloat(7, tutor.getPrice());
-            sp.setString(8, tutor.getBank());
-            sp.setString(9, tutor.getStatus());
+            sp.setInt(1, tutor.getId());
+            sp.setInt(2, tutor.getSubject().getId());
+            sp.setString(3, tutor.getName());
+            sp.setBoolean(4, tutor.isGender());
+            sp.setString(5, tutor.getImage());
+            sp.setString(6, tutor.getBio());
+            sp.setString(7, tutor.getEdu());
+            sp.setFloat(8 ,tutor.getPrice());
+            sp.setString(9, tutor.getBank());
+            sp.setString(10, tutor.getStatus());
             int rowsAffected = sp.executeUpdate();
             sp.close();
             return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {     
+            Logger.getLogger(TutorDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -177,7 +178,7 @@ public class TutorDAO extends DBContext {
     }
 
     // Method to display all tutors
-     public Vector<Tutor> displayAllTutors() {
+    public Vector<Tutor> displayAllTutors() {
         Vector<Tutor> vector = new Vector<>();
         String sql = "SELECT * FROM Tutor";
         SubjectDAO sDAO = new SubjectDAO();
@@ -234,8 +235,6 @@ public class TutorDAO extends DBContext {
     }
 
     // Method to get a tutor by ID
-
-
     // Method to add a new tutor
     public int addTutor(Tutor tutor) {
         int n = 0;
@@ -258,8 +257,7 @@ public class TutorDAO extends DBContext {
         return n;
     }
 
-
-     public Map<Integer, Map<String, Object>> getAllTutorRatings() {
+    public Map<Integer, Map<String, Object>> getAllTutorRatings() {
         Map<Integer, Map<String, Object>> tutorRatings = new HashMap<>();
         String sql = "SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count FROM Rating GROUP BY tutorId";
         try {
@@ -284,31 +282,31 @@ public class TutorDAO extends DBContext {
         }
         return tutorRatings;
     }
-    
-    public Map<String, Object> getTutorRatingsById(int tutorId) {
-    Map<String, Object> tutorRating = new HashMap<>();
-    String sql = "SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count FROM Rating WHERE tutorId = ? GROUP BY tutorId";
-    try {
-        PreparedStatement state = connection.prepareStatement(sql);
-        state.setInt(1, tutorId);
-        ResultSet rs = state.executeQuery();
-        if (rs.next()) {
-            double avgRate = rs.getDouble("avg_rate");
-            int rateCount = rs.getInt("rate_count");
 
-            if (rateCount == 0) {
-                tutorRating.put("NewTutor", rateCount);
-            } else {
-                tutorRating.put("avgRate", avgRate);
-                tutorRating.put("rateCount", rateCount);
+    public Map<String, Object> getTutorRatingsById(int tutorId) {
+        Map<String, Object> tutorRating = new HashMap<>();
+        String sql = "SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count FROM Rating WHERE tutorId = ? GROUP BY tutorId";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, tutorId);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                double avgRate = rs.getDouble("avg_rate");
+                int rateCount = rs.getInt("rate_count");
+
+                if (rateCount == 0) {
+                    tutorRating.put("NewTutor", rateCount);
+                } else {
+                    tutorRating.put("avgRate", avgRate);
+                    tutorRating.put("rateCount", rateCount);
+                }
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+        return tutorRating;
     }
-    return tutorRating;
-    }
-    
+
     public double getAvgRateById(int id) {
         double avgRate = 0;
         String sql = "SELECT AVG(rating) as avg_rate FROM Rating WHERE tutorId = ? GROUP BY tutorId";
@@ -326,7 +324,7 @@ public class TutorDAO extends DBContext {
         }
         return avgRate;
     }
-    
+
     public Vector<TutorAvailability> getTutorAvailabilityByTutorId(int tutorId) {
         Vector<TutorAvailability> tutorAvailabilities = new Vector<>();
         String sql = "SELECT \n"
@@ -374,12 +372,12 @@ public class TutorDAO extends DBContext {
         }
         return tutorAvailabilities;
     }
-    
+
     public void setStatus(int tutorId, String status) {
         String sql = "UPDATE Tutor SET status = ? WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            
+
             preparedStatement.setString(1, status);
             preparedStatement.setInt(2, tutorId);
 
@@ -389,19 +387,18 @@ public class TutorDAO extends DBContext {
         }
     }
 
-     
-     public Vector<Tutor> RateTutors(double start, double end) {
+    public Vector<Tutor> RateTutors(double start, double end) {
         Vector<Tutor> vector = new Vector<>();
         SubjectDAO sDAO = new SubjectDAO();
-         String sql = "SELECT t.*\n"
-                 + "FROM Tutor t\n"
-                 + "JOIN (\n"
-                 + "    SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count\n"
-                 + "    FROM Rating\n"
-                 + "    GROUP BY tutorId\n"
-                 + "    HAVING AVG(rating) BETWEEN "+start+" AND "+end+"\n"
-                 + ") r ON t.id = r.tutorId;";
-         try {
+        String sql = "SELECT t.*\n"
+                + "FROM Tutor t\n"
+                + "JOIN (\n"
+                + "    SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count\n"
+                + "    FROM Rating\n"
+                + "    GROUP BY tutorId\n"
+                + "    HAVING AVG(rating) BETWEEN " + start + " AND " + end + "\n"
+                + ") r ON t.id = r.tutorId;";
+        try {
             PreparedStatement state = connection.prepareStatement(sql);
             ResultSet rs = state.executeQuery();
             while (rs.next()) {
@@ -424,17 +421,17 @@ public class TutorDAO extends DBContext {
         }
         return vector;
     }
-     
+
     public static void main(String[] args) {
         TutorDAO t = new TutorDAO();
         String name = "hien";
         int subjectId = 15;
         int id = 9;
         Vector<Tutor> v = t.getTutors("SELECT *\n"
-                    + "FROM Tutor\n"
-                    + "WHERE subjectId ="+ subjectId 
-                    + "AND id <> "+id);
-        for(Tutor tu : v){
+                + "FROM Tutor\n"
+                + "WHERE subjectId =" + subjectId
+                + "AND id <> " + id);
+        for (Tutor tu : v) {
             System.out.println(t);
         }
         System.out.println(t.searchTutors("1"));

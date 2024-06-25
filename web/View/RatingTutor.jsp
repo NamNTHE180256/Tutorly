@@ -52,7 +52,7 @@
     <script>
         alert('${message}');
         if (${success}) {
-            window.location.href = 'View/newPage.jsp';
+            window.location.href = 'View/HomePage.jsp';
         } else {
             window.location.href = 'View/RatingTutor.jsp';
         }

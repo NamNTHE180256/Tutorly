@@ -288,42 +288,55 @@
                             <div class="upcommingclassdedtails">
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function () {
-                                        var calendarEl = document.getElementById('calendar');
+                                    var calendarEl = document.getElementById('calendar');
+                                    var events = [
+                                    <c:choose>
+                                        <c:when test="${sessionScope.user.role == 'tutor'}">
+                                            <c:forEach items="${lesson_vector}" var="v">
+                                    {
+                                    title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getLearner().getName()}',
+                                                start: '${v.getDate()}T${v.getSession().getStartTime()}',
+                                                            url: 'http://google.com/',
+                                                            end: '${v.getDate()}T${v.getSession().getEndTime()}',
+                                                                        className: 'custom-event'
+                                                                }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach items="${lesson_vector}" var="v">
+                                                                {
+                                                                title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
+                                                                            start: '${v.getDate()}T${v.getSession().getStartTime()}',
+                                                                                        url: 'http://google.com/',
+                                                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
+                                                                                                    className: 'custom-event'
+                                                                                            }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
 
-                                        var events = [
-                                    <c:forEach items="${lesson_vector}" var="v">
-                                        {
-                                        title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
-                                                        start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                        url: 'http://google.com/',
-                                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
-                                                                                        className: 'custom-event'
-                                                                                }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
-                                    </c:forEach>
-                                                                                ];
-
-                                                                                var calendar = new FullCalendar.Calendar(calendarEl, {
-                                                                                    height: '100%',
-                                                                                    expandRows: true,
-                                                                                    slotMinTime: '08:00',
-                                                                                    slotMaxTime: '21:00',
-                                                                                    headerToolbar: {
-                                                                                        left: 'prev,next today',
-                                                                                        center: 'title',
-                                                                                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                                                                                    },
-                                                                                    initialView: 'dayGridMonth',
-                                                                                    initialDate: new Date().toISOString().split('T')[0], // Current date
-                                                                                    navLinks: true, // can click day/week names to navigate views
-                                                                                    editable: false,
-                                                                                    selectable: false,
-                                                                                    nowIndicator: true,
-                                                                                    dayMaxEvents: true, // allow "more" link when too many events
-                                                                                    events: events
-                                                                                });
-
-                                                                                calendar.render();
-                                                                            });
+                                                                                            ];
+                                                                                            var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                                                            height: '100%',
+                                                                                                    expandRows: true,
+                                                                                                    slotMinTime: '08:00',
+                                                                                                    slotMaxTime: '21:00',
+                                                                                                    headerToolbar: {
+                                                                                                    left: 'prev,next today',
+                                                                                                            center: 'title',
+                                                                                                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                                                                                                    },
+                                                                                                    initialView: 'dayGridMonth',
+                                                                                                    initialDate: new Date().toISOString().split('T')[0], // Current date
+                                                                                                    navLinks: true, // can click day/week names to navigate views
+                                                                                                    editable: false,
+                                                                                                    selectable: false,
+                                                                                                    nowIndicator: true,
+                                                                                                    dayMaxEvents: true, // allow "more" link when too many events
+                                                                                                    events: events
+                                                                                            });
+                                                                                            calendar.render();
+                                                                                            });
                                 </script>
                                 <div id='calendar-container'>
                                     <div id='calendar'></div>

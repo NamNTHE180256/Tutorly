@@ -170,6 +170,31 @@ public class LessonDAO extends DBContext{
         }
         return vector;
     }
+        public Vector<Lesson> getLessonsByTutorId(int tutorId) {
+        Vector<Lesson> vector = new Vector<>();
+        String sql = "SELECT L.* FROM Lession L JOIN Class C ON L.classId = C.id WHERE C.tutorId = ? ORDER BY L.date";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, tutorId);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int classId = rs.getInt("classId");
+                String sessionId = rs.getString("sessionId");
+                Date date = rs.getDate("date");
+                String status = rs.getString("status");
+
+                AClass aClass = new AClassDAO().getClassById(classId); // Assuming AClassDAO is implemented
+                Session session = new SessionDAO().getSessionById(sessionId); // Assuming SessionDAO is implemented
+
+                Lesson lesson = new Lesson(id, aClass, session, date, status);
+                vector.add(lesson);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
 
     public static void main(String[] args) {
         LessonDAO lDAO = new LessonDAO();

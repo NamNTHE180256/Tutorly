@@ -118,11 +118,14 @@ public class LoginControllers extends HttpServlet {
                 } else if (userLogin.getRole().equalsIgnoreCase("manager")) {
                     Manager manager = mDao.getManagerById(userLogin.getId());
                     session.setAttribute("manager", manager);
-                    response.sendRedirect("AdminController?action=viewTutor");
+                    response.sendRedirect("AdminController?action=tutor");
                 } else {
                     request.setAttribute("messageError", "Incorrect email or password!");
                     request.getRequestDispatcher("View/Login.jsp").forward(request, response);
                 } 
+            } else {
+                request.setAttribute("messageError", "Incorrect email or password!");
+                request.getRequestDispatcher("View/Login.jsp").forward(request, response);
             }
         }
     }

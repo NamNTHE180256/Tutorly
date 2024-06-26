@@ -4,6 +4,7 @@
  */
 package Model;
 
+import DAO.ManagerDAO;
 import DAO.UserDAO;
 
 /**
@@ -47,17 +48,9 @@ public class Manager {
     public void setName(String name) {
         this.name = name;
     }
-
-    public int getApprovedTutor() {
-        return approvedTutor;
-    }
-
+ 
     public void setApprovedTutor(int approvedTutor) {
         this.approvedTutor = approvedTutor;
-    }
-
-    public int getRejectedTutor() {
-        return rejectedTutor;
     }
 
     public void setRejectedTutor(int rejectedTutor) {
@@ -78,6 +71,16 @@ public class Manager {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    public int getApprovedTutor() {
+        ManagerDAO mDao = new ManagerDAO();
+        return mDao.ActionByManagerID(id, "approve");
+    }
+    
+    public int getRejectedTutor() {
+        ManagerDAO mDao = new ManagerDAO();
+        return mDao.ActionByManagerID(id, "reject");
     }
 
     @Override

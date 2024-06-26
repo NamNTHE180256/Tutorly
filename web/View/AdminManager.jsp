@@ -135,8 +135,8 @@
                                     <td>${manager.id}</td>
                                     <td><strong>${manager.name}</strong> </td>
                                     <td>${manager.getUserInfo().email}</td>
-                                    <td>${manager.approvedTutor}</td>
-                                    <td>${manager.rejectedTutor}</td>
+                                    <td>${manager.getApprovedTutor()}</td>
+                                    <td>${manager.getRejectedTutor()}</td>
                                     <td>${manager.blockedTutor}</td>
                                     <td>
                                         <a href="AdminController?action=deleteManager&managerId=${manager.id}" 

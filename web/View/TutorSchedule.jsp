@@ -92,6 +92,11 @@
                 padding: 5px;
                 border-radius: 5px;
             }
+            .title{
+                font-size: 26px;
+                font-weight: 700;
+                color: #0E3C6E;
+            }
         </style>
     </head>
     <body>

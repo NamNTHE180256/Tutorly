@@ -45,7 +45,7 @@
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body text-center">
-                            <img src="image/${t.image}" alt="Tutor" class="rounded-circle p-1 profile-image" width="110">
+                            <img src="${pageContext.request.contextPath}/${t.image}" alt="Tutor" class="rounded-circle p-1 profile-image" width="110">
                             <h4>${t.name}</h4>
                             <p class="text-secondary mb-1">${t.getUserInfo().role}</p>
                             <a href="TutorProfileController?service=updateRequest"><i class="fa-solid fa-pen"></i></a>
@@ -55,14 +55,13 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                            <form action="TutorProfileController" method="POST" >
-
+                            <form action="TutorProfileController" method="POST" enctype="multipart/form-data">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">ID</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input readonly=""type="text"  class="form-control" value="${t.id}">
+                                        <input readonly="" type="text" class="form-control" value="${t.id}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -70,7 +69,7 @@
                                         <h6 class="mb-0">Full Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="name"  class="form-control" value="${t.name}">
+                                        <input type="text" name="name" class="form-control" value="${t.name}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -78,7 +77,7 @@
                                         <h6 class="mb-0">Email</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input readonly=""type="text"  class="form-control" value="${t.getUserInfo().email}">
+                                        <input readonly="" type="text" class="form-control" value="${t.getUserInfo().email}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -86,23 +85,23 @@
                                         <h6 class="mb-0">Join Date</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input readonly="" type="text"  class="form-control" value="${t.getUserInfo().createdAt}">
+                                        <input readonly="" type="text" class="form-control" value="${t.getUserInfo().createdAt}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Upload cert.</h6>
+                                        <h6 class="mb-0">Upload Image</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="file" class="form-control">
+                                        <input type="file" name="profileImage" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal" style="background-color: #0E3C6E;">Change Password</button>
                                         <button type="submit" class="btn btn-primary" style="background-color: #0E3C6E;">Save changes</button>
-                                        <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="action" value="add">
-                                        <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="id" value="${t.id}">
+                                        <input type="hidden" name="action" value="update">
+                                        <input type="hidden" name="id" value="${t.id}">
                                     </div>
                                 </div>
                             </form>
@@ -114,7 +113,7 @@
                             <ul class="list-unstyled mb-3">
                                 <c:forEach items="${subjectsTaught}" var="subject">
                                     <li>${subject.name}</li>
-                                    </c:forEach>
+                                </c:forEach>
                             </ul>
                         </div>
                     </div>

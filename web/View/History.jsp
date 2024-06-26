@@ -136,6 +136,11 @@
                 padding: 5px;
                 border-radius: 5px;
             }
+            .title{
+                font-size: 26px;
+                font-weight: 700;
+                color: #0E3C6E;
+            }
         </style>
     </head>
 
@@ -154,7 +159,7 @@
                     <nav class="navbar navbar-expand-sm">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <p class="title text-uppercase">Lesson</p>
+                                <p class="title text-uppercase">History Lesson</p>
                             </li>
                         </ul>
                     </nav>

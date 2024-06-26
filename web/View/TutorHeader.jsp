@@ -82,7 +82,7 @@
                 </li>
                 <!-- Schedule of student -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="TutorScheduleController">
                         <i class="fa-regular fa-calendar head_icon"></i>
                     </a>
                 </li>
@@ -99,7 +99,7 @@
                 <!-- Tutor profile image -->
                 <li class="nav-item">
                     <a class="nav-link" href="TutorProfileController">
-                        <img class="tutor_profile_image" src="${pageContext.request.contextPath}/image/${tutor.image}">
+                        <img class="tutor_profile_image" src="${pageContext.request.contextPath}/${tutor.image}" alt="Tutor Profile Image">
                     </a>
                 </li>
             </ul>

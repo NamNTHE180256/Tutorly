@@ -3,21 +3,28 @@ package Controller;
 import DAO.TutorDAO;
 import DAO.SubjectCountPercentageDAO;
 import Model.Tutor;
-import Model.SubjectCountPercentage;
 import Model.Subject;
 import Model.User;
-import jakarta.servlet.RequestDispatcher;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Vector;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Vector;
+import jakarta.servlet.http.Part;
 
 @WebServlet(name = "TutorProfileController", urlPatterns = {"/TutorProfileController"})
+@MultipartConfig
 public class TutorProfileController extends HttpServlet {
+
+    private static final String UPLOAD_DIRECTORY = "uploads";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,32 +42,46 @@ public class TutorProfileController extends HttpServlet {
         String service = request.getParameter("service");
         TutorDAO tDAO = new TutorDAO();
         SubjectCountPercentageDAO scpDAO = new SubjectCountPercentageDAO();
-        Vector<SubjectCountPercentage> scp_vector = scpDAO.getSubjectCountPercentage(tutor.getId());
         Vector<Subject> subjectsTaught = scpDAO.getSubjectsTaughtByTutor(tutor.getId());
-        TutorDAO tdao = new TutorDAO();
-        Tutor currTutor = tdao.getTutorById(tutor.getId());
-        System.out.println(currTutor);
+        Tutor currTutor = tDAO.getTutorById(tutor.getId());
+
         request.setAttribute("t", currTutor);
+        request.setAttribute("subjectsTaught", subjectsTaught);
+        
         if (service == null || service.isEmpty()) {
-            request.setAttribute("t", currTutor);
-            request.setAttribute("scp_vector", scp_vector);
-            request.setAttribute("subjectsTaught", subjectsTaught);
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorProfile.jsp");
             dispatcher.forward(request, response);
         } else if (service.equals("updateRequest")) {
-            request.setAttribute("t", currTutor);
-            request.setAttribute("scp_vector", scp_vector);
-            request.setAttribute("subjectsTaught", subjectsTaught);
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/UpdateTutor.jsp");
             dispatcher.forward(request, response);
         } else if (service.equals("update")) {
             String newName = request.getParameter("name");
             if (newName != null && !newName.isEmpty()) {
-                tutor.setName(newName);
-                tDAO.updateTutor(tutor);
+                currTutor.setName(newName);
+                tDAO.updateTutor(currTutor);
             }
+
+            // Handle profile image upload
+            Part profileImagePart = request.getPart("profileImage");
+            if (profileImagePart != null && profileImagePart.getSize() > 0) {
+                String fileName = Paths.get(profileImagePart.getSubmittedFileName()).getFileName().toString();
+                String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+
+                // Create the upload directory if it doesn't exist
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+
+                String filePath = uploadPath + File.separator + fileName;
+                profileImagePart.write(filePath);
+
+                // Update tutor's image path in the database
+                currTutor.setImage(UPLOAD_DIRECTORY + "/" + fileName);
+                tDAO.updateTutor(currTutor);
+            }
+
             request.setAttribute("t", currTutor);
-            request.setAttribute("scp_vector", scp_vector);
             request.setAttribute("subjectsTaught", subjectsTaught);
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorProfile.jsp");
             dispatcher.forward(request, response);
@@ -79,14 +100,34 @@ public class TutorProfileController extends HttpServlet {
             return;
         }
         String action = request.getParameter("action");
-        if (action.equals("add")) {
+        if (action.equals("update")) {
             String name = request.getParameter("name");
             int id = Integer.parseInt(request.getParameter("id"));
             TutorDAO tutorDAO = new TutorDAO();
             Tutor t = tutorDAO.getTutorById(id);
             t.setName(name);
-            System.out.println(t.getName());
             tutorDAO.updateTutor(t);
+
+            // Handle profile image upload
+            Part profileImagePart = request.getPart("profileImage");
+            if (profileImagePart != null && profileImagePart.getSize() > 0) {
+                String fileName = Paths.get(profileImagePart.getSubmittedFileName()).getFileName().toString();
+                String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+
+                // Create the upload directory if it doesn't exist
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+
+                String filePath = uploadPath + File.separator + fileName;
+                profileImagePart.write(filePath);
+
+                // Update tutor's image path in the database
+                t.setImage(UPLOAD_DIRECTORY + "/" + fileName);
+                tutorDAO.updateTutor(t);
+            }
+
             response.sendRedirect("TutorProfileController");
         }
     }

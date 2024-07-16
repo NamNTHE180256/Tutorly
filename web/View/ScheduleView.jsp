@@ -11,7 +11,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src='js/newjavascript.js'></script>
@@ -89,7 +91,7 @@
                 flex-grow: 1;
             }
         </style>
-        <title>Dashboard</title>
+        <title>Schedule</title>
     </head>
     <body>
 
@@ -120,39 +122,39 @@
                                         var calendarEl = document.getElementById('calendar');
 
                                         var events = [
-                                            <c:forEach items="${lesson_vector}" var="v">
-                                                {
-                                                    title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
-                                                    start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                    url: '../Tutorly/ScheduleController?service=viewLessonDetail&lessonid=${v.getId()}',
-                                                    end: '${v.getDate()}T${v.getSession().getEndTime()}',
-                                                    className: 'custom-event'
-                                                }<c:if test="${not empty v and v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
-                                            </c:forEach>
-                                        ];
+                                    <c:forEach items="${lesson_vector}" var="v">
+                                        {
+                                        title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
+                                                        start: '${v.getDate()}T${v.getSession().getStartTime()}',
+                                                                        url: '../Tutorly/ScheduleController?service=viewLessonDetail&lessonid=${v.getId()}',
+                                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
+                                                                                        className: 'custom-event'
+                                                                                }<c:if test="${not empty v and v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
+                                    </c:forEach>
+                                                                                ];
 
-                                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                                            height: '100%',
-                                            expandRows: true,
-                                            slotMinTime: '08:00',
-                                            slotMaxTime: '21:00',
-                                            headerToolbar: {
-                                                left: 'prev,next today',
-                                                center: 'title',
-                                                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                                            },
-                                            initialView: 'dayGridMonth',
-                                            initialDate: new Date().toISOString().split('T')[0], // Current date
-                                            navLinks: true, // can click day/week names to navigate views
-                                            editable: false,
-                                            selectable: false,
-                                            nowIndicator: true,
-                                            dayMaxEvents: true, // allow "more" link when too many events
-                                            events: events
-                                        });
+                                                                                var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                                                    height: '100%',
+                                                                                    expandRows: true,
+                                                                                    slotMinTime: '08:00',
+                                                                                    slotMaxTime: '21:00',
+                                                                                    headerToolbar: {
+                                                                                        left: 'prev,next today',
+                                                                                        center: 'title',
+                                                                                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                                                                                    },
+                                                                                    initialView: 'dayGridMonth',
+                                                                                    initialDate: new Date().toISOString().split('T')[0], // Current date
+                                                                                    navLinks: true, // can click day/week names to navigate views
+                                                                                    editable: false,
+                                                                                    selectable: false,
+                                                                                    nowIndicator: true,
+                                                                                    dayMaxEvents: true, // allow "more" link when too many events
+                                                                                    events: events
+                                                                                });
 
-                                        calendar.render();
-                                    });
+                                                                                calendar.render();
+                                                                            });
                                 </script>
                                 <div id='calendar-container'>
                                     <div id='calendar'></div>
@@ -211,7 +213,83 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="modal-body">
-                                                            Modal body..
+
+                                                            <div class="accordion" id="accordionExample">
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="headingOne">
+                                                                        <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                            Documents
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                                        <c:forEach items="${document}" var="d">
+                                                                            <div class="accordion-body">
+                                                                                <strong>${d.fileName} :</strong>
+                                                                                <a href="#">${d.filePath}</a>
+                                                                                <p style="margin: 0; color: #A2A2A2">${d.uploadedAt}</p>
+                                                                            </div>
+                                                                            <hr/>
+                                                                        </c:forEach>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="headingTwo">
+                                                                        <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                            Slides
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                                        <div class="accordion-body">
+                                                                            <c:forEach items="${slide}" var="s">
+                                                                            <div class="accordion-body">
+                                                                                <strong>${s.fileName} :</strong>
+                                                                                <a href="#">${s.filePath}</a>
+                                                                                <p style="margin: 0; color: #A2A2A2">${s.uploadedAt}</p>
+                                                                            </div>
+                                                                            <hr/>
+                                                                        </c:forEach>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="headingThree">
+                                                                        <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                            E-Books
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                                        <div class="accordion-body">
+                                                                            <c:forEach items="${book}" var="b">
+                                                                            <div class="accordion-body">
+                                                                                <strong>${b.fileName} :</strong>
+                                                                                <a href="#">${b.filePath}</a>
+                                                                                <p style="margin: 0; color: #A2A2A2">${b.uploadedAt}</p>
+                                                                            </div>
+                                                                            <hr/>
+                                                                        </c:forEach>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="headingFour">
+                                                                        <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                            Records/Videos
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                                                        <div class="accordion-body">
+                                                                            <c:forEach items="${video}" var="v">
+                                                                            <div class="accordion-body">
+                                                                                <strong>${v.fileName} :</strong>
+                                                                                <a href="#">${v.filePath}</a>
+                                                                                <p style="margin: 0; color: #A2A2A2">${v.uploadedAt}</p>
+                                                                            </div>
+                                                                            <hr/>
+                                                                        </c:forEach>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>  
                                                         </div>
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">

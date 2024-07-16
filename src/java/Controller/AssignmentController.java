@@ -64,7 +64,7 @@ public class AssignmentController extends HttpServlet {
                 request.setAttribute("classAssignments", classAssignmentsDone);
                 request.setAttribute("todoassignment", classAssignmentsToDo.size());
                 request.setAttribute("linfo", linfo);
-                //request.setAttribute("classAssignmentsDone", classAssignmentsDone);
+                request.setAttribute("classAssignmentsDone", classAssignmentsDone);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/Assigment.jsp");
                 dispatcher.forward(request, response);
             } else {

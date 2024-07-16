@@ -4,13 +4,14 @@
     Author     : TRANG
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <style>
@@ -20,7 +21,10 @@
             }
 
             .navheader {
-                margin: 0 20px;
+                margin-top: 0;
+                margin-bottom: 0;
+                margin-left: 20px;
+                margin-right: 20px;
                 padding: 0;
             }
 
@@ -49,20 +53,26 @@
                 color: #0E3C6E;
             }
 
-            .navbarmenu {
-                margin: 0 20px 10px;
+/*            .navbarmenu {
+                margin-top: 0;
+                margin-bottom: 10px;
+                margin-left: 20px;
+                
             }
 
             .navmenuitem {
                 margin-right: 25px;
                 background-color: #0E3C6E;
                 border-radius: 10px;
-                box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+                width: 120px;
+                
+                 text-align: center;
             }
-
+            
             .navmenuitem a {
                 color: aliceblue;
-            }
+                 justify-content: center;
+            }*/
 
             .content {
                 padding-top: 20px;
@@ -71,106 +81,92 @@
         </style>
         <title>JSP Page</title>
     </head>
-    <body>
-        <header class="head">
-            <nav class="navbar navbar-expand-sm navheader">
-                <a href="../Tutorly/TutorController"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
-                <!-- Left -->
-
-                <!-- Right -->
-                <ul class="navbar-nav ml-auto">
+    <body >
+        
+        
+        
+        
+        <nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+    data-bs-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
+    <div class="collapse navbar-collapse" id="navbarExample">
+      <ul class="navbar-nav me-auto mb-0">
+        <!-- Find tutor -->
+                    
+        
+      </ul>
+      <div class="d-flex align-items-center flex-column flex-lg-row">
+        <ul class="navbar-nav ml-auto">
                     <!-- Notification from system or tutor -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-bell head_icon"></i></a>
+                        <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-solid fa-bell head_icon"></i></a></button>
                     </li>
                     <!-- Message from tutor -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-regular fa-message head_icon"></i></a>
+                        <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-regular fa-message head_icon"></i></a></button>
                     </li>
                     <!-- Schedule of student -->
                     <li class="nav-item">
-                        <a class="nav-link" href="../Tutorly/TutorController"><i class="fa-regular fa-calendar head_icon"></i></a>
+                        <button style="background: white; border: 1px white;"><a class="nav-link" href="../Tutorly/ScheduleController"><i class="fa-regular fa-calendar head_icon"></i></a></button>
                     </li>
                     <!-- List of favor tutor -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-regular fa-heart head_icon"></i></a>
+                        <button style="background: white; border: 1px white;"><a class="nav-link" href="../Tutorly/SavedTutorController"><i class="fa-regular fa-heart head_icon"></i></a></button>
                     </li>
-
-                    <!-- Check if the user is logged in -->
-                    <c:choose>
-                        <c:when test="${not empty sessionScope.user && sessionScope.user.role == 'learner'}">
-                            <!-- Display student name and profile image if logged in -->
-                            <li class="nav-item">
-                                <a href="../Tutorly/StudentProfileController"> 
-                                    <p class="nav-link learnername">${sessionScope.learner.name}</p>
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
-                            </li>
-                        </c:when>
-                        <c:when test="${not empty sessionScope.user && sessionScope.user.role == 'tutor'}">
-                            <!-- Display tutor name and profile image if logged in -->
-                            <li class="nav-item">
-                                <a href="../Tutorly/StudentProfileController"> 
-                                    <p class="nav-link learnername">${sessionScope.tutor.name}</p>
-                                    <c:out value="${sessionScope.tutor.name}"/>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><img class="student_profile_image" src="image/image1.jpg"></a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <!-- Display Login and Register links if not logged in -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="View/Login.jsp">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="View/Register.jsp">Register</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
+                    <!-- Student name -->
+                    <li class="nav-item">
+                         <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${linfo.name}</p></a>
+                    </li>
+                    <!-- Student profile image -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <img class="student_profile_image" src="image/${linfo.image}">
+                        </a>
+                    </li>
                 </ul>
-            </nav>
-            <hr />
-        </header>
-        <!--menu-->
-        <c:if test="${not empty sessionScope.user && (sessionScope.user.role == 'learner' || sessionScope.user.role == 'tutor')}">
-            <nav class="navbar navbar-expand-sm navbarmenu">
-                <!-- Links -->
-                <ul class="navbar-nav">
-                    <li class="nav-item navmenuitem">
-                        <!-- Dashboard -->
-                        <a class="nav-link" href="../Tutorly/DashboardController">Dashboard</a>
-                    </li>
-                    <li class="nav-item navmenuitem">
-                        <!-- Schedule -->
-                        <a class="nav-link" href="#">Schedule</a>
-                    </li>
-                    <li class="nav-item navmenuitem">
-                        <!-- Material -->
-                        <a class="nav-link" href="../Tutorly/MaterialControllers">Material</a>
-                    </li>
-                    <li class="nav-item navmenuitem">
-                        <!-- Assignment -->
-                        <a class="nav-link" href="../Tutorly/AssignmentController">Assignment</a>
-                    </li>
-                    <li class="nav-item navmenuitem">
-                        <!-- Save list -->
-                        <a class="nav-link" href="#">Save list tutors</a>
-                    </li>
-                    <li class="nav-item navmenuitem">
+      </div>
+    </div>
+  </div>
+</nav>
+
+        <!-- Menu -->
+        <nav class="navbar navbar-expand-sm navbarmenu">
+            <!-- Links -->
+            <ul class="navbar-nav">
+                
+                <li class="nav-item navmenuitem">
+                    <!-- Dashboard -->
+                    <a class="nav-link" href="../Tutorly/DashboardController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- Schedule -->
+                    <a class="nav-link" href="../Tutorly/ScheduleController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Schedule</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- Material -->
+                    <a class="nav-link" href="../Tutorly/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- Assignment -->
+                    <a class="nav-link" href="../Tutorly/AssignmentController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Assignment</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- Save list -->
+                    <a class="nav-link" href="../Tutorly/SavedTutorController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Save list tutors</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
                         <!-- View classes -->
-                        <a class="nav-link" href="StdudentDashboard">View Class</a>
+                        <a class="nav-link" href="StdudentDashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
                     </li>
                     <li class="nav-item navmenuitem">
                         <!-- History -->
-                        <a class="nav-link" href="history">History</a>
+                        <a class="nav-link" href="history"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">History</button></a>
                     </li>
-                </ul>
-            </nav>
-        </c:if>
+            </ul>
+        </nav>
     </body>
 </html>

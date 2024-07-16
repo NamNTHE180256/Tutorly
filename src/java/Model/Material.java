@@ -1,28 +1,26 @@
 package Model;
 import java.sql.Timestamp;
-
-
-
-
+import java.util.Date;
 
 public class Material {
 
-     private int id;
+    private int id;
     private String fileName;
-    private byte[] fileData;
+    private String filePath;
     private String fileType;
-    private String uploadedAt;
-    private int lessonID; // Corrected variable name
+    private Date uploadedAt;
+    private Lesson lesson;
 
-    // Constructor
+    public Material() {
+    }
 
-    public Material(int id, String fileName, byte[] fileData, String fileType, String uploadedAt, int lessonID) {
+    public Material(int id, String fileName, String filePath, String fileType, Date uploadedAt, Lesson lesson) {
         this.id = id;
         this.fileName = fileName;
-        this.fileData = fileData;
+        this.filePath = filePath;
         this.fileType = fileType;
         this.uploadedAt = uploadedAt;
-        this.lessonID = lessonID;
+        this.lesson = lesson;
     }
 
     public int getId() {
@@ -41,15 +39,13 @@ public class Material {
         this.fileName = fileName;
     }
 
-    public byte[] getFileData() {
-        return fileData;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setFileData(byte[] fileData) {
-        this.fileData = fileData;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
-
- 
 
     public String getFileType() {
         return fileType;
@@ -59,20 +55,20 @@ public class Material {
         this.fileType = fileType;
     }
 
-    public String getUploadedAt() {
+    public Date getUploadedAt() {
         return uploadedAt;
     }
 
-    public void setUploadedAt(String uploadedAt) {
+    public void setUploadedAt(Date uploadedAt) {
         this.uploadedAt = uploadedAt;
     }
 
-    public int getLessonID() {
-        return lessonID;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setLessonID(int lessonID) {
-        this.lessonID = lessonID;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
    
 

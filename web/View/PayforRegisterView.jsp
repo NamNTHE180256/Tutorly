@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -196,7 +197,7 @@
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                     </tr>
-                                </thead>
+                                </thead>    
                                 <tbody>
                                     <tr>
                                         <td>
@@ -222,7 +223,7 @@
                                         <td>
                                             <p >Fee per lesson</p>
                                         </td>
-                                        <td>${tutor.price}00</td>
+                                        <td><span><fmt:formatNumber value="${tutor.price}" pattern="###,###" /></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -239,14 +240,14 @@
                                         <td>Discount: </td>
                                         <td>0</td>
                                     </tr>
-                                    
+                                        
                                     <tr>
                                         <td>Subtotal:</td>
-                                        <td>${tutor.price*totallesson}00</td>
+                                        <td><span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /></td>
                                     </tr>
                                     <tr>
                                         <td style="color: #0E3C6E;"><strong>You must pay:</strong> </td>
-                                        <td style="color: #0E3C6E;"><strong>${tutor.price*totallesson}00</strong> </td>
+                                        <td style="color: #0E3C6E;"><strong><span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /></strong> </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -269,13 +270,17 @@
                                     <tr>
                                       <td style="color: #0E3C6E;"><strong>You must pay:</strong> </td>
                                       <td style="color: #0E3C6E;"><strong>800.000</strong> </td>
-                                     
+                                        
                                     </tr>
                                   </tbody>
                                 </table> -->
-                            <div class="btn btn-primary d-block h8">PAY <span
-                                    class="fas fa-dollar-sign ms-2"></span>${tutor.price*totallesson}00<span
-                                    class="ms-3 fas fa-arrow-right"></span></div>
+                            <form action="AjaxServlet" method="get">
+                                <input type="hidden" name="amount" value="${tutor.price*totallesson}">
+                                <button class="btn btn-primary d-block h8" type="submit">PAY <span
+                                        class="fas fa-dollar-sign ms-2"></span><span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /><span
+                                        class="ms-3 fas fa-arrow-right"></span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     

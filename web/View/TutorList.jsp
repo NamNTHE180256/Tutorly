@@ -217,7 +217,8 @@
 
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerclass"
                                                 style="margin-bottom: 5px; background-color: #A2A2A2">
-                                            Register class
+                                            <a href="RegisterClassController?tutor_id=${t.id}" style="color:white">Register class</a>
+                                            
                                         </button>
 
 

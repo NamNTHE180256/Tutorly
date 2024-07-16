@@ -7,9 +7,11 @@ package Controller;
 import DAO.AssignmentDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
+import DAO.MaterialDAO;
 import Model.Assignment;
 import Model.Learner;
 import Model.Lesson;
+import Model.Material;
 import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -51,6 +53,7 @@ public class ScheduleController extends HttpServlet {
             String service = request.getParameter("service");
             response.setContentType("text/html;charset=UTF-8");
             LessonDAO lDAO = new LessonDAO();
+            MaterialDAO mDAO = new MaterialDAO();
             AssignmentDAO aDAO = new AssignmentDAO();
             Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
             LearnerDAO leDAO = new LearnerDAO();
@@ -61,20 +64,28 @@ public class ScheduleController extends HttpServlet {
                 request.setAttribute("lesson_vector", lesson_vector);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
                 dispatcher.forward(request, response);
-            } else if (service.equals("viewLessonDetail")) {
+            }else if (service.equals("viewLessonDetail")){
                 int lessonid = Integer.parseInt(request.getParameter("lessonid"));
                 Vector<Assignment> assignmentoflesson = aDAO.getTodoAssignmentsByLessonId(lessonid);
+                Vector<Material> document = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "document");
+                Vector<Material> book = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "book");
+                Vector<Material> video = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "video/record");
+                Vector<Material> slide = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "slide");
                 request.setAttribute("service", "viewLessonDetail");
+                request.setAttribute("document", document);
+                request.setAttribute("book", book);
+                request.setAttribute("video", video);
+                request.setAttribute("slide", slide);
                 request.setAttribute("assignmentoflesson", assignmentoflesson);
                 request.setAttribute("linfo", linfo);
                 request.setAttribute("lesson_vector", lesson_vector);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
                 dispatcher.forward(request, response);
-            }
 
-        } else {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            } else {
+                request.setAttribute("errorMessage", "you dont have permission to access this page");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+            }
         }
     }
 
@@ -116,5 +127,5 @@ public class ScheduleController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
+

@@ -4,8 +4,13 @@
  */
 package Controller;
 
+import DAO.LearnerDAO;
+import DAO.SaveTutorListDAO;
 import DAO.SubjectDAO;
+import DAO.TutorAvailabilityDAO;
 import DAO.TutorDAO;
+import Model.Learner;
+import Model.SaveTutorList;
 import Model.Subject;
 import Model.Tutor;
 import Model.User;
@@ -47,71 +52,101 @@ public class TutorController extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         if (user.getRole().equalsIgnoreCase("learner")) {
-            TutorDAO tDAO = new TutorDAO();
-            SubjectDAO sDAO = new SubjectDAO();
-            Vector<Tutor> tutor_vector = tDAO.displayAllTutors(); // Method to get all tutors
-            Map<Integer, Map<String, Object>> tutorRatings = tDAO.getAllTutorRatings(); // Method to get all ratings
-            Vector<Subject> subject_vector = sDAO.getSubjects("SELECT * FROM Subject"); // Method to get all subjects
+            SaveTutorListDAO tDAO = new SaveTutorListDAO();
+    SubjectDAO sDAO = new SubjectDAO();
+    TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
 
-            // Check for subject filter
-            String subject_id = request.getParameter("id");
-            if (subject_id != null && !subject_id.isEmpty()) {
-                tutor_vector = tDAO.getTutors("SELECT * FROM Tutor WHERE subjectId = " + subject_id);
-            }
-            String price_raw = request.getParameter("price");
-            if (price_raw != null && !price_raw.isEmpty()) {
+    Vector<SaveTutorList> tutor_vector = tDAO.getTop10TutorsByRating();
+    Map<Integer, Map<String, Object>> tutorRatings = tDAO.getAllTutorRatings();
+    Vector<Subject> subject_vector = sDAO.getSubjects("SELECT * FROM Subject");
+    //Vector<TutorAvailability> tutortvailability_vector = taDao.getAvailableSessions();
+
+    String service = request.getParameter("service");
+    if (service != null && !service.isEmpty()) {
+        // Check for subject filter
+        String subject_id = request.getParameter("id");
+        if (subject_id != null && !subject_id.isEmpty()) {
+            tutor_vector = tDAO.getTutors("SELECT t.*, "
+                    + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                    + "FROM Tutor t "
+                    + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                    + "WHERE t.subjectId = " + subject_id);
+        }
+
+        // Check for price filter
+        String price_raw = request.getParameter("price");
+        if (price_raw != null && !price_raw.isEmpty()) {
+            try {
                 int price = Integer.parseInt(price_raw);
+                String priceFilter = "";
                 switch (price) {
                     case 1:
-                        tutor_vector = tDAO.getTutors("SELECT * FROM Tutor WHERE price < 200");
+                        priceFilter = "t.price < 200";
                         break;
                     case 2:
-                        tutor_vector = tDAO.getTutors("SELECT * FROM Tutor WHERE price BETWEEN 200 AND 400");
+                        priceFilter = "t.price BETWEEN 200 AND 400";
                         break;
                     case 3:
-                        tutor_vector = tDAO.getTutors("SELECT * FROM Tutor WHERE price > 400");
+                        priceFilter = "t.price > 400";
                         break;
                 }
-                
+                tutor_vector = tDAO.getTutors("SELECT t.*, "
+                        + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                        + "FROM Tutor t "
+                        + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                        + "WHERE " + priceFilter);
+            } catch (NumberFormatException e) {
+                // Handle error gracefully
             }
-            
-            String session_raw = request.getParameter("session");
-            if (session_raw != null && !session_raw.isEmpty()) {
+        }
+
+        // Check for session filter
+        String session_raw = request.getParameter("session");
+        if (session_raw != null && !session_raw.isEmpty()) {
+            try {
                 int session = Integer.parseInt(session_raw);
+                String sql = "";
                 switch (session) {
                     case 1:
-                        tutor_vector = tDAO.getTutors("SELECT DISTINCT t.*\n"
-                                + "FROM \n"
-                                + "    Tutor t\n"
-                                + "JOIN \n"
-                                + "    TutorAvailability ta ON ta.tutorId = t.id\n"
-                                + "WHERE \n"
-                                + "    ta.sessionId LIKE '%1%' OR ta.sessionId LIKE '%2%';");
+                        sql = "SELECT DISTINCT t.id, t.subjectId, t.name, t.gender, t.image, "
+                                + "CAST(t.bio AS nvarchar(max)) AS bio, t.edu, t.price, t.bank, t.status, "
+                                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                                + "FROM Tutor t "
+                                + "JOIN TutorAvailability ta ON ta.tutorId = t.id "
+                                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                                + "WHERE ta.sessionId LIKE '%1%' OR ta.sessionId LIKE '%2%'";
                         break;
                     case 2:
-                        tutor_vector = tDAO.getTutors("SELECT DISTINCT t.*\n"
-                                + "FROM \n"
-                                + "    Tutor t\n"
-                                + "JOIN \n"
-                                + "    TutorAvailability ta ON ta.tutorId = t.id\n"
-                                + "WHERE \n"
-                                + "    ta.sessionId LIKE '%3%' OR ta.sessionId LIKE '%4%';");
+                        sql = "SELECT DISTINCT t.id, t.subjectId, t.name, t.gender, t.image, "
+                                + "CAST(t.bio AS nvarchar(max)) AS bio, t.edu, t.price, t.bank, t.status, "
+                                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                                + "FROM Tutor t "
+                                + "JOIN TutorAvailability ta ON ta.tutorId = t.id "
+                                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                                + "WHERE ta.sessionId LIKE '%3%' OR ta.sessionId LIKE '%4%'";
                         break;
                     case 3:
-                        tutor_vector = tDAO.getTutors("SELECT DISTINCT t.*\n"
-                                + "FROM \n"
-                                + "    Tutor t\n"
-                                + "JOIN \n"
-                                + "    TutorAvailability ta ON ta.tutorId = t.id\n"
-                                + "WHERE \n"
-                                + "    ta.sessionId LIKE '%5%';");
+                        sql = "SELECT DISTINCT t.id, t.subjectId, t.name, t.gender, t.image, "
+                                + "CAST(t.bio AS nvarchar(max)) AS bio, t.edu, t.price, t.bank, t.status, "
+                                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                                + "FROM Tutor t "
+                                + "JOIN TutorAvailability ta ON ta.tutorId = t.id "
+                                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                                + "WHERE ta.sessionId LIKE '%5%'";
                         break;
                 }
-                
+                if (!sql.isEmpty()) {
+                    tutor_vector = tDAO.getTutors(sql);
+                }
+            } catch (NumberFormatException e) {
+                // Handle error gracefully
             }
-            
-            String star_w = request.getParameter("star");
-            if (star_w != null && !star_w.isEmpty()) {
+        }
+
+        // Check for star rating filter
+        String star_w = request.getParameter("star");
+        if (star_w != null && !star_w.isEmpty()) {
+            try {
                 int star = Integer.parseInt(star_w);
                 switch (star) {
                     case 1:
@@ -130,22 +165,32 @@ public class TutorController extends HttpServlet {
                         tutor_vector = tDAO.RateTutors(5, 5);
                         break;
                 }
+            } catch (NumberFormatException e) {
+                // Handle error gracefully
             }
-            
-            String name = request.getParameter("tutorname");
-            if (name != null && !name.isEmpty()) {
-                tutor_vector = tDAO.getTutors("SELECT *\n"
-                        + "FROM Tutor\n"
-                        + "WHERE name LIKE N'%" + name + "%';");
-            }
-            // Set attributes
-            request.setAttribute("tutor_vector", tutor_vector);
-            request.setAttribute("tutorRatings", tutorRatings);
-            request.setAttribute("subject_vector", subject_vector);
+        }
 
-            // Forward to JSP
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorList.jsp");
-            dispatcher.forward(request, response);
+        // Check for name filter
+        String name = request.getParameter("tutorname");
+        if (name != null && !name.isEmpty()) {
+            tutor_vector = tDAO.getTutors("SELECT t.*, "
+                    + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                    + "FROM Tutor t "
+                    + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                    + "WHERE t.name LIKE N'%" + name + "%'");
+        }
+    }
+
+    request.setAttribute("tutor_vector", tutor_vector);
+    request.setAttribute("tutorRatings", tutorRatings);
+    request.setAttribute("subject_vector", subject_vector);
+    //request.setAttribute("tutortvailability_vector", tutortvailability_vector);
+        LearnerDAO leDAO = new LearnerDAO();
+        Learner linfo = leDAO.getStudentById(1);
+        request.setAttribute("linfo", linfo);
+    // Forward to JSP
+    RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorList.jsp");
+    dispatcher.forward(request, response);
         } else {
             request.setAttribute("errorMessage", "you dont have permission to access this page");
             request.getRequestDispatcher("error.jsp").forward(request, response);

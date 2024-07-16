@@ -150,6 +150,23 @@ CREATE TABLE Material (
     FOREIGN KEY (lessionId) REFERENCES Lession(id)
 );
 
+CREATE TABLE RegisterTrialClass (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    learnerId INT,
+    tutorId INT,
+    subjectId INT,
+    session VARCHAR(50),
+    totalSession INT,
+    startDate DATE,
+    endDate DATE,
+    status VARCHAR(50), --wait, accepted, denied
+    readed VARCHAR(50), -- read, unread
+    FOREIGN KEY (learnerId) REFERENCES Learner(id),
+    FOREIGN KEY (tutorId) REFERENCES Tutor(id),
+    FOREIGN KEY (subjectId) REFERENCES Subject(id)
+);
+
+
 -- Insert into User table
 INSERT INTO [User] (email, [password], [role], createdAt)
 VALUES 
@@ -437,7 +454,21 @@ VALUES
 (N'Assignment16', 'path/to/assignment16.docx', null, 'todo', GETDATE(), 16);
 
 -- Insert into Material table
+-- Insert into Material table
 INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessionId)
 VALUES 
-(N'Material1.pdf', 'path/to/material1.pdf', 'PDF', GETDATE(), 1),
-(N'Material2.pptx', 'path/to/material2.pptx', 'PPTX', GETDATE(), 2);
+(N'Material1.pdf', 'mas1.pdf', 'document', GETDATE(), 1),
+(N'Material2.ppt', 'mas2.ppt', 'slide', GETDATE(), 2),
+(N'Material1.pdf', 'Assig2.pdf', 'document', GETDATE(), 1),
+(N'Material2.ppt', 'path/to/material2.ppt', 'slide', GETDATE(), 2),
+(N'Document1.pdf', 'mas3.pdf', 'document', GETDATE(), 3),
+(N'Presentation1.ppt', 'path/to/presentation1.ppt', 'slide', GETDATE(), 4),
+(N'Video1.mp4', 'https://www.youtube.com/embed/hBx3cV2ugks', 'video/record', GETDATE(), 5),
+(N'Link1', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/dai-so-10_79202111413.pdf', 'book', GETDATE(), 6),
+(N'Book1.pdf', 'mas2.pdf', 'document', GETDATE(), 7),
+(N'Document2.pdf', 'mas291.pdf', 'document', GETDATE(), 8),
+(N'Presentation2.ppt', 'path/to/presentation2.ppt', 'slide', GETDATE(), 9),
+(N'Video2.mp4', 'path/to/video2.mp4', 'video/record', GETDATE(), 10),
+(N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
+(N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
+

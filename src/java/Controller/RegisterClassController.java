@@ -5,18 +5,16 @@
 
 package Controller;
 
+import DAO.AClassDAO;
 import DAO.LearnerDAO;
-import DAO.RatingCountPercentageDAO;
-import DAO.RatingDAO;
-import DAO.SaveTutorListDAO;
+import DAO.LessonDAO;
+import DAO.SessionDAO;
 import DAO.TutorAvailabilityDAO;
 import DAO.TutorDAO;
-import Model.Learner;
-import Model.Rating;
-import Model.RatingCountPercentage;
+import Model.AClass;
+import Model.Lesson;
 import Model.Tutor;
 import Model.TutorAvailability;
-import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,15 +24,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Map;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 
 /**
- *learner
+ *
  * @author TRANG
  */
-@WebServlet(name="TutorDetailController", urlPatterns={"/TutorDetailController"})
-public class TutorDetailController extends HttpServlet {
+@WebServlet(name="RegisterClassController", urlPatterns={"/RegisterClassController"})
+public class RegisterClassController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -45,47 +44,22 @@ public class TutorDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-                HttpSession session1 = request.getSession();
-    
-      
-       TutorDAO tuDAO = new TutorDAO();
-        RatingDAO rDAO = new RatingDAO();
-        SaveTutorListDAO tDAO = new SaveTutorListDAO();
+        response.setContentType("text/html;charset=UTF-8");
+        String tutor_id = request.getParameter("tutor_id");
+        System.out.println("tutor_id: " + tutor_id);
         TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
-        RatingCountPercentageDAO ratecountDAO = new RatingCountPercentageDAO();
-        Tutor t = new Tutor();
-        Vector<Tutor> suggesttutor_vector = null;
-        Vector<Rating> rateofstudent = null;
-        Map<String, Object> tutorRatings = null;
-        Vector<RatingCountPercentage> ratecount = null;
-        String id_raw = request.getParameter("id");
-        String subjectId_raw = request.getParameter("idsub");
-        if(id_raw!= null & !id_raw.isEmpty()){
-            int id = Integer.parseInt(id_raw);
-            int subjectId = Integer.parseInt(subjectId_raw);
-            t = tDAO.getTutorById(id);
-            rateofstudent = rDAO.getRatingsByTutorId(id);
-            tutorRatings = tDAO.getTutorRatingsById(id);
-            ratecount = ratecountDAO.getPercentageByTutorID(id);
-            suggesttutor_vector = tuDAO.getTutors("SELECT *\n"
-                    + "FROM Tutor\n"
-                    + "WHERE subjectId ="+ subjectId 
-                    + "AND id <> "+id);
-        }
-        
-        Vector<TutorAvailability> tutorAvailabilities = taDao.getTutorAvailabilityByTutorId(Integer.parseInt(id_raw));
+        TutorDAO tDAO = new TutorDAO();
+        Tutor tutor = tDAO.getTutorById(Integer.parseInt(tutor_id));
+        System.out.println("Tutor: " + tutor);
+        Vector<TutorAvailability> tutorAvailabilities = taDao.getTutorAvailabilityByTutorId(Integer.parseInt(tutor_id));
+        System.out.println("Tutor Availabilities: " + tutorAvailabilities);
         request.setAttribute("tutorAvailabilities", tutorAvailabilities);
-        request.setAttribute("ratings", rateofstudent);
-        request.setAttribute("tutorRatings", tutorRatings);
-        request.setAttribute("ratecount", ratecount);
-        request.setAttribute("tutor", t);
-        request.setAttribute("suggesttutor_vector", suggesttutor_vector);
-        LearnerDAO leDAO = new LearnerDAO();
-        Learner linfo = leDAO.getStudentById(1);
-        request.setAttribute("linfo", linfo);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorDetail.jsp");
+        request.setAttribute("tutor", tutor);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("View/RegisterClassView.jsp");
         dispatcher.forward(request, response);
     }
+    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.

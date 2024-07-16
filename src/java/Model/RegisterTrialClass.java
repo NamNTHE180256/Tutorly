@@ -1,44 +1,52 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Model;
 
 import java.util.Date;
 
-public class AClass {
-
-    private int id;
+/**
+ *
+ * @author TRANG
+ */
+public class RegisterTrialClass {
+        private int id;
     private Learner learner;
     private Tutor tutor;
+    private Session session;
     private int totalSession;
     private Date startDate;
     private Date endDate;
     private String status;
     private Subject subject;
-    
-    // Constructors
-    public AClass() {
-        this.subject = new Subject(); // Ensure subject is initialized
-    }
+    private String readed;
 
-    public AClass(Learner learner, Tutor tutor, int totalSession, Date startDate, Date endDate, String status, Subject subject) {
+    public RegisterTrialClass(Learner learner, Tutor tutor, Session session, int totalSession, Date startDate, Date endDate, String status, Subject subject, String readed) {
         this.learner = learner;
         this.tutor = tutor;
+        this.session = session;
         this.totalSession = totalSession;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
         this.subject = subject;
+        this.readed = readed;
     }
-    
-    public AClass(Learner learner, Tutor tutor, int totalSession, Date startDate, Date endDate, String status) {
+
+    public RegisterTrialClass(int id, Learner learner, Tutor tutor, Session session, int totalSession, Date startDate, Date endDate, String status, Subject subject, String readed) {
+        this.id = id;
         this.learner = learner;
         this.tutor = tutor;
+        this.session = session;
         this.totalSession = totalSession;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
-        this.subject = new Subject(); // Ensure subject is initialized
+        this.subject = subject;
+        this.readed = readed;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -61,6 +69,14 @@ public class AClass {
 
     public void setTutor(Tutor tutor) {
         this.tutor = tutor;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 
     public int getTotalSession() {
@@ -103,9 +119,29 @@ public class AClass {
         this.subject = subject;
     }
 
+    public String getReaded() {
+        return readed;
+    }
+
+    public void setReaded(String readed) {
+        this.readed = readed;
+    }
+
+    
+
     @Override
     public String toString() {
-        return "AClass{" + "id=" + id + ", learner=" + learner + ", tutor=" + tutor + ", totalSession=" + totalSession + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + ", subject=" + subject + '}';
+        return "RegisterTrialClass{" +
+                "id=" + id +
+                ", learner=" + learner +
+                ", tutor=" + tutor +
+                ", totalSession=" + totalSession +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status='" + status + '\'' +
+                ", subject=" + subject +
+                ", readed='" + readed + '\'' +
+                '}';
     }
-    
 }
+

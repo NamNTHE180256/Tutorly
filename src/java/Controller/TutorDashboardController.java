@@ -57,8 +57,8 @@ public class TutorDashboardController extends HttpServlet {
             }
            
             request.setAttribute("classes", classes);
-            request.setAttribute("fn", aClassDAO.countClassByStatus("finished", tutorId));
-            request.setAttribute("og", aClassDAO.countClassByStatus("ongoing", tutorId));
+            //request.setAttribute("fn", aClassDAO.countClassByStatus("finished", tutorId));
+            //request.setAttribute("og", aClassDAO.countClassByStatus("ongoing", tutorId));
             request.setAttribute("sessionData", sessionData);
             System.out.println(sessionData);
             request.setAttribute("progressMap", progressMap);

@@ -22,7 +22,7 @@ public class LessonDAO extends DBContext {
         try {
             StringBuilder query = new StringBuilder();
             query.append("""
-                SELECT s.* FROM Lesson s 
+                SELECT s.* FROM Lession s 
                 JOIN Class c ON c.id = s.classId
                 WHERE tutorId = ? AND date < GETDATE()""");
 
@@ -54,7 +54,7 @@ public class LessonDAO extends DBContext {
         try {
             StringBuilder query = new StringBuilder();
             query.append("""
-                SELECT s.* FROM Lesson s 
+                SELECT s.* FROM Lession s 
                 JOIN Class c ON c.id = s.classId
                 WHERE learnerId = ? AND date < GETDATE()""");
 
@@ -114,7 +114,7 @@ public class LessonDAO extends DBContext {
 
     // Display all lessons
     public Vector<Lesson> displayAllLessons() {
-        return getLessons("SELECT * FROM Lesson");
+        return getLessons("SELECT * FROM Lession");
     }
 
     // Get lessons based on a SQL query
@@ -134,7 +134,7 @@ public class LessonDAO extends DBContext {
 
     // Get lesson by ID
     public Lesson getLessonById(int id) {
-        String sql = "SELECT * FROM Lesson WHERE id = ?";
+        String sql = "SELECT * FROM Lession WHERE id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
@@ -150,7 +150,7 @@ public class LessonDAO extends DBContext {
 
     // Add a new lesson
     public int addLesson(Lesson lesson) {
-        String sql = "INSERT INTO Lesson (classId, sessionId, date, status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Lession (classId, sessionId, date, status) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, lesson.getAClass().getId());
@@ -166,7 +166,7 @@ public class LessonDAO extends DBContext {
 
     // Update a lesson
     public int updateLesson(Lesson lesson) {
-        String sql = "UPDATE Lesson SET classId = ?, sessionId = ?, date = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE Lession SET classId = ?, sessionId = ?, date = ?, status = ? WHERE id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, lesson.getAClass().getId());
@@ -183,7 +183,7 @@ public class LessonDAO extends DBContext {
 
     // Remove a lesson
     public int removeLesson(int lessonId) {
-        String sql = "DELETE FROM Lesson WHERE id = ?";
+        String sql = "DELETE FROM Lession WHERE id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, lessonId);
@@ -196,13 +196,13 @@ public class LessonDAO extends DBContext {
 
     // Get lessons by learner ID
     public Vector<Lesson> getLessonsByLearnerId(int learnerId) {
-        String sql = "SELECT L.* FROM Lesson L JOIN Class C ON L.classId = C.id WHERE C.learnerId = ? ORDER BY L.date";
+        String sql = "SELECT L.* FROM Lession L JOIN Class C ON L.classId = C.id WHERE C.learnerId = ? ORDER BY L.date";
         return getLessonsWithId(sql, learnerId);
     }
 
     // Get lessons by class ID
     public Vector<Lesson> getLessonsByClassId(int classId) {
-        String sql = "SELECT * FROM Lesson WHERE classId = ?";
+        String sql = "SELECT * FROM Lession WHERE classId = ?";
         return getLessonsWithId(sql, classId);
     }
 

@@ -227,24 +227,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <c:if test="${sessionScope.successMessage!=null}">
+                            <c:if test="${successMessage!=null}">
                                 </br>
                                 <div class="alert alert-success" role="alert" id="successAlert">
                                     <div class="d-flex gap-4">
                                         <span><i class="fa-solid fa-circle-check icon-success"></i></span>
                                         <div>
-                                            ${sessionScope.successMessage}
+                                            ${successMessage}
                                         </div>
                                     </div>
                                 </div>
                             </c:if>
 
-                            <c:if test="${sessionScope.errorMessage!=null}">
+                            <c:if test="${errorMessage!=null}">
                                 <div class="alert alert-danger" role="alert" id="errorAlert">
                                     <div class="d-flex gap-4">
                                         <span><i class="fa-solid fa-circle-exclamation icon-danger"></i></span>
                                         <div class="d-flex flex-column gap-2">
-                                            ${sessionScope.errorMessage}
+                                            ${errorMessage}
                                         </div>
                                     </div>
                                 </div>

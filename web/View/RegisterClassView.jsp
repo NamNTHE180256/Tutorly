@@ -153,10 +153,10 @@
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
 
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot1" style="background: #0E3C6E; color: white">
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot1" aria-labelledby="slot1" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot1" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -247,10 +247,10 @@
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
 
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot2" style="background: #0E3C6E; color: white">
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot2" aria-labelledby="slot2" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot2" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -340,10 +340,10 @@
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
 
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot3" style="background: #0E3C6E; color: white">
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot3" aria-labelledby="slot3" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="slot3" aria-labelledby="${availability.session.id}" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -431,10 +431,10 @@
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
 
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot4" style="background: #0E3C6E; color: white">
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot4" aria-labelledby="slot4" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot4" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -523,10 +523,10 @@
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
 
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot5" style="background: #0E3C6E; color: white">
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot5" aria-labelledby="slot5" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot5" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">

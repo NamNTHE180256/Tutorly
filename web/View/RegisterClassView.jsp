@@ -156,7 +156,7 @@
                                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot1" aria-labelledby="${availability.session.id}" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot1" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -250,7 +250,7 @@
                                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot2" aria-labelledby="${availability.session.id}" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot2" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -343,7 +343,7 @@
                                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot3" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="slot3" aria-labelledby="${availability.session.id}" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -434,7 +434,7 @@
                                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot4" aria-labelledby="${availability.session.id}" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot4" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -526,7 +526,7 @@
                                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot5" aria-labelledby="${availability.session.id}" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot5" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">

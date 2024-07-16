@@ -807,8 +807,8 @@
                     </div> 
                       <div class="buttons ">
                             <div class="d-grid gap-2">
-                                <button style="background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button>
-                                <button style="background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button>
+                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
                             </div>
                         </div>
                 </div>

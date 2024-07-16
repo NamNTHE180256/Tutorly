@@ -273,9 +273,10 @@
                                     </tr>
                                   </tbody>
                                 </table> -->
-                            <div class="btn btn-primary d-block h8">PAY <span
+                            <a href="RegisterOfficialClass?tutor_id=${tutor.id}&learner_id=${learner_id}&session=${session.id}&totallesson=${totallesson}">
+                                <div class="btn btn-primary d-block h8">PAY <span
                                     class="fas fa-dollar-sign ms-2"></span>${tutor.price*totallesson}00<span
-                                    class="ms-3 fas fa-arrow-right"></span></div>
+                                    class="ms-3 fas fa-arrow-right"></span></div></a>
                         </div>
                     </div>
                     

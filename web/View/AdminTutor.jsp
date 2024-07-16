@@ -227,9 +227,6 @@
                                                     </div>
                                                     <div id="collapseFour${tutor.id}" class="collapse" aria-labelledby="headingFour${tutor.id}" data-parent="#accordion${tutor.id}">
                                                         <div class="card-body">
-                                                            <div class="timetable-img text-center">
-                                                                <img src="img/content/timetable.png" alt="">
-                                                            </div>
                                                             <div class="table-responsive">
                                                                 <table class="table table-bordered text-center">
                                                                     <thead>
@@ -359,7 +356,7 @@
                     success: function(response) {
                         // Update the status in the table
                         $('#tutorStatus' + tutorId).html(
-                            '<span class="dot" data-status="Active" style="height: 10px; width: 10px; background-color: #00ff4c; border-radius: 50%; display: inline-block;"></span>Active'
+                            '<span class="status-active">Active <i class="fa-regular fa-circle-check"></i></span>'
                         );
                         // Hide the modal
                         $('#TutorDetail' + tutorId).modal('hide');

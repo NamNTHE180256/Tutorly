@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Model.ManageTutor;
 import Model.Manager;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
@@ -128,10 +129,42 @@ public class ManagerDAO extends DBContext {
         }
     }
     
+    public boolean AddManageTutor(ManageTutor mt) {
+        String sql = "INSERT INTO ManageTutor (tutorId, managerId, [status]) \n"
+                    + "VALUES (?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, mt.getTutorId());
+            ps.setInt(2, mt.getManagerId());
+            ps.setString(3, mt.getStatus());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public int ActionByManagerID(int managerId, String status) {
+    String sql = "SELECT COUNT(*) FROM ManageTutor WHERE managerId = ? AND [status] = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, managerId);
+        ps.setString(2, status);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
+}
+    
     public static void main(String[] args) {
         ManagerDAO d = new ManagerDAO();
         ArrayList<Manager> m = d.searchManagers("1");
-        System.out.println(m);
+        System.out.println(d.ActionByManagerID(13, "approve"));
     }
     
 }

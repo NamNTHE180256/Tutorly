@@ -153,27 +153,24 @@ public class AdminController extends HttpServlet {
                 Map<Subject, Integer> learnersBySubject = subjectDAO.getNumberOfLearnersBySubject();
                 Map<Subject, Integer> classesBySubject = subjectDAO.getNumberOfClassesBySubject();
                 Map<Subject, Integer> tutorsBySubject = subjectDAO.getNumberOfTutorsBySubject();
-
                 request.setAttribute("learnersBySubject", learnersBySubject);
                 request.setAttribute("classesBySubject", classesBySubject);
                 request.setAttribute("tutorsBySubject", tutorsBySubject);
-
+                request.getRequestDispatcher("View/AdminSubject.jsp").forward(request, response);
+                break;
+            case "addSubject":
                 String subjectName = request.getParameter("subject_name");
                 if (subjectName != null && !subjectName.isEmpty()) {
                     int add = subjectDAO.addSubject(subjectName);
                     success = add != 0;
-
-                    HttpSession session = request.getSession();
                     if (success) {
-                        session.setAttribute("successMessage", "Add subject success.");
+                        request.setAttribute("successMessage", "Add subject success.");
                     } else {
-                        session.setAttribute("errorMessage", "Add subject fail.");
+                        request.setAttribute("errorMessage", "Add subject fail.");
                     }
                 }
                 request.getRequestDispatcher("View/AdminSubject.jsp").forward(request, response);
                 break;
-            
-                
             default:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
                 break;

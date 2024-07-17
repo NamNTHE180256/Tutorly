@@ -274,13 +274,11 @@
                                     </tr>
                                   </tbody>
                                 </table> -->
-                            <form action="AjaxServlet" method="get">
-                                <input type="hidden" name="amount" value="${tutor.price*totallesson}">
-                                <button class="btn btn-primary d-block h8" type="submit">PAY <span
-                                        class="fas fa-dollar-sign ms-2"></span><span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /><span
-                                        class="ms-3 fas fa-arrow-right"></span>
-                                </button>
-                            </form>
+                            <a href="PaymentServlet?tutor_id=${tutor.id}&learner_id=${learner_id}&session=${session.id}&totallesson=${totallesson}&amount=${tutor.price*totallesson}">
+                                <div class="btn btn-primary d-block h8">PAY <span
+                                    class="fas fa-dollar-sign ms-2"></span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /><span
+                                    class="ms-3 fas fa-arrow-right"></span></div></a>
+
                         </div>
                     </div>
                     

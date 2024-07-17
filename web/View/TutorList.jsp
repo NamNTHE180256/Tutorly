@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -185,8 +186,8 @@
                                 <!-- Right -->
                                 <div class="col-md-3 text-right">
                                     <div class="fee">
-                                        <i style="color: #F7B500" class="fa-solid fa-money-check-dollar mr-2"></i>
-                                        <h2>${t.price}K</h2>
+                                        <i style="color: #F7B500" class="fa-solid fa-money-check-dollar mr-2"> </i> 
+                                        <h2><fmt:formatNumber value="${t.price}" pattern="###,###" />VND</h2>
                                         <p>per session</p>
                                         <form id="addtutorform-${t.id}" onsubmit="return false;">
                                             <button type="button" id="heart-button-${t.id}" style="background: white; border: 1px white;" onclick="change_heart('${t.id}')">

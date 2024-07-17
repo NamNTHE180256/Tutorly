@@ -76,6 +76,8 @@ public class MaterialController extends HttpServlet {
         request.setAttribute("video", video);
         request.setAttribute("linfo", linfo);
         request.setAttribute("video", video);
+         request.setAttribute("class_vector", class_vector);
+        request.setAttribute("linfo", linfo);
         RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
         dispatcher.forward(request, response);
     }

@@ -21,7 +21,7 @@ public class MaterialDAO extends DBContext{
     private LessonDAO lessonDAO = new LessonDAO();
 
     public boolean addMaterial(Material material) {
-        String sql = "INSERT INTO Material (id, lessonId, fileName, filePath, fileType, uploadedAt) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Material (id, lessionId, fileName, filePath, fileType, uploadedAt) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, material.getId());
             ps.setInt(2, material.getLesson().getId());
@@ -66,7 +66,7 @@ public class MaterialDAO extends DBContext{
     }
 
     public boolean updateMaterial(Material material) {
-        String sql = "UPDATE Material SET lessonId = ?, fileName = ?, filePath = ?, fileType = ?, uploadedAt = ? WHERE id = ?";
+        String sql = "UPDATE Material SET lessionId = ?, fileName = ?, filePath = ?, fileType = ?, uploadedAt = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, material.getLesson().getId());
             ps.setString(2, material.getFileName());
@@ -126,7 +126,7 @@ public class MaterialDAO extends DBContext{
 
     public Vector<Material> getMaterialsByLessonIdAndFileType(int lessonId, String fileType) {
         Vector<Material> materials = new Vector<>();
-        String sql = "SELECT * FROM Material WHERE lessonId = ? AND fileType = ?";
+        String sql = "SELECT * FROM Material WHERE lessionId = ? AND fileType = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, lessonId);
             ps.setString(2, fileType);
@@ -143,7 +143,7 @@ public class MaterialDAO extends DBContext{
 
     public Vector<Material> getMaterialsByClassIdAndFileType(int classId, String fileType) {
         Vector<Material> materials = new Vector<>();
-        String sql = "SELECT m.* FROM Material m JOIN Lesson l ON m.lessonId = l.id WHERE l.classId = ? AND m.fileType = ?";
+        String sql = "SELECT m.* FROM Material m JOIN Lession l ON m.lessionId = l.id WHERE l.classId = ? AND m.fileType = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, classId);
             ps.setString(2, fileType);
@@ -161,7 +161,7 @@ public class MaterialDAO extends DBContext{
     private Material createMaterialFromResultSet(ResultSet rs) throws SQLException {
         Material material = new Material();
         material.setId(rs.getInt("id"));
-        material.setLesson(lessonDAO.getLessonById(rs.getInt("lessonId")));
+        material.setLesson(lessonDAO.getLessonById(rs.getInt("lessionId")));
         material.setFileName(rs.getString("fileName"));
         material.setFilePath(rs.getString("filePath"));
         material.setFileType(rs.getString("fileType"));

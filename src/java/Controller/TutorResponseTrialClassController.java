@@ -61,8 +61,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     String dateStr = request.getParameter("date");
 
                     rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "accepted");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorResponseTrialClassView.jsp");
-                    dispatcher.forward(request, response);
+                    
                     
                     AClassDAO aclassDAO = new AClassDAO();
                     LearnerDAO lDAO = new LearnerDAO();
@@ -84,14 +83,13 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     );
 
                     int classId = aclassDAO.addClass(aClass);
-                    System.out.println("Generated Class ID: " + classId);
 
                     int lessonResult = 0;
                     Lesson newLesson = null;
 
                     if (classId != 0) {
                         // Retrieve the newly added AClass using the classId directly
-                        AClass addedClass = aclassDAO.getClassById(classId);
+                        AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
 
                         if (addedClass != null) {
                             newLesson = new Lesson(
@@ -110,7 +108,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     } else {
                         response.getWriter().write("Failed to add lesson.");
                     }
-                    
+                    response.sendRedirect("TutorResponseTrialClassController");
                 } catch (Exception e) {
                     e.printStackTrace();
                     response.getWriter().write("Error: " + e.getMessage());
@@ -118,8 +116,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
             } else if (service.equals("deny")) {
                 String responseid = request.getParameter("responseid");
                 rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "denied");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorResponseTrialClassView.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("TutorResponseTrialClassController");
             }
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorResponseTrialClassView.jsp");

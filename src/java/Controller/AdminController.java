@@ -8,11 +8,13 @@ package Controller;
 import DAO.LearnerDAO;
 import DAO.ManagerDAO;
 import DAO.SubjectDAO;
+import DAO.TransactionDAO;
 import DAO.TutorDAO;
 import DAO.UserDAO;
 import Model.Learner;
 import Model.Manager;
 import Model.Subject;
+import Model.Transaction;
 import Model.Tutor;
 import Model.User;
 import java.io.IOException;
@@ -26,6 +28,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Map;
 import com.google.gson.Gson;
+import java.util.List;
 
 /**
  *admin
@@ -170,6 +173,13 @@ public class AdminController extends HttpServlet {
                     }
                 }
                 request.getRequestDispatcher("View/AdminSubject.jsp").forward(request, response);
+                break;
+                
+            case "viewIncome":
+                TransactionDAO tranDao = new TransactionDAO();
+                List<Transaction> trans = tranDao.getAllTransactions();
+                request.setAttribute("trans", trans);
+                request.getRequestDispatcher("View/AdminIncome.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");

@@ -13,12 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LessonDAO extends DBContext {
-    
+
     // Fetch lessons for a tutor
     public List<Lesson> getLessonForTutor(int tutorId, Integer classId) {
         List<Lesson> listLesson = new ArrayList<>();
         List<Object> params = new ArrayList<>();
-        
+
         try {
             StringBuilder query = new StringBuilder();
             query.append("""
@@ -31,7 +31,7 @@ public class LessonDAO extends DBContext {
                 query.append(" AND s.classId = ?");
                 params.add(classId);
             }
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
             mapParams(preparedStatement, params);
 
@@ -50,7 +50,7 @@ public class LessonDAO extends DBContext {
     public List<Lesson> getLessonForLearner(int learnerId, Integer classId) {
         List<Lesson> listLesson = new ArrayList<>();
         List<Object> params = new ArrayList<>();
-        
+
         try {
             StringBuilder query = new StringBuilder();
             query.append("""
@@ -63,7 +63,7 @@ public class LessonDAO extends DBContext {
                 query.append(" AND s.classId = ?");
                 params.add(classId);
             }
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
             mapParams(preparedStatement, params);
 
@@ -106,7 +106,7 @@ public class LessonDAO extends DBContext {
         Date date = rs.getDate("date");
         String status = rs.getString("status");
 
-        AClass aClass = new AClassDAO().getClassById(classId); 
+        AClass aClass = new AClassDAO().getClassById(classId);
         Session session = new SessionDAO().getSessionById(sessionId);
 
         return new Lesson(id, aClass, session, date, status);
@@ -196,7 +196,11 @@ public class LessonDAO extends DBContext {
 
     // Get lessons by learner ID
     public Vector<Lesson> getLessonsByLearnerId(int learnerId) {
-        String sql = "SELECT L.* FROM Lession L JOIN Class C ON L.classId = C.id WHERE C.learnerId = ? ORDER BY L.date";
+        String sql = "  SELECT L.* \n"
+                + "FROM Lession L \n"
+                + "JOIN Class C ON L.classId = C.id \n"
+                + "WHERE C.learnerId = ? AND C.status != 'finished' \n"
+                + "ORDER BY L.date;";
         return getLessonsWithId(sql, learnerId);
     }
 
@@ -224,7 +228,7 @@ public class LessonDAO extends DBContext {
 
     public static void main(String[] args) {
         LessonDAO lessonDAO = new LessonDAO();
-        
+
         // Example: Fetch lessons by class ID
         Vector<Lesson> lessonsByClass = lessonDAO.getLessonsByClassId(1);
         for (Lesson lesson : lessonsByClass) {

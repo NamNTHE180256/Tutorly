@@ -1,15 +1,45 @@
 package DAO;
 
 import Model.AClass;
+import Model.Learner;
 import Model.Session;
+import Model.Tutor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClassDAO extends DBContext {
+
+    public AClass getClassById(int id) {
+        String sql = "SELECT * FROM Class WHERE id = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, id);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                int learnerId = rs.getInt("learnerId");
+                int tutorId = rs.getInt("tutorId");
+                int totalSession = rs.getInt("totalSession");
+                Date startDate = rs.getDate("startDate");
+                Date endDate = rs.getDate("endDate");
+                String status = rs.getString("status");
+
+                Learner learner = new LearnerDAO().getStudentById(learnerId); // Assuming LearnerDAO is implemented
+                Tutor tutor = new TutorDAO().getTutorById(tutorId); // Assuming TutorDAO is implemented
+
+                AClass aClass = new AClass(learner, tutor, totalSession, startDate, endDate, status);
+                aClass.setId(id);
+                return aClass;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public Vector<AClass> getClassesByTutorId(int tutorId) {
         Vector<AClass> classes = new Vector<>();
@@ -39,6 +69,7 @@ public class ClassDAO extends DBContext {
         }
         return classes;
     }
+
     public Vector<AClass> getClassesBySTudentId(int studentId) {
         Vector<AClass> classes = new Vector<>();
         LearnerDAO lDao = new LearnerDAO();

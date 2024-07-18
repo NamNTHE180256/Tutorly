@@ -60,84 +60,83 @@ public class RegisterTrialCotroller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String tutor_id = request.getParameter("tutor_id");
-System.out.println("tutor_id: " + tutor_id);
-TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
-TutorDAO tDAO = new TutorDAO();
-Tutor tutor = tDAO.getTutorById(Integer.parseInt(tutor_id));
-System.out.println("Tutor: " + tutor);
-Vector<TutorAvailability> tutorAvailabilities = taDao.getTutorAvailabilityByTutorId(Integer.parseInt(tutor_id));
-System.out.println("Tutor Availabilities: " + tutorAvailabilities);
-request.setAttribute("tutorAvailabilities", tutorAvailabilities);
-request.setAttribute("tutor", tutor);
+        System.out.println("tutor_id: " + tutor_id);
+        TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
+        TutorDAO tDAO = new TutorDAO();
+        Tutor tutor = tDAO.getTutorById(Integer.parseInt(tutor_id));
+        System.out.println("Tutor: " + tutor);
+        Vector<TutorAvailability> tutorAvailabilities = taDao.getTutorAvailabilityByTutorId(Integer.parseInt(tutor_id));
+        System.out.println("Tutor Availabilities: " + tutorAvailabilities);
+        request.setAttribute("tutorAvailabilities", tutorAvailabilities);
+        request.setAttribute("tutor", tutor);
 
-String service = request.getParameter("service");
-System.out.println("service: " + service);
-if (service != null && !service.isEmpty()) {
-    String learner_id = request.getParameter("learner_id");
-    System.out.println("learner_id: " + learner_id);
-    String session_id = request.getParameter("session");
-    System.out.println("session_id: " + session_id);
+        String service = request.getParameter("service");
+        System.out.println("service: " + service);
+        if (service != null && !service.isEmpty()) {
+            String learner_id = request.getParameter("learner_id");
+            System.out.println("learner_id: " + learner_id);
+            String session_id = request.getParameter("session");
+            System.out.println("session_id: " + session_id);
 
-    AClassDAO aclassDAO = new AClassDAO();
-    LearnerDAO lDAO = new LearnerDAO();
-    LessonDAO lessonDAO = new LessonDAO();
-    SessionDAO sDAO = new SessionDAO();
-    Date today = new Date();
+            AClassDAO aclassDAO = new AClassDAO();
+            LearnerDAO lDAO = new LearnerDAO();
+            LessonDAO lessonDAO = new LessonDAO();
+            SessionDAO sDAO = new SessionDAO();
+            Date today = new Date();
 
-    AClass aClass = new AClass(
-        lDAO.getLearnerById(Integer.parseInt(learner_id)), 
-        tutor, 
-        1, 
-        getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek()), 
-        getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek()), 
-        "ongoing"
-    );
+            AClass aClass = new AClass(
+                    lDAO.getLearnerById(Integer.parseInt(learner_id)),
+                    tutor,
+                    1,
+                    getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek()),
+                    getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek()),
+                    "ongoing"
+            );
 
-    int classId = aclassDAO.addClass(aClass);
-    System.out.println("Generated Class ID: " + classId);
+            int classId = aclassDAO.addClass(aClass);
+            System.out.println("Generated Class ID: " + classId);
 
-    int lessonResult = 0;
-    Lesson newLesson = null;
+            int lessonResult = 0;
+            Lesson newLesson = null;
 
-    if (classId != 0) {
-        // Retrieve the newly added AClass with its classId
-        AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
-        
+            if (classId != 0) {
+                // Retrieve the newly added AClass with its classId
+                AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
 
-        if (addedClass != null) {
-            newLesson = new Lesson(
-                addedClass, 
-                sDAO.getSessionById(session_id), 
-                addedClass.getStartDate(), 
-                "Scheduled"
-            ); 
-            lessonResult = lessonDAO.addLesson(newLesson);
-            
+                if (addedClass != null) {
+                    newLesson = new Lesson(
+                            addedClass,
+                            sDAO.getSessionById(session_id),
+                            addedClass.getStartDate(),
+                            "Scheduled"
+                    );
+                    lessonResult = lessonDAO.addLesson(newLesson);
+
+                }
+            }
+            boolean success = false;
+            if (lessonResult != 0) {
+                success = true;
+            }
+            if (success) {
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage", "Register trial lesson success.");
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "Register trial lesson fail.");
+            }
+            HttpSession session = request.getSession();
+            session.setAttribute("success", "Register trial class success");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("TutorController");
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("View/RegisterTrialView.jsp");
+            dispatcher.forward(request, response);
         }
-    }
-    boolean success = false;
-    if(lessonResult != 0){
-        success = true;
-    }
-    if (success) {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("successMessage", "Register trial lesson success.");
-                    } else {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("errorMessage", "Register trial lesson fail.");
-                    }
-    HttpSession session = request.getSession();
-    session.setAttribute("success", "Register trial class success");
-    RequestDispatcher dispatcher = request.getRequestDispatcher("TutorController");
-    dispatcher.forward(request, response);
-} else {
-    RequestDispatcher dispatcher = request.getRequestDispatcher("View/RegisterTrialView.jsp");
-    dispatcher.forward(request, response);
-}
-
 
     }
-      public static Date getNearestDayOfWeek(Date date, String dayOfWeek) {
+
+    public static Date getNearestDayOfWeek(Date date, String dayOfWeek) {
         // Define the day of the week as Calendar constant
         int targetDay = getDayOfWeekInt(dayOfWeek);
 
@@ -188,7 +187,7 @@ if (service != null && !service.isEmpty()) {
         Date today = new Date();
         String targetDayOfWeek = "Wednesday";
         Date nearestDate = getNearestDayOfWeek(today, targetDayOfWeek);
-        
+
         // Format the resulting date for display
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Nearest " + targetDayOfWeek + ": " + sdf.format(nearestDate));

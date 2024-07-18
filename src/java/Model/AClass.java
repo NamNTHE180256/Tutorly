@@ -12,7 +12,7 @@ public class AClass {
     private Date endDate;
     private String status;
     private Subject subject;
-    
+   
     // Constructors
     public AClass() {
         this.subject = new Subject(); // Ensure subject is initialized
@@ -26,7 +26,10 @@ public class AClass {
         this.endDate = endDate;
         this.status = status;
         this.subject = new Subject(); // Ensure subject is initialized
+    
     }
+
+ 
 
     // Getters and Setters
     public int getId() {

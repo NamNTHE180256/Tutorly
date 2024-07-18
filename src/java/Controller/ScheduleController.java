@@ -43,13 +43,7 @@ public class ScheduleController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session1 = request.getSession();
-        User user = (User) session1.getAttribute("user");
-        if (user == null) {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-        if (user.getRole().equalsIgnoreCase("learner")) {
+
             String service = request.getParameter("service");
             response.setContentType("text/html;charset=UTF-8");
             LessonDAO lDAO = new LessonDAO();
@@ -82,10 +76,7 @@ public class ScheduleController extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
                 dispatcher.forward(request, response);
 
-            } else {
-                request.setAttribute("errorMessage", "you dont have permission to access this page");
-                request.getRequestDispatcher("error.jsp").forward(request, response);
-            }
+        
         }
     }
 

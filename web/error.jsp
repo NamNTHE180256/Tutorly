@@ -13,8 +13,8 @@
     </head>
     <body>
         <h1>${requestScope.error}</h1>
-        <p> ${sessionScope.LearnerRegister.toString()}</p>
-        <p> ${requestScope.LearnerRegister.toString()}</p>
+        <p> ${sessionScope.tutor.toString()}</p>
+        <p> ${sessionScope.user.toString()}</p>
            <p> ${requestScope.status}</p>
     </body>
 </html>

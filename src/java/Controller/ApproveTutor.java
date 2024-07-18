@@ -70,13 +70,7 @@ public class ApproveTutor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session1 = request.getSession();
-        User user = (User) session1.getAttribute("user");
-        if (user == null) {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-        if (user.getRole().equalsIgnoreCase("learner")) {
+       
             int tutorId = Integer.parseInt(request.getParameter("id"));
 
             TutorDAO tutorDao = new TutorDAO();
@@ -85,10 +79,7 @@ public class ApproveTutor extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("{\"status\":\"success\"}");
-        } else {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
+       
     }
 
 

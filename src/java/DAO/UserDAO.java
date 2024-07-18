@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class UserDAO extends DBContext {
-
+    
     public User getUserById(int id) {
         User user = null;
         String sql = "Select * from [User] where id = ?";
@@ -29,6 +29,7 @@ public class UserDAO extends DBContext {
                 user.setId(id);
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
                 user.setCreatedAt(rs.getTimestamp("createdAt"));
             }
         } catch (SQLException e) {
@@ -38,8 +39,8 @@ public class UserDAO extends DBContext {
     }
     
     public int addUser(String email, String password, String role) {
-        String sql = "INSERT INTO [User] (email, [password], [role])\n" +
-                    "VALUES  (?, ?, ?)";
+        String sql = "INSERT INTO [User] (email, [password], [role])\n"
+                + "VALUES  (?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, email);
@@ -84,8 +85,7 @@ public class UserDAO extends DBContext {
         }
         return count;
     }
-
-
+    
     public User GetUserWithEmail(String email_login) {
         String sql = "SELECT * FROM [User] WHERE email = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -106,7 +106,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-
+    
     public int ChangePassWord(String password, String email) {
         String sql = "UPDATE [dbo].[User]\n"
                 + "   SET [password] = ?\n"
@@ -122,8 +122,8 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
-
-        public User Login(String email, String password) {
+    
+    public User Login(String email, String password) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -136,9 +136,13 @@ public class UserDAO extends DBContext {
                 String passwordDB = rs.getString("password");
                 String role = rs.getString("role");
                 String createAt = rs.getString("createdAt");
-                User user = new User(emailDB, passwordDB, role);
+                User user = new User();
                 user.setId(id);
+                user.setEmail(emailDB);
+                user.setPassword(passwordDB);
                 user.setCreatedAt(rs.getTimestamp("createdAt"));
+                user.setRole(role);
+                
                 return user;
             }
         } catch (SQLException e) {
@@ -146,12 +150,12 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-
+    
     public int register(User user) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = "INSERT INTO [dbo].[User] ([email], [password], [role], [createdAt]) VALUES (?, ?, ?, ?)";
-
+        
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, user.getEmail());
             st.setString(2, user.getPassword());
@@ -164,7 +168,7 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
-
+    
     public String computeMD5Hash(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -178,12 +182,12 @@ public class UserDAO extends DBContext {
             throw new RuntimeException(e);
         }
     }
-
+    
     public int registerLearnerUsingGoogle(GoogleAccount acc) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = "INSERT INTO [dbo].[User] ([email], [password], [role], [createdAt]) VALUES (?, '', ?, ?)";
-
+        
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, acc.getEmail());
             st.setString(2, "learner");
@@ -193,10 +197,15 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
             System.err.println("Error during user registration: " + e.getMessage());
         }
-
+        
         return 0;
     }
-
+    
+    public static void main(String[] args) {
+        UserDAO dao = new UserDAO();
+        User u = dao.Login("learner1@gmail.com","1");
+        System.out.println(u);
+    }
 //    public static void main(String[] args) {
 //<<<<<<< HEAD
 //        UserDAO udao = new UserDAO();

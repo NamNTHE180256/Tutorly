@@ -53,26 +53,26 @@
                 color: #0E3C6E;
             }
 
-/*            .navbarmenu {
-                margin-top: 0;
-                margin-bottom: 10px;
-                margin-left: 20px;
-                
-            }
-
-            .navmenuitem {
-                margin-right: 25px;
-                background-color: #0E3C6E;
-                border-radius: 10px;
-                width: 120px;
-                
-                 text-align: center;
-            }
+            /*            .navbarmenu {
+                            margin-top: 0;
+                            margin-bottom: 10px;
+                            margin-left: 20px;
+                            
+                        }
             
-            .navmenuitem a {
-                color: aliceblue;
-                 justify-content: center;
-            }*/
+                        .navmenuitem {
+                            margin-right: 25px;
+                            background-color: #0E3C6E;
+                            border-radius: 10px;
+                            width: 120px;
+                            
+                             text-align: center;
+                        }
+                        
+                        .navmenuitem a {
+                            color: aliceblue;
+                             justify-content: center;
+                        }*/
 
             .content {
                 padding-top: 20px;
@@ -82,92 +82,92 @@
         <title>JSP Page</title>
     </head>
     <body >
-        
-        
-        
-        
+
+
+
+
         <nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-    data-bs-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
-    <div class="collapse navbar-collapse" id="navbarExample">
-      <ul class="navbar-nav me-auto mb-0">
-        <!-- Find tutor -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="../Tutorly/TutorController">Finding a tutor</a>
-                    </li>
-        
-      </ul>
-      <div class="d-flex align-items-center flex-column flex-lg-row">
-        <ul class="navbar-nav ml-auto">
-                    <!-- Notification from system or tutor -->
-                    <li class="nav-item">
-                        <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-solid fa-bell head_icon"></i></a></button>
-                    </li>
-                    <!-- Message from tutor -->
-                    <li class="nav-item">
-                        <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-regular fa-message head_icon"></i></a></button>
-                    </li>
-                    <!-- Schedule of student -->
-                    <li class="nav-item">
-                        <button style="background: white; border: 1px white;"><a class="nav-link" href="../Tutorly/ScheduleController"><i class="fa-regular fa-calendar head_icon"></i></a></button>
-                    </li>
-                    <!-- List of favor tutor -->
-                    <li class="nav-item">
-                        <button style="background: white; border: 1px white;"><a class="nav-link" href="../Tutorly/SavedTutorController"><i class="fa-regular fa-heart head_icon"></i></a></button>
-                    </li>
-                    <!-- Student name -->
-                    <li class="nav-item">
-                         <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${linfo.name}</p></a>
-                    </li>
-                    <!-- Student profile image -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <img class="student_profile_image" src="image/${linfo.image}">
-                        </a>
-                    </li>
-                </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
+                <div class="collapse navbar-collapse" id="navbarExample">
+                    <ul class="navbar-nav me-auto mb-0">
+                        <!-- Find tutor -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/TutorController">Finding a tutor</a>
+                        </li>
+
+                    </ul>
+                    <div class="d-flex align-items-center flex-column flex-lg-row">
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Notification from system or tutor -->
+                            <li class="nav-item">
+                                <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-solid fa-bell head_icon"></i></a></button>
+                            </li>
+                            <!-- Message from tutor -->
+                            <li class="nav-item">
+                                <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-regular fa-message head_icon"></i></a></button>
+                            </li>
+                            <!-- Schedule of student -->
+                            <li class="nav-item">
+                                <button style="background: white; border: 1px white;"><a class="nav-link" href="${pageContext.request.contextPath}/ScheduleController"><i class="fa-regular fa-calendar head_icon"></i></a></button>
+                            </li>
+                            <!-- List of favor tutor -->
+                            <li class="nav-item">
+                                <button style="background: white; border: 1px white;"><a class="nav-link" href="${pageContext.request.contextPath}/SavedTutorController"><i class="fa-regular fa-heart head_icon"></i></a></button>
+                            </li>
+                            <!-- Student name -->
+                            <li class="nav-item">
+                                <a href="${pageContext.request.contextPath}/StudentProfileController"><p class="nav-link learnername"> ${sessionScope.learner.name}</p></a>
+                            </li>
+                            <!-- Student profile image -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <img class="student_profile_image" src="image/${sessionScope.learner.image}">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
         <!-- Menu -->
         <nav class="navbar navbar-expand-sm navbarmenu">
             <!-- Links -->
             <ul class="navbar-nav">
-                
+
                 <li class="nav-item navmenuitem">
                     <!-- Dashboard -->
-                    <a class="nav-link" href="../Tutorly/DashboardController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/DashboardController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Schedule -->
-                    <a class="nav-link" href="../Tutorly/ScheduleController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Schedule</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ScheduleController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Schedule</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Material -->
-                    <a class="nav-link" href="../Tutorly/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Assignment -->
-                    <a class="nav-link" href="../Tutorly/AssignmentController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Assignment</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/AssignmentController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Assignment</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->
-                    <a class="nav-link" href="../Tutorly/SavedTutorController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Save list tutors</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/SavedTutorController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Save list tutors</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
-                        <!-- View classes -->
-                        <a class="nav-link" href="StdudentDashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
-                    </li>
-                    <li class="nav-item navmenuitem">
-                        <!-- History -->
-                        <a class="nav-link" href="history"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">History</button></a>
-                    </li>
+                    <!-- View classes -->
+                    <a class="nav-link" href="StdudentDashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- History -->
+                    <a class="nav-link" href="history"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">History</button></a>
+                </li>
             </ul>
         </nav>
     </body>

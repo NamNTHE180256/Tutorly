@@ -15,21 +15,18 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class DBContext {
-    protected Connection connection;
-    public DBContext() {
 
+    protected Connection connection;
+
+    public DBContext() {
         try {
             String userName = "sa";
-            String password = "17022004";
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=Tutorly";
+            String password = "123";
+            String url = "jdbc:sqlserver://ADMINACER\\SQLEXPRESS:1433;databaseName=Tutorly";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, userName, password);
-
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
+            connection = null; // Ensure connection is null if an exception occurs
         }
-    }
-    public Connection getConnection(){
-        return connection;
-    }
-}
+    }}

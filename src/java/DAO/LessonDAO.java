@@ -13,12 +13,52 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LessonDAO extends DBContext {
-    
+
+    SessionDAO sdao = new SessionDAO();
+    ClassDAO cdao = new ClassDAO();
+
+    public Lesson getLessionById(int lessionId, int classId) {
+        Lesson lession = null;
+        String query = "SELECT Lesson.* FROM Lesson JOIN Class ON Lesson.classId = Class.id WHERE Lesson.id = ? AND Class.id = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+
+            st.setInt(1, lessionId);
+            st.setInt(2, classId);
+
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                lession = new Lesson();
+                int id = rs.getInt("id");
+                System.out.println(id);
+                AClass aclass = cdao.getClassById(rs.getInt("classId"));
+                System.out.println(aclass);
+                Session session = sdao.getSessionById(rs.getString("sessionId"));
+                System.out.println(session);
+                Date date = rs.getDate("date");
+                System.out.println(date);
+                String status = rs.getString("status");
+                System.out.println(status);
+                
+                lession = new Lesson(id, aclass, session, date, status);
+
+                // Set other fields of Lession object here as per your database schema
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lession;
+    }
+
     // Fetch lessons for a tutor
     public List<Lesson> getLessonForTutor(int tutorId, Integer classId) {
         List<Lesson> listLesson = new ArrayList<>();
         List<Object> params = new ArrayList<>();
-        
+
         try {
             StringBuilder query = new StringBuilder();
             query.append("""
@@ -31,7 +71,7 @@ public class LessonDAO extends DBContext {
                 query.append(" AND s.classId = ?");
                 params.add(classId);
             }
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
             mapParams(preparedStatement, params);
 
@@ -50,7 +90,7 @@ public class LessonDAO extends DBContext {
     public List<Lesson> getLessonForLearner(int learnerId, Integer classId) {
         List<Lesson> listLesson = new ArrayList<>();
         List<Object> params = new ArrayList<>();
-        
+
         try {
             StringBuilder query = new StringBuilder();
             query.append("""
@@ -63,7 +103,7 @@ public class LessonDAO extends DBContext {
                 query.append(" AND s.classId = ?");
                 params.add(classId);
             }
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
             mapParams(preparedStatement, params);
 
@@ -106,7 +146,7 @@ public class LessonDAO extends DBContext {
         Date date = rs.getDate("date");
         String status = rs.getString("status");
 
-        AClass aClass = new AClassDAO().getClassById(classId); 
+        AClass aClass = new AClassDAO().getClassById(classId);
         Session session = new SessionDAO().getSessionById(sessionId);
 
         return new Lesson(id, aClass, session, date, status);
@@ -153,7 +193,7 @@ public class LessonDAO extends DBContext {
         String sql = "INSERT INTO Lesson (classId, sessionId, date, status) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, lesson.getAClass().getId());
+            statement.setInt(1, lesson.getaClass().getId());
             statement.setString(2, lesson.getSession().getId());
             statement.setDate(3, new java.sql.Date(lesson.getDate().getTime()));
             statement.setString(4, lesson.getStatus());
@@ -169,7 +209,7 @@ public class LessonDAO extends DBContext {
         String sql = "UPDATE Lesson SET classId = ?, sessionId = ?, date = ?, status = ? WHERE id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, lesson.getAClass().getId());
+            statement.setInt(1, lesson.getaClass().getId());
             statement.setString(2, lesson.getSession().getId());
             statement.setDate(3, new java.sql.Date(lesson.getDate().getTime()));
             statement.setString(4, lesson.getStatus());
@@ -224,18 +264,19 @@ public class LessonDAO extends DBContext {
 
     public static void main(String[] args) {
         LessonDAO lessonDAO = new LessonDAO();
-        
-        // Example: Fetch lessons by class ID
-        Vector<Lesson> lessonsByClass = lessonDAO.getLessonsByClassId(1);
-        for (Lesson lesson : lessonsByClass) {
-            System.out.println(lesson);
-        }
 
-        // Example: Fetch lessons for a specific learner
-        int learnerId = 1; // Replace with the actual learner ID
-        Vector<Lesson> learnerLessons = lessonDAO.getLessonsByLearnerId(learnerId);
-        for (Lesson lesson : learnerLessons) {
-            System.out.println(lesson.getAClass().getTutor().getName());
+        // Example: Fetch lessons by class ID
+//        Vector<Lesson> lessonsByClass = lessonDAO.getLessonsByClassId(1);
+//        for (Lesson lesson : lessonsByClass) {
+//            System.out.println(lesson);
+//        }
+//
+//        // Example: Fetch lessons for a specific learner
+//        int learnerId = 1; // Replace with the actual learner ID
+//        Vector<Lesson> learnerLessons = lessonDAO.getLessonsByLearnerId(learnerId);
+//        for (Lesson lesson : learnerLessons) {
+//            System.out.println(lesson.getAClass().getTutor().getName());
+System.out.println("1:"+lessonDAO.getLessionById(13, 2));
         }
     }
-}
+

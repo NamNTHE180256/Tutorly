@@ -1,36 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
-import DAO.AClassDAO;
-import DAO.AssignmentDAO;
-import DAO.LearnerDAO;
 import DAO.LessonDAO;
-import DAO.TutorDAO;
-import Model.AClass;
-import Model.Assignment;
-import Model.Learner;
 import Model.Lesson;
-import Model.User;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.Vector;
 
 /**
- *
- * @author asus
+ * Servlet implementation class lessonDetailControllers
  */
-@WebServlet(name = "ClassDetail", urlPatterns = {"/ClassDetail"})
-public class ClassDetail extends HttpServlet {
+@WebServlet(name = "lessonDetailControllers", urlPatterns = {"/lessonDetailControllers"})
+public class lessonDetailControllers extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,34 +26,32 @@ public class ClassDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-            response.setContentType("text/html;charset=UTF-8");
+        LessonDAO ldao = new LessonDAO();
+        response.setContentType("text/html;charset=UTF-8");
 
-            int classId = Integer.parseInt(request.getParameter("classId"));
+        String classIdStr = request.getParameter("classid");
+        String lessonIdStr = request.getParameter("lessonId");
 
-            LessonDAO lDAO = new LessonDAO();
-            AssignmentDAO aDAO = new AssignmentDAO();
-            Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(classId);
-            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(classId);
+        if (classIdStr != null && lessonIdStr != null) {
+            int classid = Integer.parseInt(classIdStr);
+            int lessonId = Integer.parseInt(lessonIdStr);
 
-            LearnerDAO leDAO = new LearnerDAO();
-            Learner linfo = leDAO.getStudentById(classId);
-
-            AClassDAO classDAO = new AClassDAO();
-            AClass aClass = classDAO.getClassById(classId);
-
-            request.setAttribute("linfo", linfo);
-            request.setAttribute("todoassignment", classAssignmentsToDo.size());
-            request.setAttribute("lesson_vector", lesson_vector);
-            request.setAttribute("aClass", aClass);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/ClassDetail.jsp");
-            dispatcher.forward(request, response);
-       
-
+            Lesson lesson = ldao.getLessionById(lessonId, classid);
+            System.out.println("1: "+lesson);
+            if (lesson != null) {
+                request.setAttribute("lesson", lesson);
+                request.getRequestDispatcher("View/lessonDetails.jsp").forward(request, response);
+            } else {
+                request.setAttribute("error", "No lesson found for the provided class ID and lesson ID.");
+                request.getRequestDispatcher("View/lessonDetails.jsp").forward(request, response);
+            }
+        } else {
+            request.setAttribute("error", "Invalid class ID or lesson ID");
+            request.getRequestDispatcher("View/lessonDetails.jsp").forward(request, response);
+        }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

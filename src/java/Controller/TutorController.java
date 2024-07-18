@@ -45,13 +45,7 @@ public class TutorController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session1 = request.getSession();
-        User user = (User) session1.getAttribute("user");
-         if (user == null) {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-        if (user.getRole().equalsIgnoreCase("learner")) {
+    
             SaveTutorListDAO tDAO = new SaveTutorListDAO();
     SubjectDAO sDAO = new SubjectDAO();
     TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
@@ -191,10 +185,7 @@ public class TutorController extends HttpServlet {
     // Forward to JSP
     RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorList.jsp");
     dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
+      
             }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

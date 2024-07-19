@@ -505,7 +505,7 @@
                     </nav>
 
                     <div class="container">
-                        
+
                         <div class="table-responsive">
                             <table class="table table-bordered text-center">
                                 <thead >
@@ -778,7 +778,7 @@
                                                 <p>per session</p>
                                             </div>
                                         </li>
-                                        
+
                                         <li class="nav-item">
                                             <form id="addtutorform-${tutor.id}" onsubmit="return false;">
                                                 <button type="button" id="heart-button-${tutor.id}" style="background: white; border: 1px white;" onclick="change_heart('${tutor.id}')">
@@ -801,20 +801,20 @@
 
                                 </div>
                             </div>
-                                                
+
                         </nav>
-                        
+
                     </div> 
-                      <div class="buttons ">
-                            <div class="d-grid gap-2">
-                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
-                            </div>
+                    <div class="buttons ">
+                        <div class="d-grid gap-2">
+                            <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                            <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
-                                                <script type="text/javascript">
+        <script type="text/javascript">
             window.onload = function () {
                 setTimeout(function () {
                     var successAlert = document.getElementById('successAlert');
@@ -826,7 +826,7 @@
                         errorAlert.style.display = 'none';
                     }
             <% session.removeAttribute("successMessage"); %>
-            <% session.removeAttribute("errorMessage"); %>
+            <% session.removeAttribute("errorMessage");%>
                 }, 5000); // 5000 milliseconds = 5 seconds
             };
 

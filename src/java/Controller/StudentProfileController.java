@@ -24,18 +24,20 @@ import java.util.Vector;
  *
  * @author TRANG
  */
-@WebServlet(name="StudentProfileController", urlPatterns={"/StudentProfileController"})
+@WebServlet(name = "StudentProfileController", urlPatterns = {"/StudentProfileController"})
 public class StudentProfileController extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException  {
+            throws ServletException, IOException {
         HttpSession session1 = request.getSession();
         User user = (User) session1.getAttribute("user");
         if (user == null) {

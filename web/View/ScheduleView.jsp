@@ -241,13 +241,13 @@
                                                                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                                                         <div class="accordion-body">
                                                                             <c:forEach items="${slide}" var="s">
-                                                                            <div class="accordion-body">
-                                                                                <strong>${s.fileName} :</strong>
-                                                                                <a href="#">${s.filePath}</a>
-                                                                                <p style="margin: 0; color: #A2A2A2">${s.uploadedAt}</p>
-                                                                            </div>
-                                                                            <hr/>
-                                                                        </c:forEach>
+                                                                                <div class="accordion-body">
+                                                                                    <strong>${s.fileName} :</strong>
+                                                                                    <a href="#">${s.filePath}</a>
+                                                                                    <p style="margin: 0; color: #A2A2A2">${s.uploadedAt}</p>
+                                                                                </div>
+                                                                                <hr/>
+                                                                            </c:forEach>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -260,13 +260,13 @@
                                                                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                                                                         <div class="accordion-body">
                                                                             <c:forEach items="${book}" var="b">
-                                                                            <div class="accordion-body">
-                                                                                <strong>${b.fileName} :</strong>
-                                                                                <a href="#">${b.filePath}</a>
-                                                                                <p style="margin: 0; color: #A2A2A2">${b.uploadedAt}</p>
-                                                                            </div>
-                                                                            <hr/>
-                                                                        </c:forEach>
+                                                                                <div class="accordion-body">
+                                                                                    <strong>${b.fileName} :</strong>
+                                                                                    <a href="#">${b.filePath}</a>
+                                                                                    <p style="margin: 0; color: #A2A2A2">${b.uploadedAt}</p>
+                                                                                </div>
+                                                                                <hr/>
+                                                                            </c:forEach>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -279,13 +279,13 @@
                                                                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                                                                         <div class="accordion-body">
                                                                             <c:forEach items="${video}" var="v">
-                                                                            <div class="accordion-body">
-                                                                                <strong>${v.fileName} :</strong>
-                                                                                <a href="#">${v.filePath}</a>
-                                                                                <p style="margin: 0; color: #A2A2A2">${v.uploadedAt}</p>
-                                                                            </div>
-                                                                            <hr/>
-                                                                        </c:forEach>
+                                                                                <div class="accordion-body">
+                                                                                    <strong>${v.fileName} :</strong>
+                                                                                    <a href="#">${v.filePath}</a>
+                                                                                    <p style="margin: 0; color: #A2A2A2">${v.uploadedAt}</p>
+                                                                                </div>
+                                                                                <hr/>
+                                                                            </c:forEach>
                                                                         </div>
                                                                     </div>
                                                                 </div>

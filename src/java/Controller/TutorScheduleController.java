@@ -104,8 +104,6 @@ public class TutorScheduleController extends HttpServlet {
         return new String[]{startDate, endDate};
     }
 
-     
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -127,7 +125,7 @@ public class TutorScheduleController extends HttpServlet {
             try {
                 String startDate = sdfOutput.format(sdfInput.parse(dates[0]));
                 String endDate = sdfOutput.format(sdfInput.parse(dates[1]));
-                //lessons = lessonDAO.getLessonsByTutorIdAndDateRange(tutor.getId(), startDate, endDate);
+                lessons = lessonDAO.getLessonsByTutorIdAndDateRange(tutor.getId(), startDate, endDate);
             } catch (Exception e) {
                 e.printStackTrace();
                 lessons = new Vector<>();
@@ -137,7 +135,7 @@ public class TutorScheduleController extends HttpServlet {
             String[] currentWeekDates = getCurrentWeekDates();
             String startDate = currentWeekDates[0];
             String endDate = currentWeekDates[1];
-            //lessons = lessonDAO.getLessonsByTutorIdAndDateRange(tutor.getId(), startDate, endDate);
+            lessons = lessonDAO.getLessonsByTutorIdAndDateRange(tutor.getId(), startDate, endDate);
             selectedWeek = startDate + " to " + endDate;
         }
 
@@ -146,7 +144,7 @@ public class TutorScheduleController extends HttpServlet {
 
         request.setAttribute("weeks", weeks);
         request.setAttribute("selectedWeek", selectedWeek);
-        //request.setAttribute("lessons", lessons);
+        request.setAttribute("lessons", lessons);
         request.setAttribute("tutor", tutor);
         request.setAttribute("classes", classes);
 
@@ -157,7 +155,7 @@ public class TutorScheduleController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     @Override

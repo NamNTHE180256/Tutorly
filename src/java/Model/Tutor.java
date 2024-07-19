@@ -14,6 +14,7 @@ import java.util.Vector;
  * @author Admin
  */
 public class Tutor {
+
     private int id;
     private Subject subject;
     private String name;
@@ -26,8 +27,9 @@ public class Tutor {
     private String status;
 
     // Constructors
-    public Tutor() {}
-    
+    public Tutor() {
+    }
+
     public Tutor(int id, String name) {
         this.id = id;
         this.name = name;
@@ -126,17 +128,17 @@ public class Tutor {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
     public User getUserInfo() {
         UserDAO uDao = new UserDAO();
         return uDao.getUserById(id);
     }
-    
+
     public double getAvgRating() {
         TutorDAO tDao = new TutorDAO();
         return tDao.getAvgRateById(id);
     }
-    
+
     public Vector<TutorAvailability> getAvailabilities() {
         TutorDAO tDao = new TutorDAO();
         return tDao.getTutorAvailabilityByTutorId(id);
@@ -146,5 +148,5 @@ public class Tutor {
     public String toString() {
         return "Tutor{" + "id=" + id + ", subject=" + subject + ", name=" + name + ", gender=" + gender + ", image=" + image + ", bio=" + bio + ", edu=" + edu + ", price=" + price + ", bank=" + bank + ", status=" + status + '}';
     }
-    
+
 }

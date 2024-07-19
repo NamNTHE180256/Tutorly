@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+
 /**
  *
  * @author TRANG
  */
-public class MaterialDAO extends DBContext{
+public class MaterialDAO extends DBContext {
+
     private LessonDAO lessonDAO = new LessonDAO();
 
     public boolean addMaterial(Material material) {
@@ -39,8 +41,7 @@ public class MaterialDAO extends DBContext{
     public Vector<Material> displayAllMaterials() {
         Vector<Material> materials = new Vector<>();
         String sql = "SELECT * FROM Material";
-        try (PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 materials.add(createMaterialFromResultSet(rs));
             }
@@ -171,7 +172,7 @@ public class MaterialDAO extends DBContext{
 
     public static void main(String[] args) {
         MaterialDAO materialDAO = new MaterialDAO();
-        
+
         // Test getMaterialsByClassIdAndFileType method
         Vector<Material> materialsByClassIdAndFileType = materialDAO.getMaterialsByClassIdAndFileType(1, "document");
         for (Material material : materialsByClassIdAndFileType) {

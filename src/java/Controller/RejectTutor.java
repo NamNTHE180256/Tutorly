@@ -77,10 +77,10 @@ public class RejectTutor extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         int tutorId = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
-        Manager manager = (Manager)session.getAttribute("manager");
+        Manager manager = (Manager) session.getAttribute("manager");
         if (manager != null) {
             ManagerDAO mDao = new ManagerDAO();
             ManageTutor mt = new ManageTutor(tutorId, manager.getId(), "reject");

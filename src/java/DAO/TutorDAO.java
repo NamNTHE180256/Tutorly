@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import Model.Session;
 import Model.Tutor;
 import Model.TutorAvailability;
@@ -12,10 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Admin
@@ -50,7 +53,31 @@ public class TutorDAO extends DBContext {
         }
         return tutors;
     }
-    
+
+    public List<Tutor> getTutorsByLearnerId(int learnerId) {
+        List<Tutor> tutors = new ArrayList<>();
+        String sql = "SELECT  t.* FROM Tutor t "
+                + "JOIN Class c ON t.id = c.tutorId "
+                + "JOIN Learner l ON c.learnerId = l.id "
+                + "WHERE l.id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, learnerId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Tutor tutor = new Tutor();
+                tutor.setId(rs.getInt("id"));
+                tutor.setName(rs.getString("name"));
+                tutor.setImage(rs.getString("image"));
+                tutor.setBio(rs.getString("bio"));
+                tutors.add(tutor);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TutorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tutors;
+    }
+
     public ArrayList<Tutor> searchTutors(String searchQuery) {
         ArrayList<Tutor> tutors = new ArrayList<>();
         SubjectDAO sDao = new SubjectDAO();
@@ -128,13 +155,13 @@ public class TutorDAO extends DBContext {
             sp.setString(5, tutor.getImage());
             sp.setString(6, tutor.getBio());
             sp.setString(7, tutor.getEdu());
-            sp.setFloat(8 ,tutor.getPrice());
+            sp.setFloat(8, tutor.getPrice());
             sp.setString(9, tutor.getBank());
             sp.setString(10, tutor.getStatus());
             int rowsAffected = sp.executeUpdate();
             sp.close();
             return rowsAffected > 0;
-        } catch (SQLException ex) {     
+        } catch (SQLException ex) {
             Logger.getLogger(TutorDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

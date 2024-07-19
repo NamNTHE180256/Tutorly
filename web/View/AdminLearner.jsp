@@ -18,9 +18,9 @@
                 text-align: center;
                 vertical-align: middle;
             }
-            
-           
-            
+
+
+
             .stu_image {
                 width: 50px; /* Adjust the width as needed */
                 height: 50px; /* Adjust the height as needed */
@@ -28,7 +28,7 @@
                 border-radius: 50%; /* Optional: make the image circular */
                 border: 2px solid #ccc; /* Optional: add a border */
             }
-            
+
             .search {
                 width: 40%;
                 height: 40px;
@@ -78,7 +78,7 @@
 
                 color: #fff !important;
             }
-            
+
         </style>
     </head>
     <body>

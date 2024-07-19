@@ -91,7 +91,7 @@
 
             .bg-soft-primary {
                 background-color: rgba(59, 118, 225, .25) !important;
-}
+            }
 
             .avatar-xs {
                 height: 1rem;
@@ -307,16 +307,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="entry" items="${learnersBySubject}">
-                                        <tr>
-                                            <td><a href="javascript: void(0);" class="text-dark fw-medium">
-                                                    <i class="fa-solid fa-book-open" style="color: #0E3C6E; font-size: 15px;"></i>
-                                                    ${entry.key.name}</a></td>
-                                            <td>${entry.value}</td>
-                                            <td>${entry.value}</td>
+                                        <c:forEach var="entry" items="${learnersBySubject}">
+                                            <tr>
+                                                <td><a href="javascript: void(0);" class="text-dark fw-medium">
+                                                        <i class="fa-solid fa-book-open" style="color: #0E3C6E; font-size: 15px;"></i>
+                                                        ${entry.key.name}</a></td>
+                                                <td>${entry.value}</td>
+                                                <td>${entry.value}</td>
 
-                                        </tr>
-                                    </c:forEach>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -340,7 +340,7 @@
                         errorAlert.style.display = 'none';
                     }
             <% session.removeAttribute("successMessage"); %>
-            <% session.removeAttribute("errorMessage"); %>
+            <% session.removeAttribute("errorMessage");%>
                 }, 5000); // 5000 milliseconds = 5 seconds
             };
         </script>

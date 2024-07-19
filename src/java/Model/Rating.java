@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Model;
+
 import java.util.Date;
+
 /**
  *
  * @author Admin
  */
 public class Rating {
+
     private int id;
     private Learner learner;
     private Tutor tutor;
@@ -17,7 +20,8 @@ public class Rating {
     private Date createdAt;
 
     // Constructors
-    public Rating() {}
+    public Rating() {
+    }
 
     public Rating(Learner learner, Tutor tutor, int rating, String review) {
         this.learner = learner;
@@ -79,5 +83,5 @@ public class Rating {
     public String toString() {
         return "Rating{" + "id=" + id + ", learner=" + learner + ", tutor=" + tutor + ", rating=" + rating + ", review=" + review + ", createdAt=" + createdAt + '}';
     }
-    
+
 }

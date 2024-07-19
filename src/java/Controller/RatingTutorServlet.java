@@ -105,7 +105,7 @@ public class RatingTutorServlet extends HttpServlet {
             message = "Rating successful";
 
         } catch (Exception e) {
-             message = "Error: " + e.getMessage();
+            message = "Error: " + e.getMessage();
 
         }
         request.setAttribute("success", success);

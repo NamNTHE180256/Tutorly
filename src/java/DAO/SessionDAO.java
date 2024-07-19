@@ -10,13 +10,17 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SessionDAO extends DBContext{
+public class SessionDAO extends DBContext {
+
     public SessionDAO() {
         // Initialize your database connection here
         // For example:
@@ -27,6 +31,29 @@ public class SessionDAO extends DBContext{
     public Vector<Session> displayAllSessions() {
         Vector<Session> vector = new Vector<>();
         String sql = "SELECT * FROM Session";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String startTime = rs.getString("startTime");
+                String endTime = rs.getString("endTime");
+                String dayOfWeek = rs.getString("dayOfWeek");
+
+                Session session = new Session(id, startTime, endTime, dayOfWeek);
+                vector.add(session);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public List<Session> displayAllSessions2() {
+        List<Session> vector = new ArrayList<>();
+        String sql = "SELECT  distinct s.* FROM Session s  \n"
+                + "                      JOIN Lession l ON s.id = l.sessionId  \n"
+                + "                    JOIN Class c ON l.classId = c.id  ";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
             ResultSet rs = state.executeQuery();
@@ -109,7 +136,7 @@ public class SessionDAO extends DBContext{
         }
         return null;
     }
-    
+
     // Method to add a new session
     public int addSession(Session session) {
         int n = 0;
@@ -156,5 +183,98 @@ public class SessionDAO extends DBContext{
             Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
+    }
+
+    public List<Session> getAvailableSessions(String currentSessionId) {
+        List<Session> vector = new ArrayList<>();
+        String sql = "SELECT * FROM Session WHERE id != ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setString(1, currentSessionId);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String startTime = rs.getString("startTime");
+                String endTime = rs.getString("endTime");
+                String dayOfWeek = rs.getString("dayOfWeek");
+
+                Session session = new Session(id, startTime, endTime, dayOfWeek);
+                vector.add(session);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public List<Session> getSessionsByLearnerId(int learnerId) {
+        List<Session> vector = new ArrayList<>();
+        String sql = "SELECT  l.date as ldate, s.* FROM Session s JOIN Lession l ON s.id = l.sessionId JOIN Class c ON l.classId = c.id "
+                + "WHERE c.learnerId = ? and l.status = 'Scheduled'";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, learnerId);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String startTime = rs.getString("startTime");
+                String endTime = rs.getString("endTime");
+                String dayOfWeek = rs.getString("dayOfWeek");
+
+                Date date = rs.getDate("ldate");
+                Session session = new Session(id, startTime, endTime, dayOfWeek, date);
+                vector.add(session);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public List<Session> getSessionsByTutorId(String tutorId) {
+        List<Session> vector = new ArrayList<>();
+        String sql = "SELECT l.date as ldate,  s.* FROM Session s "
+                + "JOIN Lession l ON s.id = l.sessionId "
+                + "JOIN Class c ON l.classId = c.id "
+                + "WHERE c.tutorId = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setString(1, tutorId);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String startTime = rs.getString("startTime");
+                String endTime = rs.getString("endTime");
+                String dayOfWeek = rs.getString("dayOfWeek");
+                Date date = rs.getDate("ldate");
+                Session session = new Session(id, startTime, endTime, dayOfWeek, date);
+                vector.add(session);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public boolean updateLearnerSession(int learnerId, String fromSessionId, String toSessionId, String date) {
+        String sql = "UPDATE Lession SET sessionId = ? WHERE sessionId = ? AND classId IN (SELECT id FROM Class WHERE learnerId = ?) AND date = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setString(1, toSessionId);
+            state.setString(2, fromSessionId);
+            state.setInt(3, learnerId);
+            state.setString(4, date);
+            int rowsUpdated = state.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        SessionDAO s = new SessionDAO();
+        Date date = new Date(2024, 05, 13);
+        s.updateLearnerSession(1, "M1", "W5", "2024-05-13");
     }
 }

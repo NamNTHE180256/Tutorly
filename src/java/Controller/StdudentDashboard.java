@@ -1,7 +1,6 @@
 package Controller;
 
 import DAO.AClassDAO;
-import DAO.ClassDAO;
 import DAO.SessionDAO;
 import Model.AClass;
 import Model.Learner;
@@ -30,9 +29,10 @@ public class StdudentDashboard extends HttpServlet {
         if (learner != null) {
             int learnerID = learner.getId();
             AClassDAO aClassDAO = new AClassDAO();
-            ClassDAO classDAO = new ClassDAO();
             SessionDAO sessionDAO = new SessionDAO();
+
             Vector<AClass> classes = aClassDAO.getClassesByLearnerId(learnerID);
+
 
             Map<Integer, Session> sessionData = new HashMap<>();
             for (AClass aClass : classes) {
@@ -42,7 +42,7 @@ public class StdudentDashboard extends HttpServlet {
 
             Map<Integer, Double> progressMap = new HashMap<>();
             for (AClass aClass : classes) {
-                int finishedSessions = classDAO.getFinishedSessions(aClass.getId());
+                int finishedSessions = aClassDAO.getFinishedSessions(aClass.getId());
                 double progressPercentage = (double) finishedSessions / aClass.getTotalSession() * 100;
                 progressMap.put(aClass.getId(), progressPercentage);
             }

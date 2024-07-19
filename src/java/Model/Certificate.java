@@ -9,12 +9,14 @@ package Model;
  * @author Admin
  */
 public class Certificate {
+
     private int id;
     private Tutor tutor;
     private String image;
 
     // Constructors
-    public Certificate() {}
+    public Certificate() {
+    }
 
     public Certificate(Tutor tutor, String image) {
         this.tutor = tutor;

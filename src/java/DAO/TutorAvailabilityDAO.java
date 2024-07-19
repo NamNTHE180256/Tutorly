@@ -17,11 +17,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author TRANG
  */
-public class TutorAvailabilityDAO extends DBContext{
+public class TutorAvailabilityDAO extends DBContext {
+
     public TutorAvailabilityDAO() {
         // Initialize your database connection here
         // For example:
@@ -148,7 +150,7 @@ public class TutorAvailabilityDAO extends DBContext{
         }
         return n;
     }
-    
+
     public Vector<TutorAvailability> getTutorAvailabilityByTutorId(int tutorId) {
         Vector<TutorAvailability> tutorAvailabilities = new Vector<>();
         String sql = "SELECT \n"
@@ -196,14 +198,13 @@ public class TutorAvailabilityDAO extends DBContext{
         }
         return tutorAvailabilities;
     }
-    
-    
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
         TutorAvailabilityDAO t = new TutorAvailabilityDAO();
         Vector<TutorAvailability> v = t.getTutorAvailabilityByTutorId(7);
-        for(TutorAvailability e : v){
+        for (TutorAvailability e : v) {
             System.out.println(e.toString());
         }
     }
-    
+
 }

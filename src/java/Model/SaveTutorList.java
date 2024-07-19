@@ -8,7 +8,8 @@ package Model;
  *
  * @author TRANG
  */
-public class SaveTutorList extends Tutor{
+public class SaveTutorList extends Tutor {
+
     private String saveStatus;
 
     public SaveTutorList() {
@@ -35,5 +36,5 @@ public class SaveTutorList extends Tutor{
     public String toString() {
         return "SaveTutorList{" + "saveStatus=" + saveStatus + '}';
     }
-    
+
 }

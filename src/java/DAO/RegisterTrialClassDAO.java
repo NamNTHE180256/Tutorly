@@ -18,12 +18,14 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author TRANG
  */
 public class RegisterTrialClassDAO extends DBContext {
-     public Vector<RegisterTrialClass> displayAllTrialClasses() {
+
+    public Vector<RegisterTrialClass> displayAllTrialClasses() {
         Vector<RegisterTrialClass> vector = new Vector<>();
         String sql = "SELECT * FROM RegisterTrialClass";
         try (PreparedStatement state = connection.prepareStatement(sql)) {
@@ -222,7 +224,7 @@ public class RegisterTrialClassDAO extends DBContext {
         }
         return -1;
     }
-    
+
     public int updateTrialClassStatus(int classId, String newStatus) {
         String sql = "UPDATE RegisterTrialClass SET status = ? WHERE id = ?";
         try (PreparedStatement pre = connection.prepareStatement(sql)) {
@@ -234,33 +236,32 @@ public class RegisterTrialClassDAO extends DBContext {
         }
         return 0;
     }
-   
 
     public static void main(String[] args) {
         // Assume connection is established
-            LearnerDAO lDAO = new LearnerDAO();
-            LessonDAO lessonDAO = new LessonDAO();
-            SessionDAO sDAO = new SessionDAO();
-            Date today = new Date();
-            TutorDAO tDAO = new TutorDAO();
-            SubjectDAO sbDAO = new SubjectDAO();
-            Session session = sDAO.getSessionById("M2");
+        LearnerDAO lDAO = new LearnerDAO();
+        LessonDAO lessonDAO = new LessonDAO();
+        SessionDAO sDAO = new SessionDAO();
+        Date today = new Date();
+        TutorDAO tDAO = new TutorDAO();
+        SubjectDAO sbDAO = new SubjectDAO();
+        Session session = sDAO.getSessionById("M2");
         Tutor tutor = tDAO.getTutorById(8);
         RegisterTrialClassDAO trialClassDAO = new RegisterTrialClassDAO();
         RegisterTrialClass rClass = new RegisterTrialClass(
-                    lDAO.getLearnerById(1),
-                    tutor,
-                    session,
-                    1,
-                    getNearestDayOfWeek(today, sDAO.getSessionById("M2").getDayOfWeek()),
-                    getNearestDayOfWeek(today, sDAO.getSessionById("M2").getDayOfWeek()),
-                    "wait",
-                    tutor.getSubject(),
-                    "unreaded"
-            );
+                lDAO.getLearnerById(1),
+                tutor,
+                session,
+                1,
+                getNearestDayOfWeek(today, sDAO.getSessionById("M2").getDayOfWeek()),
+                getNearestDayOfWeek(today, sDAO.getSessionById("M2").getDayOfWeek()),
+                "wait",
+                tutor.getSubject(),
+                "unreaded"
+        );
         trialClassDAO.addTrialClass(rClass);
         // Example: Get trial classes by learner ID
-        
+
         Vector<RegisterTrialClass> trialClasses = trialClassDAO.getTrialClassesByTutorId(7);
         System.out.println(trialClasses.size());
     }

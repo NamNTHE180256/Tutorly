@@ -4,7 +4,9 @@
  */
 package Controller;
 
+import DAO.AClassDAO;
 import DAO.LessonDAO;
+import Model.AClass;
 import Model.Learner;
 import Model.Lesson;
 import Model.Tutor;
@@ -22,7 +24,7 @@ import java.util.List;
 
 /**
  *
- * @author ADMIN
+ * @author Tung Duong
  */
 @WebServlet(name = "HistoryController", urlPatterns = {"/history"})
 public class HistoryController extends HttpServlet {
@@ -34,21 +36,29 @@ public class HistoryController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         Learner learner = (Learner) session.getAttribute("learner");
         Tutor tutor = (Tutor) session.getAttribute("tutor");
-        String majorParam = request.getParameter("class");
+        String classParam = request.getParameter("class");
 
-        Integer classId = (majorParam != null && !majorParam.isEmpty()) ? Integer.valueOf(majorParam) : null;
+        Integer classId = (classParam != null && !classParam.isEmpty()) ? Integer.valueOf(classParam) : null;
 
+        AClassDAO aClassDAO = new AClassDAO();
         if (user == null) {
             response.sendRedirect("View/Login.jsp");
         } else {
             List<Lesson> lessons = new ArrayList<>();
+            List<AClass> list = new ArrayList<>();
             LessonDAO ldao = new LessonDAO();
             if (tutor != null) {
+                list = aClassDAO.getClassesByTutorId(tutor.getId());
                 lessons = ldao.getLessonForTutor(tutor.getId(), classId);
             } else if (learner != null) {
+                list = aClassDAO.getClassesByLearnerId(learner.getId());
                 lessons = ldao.getLessonForLearner(learner.getId(), classId);
             }
+            list.forEach(System.out::println);
+            System.out.println(list.size());
+            request.setAttribute("list", list);
             request.setAttribute("lessons", lessons);
+            request.setAttribute("classParam", classParam);
             request.getRequestDispatcher("View/History.jsp").forward(request, response);
         }
 

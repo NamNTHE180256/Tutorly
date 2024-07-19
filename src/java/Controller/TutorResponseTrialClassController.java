@@ -63,7 +63,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "accepted");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorResponseTrialClassView.jsp");
                     dispatcher.forward(request, response);
-                    
+
                     AClassDAO aclassDAO = new AClassDAO();
                     LearnerDAO lDAO = new LearnerDAO();
                     LessonDAO lessonDAO = new LessonDAO();
@@ -110,7 +110,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     } else {
                         response.getWriter().write("Failed to add lesson.");
                     }
-                    
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     response.getWriter().write("Error: " + e.getMessage());

@@ -18,11 +18,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author TRANG
  */
-public class AClassDAO extends DBContext{
+public class AClassDAO extends DBContext {
+
     public Vector<AClass> displayAllClasses() {
         Vector<AClass> vector = new Vector<>();
         String sql = "SELECT * FROM Class";
@@ -132,7 +134,7 @@ public class AClassDAO extends DBContext{
         return n;
     }
 
-     public Vector<AClass> getClassesByLearnerId(int learnerId) {
+    public Vector<AClass> getClassesByLearnerId(int learnerId) {
         Vector<AClass> vector = new Vector<>();
         String sql = "SELECT * FROM Class WHERE learnerId = ?";
         try {
@@ -159,7 +161,8 @@ public class AClassDAO extends DBContext{
         }
         return vector;
     }
-     public int getLatestClassId() {
+
+    public int getLatestClassId() {
         String sql = "SELECT TOP 1 id FROM Class ORDER BY id DESC";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -172,18 +175,16 @@ public class AClassDAO extends DBContext{
         }
         return -1;
     }
-     
-     public int countClassByStatusLearner(String status, int id) {
+
+    public int countClassByStatus(String status, int id) {
         int n = 0;
-        String sql = "Select count(*) as count_class from class where status = ? and learnerId = ? ";
+        String sql = "Select count(*) as count_class from class where status = ? and tutorId = ? ";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, status);
             pre.setInt(2, id);
-            
-            
-            
-             ResultSet rs = pre.executeQuery();
+
+            ResultSet rs = pre.executeQuery();
             if (rs.next()) {
                 n = rs.getInt("count_class");
                 return n;
@@ -192,6 +193,100 @@ public class AClassDAO extends DBContext{
             Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+
+    public int countClassByStatusLearner(String status, int id) {
+        int n = 0;
+        String sql = "Select count(*) as count_class from class where status = ? and learnerId = ? ";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, status);
+            pre.setInt(2, id);
+
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                n = rs.getInt("count_class");
+                return n;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public Vector<AClass> getClassesByTutorId(int tutorId) {
+        Vector<AClass> classes = new Vector<>();
+        LearnerDAO lDao = new LearnerDAO();
+        TutorDAO tDao = new TutorDAO();
+        SubjectDAO sDao = new SubjectDAO();
+        String sql = "SELECT c.id, c.learnerId, c.totalSession, c.startDate "
+                + "FROM Class c "
+                + "WHERE c.tutorId = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, tutorId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AClass aClass = new AClass();
+                aClass.setId(rs.getInt("id"));
+                aClass.setLearner(lDao.getLearnerById(rs.getInt("learnerId")));
+                aClass.setTutor(tDao.getTutorById(tutorId));
+//                aClass.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
+                aClass.setTotalSession(rs.getInt("totalSession"));
+                aClass.setStartDate(rs.getDate("startDate"));
+
+                classes.add(aClass);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return classes;
+    }
+
+    public Vector<AClass> getClassesBySTudentId(int studentId) {
+        Vector<AClass> classes = new Vector<>();
+        LearnerDAO lDao = new LearnerDAO();
+        TutorDAO tDao = new TutorDAO();
+        SubjectDAO sDao = new SubjectDAO();
+        String sql = """
+                    SELECT c.id, c.learnerId, c.tutorId, c.totalSession, c.startDate  
+                      FROM Class c    
+                      WHERE c.learnerId = ?""";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, studentId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AClass aClass = new AClass();
+                aClass.setId(rs.getInt("id"));
+                aClass.setLearner(lDao.getLearnerById(rs.getInt("learnerId")));
+                aClass.setTutor(tDao.getTutorById(rs.getInt("tutorId")));
+//                aClass.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
+                aClass.setTotalSession(rs.getInt("totalSession"));
+                aClass.setStartDate(rs.getDate("startDate"));
+
+                classes.add(aClass);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return classes;
+    }
+
+    public int getFinishedSessions(int classId) {
+        int finishedSessions = 0;
+        String sql = "SELECT COUNT(*) AS finishedSessions FROM Lession WHERE classId = ? AND status = 'Finished'";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, classId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                finishedSessions = rs.getInt("finishedSessions");
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return finishedSessions;
     }
 
     public static void main(String[] args) {

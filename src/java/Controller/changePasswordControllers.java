@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet(name = "changePasswordControllers", urlPatterns = {"/changePassword"})
 public class changePasswordControllers extends HttpServlet {
-    
+
     UserDAO udao = new UserDAO();
 
     /**
@@ -52,7 +52,7 @@ public class changePasswordControllers extends HttpServlet {
                 request.setAttribute("error", "Change password Failed");
                 request.getRequestDispatcher("error.jsp").forward(request, response);
             }
-            
+
         }
         request.getRequestDispatcher("StudentProfileController").forward(request, response);
     }

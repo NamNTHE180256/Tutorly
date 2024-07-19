@@ -22,177 +22,177 @@
 
         <style>
             html, body {
-            overflow: hidden;
-            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
+                overflow: hidden;
+                font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                font-size: 14px;
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
 
-        .container-fluid {
-            display: flex;
-            flex-grow: 1;
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
-        }
+            .container-fluid {
+                display: flex;
+                flex-grow: 1;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+            }
 
-        .content {
-            display: flex;
-            flex-grow: 1;
-            overflow: hidden;
-        }
+            .content {
+                display: flex;
+                flex-grow: 1;
+                overflow: hidden;
+            }
 
-        .todo, .classofstudent, .upcommingclass {
-            margin-bottom: 20px;
-            flex-shrink: 0;
-        }
+            .todo, .classofstudent, .upcommingclass {
+                margin-bottom: 20px;
+                flex-shrink: 0;
+            }
 
-        .todo {
-            background-color: white;
-            border-radius: 20px;
-            padding-top: 20px;
-        }
+            .todo {
+                background-color: white;
+                border-radius: 20px;
+                padding-top: 20px;
+            }
 
-        .todo .todohead {
-            background-color: #F7B500;
-            width: fit-content;
-            border-radius: 5px;
-            padding: 5px;
-            margin-left: 30px;
-            color: white;
-            box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
-        }
+            .todo .todohead {
+                background-color: #F7B500;
+                width: fit-content;
+                border-radius: 5px;
+                padding: 5px;
+                margin-left: 30px;
+                color: white;
+                box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+            }
 
-        .todo .todonumber {
-            text-align: center;
-            font-size: 80px;
-        }
+            .todo .todonumber {
+                text-align: center;
+                font-size: 80px;
+            }
 
-        .todo .foot {
-            text-align: center;
-            color: #A2A2A2;
-            padding-bottom: 10px;
-        }
+            .todo .foot {
+                text-align: center;
+                color: #A2A2A2;
+                padding-bottom: 10px;
+            }
 
-        .classofstudent {
-            background-color: white;
-            border-radius: 20px;
-            padding-top: 20px;
-        }
+            .classofstudent {
+                background-color: white;
+                border-radius: 20px;
+                padding-top: 20px;
+            }
 
-        .classofstudent .classofstudenthead {
-            background-color: #F7B500;
-            width: fit-content;
-            border-radius: 5px;
-            padding: 5px;
-            margin-left: 30px;
-            color: white;
-            box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
-        }
+            .classofstudent .classofstudenthead {
+                background-color: #F7B500;
+                width: fit-content;
+                border-radius: 5px;
+                padding: 5px;
+                margin-left: 30px;
+                color: white;
+                box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+            }
 
-        .classofstudent ul {
-            display: inline-flex;
-            text-decoration: none;
-        }
+            .classofstudent ul {
+                display: inline-flex;
+                text-decoration: none;
+            }
 
-        .classofstudent li {
-            text-decoration: none;
-        }
+            .classofstudent li {
+                text-decoration: none;
+            }
 
-        .classofstudent .classongoing {
-            text-align: center;
-            font-size: 80px;
-        }
+            .classofstudent .classongoing {
+                text-align: center;
+                font-size: 80px;
+            }
 
-        .classofstudent .classongoingfoot {
-            text-align: center;
-            color: #A2A2A2;
-            padding-bottom: 10px;
-        }
+            .classofstudent .classongoingfoot {
+                text-align: center;
+                color: #A2A2A2;
+                padding-bottom: 10px;
+            }
 
-        .classofstudent .classcomplete {
-            text-align: center;
-            font-size: 80px;
-        }
+            .classofstudent .classcomplete {
+                text-align: center;
+                font-size: 80px;
+            }
 
-        .classofstudent .classcompletefoot {
-            text-align: center;
-            color: #A2A2A2;
-            padding-bottom: 10px;
-        }
+            .classofstudent .classcompletefoot {
+                text-align: center;
+                color: #A2A2A2;
+                padding-bottom: 10px;
+            }
 
-        .ongoingclass {
-            margin-left: 40px;
-        }
+            .ongoingclass {
+                margin-left: 40px;
+            }
 
-        .completedclass {
-            margin-right: 40px;
-        }
+            .completedclass {
+                margin-right: 40px;
+            }
 
-        .upcommingclass {
-            background-color: white;
-            border-radius: 20px;
-            padding-top: 10px;
-            padding-bottom: 20px;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            flex-grow: 1;
-        }
+            .upcommingclass {
+                background-color: white;
+                border-radius: 20px;
+                padding-top: 10px;
+                padding-bottom: 20px;
+                padding: 40px;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                flex-grow: 1;
+            }
 
-        .upcommingclasstitle {
-            color: #0E3C6E;
-            font-weight: bold;
-        }
+            .upcommingclasstitle {
+                color: #0E3C6E;
+                font-weight: bold;
+            }
 
-        .upcommingclassnote {
-            color: #A2A2A2;
-        }
+            .upcommingclassnote {
+                color: #A2A2A2;
+            }
 
-        .upcommingclassdedtails {
-            background-color: #E6E6E6;
-            border-radius: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow: auto;
-            
-        }
+            .upcommingclassdedtails {
+                background-color: #E6E6E6;
+                border-radius: 20px;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+                box-sizing: border-box;
+                overflow: auto;
 
-        #calendar-container {
-            height: 100%;
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            background-color: white;
-            padding: 20px;
-            overflow: hidden;
-            box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
-        }
+            }
 
-        #calendar {
-            flex-grow: 1;
-        }
+            #calendar-container {
+                height: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                background-color: white;
+                padding: 20px;
+                overflow: hidden;
+                box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
+            }
 
-        .leftupcoming h4 {
-            color: #0E3C6E;
-        }
+            #calendar {
+                flex-grow: 1;
+            }
 
-        .leftupcoming p {
-            color: #0E3C6E;
-        }
+            .leftupcoming h4 {
+                color: #0E3C6E;
+            }
 
-        .rightupcoming h4 {
-            color: #0E3C6E;
-        }
+            .leftupcoming p {
+                color: #0E3C6E;
+            }
+
+            .rightupcoming h4 {
+                color: #0E3C6E;
+            }
         </style>
         <title>Dashboard</title>
     </head>
@@ -212,7 +212,7 @@
                             <p class="foot">Assignment(s) not completed</p>
                         </div>
 
-                            <img style="width: 310px" src="image/Dashboard3.png">
+                        <img style="width: 310px" src="image/Dashboard3.png">
                     </div>
                     <!-- Session occur in 5 hours -->
                     <div class="col-sm-9 d-flex flex-column" >
@@ -231,17 +231,16 @@
                             <div class="upcommingclassdedtails" style="height: 450px">
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
-                                        var calendarEl = document.getElementById('calendar');
-
-                                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                                            headerToolbar: {
-                                                left: 'prev,next today',
-                                                center: 'title',
-                                                right: 'listDay,listWeek'
-                                            },
+                                    var calendarEl = document.getElementById('calendar');
+                                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                                    headerToolbar: {
+                                    left: 'prev,next today',
+                                            center: 'title',
+                                            right: 'listDay,listWeek'
+                                    },
                                             views: {
-                                                listDay: { buttonText: 'list day' },
-                                                listWeek: { buttonText: 'list week' }
+                                            listDay: { buttonText: 'list day' },
+                                                    listWeek: { buttonText: 'list week' }
                                             },
                                             initialView: 'listWeek',
                                             initialDate: new Date().toISOString().split('T')[0],
@@ -249,20 +248,19 @@
                                             editable: true,
                                             dayMaxEvents: true,
                                             events: [
-                                                <c:forEach items="${lesson_vector}" var="v">
-                                                    {
-                                                        title: '${v.getAClass().getTutor().getSubject().getName()} - ${v.getAClass().getTutor().getName()}',
-                                                        start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                        url: 'http://google.com/',
-                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
-                                                        className: 'custom-event'
-                                                    }<c:if test="${v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
-                                                </c:forEach>
-                                            ]
-                                        });
-
-                                        calendar.render();
-                                    });
+                                    <c:forEach items="${lesson_vector}" var="v">
+                                            {
+                                            title: '${v.getAClass().getTutor().getSubject().getName()} - ${v.getAClass().getTutor().getName()}',
+                                                                start: '${v.getDate()}T${v.getSession().getStartTime()}',
+                                                                                    url: 'http://google.com/',
+                                                                                    end: '${v.getDate()}T${v.getSession().getEndTime()}',
+                                                                                                        className: 'custom-event'
+                                                                                                }<c:if test="${v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
+                                    </c:forEach>
+                                                                                                ]
+                                                                                        });
+                                                                                        calendar.render();
+                                                                                        });
                                 </script>
                                 <div id='calendar-container'>
                                     <div id='calendar'></div>

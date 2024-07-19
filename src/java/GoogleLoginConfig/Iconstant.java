@@ -9,6 +9,7 @@ package GoogleLoginConfig;
  * @author Acer
  */
 class Iconstant { // File config google
+
     public static final String GOOGLE_CLIENT_ID = "598103268131-cq29u3qtj4hci367mp2a6jip7gp02iii.apps.googleusercontent.com";
 
     public static final String GOOGLE_CLIENT_SECRET = "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";

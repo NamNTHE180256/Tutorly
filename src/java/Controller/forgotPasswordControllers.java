@@ -21,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Acer
  */
-@WebServlet(name="forgotPasswordControllers", urlPatterns={"/forgotPassword"})
+@WebServlet(name = "forgotPasswordControllers", urlPatterns = {"/forgotPassword"})
 public class forgotPasswordControllers extends HttpServlet {
 
     /**

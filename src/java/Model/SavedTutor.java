@@ -9,13 +9,14 @@ package Model;
  * @author Admin
  */
 public class SavedTutor {
-    
+
     private int id;
     private Learner learner;
     private Tutor tutor;
 
     // Constructors
-    public SavedTutor() {}
+    public SavedTutor() {
+    }
 
     public SavedTutor(Learner learner, Tutor tutor) {
         this.learner = learner;

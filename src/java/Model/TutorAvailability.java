@@ -9,6 +9,7 @@ package Model;
  * @author Admin
  */
 public class TutorAvailability {
+
     private int id;
     private Tutor tutor;
     private Session session;
@@ -16,7 +17,8 @@ public class TutorAvailability {
     private String status;
 
     // Constructors
-    public TutorAvailability() {}
+    public TutorAvailability() {
+    }
 
     public TutorAvailability(int id, Tutor tutor, Session session, String status) {
         this.id = id;
@@ -24,7 +26,7 @@ public class TutorAvailability {
         this.session = session;
         this.status = status;
     }
-    
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -62,5 +64,5 @@ public class TutorAvailability {
     public String toString() {
         return "TutorAvailability{" + "id=" + id + ", tutor=" + tutor + ", session=" + session + ", status=" + status + '}';
     }
-    
+
 }

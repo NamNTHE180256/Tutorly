@@ -11,7 +11,8 @@ import java.util.Date;
  * @author TRANG
  */
 public class RegisterTrialClass {
-        private int id;
+
+    private int id;
     private Learner learner;
     private Tutor tutor;
     private Session session;
@@ -127,21 +128,18 @@ public class RegisterTrialClass {
         this.readed = readed;
     }
 
-    
-
     @Override
     public String toString() {
-        return "RegisterTrialClass{" +
-                "id=" + id +
-                ", learner=" + learner +
-                ", tutor=" + tutor +
-                ", totalSession=" + totalSession +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", status='" + status + '\'' +
-                ", subject=" + subject +
-                ", readed='" + readed + '\'' +
-                '}';
+        return "RegisterTrialClass{"
+                + "id=" + id
+                + ", learner=" + learner
+                + ", tutor=" + tutor
+                + ", totalSession=" + totalSession
+                + ", startDate=" + startDate
+                + ", endDate=" + endDate
+                + ", status='" + status + '\''
+                + ", subject=" + subject
+                + ", readed='" + readed + '\''
+                + '}';
     }
 }
-

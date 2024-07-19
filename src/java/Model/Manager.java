@@ -11,6 +11,7 @@ import DAO.UserDAO;
  * @author Admin
  */
 public class Manager {
+
     private int id;
     private String name;
     private int approvedTutor;
@@ -82,17 +83,17 @@ public class Manager {
 
     @Override
     public String toString() {
-        return "Manager{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", approvedTutor=" + approvedTutor +
-                ", rejectedTutor=" + rejectedTutor +
-                ", blockedTutor=" + blockedTutor +
-                ", status='" + status + '\'' +
-                '}';
+        return "Manager{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", approvedTutor=" + approvedTutor
+                + ", rejectedTutor=" + rejectedTutor
+                + ", blockedTutor=" + blockedTutor
+                + ", status='" + status + '\''
+                + '}';
     }
-    
-    public User getUserInfo(){
+
+    public User getUserInfo() {
         UserDAO uDAO = new UserDAO();
         return uDAO.getUserById(id);
     }

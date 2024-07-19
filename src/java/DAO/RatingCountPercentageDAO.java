@@ -16,8 +16,9 @@ import java.util.logging.Logger;
  *
  * @author TRANG
  */
-public class RatingCountPercentageDAO extends DBContext{
-    public Vector<RatingCountPercentage> getPercentageByTutorID(int id){
+public class RatingCountPercentageDAO extends DBContext {
+
+    public Vector<RatingCountPercentage> getPercentageByTutorID(int id) {
         Vector<RatingCountPercentage> vector = new Vector<RatingCountPercentage>();
         String sql = "SELECT\n"
                 + "    rating,\n"
@@ -43,15 +44,16 @@ public class RatingCountPercentageDAO extends DBContext{
                 int rate = rs.getInt(1);
                 int count = rs.getInt(2);
                 double percent = rs.getInt(3);
-                RatingCountPercentage r = new RatingCountPercentage(rate,count, percent);
+                RatingCountPercentage r = new RatingCountPercentage(rate, count, percent);
                 vector.add(r);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RatingCountPercentageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
         return vector;
     }
+
     public static void main(String[] args) {
         RatingCountPercentageDAO r = new RatingCountPercentageDAO();
         System.out.println(r.getPercentageByTutorID(7).toString());;

@@ -20,6 +20,12 @@ public class TutorAvailability {
     public TutorAvailability() {
     }
 
+    public TutorAvailability(Tutor tutor, Session session, String status) {
+        this.tutor = tutor;
+        this.session = session;
+        this.status = status;
+    }
+
     public TutorAvailability(int id, Tutor tutor, Session session, String status) {
         this.id = id;
         this.tutor = tutor;

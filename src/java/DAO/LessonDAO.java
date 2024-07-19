@@ -273,19 +273,12 @@ public class LessonDAO extends DBContext {
 
     // Get lessons by learner ID
     public Vector<Lesson> getLessonsByLearnerId(int learnerId) {
-        Vector<Lesson> vector = new Vector<>();
-        String sql = "SELECT L.* FROM Lession L JOIN Class C ON L.classId = C.id WHERE C.learnerId = ? ORDER BY L.date";
-        try {
-            PreparedStatement state = connection.prepareStatement(sql);
-            state.setInt(1, learnerId);
-            ResultSet rs = state.executeQuery();
-            while (rs.next()) {
-                vector.add(mapResultSetToLesson(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return vector;
+        String sql = "  SELECT L.* \n"
+                + "FROM Lession L \n"
+                + "JOIN Class C ON L.classId = C.id \n"
+                + "WHERE C.learnerId = ? AND C.status != 'finished' \n"
+                + "ORDER BY L.date;";
+        return getLessonsWithId(sql, learnerId);
     }
 
     // Get lessons by class ID

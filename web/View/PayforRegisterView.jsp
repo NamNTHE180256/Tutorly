@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -278,6 +279,98 @@
                                             class="fas fa-dollar-sign ms-2"></span>${tutor.price*totallesson}00<span
                                             class="ms-3 fas fa-arrow-right"></span></div></a>
                             </div>
+
+                            <div class="col-md-4" >
+                                <img style="height: 40px;margin-left: 100px; " src="image/LOGO_TUTORLY.png">
+                            </div>
+                            <hr/>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>    
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p>InvoiceID</p>
+                                        </td>
+                                        <td>1wq2344335</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p >Session</p>
+                                        </td>
+                                        <td> ${session.dayOfWeek} : ${fn:substring(session.startTime, 0, 5)}-${fn:substring(session.endTime, 0, 5)}</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p >Total lesson</p>
+                                        </td>
+                                        <td>${totallesson}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <p >Fee per lesson</p>
+                                        </td>
+                                        <td><span><fmt:formatNumber value="${tutor.price}" pattern="###,###" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr/>
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Discount: </td>
+                                        <td>0</td>
+                                    </tr>
+                                        
+                                    <tr>
+                                        <td>Subtotal:</td>
+                                        <td><span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #0E3C6E;"><strong>You must pay:</strong> </td>
+                                        <td style="color: #0E3C6E;"><strong><span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /></strong> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                      <th scope="col"></th>
+                                      <th scope="col"></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                        <td>Discount: </td>
+                                        <td>15%</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Subtotal:</td>
+                                        <td>800.000</td>
+                                      </tr>
+                                    <tr>
+                                      <td style="color: #0E3C6E;"><strong>You must pay:</strong> </td>
+                                      <td style="color: #0E3C6E;"><strong>800.000</strong> </td>
+                                        
+                                    </tr>
+                                  </tbody>
+                                </table> -->
+                            <a href="PaymentServlet?tutor_id=${tutor.id}&learner_id=${learner_id}&session=${session.id}&totallesson=${totallesson}&amount=${tutor.price*totallesson}">
+                                <div class="btn btn-primary d-block h8">PAY <span
+                                    class="fas fa-dollar-sign ms-2"></span><fmt:formatNumber value="${tutor.price*totallesson}" pattern="###,###" /><span
+                                    class="ms-3 fas fa-arrow-right"></span></div></a>
                         </div>
 
                     </div>

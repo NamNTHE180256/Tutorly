@@ -176,6 +176,7 @@ public class AClassDAO extends DBContext {
         return -1;
     }
 
+
     public int countClassByStatus(String status, int id) {
         int n = 0;
         String sql = "Select count(*) as count_class from class where status = ? and tutorId = ? ";
@@ -194,6 +195,7 @@ public class AClassDAO extends DBContext {
         }
         return -1;
     }
+
 
     public int countClassByStatusLearner(String status, int id) {
         int n = 0;
@@ -287,6 +289,20 @@ public class AClassDAO extends DBContext {
             Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return finishedSessions;
+    }
+    public int updateClassStatus(int classId, String newStatus) {
+        int n = 0;
+        String sql = "UPDATE Class SET status = ? WHERE id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, newStatus);
+            pre.setInt(2, classId);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+
     }
 
     public static void main(String[] args) {

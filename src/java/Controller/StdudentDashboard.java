@@ -30,7 +30,9 @@ public class StdudentDashboard extends HttpServlet {
             int learnerID = learner.getId();
             AClassDAO aClassDAO = new AClassDAO();
             SessionDAO sessionDAO = new SessionDAO();
-            Vector<AClass> classes = aClassDAO.getClassesBySTudentId(learnerID);
+
+            Vector<AClass> classes = aClassDAO.getClassesByLearnerId(learnerID);
+
 
             Map<Integer, Session> sessionData = new HashMap<>();
             for (AClass aClass : classes) {

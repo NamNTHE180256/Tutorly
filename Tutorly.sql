@@ -1,5 +1,5 @@
-﻿CREATE DATABASE Tutorly
-go
+﻿--CREATE DATABASE Tutorly
+--go
 use Tutorly
 
 --drop database Tutorly
@@ -129,7 +129,7 @@ CREATE TABLE Payment (
     FOREIGN KEY (classId) REFERENCES Class(id)
 );
 
-CREATE TABLE Assignment (
+CREATE TABLE Quiz (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
 	lessionId INT,
     [fileName] NVARCHAR(255),
@@ -238,77 +238,76 @@ INSERT INTO Tutor (id, subjectId, [name], gender, [image], bio, edu, price, bank
 VALUES 
 (7, 2, N'Đặng Anh Hiển', 1, 'tutor1.jpg', 
     N'Với hơn 15 năm kinh nghiệm giảng dạy Toán học tại các trường đại học hàng đầu, tôi, Đặng Anh Hiển, luôn tự hào về khả năng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi. Phương pháp giảng dạy của tôi không chỉ tập trung vào việc giải thích các khái niệm khó một cách dễ hiểu mà còn khơi gợi sự hứng thú và đam mê học tập ở mỗi học sinh. Tôi tin rằng mỗi học sinh đều có tiềm năng và nhiệm vụ của tôi là giúp các em phát huy tối đa khả năng của mình.', 
-    N'Đại học FPT', 300.0, 'Bank1', 'Active'),
+    N'Đại học FPT', 300000, 'Bank1', 'Active'),
 (8, 4, N'Trương Gia Bình', 1, 'tutor2.jpg',
-N'Tôi là Trương Gia Bình, một chuyên gia Vật lý với hơn 20 năm kinh nghiệm giảng dạy và nghiên cứu. Với niềm đam mê và sự kiên trì, tôi luôn nỗ lực truyền đạt những kiến thức vật lý phức tạp một cách đơn giản và thú vị. Tôi đã có nhiều công trình nghiên cứu được công bố trên các tạp chí khoa học uy tín, và tôi tin rằng, sự hiểu biết sâu rộng cùng phương pháp giảng dạy sáng tạo của mình sẽ giúp học sinh không chỉ học tốt mà còn yêu thích môn Vật lý.', 
-    N'Đại học Bách Khoa Hà Nội', 250.0, 'Bank2', 'Active'),
+    N'Tôi là Trương Gia Bình, một chuyên gia Vật lý với hơn 20 năm kinh nghiệm giảng dạy và nghiên cứu. Với niềm đam mê và sự kiên trì, tôi luôn nỗ lực truyền đạt những kiến thức vật lý phức tạp một cách đơn giản và thú vị. Tôi đã có nhiều công trình nghiên cứu được công bố trên các tạp chí khoa học uy tín, và tôi tin rằng, sự hiểu biết sâu rộng cùng phương pháp giảng dạy sáng tạo của mình sẽ giúp học sinh không chỉ học tốt mà còn yêu thích môn Vật lý.', 
+    N'Đại học Bách Khoa Hà Nội', 250000, 'Bank2', 'Active'),
 (9, 13, N'Nguyễn Phương', 0, 'tutor3.jpg', 
     N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
-    N'Đại học Kinh tế Quốc dân', 400.0, 'Bank2', 'Pending'),
+    N'Đại học Kinh tế Quốc dân', 400000, 'Bank2', 'Pending'),
 (10, 15, N'Nguyễn Xuân', 0, 'tutor4.jpg', 
     N'Với phương châm "Từ zero đến hero", tôi, Nguyễn Xuân, đã giúp đỡ nhiều học sinh từ mất gốc trở thành xuất sắc trong môn học. Phong cách giảng dạy của tôi linh hoạt, phù hợp với từng đối tượng học sinh, và tôi luôn sẵn sàng hỗ trợ các em vượt qua mọi khó khăn trong học tập. Tôi tin rằng sự nỗ lực và kiên trì sẽ đem lại kết quả tốt đẹp cho mọi học sinh.', 
-    N'Đại học Kinh tế Quốc dân', 350.0, 'Bank2', 'Active'),
+    N'Đại học Kinh tế Quốc dân', 350000, 'Bank2', 'Active'),
 (11, 10, N'Phạm Quang Huy', 1, 'tutor5.jpg', 
     N'Tôi là Phạm Quang Huy, giáo viên dạy Tiếng Anh với hơn 12 năm kinh nghiệm. Tôi đã giúp nhiều học sinh đạt được chứng chỉ tiếng Anh quốc tế như IELTS, TOEFL với điểm số cao. Với phương pháp giảng dạy sáng tạo và sử dụng nhiều công cụ hiện đại, tôi luôn cố gắng mang đến cho học viên những bài học thú vị và hiệu quả. Tôi tin rằng với sự hướng dẫn của mình, các em sẽ tự tin hơn trong việc sử dụng tiếng Anh và đạt được mục tiêu của mình.', 
-    N'Đại học Ngoại thương', 300.0, 'Bank3', 'Pending'),
+    N'Đại học Ngoại thương', 300000, 'Bank3', 'Pending'),
 (12, 11, N'Trần Hữu Dũng', 1, 'tutor6.jpg', 
     N'Tôi là Trần Hữu Dũng, giảng viên Vật lý ứng dụng với hơn 18 năm kinh nghiệm. Tôi tin rằng việc kết hợp lý thuyết với thực hành là cách tốt nhất để học sinh hiểu và yêu thích môn Vật lý. Tôi luôn tìm cách áp dụng các hiện tượng vật lý vào thực tiễn, giúp học sinh không chỉ học tốt mà còn thấy được sự kỳ diệu và ứng dụng của Vật lý trong cuộc sống hàng ngày.', 
-    N'Đại học Sư phạm Hà Nội', 320.0, 'Bank3', 'Pending'),
+    N'Đại học Sư phạm Hà Nội', 320000, 'Bank3', 'Pending'),
 (13, 5, N'Nguyễn Phương', 0, 'tutor3.jpg', 
     N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
-    N'Đại học Kinh tế Quốc dân', 400.0, 'Bank2', 'Pending'),
+    N'Đại học Kinh tế Quốc dân', 400000, 'Bank2', 'Pending'),
 (14, 1, N'Vũ Thanh Hải', 1, 'tutor7.jpg', 
     N'Tôi là Vũ Thanh Hải, giáo viên Toán với 10 năm kinh nghiệm. Tôi luôn nỗ lực giúp học sinh hiểu sâu và nắm vững các khái niệm Toán học, giúp các em đạt được điểm cao trong các kỳ thi.', 
-    N'Đại học Sư phạm Hà Nội', 280.0, 'Bank1', 'Pending'),
+    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending'),
 (15, 2, N'Lê Thị Minh', 0, 'tutor8.jpg', 
     N'Giáo viên Lê Thị Minh, chuyên giảng dạy Toán lớp 11 với 8 năm kinh nghiệm. Tôi luôn mong muốn mang đến phương pháp học hiệu quả và tạo động lực học tập cho các em.', 
-    N'Đại học Sư phạm TP.HCM', 290.0, 'Bank2', 'Pending'),
+    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending'),
 (16, 3, N'Phạm Văn Cường', 1, 'tutor9.jpg', 
     N'Phạm Văn Cường, giáo viên Toán lớp 12, với phương pháp giảng dạy sinh động và trực quan, giúp học sinh hiểu rõ bản chất của các khái niệm toán học.', 
-    N'Đại học Quốc gia Hà Nội', 300.0, 'Bank3', 'Pending'),
+    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending'),
 (17, 4, N'Trần Thu Hà', 0, 'tutor10.jpg', 
     N'Tôi là Trần Thu Hà, chuyên gia Vật lý với 15 năm kinh nghiệm. Tôi luôn khơi gợi sự hứng thú và niềm đam mê Vật lý cho học sinh.', 
-    N'Đại học Khoa học Tự nhiên', 260.0, 'Bank1', 'Pending'),
+    N'Đại học Khoa học Tự nhiên', 260000, 'Bank1', 'Pending'),
 (18, 5, N'Nguyễn Minh Tú', 1, 'tutor11.jpg', 
     N'Nguyễn Minh Tú, giáo viên Vật lý lớp 11 với 12 năm kinh nghiệm. Tôi luôn cố gắng mang đến phương pháp học hiệu quả nhất cho học sinh.', 
-    N'Đại học Bách Khoa Đà Nẵng', 270.0, 'Bank2', 'Pending'),
+    N'Đại học Bách Khoa Đà Nẵng', 270000, 'Bank2', 'Pending'),
 (19, 6, N'Hoàng Văn Anh', 1, 'tutor12.jpg', 
     N'Hoàng Văn Anh, giáo viên Vật lý lớp 12. Tôi đã giúp nhiều học sinh đạt điểm cao trong các kỳ thi quốc gia.', 
-    N'Đại học Bách Khoa Hà Nội', 280.0, 'Bank3', 'Pending'),
+    N'Đại học Bách Khoa Hà Nội', 280000, 'Bank3', 'Pending'),
 (20, 7, N'Phạm Ngọc Linh', 0, 'tutor13.jpg', 
     N'Phạm Ngọc Linh, giáo viên Hóa học lớp 10 với 10 năm kinh nghiệm. Tôi luôn mang đến những bài học thú vị và sáng tạo.', 
-    N'Đại học Khoa học Tự nhiên', 250.0, 'Bank1', 'Pending'),
+    N'Đại học Khoa học Tự nhiên', 250000, 'Bank1', 'Pending'),
 (21, 8, N'Nguyễn Hữu Đức', 1, 'tutor14.jpg', 
     N'Nguyễn Hữu Đức, giáo viên Hóa học lớp 11. Tôi luôn cố gắng giúp học sinh hiểu rõ bản chất và yêu thích môn học.', 
-    N'Đại học Sư phạm Hà Nội', 260.0, 'Bank2', 'Pending'),
+    N'Đại học Sư phạm Hà Nội', 260000, 'Bank2', 'Pending'),
 (22, 9, N'Vũ Thị Hương', 0, 'tutor15.jpg',
-N'Vũ Thị Hương, giáo viên Hóa học lớp 12. Tôi luôn giúp học sinh nắm vững kiến thức và tự tin trong các kỳ thi.', 
-    N'Đại học Sư phạm TP.HCM', 270.0, 'Bank3', 'Pending'),
+    N'Vũ Thị Hương, giáo viên Hóa học lớp 12. Tôi luôn giúp học sinh nắm vững kiến thức và tự tin trong các kỳ thi.', 
+    N'Đại học Sư phạm TP.HCM', 270000, 'Bank3', 'Pending'),
 (23, 10, N'Nguyễn Thị Lan', 0, 'tutor16.jpg', 
     N'Nguyễn Thị Lan, giáo viên Tiếng Anh lớp 10 với 8 năm kinh nghiệm. Tôi giúp học sinh cải thiện kỹ năng giao tiếp và đạt điểm cao trong các kỳ thi.', 
-    N'Đại học Ngoại thương', 300.0, 'Bank1', 'Pending'),
+    N'Đại học Ngoại thương', 300000, 'Bank1', 'Pending'),
 (24, 11, N'Trần Văn Hùng', 1, 'tutor17.jpg', 
     N'Trần Văn Hùng, giáo viên Tiếng Anh lớp 11. Tôi đã giúp nhiều học sinh đạt chứng chỉ IELTS và TOEFL với điểm số cao.', 
-    N'Đại học Khoa học Xã hội và Nhân văn', 310.0, 'Bank2', 'Pending'),
+    N'Đại học Khoa học Xã hội và Nhân văn', 310000, 'Bank2', 'Pending'),
 (25, 12, N'Phạm Thị Thanh', 0, 'tutor18.jpg', 
     N'Phạm Thị Thanh, giáo viên Tiếng Anh lớp 12. Tôi luôn mang đến phương pháp học tập hiệu quả và sáng tạo.', 
-    N'Đại học Hà Nội', 320.0, 'Bank3', 'Pending'),
+    N'Đại học Hà Nội', 320000, 'Bank3', 'Pending'),
 (26, 13, N'Vũ Văn Dũng', 1, 'tutor19.jpg', 
     N'Vũ Văn Dũng, giáo viên Văn học lớp 10 với 12 năm kinh nghiệm. Tôi luôn giúp học sinh yêu thích và đạt điểm cao trong môn Văn.', 
-    N'Đại học Sư phạm Hà Nội', 280.0, 'Bank1', 'Pending'),
+    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending'),
 (27, 14, N'Nguyễn Thu Trang', 0, 'tutor20.jpg', 
     N'Nguyễn Thu Trang, giáo viên Văn học lớp 11. Tôi luôn nỗ lực mang đến những bài học thú vị và sáng tạo cho học sinh.', 
-    N'Đại học Sư phạm TP.HCM', 290.0, 'Bank2', 'Pending'),
+    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending'),
 (28, 15, N'Trần Văn Nam', 1, 'tutor21.jpg', 
     N'Trần Văn Nam, giáo viên Văn học lớp 12. Tôi luôn cố gắng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
-    N'Đại học Quốc gia Hà Nội', 300.0, 'Bank3', 'Pending'),
+    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending'),
 (29, 1, N'Lê Văn Quang', 1, 'tutor22.jpg', 
     N'Lê Văn Quang, giáo viên Toán học lớp 10 với 10 năm kinh nghiệm. Tôi giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
-    N'Đại học Khoa học Tự nhiên', 290.0, 'Bank1', 'Pending'),
+    N'Đại học Khoa học Tự nhiên', 290000, 'Bank1', 'Pending'),
 (30, 2, N'Nguyễn Thị Hoa', 0, 'tutor23.jpg', 
     N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
-    N'Đại học Sư phạm Hà Nội', 300.0, 'Bank2', 'Pending');
-
+    N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending');
 																		
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
@@ -433,25 +432,25 @@ VALUES
 (1, 3000.0, '2024-05-02'),
 (2, 2000.0, '2024-06-02');
 
--- Insert into Assignment table
-INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessionId)
+-- Insert into Quiz table
+INSERT INTO Quiz ([fileName], filePath, score, [status], createdAt, lessionId)
 VALUES 
-(N'Assignment1', 'path/to/assignment1.docx', 9.5, 'done', GETDATE(), 1),
-(N'Assignment2', 'path/to/assignment2.docx', 8.5, 'done', GETDATE(), 2),
-(N'Assignment3', 'path/to/assignment3.docx', 7.5, 'done', GETDATE(), 3),
-(N'Assignment4', 'path/to/assignment4.docx', 6.5, 'done', GETDATE(), 4),
-(N'Assignment5', 'path/to/assignment5.docx', 5.5, 'done', GETDATE(), 5),
-(N'Assignment6', 'path/to/assignment6.docx', null, 'todo', GETDATE(), 6),
-(N'Assignment7', 'path/to/assignment7.docx', null, 'todo', GETDATE(), 7),
-(N'Assignment8', 'path/to/assignment8.docx', null, 'todo', GETDATE(), 8),
-(N'Assignment9', 'path/to/assignment9.docx', null, 'todo', GETDATE(), 9),
-(N'Assignment10', 'path/to/assignment10.docx', null, 'done', GETDATE(), 10),
-(N'Assignment11', 'path/to/assignment11.docx', null, 'done', GETDATE(), 11),
-(N'Assignment12', 'path/to/assignment12.docx', null, 'done', GETDATE(), 12),
-(N'Assignment13', 'path/to/assignment13.docx', null, 'done', GETDATE(), 13),
-(N'Assignment14', 'path/to/assignment14.docx', null, 'todo', GETDATE(), 14),
-(N'Assignment15', 'path/to/assignment15.docx', null, 'todo', GETDATE(), 15),
-(N'Assignment16', 'path/to/assignment16.docx', null, 'todo', GETDATE(), 16);
+(N'Quiz1', 'path/to/Quiz1.docx', 9.5, 'done', GETDATE(), 1),
+(N'Quiz2', 'path/to/Quiz2.docx', 8.5, 'done', GETDATE(), 2),
+(N'Quiz3', 'path/to/Quiz3.docx', 7.5, 'done', GETDATE(), 3),
+(N'Quiz4', 'path/to/Quiz4.docx', 6.5, 'done', GETDATE(), 4),
+(N'Quiz5', 'path/to/Quiz5.docx', 5.5, 'done', GETDATE(), 5),
+(N'Quiz6', 'path/to/Quiz6.docx', null, 'todo', GETDATE(), 6),
+(N'Quiz7', 'path/to/Quiz7.docx', null, 'todo', GETDATE(), 7),
+(N'Quiz8', 'path/to/Quiz8.docx', null, 'todo', GETDATE(), 8),
+(N'Quiz9', 'path/to/Quiz9.docx', null, 'todo', GETDATE(), 9),
+(N'Quiz10', 'path/to/Quiz10.docx', null, 'done', GETDATE(), 10),
+(N'Quiz11', 'path/to/Quiz11.docx', null, 'done', GETDATE(), 11),
+(N'Quiz12', 'path/to/Quiz12.docx', null, 'done', GETDATE(), 12),
+(N'Quiz13', 'path/to/Quiz13.docx', null, 'done', GETDATE(), 13),
+(N'Quiz14', 'path/to/Quiz14.docx', null, 'todo', GETDATE(), 14),
+(N'Quiz15', 'path/to/Quiz15.docx', null, 'todo', GETDATE(), 15),
+(N'Quiz16', 'path/to/Quiz16.docx', null, 'todo', GETDATE(), 16);
 
 -- Insert into Material table
 -- Insert into Material table
@@ -472,3 +471,10 @@ VALUES
 (N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
 (N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
 
+select * from Class
+SELECT * FROM Class WHERE learnerId = 1
+SELECT L.*
+FROM Lession L 
+JOIN Class C ON L.classId = C.id 
+WHERE C.learnerId = 1 AND C.status != 'finished'
+ORDER BY L.date;

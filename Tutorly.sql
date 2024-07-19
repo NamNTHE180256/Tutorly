@@ -102,7 +102,7 @@ CREATE TABLE [Session] (
     [dayOfWeek] VARCHAR(50)
 );
 
-CREATE TABLE Lession (
+CREATE TABLE Lesson (
     id INT IDENTITY(1,1) PRIMARY KEY,
     classId INT,
     sessionId VARCHAR(10),
@@ -131,25 +131,35 @@ CREATE TABLE Payment (
 
 CREATE TABLE Assignment (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
-	lessionId INT,
+	lessonId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
 	score FLOAT,
 	[status] VARCHAR(20),
     createdAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (lessionId) REFERENCES Lession(id)
+    FOREIGN KEY (lessonId) REFERENCES Lesson(id)
 );
-
+select * from Income
 CREATE TABLE Material (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
-	lessionId INT,
+	lessonId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
     fileType VARCHAR(50),
     uploadedAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (lessionId) REFERENCES Lession(id)
+    FOREIGN KEY (lessonId) REFERENCES Lesson(id)
 );
-
+CREATE TABLE Income (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    tax FLOAT,
+    amount FLOAT,
+	Total as amount-(tax*amount),
+    createdAt DATETIME DEFAULT GETDATE(),
+	DayPaid DATETIME,
+    [status] VARCHAR(20),
+    tutorID INT,
+    FOREIGN KEY (tutorID) REFERENCES Tutor(id)
+);
 -- Insert into User table
 INSERT INTO [User] (email, [password], [role], createdAt)
 VALUES 
@@ -369,7 +379,7 @@ VALUES
 ('SU5', '19:00:00', '20:30:00', 'Sunday');
 
 -- Insert into Class_Slot table
-INSERT INTO Lession (classId, sessionId, [date], [status])
+INSERT INTO Lesson (classId, sessionId, [date], [status])
 VALUES 
 (1, 'M1', '2024-05-06', 'Finished'),
 (1, 'M1', '2024-05-13', 'Finished'),
@@ -417,7 +427,7 @@ VALUES
 (2, 2000.0, '2024-06-02');
 
 -- Insert into Assignment table
-INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessionId)
+INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessonId)
 VALUES 
 (N'Assignment1', 'path/to/assignment1.docx', 9.5, 'done', GETDATE(), 1),
 (N'Assignment2', 'path/to/assignment2.docx', 8.5, 'done', GETDATE(), 2),
@@ -437,7 +447,31 @@ VALUES
 (N'Assignment16', 'path/to/assignment16.docx', null, 'todo', GETDATE(), 16);
 
 -- Insert into Material table
-INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessionId)
+INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessonId)
 VALUES 
 (N'Material1.pdf', 'path/to/material1.pdf', 'PDF', GETDATE(), 1),
 (N'Material2.pptx', 'path/to/material2.pptx', 'PPTX', GETDATE(), 2);
+INSERT INTO Income (tax, amount, createdAt, DayPaid, status, tutorID)
+VALUES 
+(0.1, 1000, '2023-06-25 00:00:00.000', '2024-08-01 00:00:00.000', 'paid', 7),
+(0.08, 750, '2023-05-20 00:00:00.000', '2024-08-05 00:00:00.000', 'paid', 8),
+(0.05, 500, '2022-04-15 00:00:00.000', NULL, 'pending confirmation', 9),
+(0.065, 850, '2021-04-05 00:00:00.000', '2024-10-01 00:00:00.000', 'paid', 10),
+(0.12, 1100, '2024-07-01 00:00:00.000', NULL, 'processing', 7),
+(0.09, 800, '2023-04-18 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.06, 600, '2022-03-12 00:00:00.000', NULL, 'processing', 9),
+(0.07, 900, '2021-02-08 00:00:00.000', NULL, 'pending confirmation', 10),
+(0.11, 1150, '2020-01-05 00:00:00.000', '2024-12-01 00:00:00.000', 'paid', 7),
+(0.09, 950, '2019-12-25 00:00:00.000', '2024-12-15 00:00:00.000', 'paid', 8);
+INSERT INTO Income (tax, amount, createdAt, DayPaid, status, tutorID)
+VALUES 
+(0.07, 950, '2024-07-17 00:00:00.000', '2024-07-18 00:00:00.000', 'paid', 7),
+(0.08, 850, '2024-07-16 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.09, 900, '2024-07-15 00:00:00.000', '2024-07-17 00:00:00.000', 'paid', 9),
+(0.1, 1000, '2024-07-14 00:00:00.000', NULL, 'pending confirmation', 10),
+(0.065, 750, '2024-07-13 00:00:00.000', '2024-07-16 00:00:00.000', 'paid', 7),
+(0.07, 1100, '2024-07-12 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.08, 800, '2024-07-11 00:00:00.000', NULL, 'processing', 9),
+(0.09, 950, '2024-07-10 00:00:00.000', NULL, 'processing', 10),
+(0.06, 600, '2024-07-09 00:00:00.000', '2024-07-12 00:00:00.000', 'paid', 7),
+(0.1, 1200, '2024-07-08 00:00:00.000', '2024-07-11 00:00:00.000', 'paid', 8);

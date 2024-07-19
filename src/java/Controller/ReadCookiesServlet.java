@@ -57,23 +57,30 @@ public class ReadCookiesServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("tutor", tutor);
                 }
+                if ("userId".equals(cookie.getName())) {
+                    String userId = cookie.getValue();
+                    int uid = Integer.parseInt(userId);
+                    user = udao.getUserById(uid);
 
-                // Check and handle userId cookie
-                if (learner != null && tutor == null) {
-                    user = udao.getUserById(learner.getId());
-                } else if (tutor != null && learner == null) {
-                    user = udao.getUserById(tutor.getId());
+                    // Save user information in the session
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
                 }
 
+                // Check and handle userId cookie
             }
         }
-
+        if (learner != null && tutor == null) {
+            user = udao.getUserById(learner.getId());
+        } else if (tutor != null && learner == null) {
+            user = udao.getUserById(tutor.getId());
+        }
         // Debugging prints
         System.out.println("Learner: " + learner);
         System.out.println("Tutor: " + tutor);
         System.out.println("User: " + user.getRole());
 
-        // Redirect to the appropriate page based on user role
+        // Redirect to the appropriate page based on u  ser role
         if (user != null && user.getRole() != null) {
             if (user.getRole().equalsIgnoreCase("Learner")) {
                 request.getRequestDispatcher("TutorController").forward(request, response);

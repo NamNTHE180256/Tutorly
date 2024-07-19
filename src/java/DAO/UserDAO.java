@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class UserDAO extends DBContext {
     
@@ -96,8 +97,8 @@ public class UserDAO extends DBContext {
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 String role = rs.getString("role");
-                String createdAt = rs.getString("createdAt");
-                User user = new User(email, password, role);
+                Date createdAt = rs.getDate("createdAt");
+                User user = new User(id, email, password, role, createdAt);
                 return user;
             }
         } catch (SQLException e) {
@@ -203,7 +204,7 @@ public class UserDAO extends DBContext {
     
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
-        User u = dao.Login("learner1@gmail.com","1");
+        User u = dao.GetUserWithEmail("learner1@gmail.com");
         System.out.println(u);
     }
 //    public static void main(String[] args) {

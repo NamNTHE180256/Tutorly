@@ -3,19 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Model;
+
 import java.util.Date;
+
 /**
  *
  * @author Admin
  */
 public class User {
+
     private int id;
     private String email;
     private String password;
     private String role;
-    private Date createdAt;  
-    
-    public User() {}
+    private Date createdAt;
+
+    public User() {
+    }
+
+    public User(int id, String email, String password, String role, Date createdAt) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
 
     public User(String email, String password, String role) {
         this.email = email;
@@ -68,5 +80,5 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", role=" + role + ", createdAt=" + createdAt + '}';
     }
-    
+
 }

@@ -42,34 +42,34 @@ public class LearnerDAO extends DBContext {
         return learners;
     }
 
-public int RegisterLearner(User user) {
-    String sql = "INSERT INTO [dbo].[Learner] ([id], [name], [image]) VALUES (?, ?, ' ')";
-    int newId = generateNewId();
+    public int RegisterLearner(User user) {
+        String sql = "INSERT INTO [dbo].[Learner] ([id], [name], [image]) VALUES (?, ?, ' ')";
+        int newId = generateNewId();
 
-    try (PreparedStatement sp = connection.prepareStatement(sql)) {
-        sp.setInt(1, newId);
-        sp.setString(2, user.getEmail());
-        sp.executeUpdate();
-        return newId;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        System.err.println("Error during learner registration: " + e.getMessage());
-    }
-    return 0;
-}
-
-public int generateNewId() {
-    String query = "SELECT MAX(id) AS max_id FROM [dbo].[Learner]";
-    try (PreparedStatement sp = connection.prepareStatement(query); ResultSet rs = sp.executeQuery()) {
-        if (rs.next()) {
-            return rs.getInt("max_id") + 1;
+        try (PreparedStatement sp = connection.prepareStatement(sql)) {
+            sp.setInt(1, newId);
+            sp.setString(2, user.getEmail());
+            sp.executeUpdate();
+            return newId;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error during learner registration: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        System.err.println("Error generating new ID: " + e.getMessage());
+        return 0;
     }
-    return 1; // Default to 1 if there are no records
-}
+
+    public int generateNewId() {
+        String query = "SELECT MAX(id) AS max_id FROM [dbo].[Learner]";
+        try (PreparedStatement sp = connection.prepareStatement(query); ResultSet rs = sp.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("max_id") + 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error generating new ID: " + e.getMessage());
+        }
+        return 1; // Default to 1 if there are no records
+    }
 
     public Learner getLearnerById(int id) {
         Learner learner = null;
@@ -93,18 +93,19 @@ public int generateNewId() {
     }
 
     // Method to insert a new learner into the database
-    public boolean insertLearner(Learner learner) {
-        String sql = "INSERT INTO Learner (name, image) VALUES (?, ?)";
+    public int insertLearner(Learner learner) {
+        String sql = "INSERT INTO [dbo].[Learner] ([id], [name], [image]) VALUES (?, ?, ?)";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
-            sp.setString(1, learner.getName());
-            sp.setString(2, learner.getImage());
+            sp.setInt(1, learner.getId());
+            sp.setString(2, learner.getName());
+            sp.setString(3, learner.getImage());
             int rowsAffected = sp.executeUpdate();
             sp.close();
-            return rowsAffected > 0;
+            return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
@@ -239,9 +240,11 @@ public int generateNewId() {
 
     public static void main(String[] args) {
         LearnerDAO l = new LearnerDAO();
+        Learner learner = new Learner(200, "ducanh", "dsadada");
 //        Learner le = l.getStudentById(1);
 //        System.out.println(le.toString());
 //        System.out.println(le.getUserInfo().toString());
-        System.out.println(l.displayAllStudents().toString());
+        System.out.println(l.insertLearner(learner));
+        System.out.println(l.getLearnerById(3));
     }
 }

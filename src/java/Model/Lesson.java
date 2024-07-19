@@ -46,11 +46,11 @@ public class Lesson {
         this.id = id;
     }
 
-    public AClass getaClass() {
+    public AClass getAClass() {
         return aClass;
     }
 
-    public void setaClass(AClass aClass) {
+    public void setAClass(AClass aClass) {
         this.aClass = aClass;
     }
 

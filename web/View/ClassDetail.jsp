@@ -301,9 +301,9 @@ int classId = Integer.parseInt(request.getParameter("classId"));
                                         <c:when test="${sessionScope.user.role == 'tutor'}">
                                             <c:forEach items="${lesson_vector}" var="v">
                                     {
-                                    title: '${v.getaClass().getTutor().getSubject().getName()}-${v.getaClass().getLearner().getName()}',
+                                    title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getLearner().getName()}',
                                                 start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                            url: 'http://localhost:9999/Tutorly/lessonDetailControllers?classid=${v.getaClass().id}&lessonId=${v.getId()}',
+                                                            url: 'http://localhost:9999/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
                                                             end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                         className: 'custom-event'
                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
@@ -312,9 +312,9 @@ int classId = Integer.parseInt(request.getParameter("classId"));
                                         <c:otherwise>
                                             <c:forEach items="${lesson_vector}" var="v">
                                                                 {
-                                                                title: '${v.getaClass().getTutor().getSubject().getName()}-${v.getaClass().getTutor().getName()}',
+                                                                title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                                             start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                                        url: 'http://localhost:9999/Tutorly/lessonDetailControllers?classid=${v.getaClass().id}&lessonId=${v.getId()}'
+                                                                                        url: 'http://localhost:9999/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}'
                                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
                                             </c:forEach>
                                         </c:otherwise>

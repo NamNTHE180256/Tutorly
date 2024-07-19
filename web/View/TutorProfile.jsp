@@ -45,7 +45,7 @@
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body text-center">
-                            <img src="image/${t.image}" alt="Tutor" class="rounded-circle p-1 profile-image" width="110">
+                            <img src="image/${sessionScope.tutor.image}" alt="Tutor" class="rounded-circle p-1 profile-image" width="110">
                             <h4>${t.name}</h4>
                             <p class="text-secondary mb-1">${t.getUserInfo().role}</p>
                             <a href="TutorProfileController?service=updateRequest"><i class="fa-solid fa-pen"></i></a>
@@ -130,7 +130,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form> <!--<!-- them duong dan kem servlet -->
                             <div class="form-group">
                                 <label for="currentPassword">Current Password</label>
                                 <input type="password" id="currentPassword" class="form-control" placeholder="Current Password">

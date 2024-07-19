@@ -184,7 +184,7 @@
                                     <tr>
 
                                         <td>${l.session.id}</td>
-                                        <td>${l.getaClass().tutor.subject.name}</td>
+                                        <td>${l.getAClass().tutor.subject.name}</td>
                                         <td>${fn:substring(l.session.startTime, 0, 5)}</td>
                                         <td><fmt:formatDate value="${l.date}" pattern="dd/MM/yyyy"/></td>
                                         <td style="color: ${l.status eq 'Finished' ? 'green' : 'orange'}">${l.status}</td>

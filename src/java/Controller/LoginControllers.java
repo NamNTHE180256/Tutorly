@@ -92,6 +92,7 @@ public class LoginControllers extends HttpServlet {
 
             if (userLogin != null) {
                 clearPreviousCookies(request, response);
+
                 if (userLogin.getRole().equalsIgnoreCase("Learner")) {
                     Learner learner = ldao.getLearnerById(userLogin.getId());
 
@@ -109,7 +110,7 @@ public class LoginControllers extends HttpServlet {
                     // Save information in the session
                     session.setAttribute("learner", learner);
                     session.setAttribute("user", userLogin);
-                    request.getRequestDispatcher("TutorController").forward(request, response);
+                    response.sendRedirect("TutorController");
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
                     Tutor tutor = tDao.getTutorById(userLogin.getId());
                     if (tutor != null) {
@@ -126,7 +127,7 @@ public class LoginControllers extends HttpServlet {
 
                         session.setAttribute("tutor", tutor);
                         session.setAttribute("user", userLogin);
-                        request.getRequestDispatcher("tutor-dashboard").forward(request, response);
+                        response.sendRedirect("tutor-dashboard");
                     } else {
                         request.setAttribute("messageError", "Tutor not found!");
                         request.getRequestDispatcher("View/Login.jsp").forward(request, response);
@@ -143,6 +144,8 @@ public class LoginControllers extends HttpServlet {
     }
 
     private void clearPreviousCookies(HttpServletRequest request, HttpServletResponse response) {
+      
+
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {

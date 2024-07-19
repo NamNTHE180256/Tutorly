@@ -1,15 +1,16 @@
 <%-- 
     Document   : lessonDetails
-    Created on : Jul 18, 2024, 12:34:01 AM
+    Created on : Jun 30, 2024, 1:32:50 PM
     Author     : Acer
 --%>
 
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Lesson Details</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet"
@@ -71,50 +72,41 @@
         </header>
         <div class="container lesson-details border-container">
             <h1 class="text-center">Lesson Details</h1>
-            <c:choose>
-                <c:when test="${not empty requestScope.lesson}">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="details-row">
-                                <div class="details-col">
-                                    <p><strong>Date:</strong> ${requestScope.lesson.date}</p>
-                                    <p><strong>Slot:</strong> ${requestScope.lesson.session.id}</p>
-                                    <p><strong>Class:</strong> ${requestScope.lesson.aClass.id}</p>
-                                    <p><strong>Status:</strong> ${requestScope.lesson.status}</p>
-                                    <p><strong>Meet URL:</strong></p>
-                                </div>
-                                <div class="details-col text-right">
-                                    <button id="joinClass" class="btn btn-primary">Enter Class</button>
-                                </div>
-                            </div>
-                            <div class="assignment mt-3">
-                                <p><strong>Assignment:</strong></p>
-                                <div class="buttons-row">
-                                    <button class="btn btn-primary" type="button">View</button>
-                                    <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                        <button class="btn btn-primary" type="button">Upload</button>
-                                    </c:if>
-                                </div>
-                            </div>
-                            <div class="materials mt-3">
-                                <p><strong>Material:</strong></p>
-                                <div class="buttons-row">
-                                    <button class="btn btn-primary" type="button" id="viewButton">View</button>
-                                    <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload">Upload</button>
-                                    </c:if>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="details-row">
+                        <div class="details-col">
+                            <p><strong>Date:</strong> ${requestScope.lesson.getDate()}</p>
+                            <p><strong>Slot:</strong> ${requestScope.lesson.getSession().getId()}</p>
+                            <p><strong>Class:</strong> ${requestScope.lesson.getAClass().getId()}</p>
+                            <p><strong>Status:</strong> ${requestScope.lesson.getStatus()}</p>
+                            <p><strong>Meet URL:</strong></p>
+                        </div>
+                        <div class="details-col text-right">
+                            <button id="joinClass" class="btn btn-primary">Enter Class</button>
                         </div>
                     </div>
-                </c:when>
-                <c:otherwise>
-                    <p>No lesson details found. Please check the class ID and lesson ID.</p>
-                    <c:if test="${not empty requestScope.error}">
-                        <p>Error: ${requestScope.error}</p>
-                    </c:if>
-                </c:otherwise>
-            </c:choose>
+                    <div class="assignment mt-3">
+                        <p><strong>Assignment:</strong></p>
+                        <div class="buttons-row">
+                            <button class="btn btn-primary" type="button">View</button>
+                            <c:if test="${sessionScope.user.role eq 'tutor'}">
+                                <button class="btn btn-primary" type="button">Upload</button>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="materials mt-3">
+                        <p><strong>Material:</strong></p>
+                        <div class="buttons-row">
+                            <button class="btn btn-primary" type="button" id="viewButton">View</button>
+
+                            <c:if test="${sessionScope.user.role eq 'tutor'}">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload">Upload</button>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="modal" id="upload">
             <div class="modal-dialog">
@@ -126,8 +118,8 @@
                     <div class="modal-body">
                         <i style="color: red"> ${requestScope.error}</i>
                         <form action="${pageContext.request.contextPath}/Material" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="classid" value="${requestScope.lesson.aClass.id}">
-                            <input type="hidden" name="slotid" value="${requestScope.lesson.id}">
+                            <input type="hidden" name="classid" value="${requestScope.lesson.getAClass().getId()}">
+                            <input type="hidden" name="slotid" value="${requestScope.lesson.getId()}">
                             <input type="hidden" value="upload" name="action">
                             <div class="form-group">
                                 <label for="fileName">Name</label>
@@ -147,10 +139,13 @@
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("viewButton").addEventListener("click", function () {
-                    window.location.href = "Material?classid=${requestScope.lesson.aClass.id}&slotid=${requestScope.lesson.id}&action=getall";
+                    window.location.href = "Material?classid=${requestScope.lesson.getAClass().getId()}&slotid=${requestScope.lesson.getId()}&action=getall";
                 });
+            });
+            document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("joinClass").addEventListener("click", function () {
-                    window.location.href = "${requestScope.lesson.getaClass().getTutor().getLinkmeet()}";
+                    window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet() 
+            }";
                 });
             });
         </script>

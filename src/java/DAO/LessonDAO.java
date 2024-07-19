@@ -193,7 +193,7 @@ public class LessonDAO extends DBContext {
         String sql = "INSERT INTO Lesson (classId, sessionId, date, status) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, lesson.getaClass().getId());
+            statement.setInt(1, lesson.getAClass().getId());
             statement.setString(2, lesson.getSession().getId());
             statement.setDate(3, new java.sql.Date(lesson.getDate().getTime()));
             statement.setString(4, lesson.getStatus());
@@ -209,7 +209,7 @@ public class LessonDAO extends DBContext {
         String sql = "UPDATE Lesson SET classId = ?, sessionId = ?, date = ?, status = ? WHERE id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, lesson.getaClass().getId());
+            statement.setInt(1, lesson.getAClass().getId());
             statement.setString(2, lesson.getSession().getId());
             statement.setDate(3, new java.sql.Date(lesson.getDate().getTime()));
             statement.setString(4, lesson.getStatus());

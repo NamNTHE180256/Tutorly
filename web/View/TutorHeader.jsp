@@ -128,11 +128,11 @@
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Student Request -->
-                    <a class="nav-link" href="TutorHistoryController">Student Request</a>
+                    <a class="nav-link" href="HistoryController">Student Request</a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Trial Request -->
-                    <a class="nav-link" href="TrialRequestController">Trial Request</a>
+                    <a class="nav-link" href="RegisterTrialCotroller?tutor_id=${sessionScope.tutor.getId()}">Trial Request</a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- History -->

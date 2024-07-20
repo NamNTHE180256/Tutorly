@@ -91,7 +91,7 @@
 
             .bg-soft-primary {
                 background-color: rgba(59, 118, 225, .25) !important;
-}
+            }
 
             .avatar-xs {
                 height: 1rem;
@@ -227,24 +227,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <c:if test="${sessionScope.successMessage!=null}">
+                            <c:if test="${successMessage!=null}">
                                 </br>
                                 <div class="alert alert-success" role="alert" id="successAlert">
                                     <div class="d-flex gap-4">
                                         <span><i class="fa-solid fa-circle-check icon-success"></i></span>
                                         <div>
-                                            ${sessionScope.successMessage}
+                                            ${successMessage}
                                         </div>
                                     </div>
                                 </div>
                             </c:if>
 
-                            <c:if test="${sessionScope.errorMessage!=null}">
+                            <c:if test="${errorMessage!=null}">
                                 <div class="alert alert-danger" role="alert" id="errorAlert">
                                     <div class="d-flex gap-4">
                                         <span><i class="fa-solid fa-circle-exclamation icon-danger"></i></span>
                                         <div class="d-flex flex-column gap-2">
-                                            ${sessionScope.errorMessage}
+                                            ${errorMessage}
                                         </div>
                                     </div>
                                 </div>
@@ -307,16 +307,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="entry" items="${learnersBySubject}">
-                                        <tr>
-                                            <td><a href="javascript: void(0);" class="text-dark fw-medium">
-                                                    <i class="fa-solid fa-book-open" style="color: #0E3C6E; font-size: 15px;"></i>
-                                                    ${entry.key.name}</a></td>
-                                            <td>${entry.value}</td>
-                                            <td>${entry.value}</td>
+                                        <c:forEach var="entry" items="${learnersBySubject}">
+                                            <tr>
+                                                <td><a href="javascript: void(0);" class="text-dark fw-medium">
+                                                        <i class="fa-solid fa-book-open" style="color: #0E3C6E; font-size: 15px;"></i>
+                                                        ${entry.key.name}</a></td>
+                                                <td>${entry.value}</td>
+                                                <td>${entry.value}</td>
 
-                                        </tr>
-                                    </c:forEach>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -340,7 +340,7 @@
                         errorAlert.style.display = 'none';
                     }
             <% session.removeAttribute("successMessage"); %>
-            <% session.removeAttribute("errorMessage"); %>
+            <% session.removeAttribute("errorMessage");%>
                 }, 5000); // 5000 milliseconds = 5 seconds
             };
         </script>

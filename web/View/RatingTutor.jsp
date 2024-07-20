@@ -15,7 +15,7 @@
     </head>
     <body>
         <%
-        //    int classId = Integer.parseInt(request.getParameter("classId")); // Replace with the actual parameter name
+            //    int classId = Integer.parseInt(request.getParameter("classId")); // Replace with the actual parameter name
             int classId = 1;
             AClassDAO classDAO = new AClassDAO();
             AClass aClass = classDAO.getClassById(classId);
@@ -27,10 +27,10 @@
 
         <div class="wrapper">
             <h3>Rate the tutor</h3>
-            <label for="tutorName" style="margin-bottom: 20px;">Tutor Name: <%= tutor.getName() %></label>
+            <label for="tutorName" style="margin-bottom: 20px;">Tutor Name: <%= tutor.getName()%></label>
             <br>
-            <label for="subject">Subject: <%= subject.getName() %></label>
-            <form id="ratingForm" action="<%=request.getContextPath() %>/RatingTutorServlet" method="post">
+            <label for="subject">Subject: <%= subject.getName()%></label>
+            <form id="ratingForm" action="<%=request.getContextPath()%>/RatingTutorServlet" method="post">
                 <div class="rating">
                     <input type="hidden" name="rating" value="0">
                     <i class='bx bx-star star' style="--i: 1;"></i>
@@ -40,8 +40,8 @@
                     <i class='bx bx-star star' style="--i: 5;"></i>
                 </div>
                 <textarea name="review" id="review" cols="30" rows="5" placeholder="Your opinion..."></textarea>
-                <input type="hidden" name="learnerId" value="<%= learnerId %>" />
-                <input type="hidden" name="tutorId" value="<%= tutorId %>" />
+                <input type="hidden" name="learnerId" value="<%= learnerId%>" />
+                <input type="hidden" name="tutorId" value="<%= tutorId%>" />
                 <div class="btn-group">
                     <button type="submit" class="btn submit">Submit</button>
                     <button type="button" class="btn cancel" onclick="window.location.href = 'home.jsp'">Cancel</button>
@@ -49,15 +49,15 @@
             </form>
         </div>
         <c:if test="${not empty message}">
-    <script>
-        alert('${message}');
-        if (${success}) {
-            window.location.href = 'View/HomePage.jsp';
-        } else {
-            window.location.href = 'View/RatingTutor.jsp';
-        }
-    </script>
-</c:if>
+            <script>
+                alert('${message}');
+                if (${success}) {
+                    window.location.href = 'View/HomePage.jsp';
+                } else {
+                    window.location.href = 'View/RatingTutor.jsp';
+                }
+            </script>
+        </c:if>
 
         <script src="../js/RatingTutor.js"></script>
 

@@ -12,10 +12,19 @@ public class AClass {
     private Date endDate;
     private String status;
     private Subject subject;
-   
     // Constructors
     public AClass() {
         this.subject = new Subject(); // Ensure subject is initialized
+    }
+
+    public AClass(Learner learner, Tutor tutor, int totalSession, Date startDate, Date endDate, String status, Subject subject) {
+        this.learner = learner;
+        this.tutor = tutor;
+        this.totalSession = totalSession;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.subject = subject;
     }
 
     public AClass(Learner learner, Tutor tutor, int totalSession, Date startDate, Date endDate, String status) {
@@ -100,5 +109,5 @@ public class AClass {
     public String toString() {
         return "AClass{" + "id=" + id + ", learner=" + learner + ", tutor=" + tutor + ", totalSession=" + totalSession + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + ", subject=" + subject + '}';
     }
-    
+
 }

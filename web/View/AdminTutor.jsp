@@ -31,7 +31,7 @@
             .status-pending {
                 color: #F7B500;
             }
-            
+
             .search {
                 width: 40%;
                 height: 40px;
@@ -227,9 +227,6 @@
                                                     </div>
                                                     <div id="collapseFour${tutor.id}" class="collapse" aria-labelledby="headingFour${tutor.id}" data-parent="#accordion${tutor.id}">
                                                         <div class="card-body">
-                                                            <div class="timetable-img text-center">
-                                                                <img src="img/content/timetable.png" alt="">
-                                                            </div>
                                                             <div class="table-responsive">
                                                                 <table class="table table-bordered text-center">
                                                                     <thead>
@@ -349,45 +346,45 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
-            function approveTutor(tutorId) {
-                confirm('Approve tutor with ID: ' + tutorId);
+                                                    function approveTutor(tutorId) {
+                                                        confirm('Approve tutor with ID: ' + tutorId);
 
-                $.ajax({
-                    url: 'approveTutor', // Your backend URL to approve tutor
-                    type: 'POST',
-                    data: { id: tutorId },
-                    success: function(response) {
-                        // Update the status in the table
-                        $('#tutorStatus' + tutorId).html(
-                            '<span class="dot" data-status="Active" style="height: 10px; width: 10px; background-color: #00ff4c; border-radius: 50%; display: inline-block;"></span>Active'
-                        );
-                        // Hide the modal
-                        $('#TutorDetail' + tutorId).modal('hide');
-                    },
-                    error: function(error) {
-                        console.log('Error approving tutor:', error);
-                    }
-                });
-            }
+                                                        $.ajax({
+                                                            url: 'approveTutor', // Your backend URL to approve tutor
+                                                            type: 'POST',
+                                                            data: {id: tutorId},
+                                                            success: function (response) {
+                                                                // Update the status in the table
+                                                                $('#tutorStatus' + tutorId).html(
+                                                                        '<span class="status-active">Active <i class="fa-regular fa-circle-check"></i></span>'
+                                                                        );
+                                                                // Hide the modal
+                                                                $('#TutorDetail' + tutorId).modal('hide');
+                                                            },
+                                                            error: function (error) {
+                                                                console.log('Error approving tutor:', error);
+                                                            }
+                                                        });
+                                                    }
 
-            function rejectTutor(tutorId) {
-                confirm('Reject tutor with ID: ' + tutorId);
+                                                    function rejectTutor(tutorId) {
+                                                        confirm('Reject tutor with ID: ' + tutorId);
 
-                $.ajax({
-                    url: 'rejectTutor', // Your backend URL to reject tutor
-                    type: 'POST',
-                    data: { id: tutorId },
-                    success: function(response) {
-                        // Remove the tutor row from the table
-                        $('#tutorRow' + tutorId).remove();
-                        // Hide the modal
-                        $('#TutorDetail' + tutorId).modal('hide');
-                    },
-                    error: function(error) {
-                        console.log('Error rejecting tutor:', error);
-                    }
-                });
-            }
+                                                        $.ajax({
+                                                            url: 'rejectTutor', // Your backend URL to reject tutor
+                                                            type: 'POST',
+                                                            data: {id: tutorId},
+                                                            success: function (response) {
+                                                                // Remove the tutor row from the table
+                                                                $('#tutorRow' + tutorId).remove();
+                                                                // Hide the modal
+                                                                $('#TutorDetail' + tutorId).modal('hide');
+                                                            },
+                                                            error: function (error) {
+                                                                console.log('Error rejecting tutor:', error);
+                                                            }
+                                                        });
+                                                    }
         </script>
 
     </body>

@@ -129,7 +129,7 @@ public class AssignmentDAO extends DBContext {
 
     public Vector<Assignment> getAssignmentsByClassId(int classId) {
         Vector<Assignment> vector = new Vector<>();
-        String sql = "SELECT a.* FROM Assignment a JOIN Lession l ON a.lessionId = l.id WHERE l.classId = ?";
+        String sql = "SELECT a.* FROM Assignment a JOIN Lesson l ON a.lessionId = l.id WHERE l.classId = ?";
         LessonDAO lessonDAO = new LessonDAO();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -154,7 +154,7 @@ public class AssignmentDAO extends DBContext {
 
     public Vector<Assignment> getDoneAssignmentsByClassId(int classId) {
         Vector<Assignment> vector = new Vector<>();
-        String sql = "SELECT a.* FROM Assignment a JOIN Lession l ON a.lessionId = l.id WHERE l.classId = ? and a.status LIKE 'Done'";
+        String sql = "SELECT a.* FROM Assignment a JOIN Lesson l ON a.lessionId = l.id WHERE l.classId = ? and a.status LIKE 'Done'";
         LessonDAO lessonDAO = new LessonDAO();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -179,7 +179,7 @@ public class AssignmentDAO extends DBContext {
 
     public Vector<Assignment> getToDoAssignmentsByClassId(int classId) {
         Vector<Assignment> vector = new Vector<>();
-        String sql = "SELECT a.* FROM Assignment a JOIN Lession l ON a.lessonId = l.id WHERE l.classId = ? and a.status LIKE 'Todo'";
+        String sql = "SELECT a.* FROM Assignment a JOIN Lesson l ON a.lessonId = l.id WHERE l.classId = ? and a.status LIKE 'Todo'";
         LessonDAO lessonDAO = new LessonDAO();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -204,10 +204,10 @@ public class AssignmentDAO extends DBContext {
 
     public Vector<Assignment> getAssignmentsByLearnerIdAndStatusDone(int learnerId) {
         Vector<Assignment> vector = new Vector<>();
-        String sql = "SELECT a.* FROM Assignment a " +
-                     "JOIN Lession l ON a.lessionId = l.id " +
-                     "JOIN Class c ON l.classId = c.id " +
-                     "WHERE c.learnerId = ? AND a.status = 'Done'";
+        String sql = "SELECT a.* FROM Assignment a "
+                + "JOIN Lesson l ON a.lessionId = l.id "
+                + "JOIN Class c ON l.classId = c.id "
+                + "WHERE c.learnerId = ? AND a.status = 'Done'";
         LessonDAO lessonDAO = new LessonDAO();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -232,10 +232,10 @@ public class AssignmentDAO extends DBContext {
 
     public Vector<Assignment> getAssignmentsByLearnerIdAndStatusTodo(int learnerId) {
         Vector<Assignment> vector = new Vector<>();
-        String sql = "SELECT a.* FROM Assignment a " +
-                     "JOIN Lession l ON a.lessionId = l.id " +
-                     "JOIN Class c ON l.classId = c.id " +
-                     "WHERE c.learnerId = ? AND a.status = 'Todo'";
+        String sql = "SELECT a.* FROM Assignment a "
+                + "JOIN Lesson l ON a.lessionId = l.id "
+                + "JOIN Class c ON l.classId = c.id "
+                + "WHERE c.learnerId = ? AND a.status = 'Todo'";
         LessonDAO lessonDAO = new LessonDAO();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -257,8 +257,8 @@ public class AssignmentDAO extends DBContext {
         }
         return vector;
     }
-    
-     public Vector<Assignment> getTodoAssignmentsByLessonId(int lessonId) {
+
+    public Vector<Assignment> getTodoAssignmentsByLessonId(int lessonId) {
         Vector<Assignment> vector = new Vector<>();
         String sql = "SELECT * FROM Assignment WHERE lessionId = ? AND status = 'todo'";
         LessonDAO lessonDAO = new LessonDAO();
@@ -282,7 +282,6 @@ public class AssignmentDAO extends DBContext {
         return vector;
     }
 
-    
     public static void main(String[] args) {
         AssignmentDAO assignmentDAO = new AssignmentDAO();
         Vector<Assignment> assignments = assignmentDAO.getTodoAssignmentsByLessonId(6);

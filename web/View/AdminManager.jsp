@@ -18,7 +18,7 @@
                 text-align: center;
                 vertical-align: middle;
             }
-            
+
             .search {
                 width: 80%;
                 height: 40px;
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </c:if>
-              
+
             <c:if test="${sessionScope.errorMessage!=null}">
                 <div class="alert alert-danger" role="alert" id="errorAlert">
                     <div class="d-flex gap-4">
@@ -135,8 +135,8 @@
                                     <td>${manager.id}</td>
                                     <td><strong>${manager.name}</strong> </td>
                                     <td>${manager.getUserInfo().email}</td>
-                                    <td>${manager.approvedTutor}</td>
-                                    <td>${manager.rejectedTutor}</td>
+                                    <td>${manager.getApprovedTutor()}</td>
+                                    <td>${manager.getRejectedTutor()}</td>
                                     <td>${manager.blockedTutor}</td>
                                     <td>
                                         <a href="AdminController?action=deleteManager&managerId=${manager.id}" 
@@ -144,14 +144,14 @@
                                            onclick="return confirm('Are you sure you want to delete the manager with id = ${manager.id}?');">
                                             Delete
                                         </a>
-                                           <button class="btn btn-outline-warning btn-sm" 
-                                                   data-toggle="modal" 
-                                                   data-target="#updateModal"
-                                                   data-id="${manager.id}"
-                                                   data-name="${manager.name}"
-                                                   data-email="${manager.getUserInfo().email}">
-                                               Update
-                                           </button>
+                                        <button class="btn btn-outline-warning btn-sm" 
+                                                data-toggle="modal" 
+                                                data-target="#updateModal"
+                                                data-id="${manager.id}"
+                                                data-name="${manager.name}"
+                                                data-email="${manager.getUserInfo().email}">
+                                            Update
+                                        </button>
                                         <a href="ManagerController?action=details&managerId=${manager.id}" class="btn btn-outline-info btn-sm">Details</a>
                                     </td>
                                 </tr>
@@ -161,7 +161,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="addManagerModal" tabindex="-1" role="dialog" aria-labelledby="addManagerModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -248,68 +248,68 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-                
+
         <script>
-            window.onload = function() {
-                setTimeout(function() {
-                    var successAlert = document.getElementById('successAlert');
-                    if (successAlert) {
-                        successAlert.style.display = 'none';
-                    }
-                    var errorAlert = document.getElementById('errorAlert');
-                    if (errorAlert) {
-                        errorAlert.style.display = 'none';
-                    }
-                    <% session.removeAttribute("successMessage"); %>
-                    <% session.removeAttribute("errorMessage"); %>
-                }, 5000); // 5000 milliseconds = 5 seconds
-            };
-            
-            $('#updateModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var id = button.data('id');
-                var name = button.data('name');
-                var email = button.data('email');
-                
-                var modal = $(this);
-                modal.find('#managerId').val(id);
-                modal.find('#managerName').val(name);
-                modal.find('#managerEmail').val(email);
-            });
+                                               window.onload = function () {
+                                                   setTimeout(function () {
+                                                       var successAlert = document.getElementById('successAlert');
+                                                       if (successAlert) {
+                                                           successAlert.style.display = 'none';
+                                                       }
+                                                       var errorAlert = document.getElementById('errorAlert');
+                                                       if (errorAlert) {
+                                                           errorAlert.style.display = 'none';
+                                                       }
+            <% session.removeAttribute("successMessage"); %>
+            <% session.removeAttribute("errorMessage");%>
+                                                   }, 5000); // 5000 milliseconds = 5 seconds
+                                               };
 
-            function validateForm() {
-                var isValid = true;
-                var alertDiv = document.getElementById("passwordAlert");
+                                               $('#updateModal').on('show.bs.modal', function (event) {
+                                                   var button = $(event.relatedTarget); // Button that triggered the modal
+                                                   var id = button.data('id');
+                                                   var name = button.data('name');
+                                                   var email = button.data('email');
 
-                // Reset alert
-                alertDiv.classList.add("d-none");
+                                                   var modal = $(this);
+                                                   modal.find('#managerId').val(id);
+                                                   modal.find('#managerName').val(name);
+                                                   modal.find('#managerEmail').val(email);
+                                               });
 
-                // Validate fields
-                var fields = ["addManagerName", "addManagerEmail", "managerPassword", "confirmPassword"];
-                fields.forEach(function(fieldId) {
-                    var field = document.getElementById(fieldId);
-                    if (!field.value.trim()) {
-                        field.classList.add("is-invalid");
-                        isValid = false;
-                    } else {
-                        field.classList.remove("is-invalid");
-                    }
-                });
+                                               function validateForm() {
+                                                   var isValid = true;
+                                                   var alertDiv = document.getElementById("passwordAlert");
 
-                // Validate password match
-                var password = document.getElementById("managerPassword").value;
-                var confirmPassword = document.getElementById("confirmPassword").value;
-                if (password !== confirmPassword) {
-                    alertDiv.classList.remove("d-none");
-                    isValid = false;
-                }
+                                                   // Reset alert
+                                                   alertDiv.classList.add("d-none");
 
-                return isValid;
-            }
+                                                   // Validate fields
+                                                   var fields = ["addManagerName", "addManagerEmail", "managerPassword", "confirmPassword"];
+                                                   fields.forEach(function (fieldId) {
+                                                       var field = document.getElementById(fieldId);
+                                                       if (!field.value.trim()) {
+                                                           field.classList.add("is-invalid");
+                                                           isValid = false;
+                                                       } else {
+                                                           field.classList.remove("is-invalid");
+                                                       }
+                                                   });
 
-            document.getElementById("addManagerForm").onsubmit = function() {
-                return validateForm();
-            };
+                                                   // Validate password match
+                                                   var password = document.getElementById("managerPassword").value;
+                                                   var confirmPassword = document.getElementById("confirmPassword").value;
+                                                   if (password !== confirmPassword) {
+                                                       alertDiv.classList.remove("d-none");
+                                                       isValid = false;
+                                                   }
+
+                                                   return isValid;
+                                               }
+
+                                               document.getElementById("addManagerForm").onsubmit = function () {
+                                                   return validateForm();
+                                               };
         </script>
     </body>
 </html>

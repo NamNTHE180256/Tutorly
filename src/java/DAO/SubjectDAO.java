@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Admin
  */
-public class SubjectDAO extends DBContext{
+public class SubjectDAO extends DBContext {
 
     public Subject getSubjectById(int id) {
         String sql = "SELECT * FROM Subject WHERE id =" + id;
@@ -36,8 +36,8 @@ public class SubjectDAO extends DBContext{
         }
         return null;
     }
-    
-   public void displayAllSubjects() {
+
+    public void displayAllSubjects() {
         String sql = "SELECT * FROM Subject";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -91,7 +91,6 @@ public class SubjectDAO extends DBContext{
         return null;
     }
 
-
     // Method to update a subject
     public int updateSubject(Subject subject) {
         int n = 0;
@@ -119,7 +118,7 @@ public class SubjectDAO extends DBContext{
         }
         return n;
     }
-    
+
     public int addSubject(String subjectName) {
         int n = 0;
         String sql = "INSERT INTO Subject (name) VALUES (?)";
@@ -132,13 +131,13 @@ public class SubjectDAO extends DBContext{
         }
         return n;
     }
-    
+
     public Map<String, Integer> getTutorsPerSubject() {
         Map<String, Integer> subjectTutorCounts = new HashMap<>();
-        String sql = "SELECT [Subject].[name] AS subject_name, COUNT(Tutor.id) AS tutor_count \n" +
-"                     FROM [Subject] \n" +
-"                     LEFT JOIN Tutor ON [Subject].id = tutor.subjectId \n" +
-"                     GROUP BY [Subject].[name]";
+        String sql = "SELECT [Subject].[name] AS subject_name, COUNT(Tutor.id) AS tutor_count \n"
+                + "                     FROM [Subject] \n"
+                + "                     LEFT JOIN Tutor ON [Subject].id = tutor.subjectId \n"
+                + "                     GROUP BY [Subject].[name]";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -152,13 +151,13 @@ public class SubjectDAO extends DBContext{
         }
         return subjectTutorCounts;
     }
-    
+
     public Map<Subject, Integer> getNumberOfLearnersBySubject() {
         String sql = "SELECT s.id, s.name, COUNT(DISTINCT c.learnerId) AS NumberOfLearners "
-                   + "FROM Subject s "
-                   + "LEFT JOIN Tutor t ON s.id = t.subjectId "
-                   + "LEFT JOIN Class c ON t.id = c.tutorId "
-                   + "GROUP BY s.id, s.name";
+                + "FROM Subject s "
+                + "LEFT JOIN Tutor t ON s.id = t.subjectId "
+                + "LEFT JOIN Class c ON t.id = c.tutorId "
+                + "GROUP BY s.id, s.name";
         Map<Subject, Integer> result = new HashMap<>();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -175,14 +174,14 @@ public class SubjectDAO extends DBContext{
         }
         return result;
     }
-    
+
     // Method to get number of classes by subject
     public Map<Subject, Integer> getNumberOfClassesBySubject() {
         String sql = "SELECT s.id, s.name, COUNT(c.id) AS NumberOfClasses "
-                   + "FROM Subject s "
-                   + "LEFT JOIN Tutor t ON s.id = t.subjectId "
-                   + "LEFT JOIN Class c ON t.id = c.tutorId "
-                   + "GROUP BY s.id, s.name";
+                + "FROM Subject s "
+                + "LEFT JOIN Tutor t ON s.id = t.subjectId "
+                + "LEFT JOIN Class c ON t.id = c.tutorId "
+                + "GROUP BY s.id, s.name";
         Map<Subject, Integer> result = new HashMap<>();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -204,9 +203,9 @@ public class SubjectDAO extends DBContext{
     // Method to get number of tutors by subject
     public Map<Subject, Integer> getNumberOfTutorsBySubject() {
         String sql = "SELECT s.id, s.name, COUNT(t.id) AS NumberOfTutors "
-                   + "FROM Subject s "
-                   + "LEFT JOIN Tutor t ON s.id = t.subjectId "
-                   + "GROUP BY s.id, s.name";
+                + "FROM Subject s "
+                + "LEFT JOIN Tutor t ON s.id = t.subjectId "
+                + "GROUP BY s.id, s.name";
         Map<Subject, Integer> result = new HashMap<>();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -224,11 +223,7 @@ public class SubjectDAO extends DBContext{
         }
         return result;
     }
-    
 
-    
-    
-    
     public static void main(String[] args) {
         SubjectDAO d = new SubjectDAO();
         Map<String, Integer> subjectTutorCounts = d.getTutorsPerSubject();

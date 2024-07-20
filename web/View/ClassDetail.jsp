@@ -11,10 +11,10 @@
 <%@ page import="DAO.*" %>
 <%
     // Get class ID from request
-int classId = Integer.parseInt(request.getParameter("classId"));
- 
+    int classId = Integer.parseInt(request.getParameter("classId"));
+
     // Fetch class details using the provided function
-   AClassDAO classDAO = new AClassDAO();
+    AClassDAO classDAO = new AClassDAO();
     AClass aClass = classDAO.getClassById(classId);
 
     // Get current date or date from request parameters
@@ -30,9 +30,9 @@ int classId = Integer.parseInt(request.getParameter("classId"));
     String subjectName = aClass.getTutor().getSubject().getName();
     int attendance = 10; // This should be fetched dynamically based on attended sessions
     int progress = (attendance * 100) / totalSlots;
-    
+
     User user = (User) session.getAttribute("user");
-    
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,7 +234,7 @@ int classId = Integer.parseInt(request.getParameter("classId"));
             <%@ include file="TutorHeader.jsp" %>
             <% } else { %>
             <%@ include file="StudentHeader.jsp" %>
-            <% } %>
+            <% }%>
         </header>
 
         <main style="background-color: #D9D9D9; flex-grow: 1; display: flex; flex-direction: column;">
@@ -247,31 +247,31 @@ int classId = Integer.parseInt(request.getParameter("classId"));
                             <p class="todohead" style="font-size: 20px;font-weight: bold">                    
                                 <c:choose>
                                     <c:when test="${sessionScope.user.role == 'tutor'}">
-                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : <%= studentName %></p>
+                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : <%= studentName%></p>
                                 </c:when>
                                 <c:otherwise>
-                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : MR <%= tutorName %></p>
+                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : MR <%= tutorName%></p>
                                 </c:otherwise>
                             </c:choose> </p>
                             <div class="d-flex justify-content-between">
                                 <p>Total Slots:</p>
-                                <p><%= totalSlots %></p>
+                                <p><%= totalSlots%></p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>Start Date:</p>
-                                <p><%= sdf.format(startDate) %></p>
+                                <p><%= sdf.format(startDate)%></p>
                             </div>                            
                             <div class="d-flex justify-content-between">
                                 <p>End Date:</p>
-                                <p><%= sdf.format(endDate) %></p>
+                                <p><%= sdf.format(endDate)%></p>
                             </div>                            
                             <div class="d-flex justify-content-between">
                                 <p>Subject:</p>
-                                <p><%= subjectName %></p>
+                                <p><%= subjectName%></p>
                             </div>                            
                             <div class="d-flex justify-content-between">
                                 <p>Attendance:</p>
-                                <p><%= attendance %>/<%= totalSlots %></p>
+                                <p><%= attendance%>/<%= totalSlots%></p>
                             </div>
                         </div>
 

@@ -28,24 +28,24 @@
         %>
 
         <div class="container">
-            <h2>Ratings for <%= tutor.getName() %></h2>
+            <h2>Ratings for <%= tutor.getName()%></h2>
             <div class="summary">
                 <div class="average-rating">
-                    <h3>Average Rating: <%= String.format("%.1f", averageRating) %> out of 5</h3>
+                    <h3>Average Rating: <%= String.format("%.1f", averageRating)%> out of 5</h3>
                     <div class="stars">
-                        <% for (int i = 0; i < 5; i++) { %>
-                        <span class="star <%= i < averageRating ? "filled" : "" %>">&#9733;</span>
-                        <% } %>
+                        <% for (int i = 0; i < 5; i++) {%>
+                        <span class="star <%= i < averageRating ? "filled" : ""%>">&#9733;</span>
+                        <% }%>
                     </div>
                 </div>
                 <div class="total-ratings">
-                    <h3><%= totalRatings %> Ratings</h3>
+                    <h3><%= totalRatings%> Ratings</h3>
                 </div>
             </div>
 
             <div class="filter">
                 <form action="TutorRatingsServlet" method="get">
-                    <input type="hidden" name="tutorId" value="<%= tutorId %>">
+                    <input type="hidden" name="tutorId" value="<%= tutorId%>">
                     <label for="ratingFilter">Filter by Rating:</label>
                     <select name="ratingFilter" id="ratingFilter" onchange="this.form.submit()">
                         <option value="all">All</option>
@@ -70,7 +70,7 @@
                                 <% } %>
                                 <% for (int i = rating.rating; i < 5; i++) { %>
                                 <span class="star">&#9733;</span>
-                                <% } %>
+                                <% }%>
                             </div>
                         </div>
                         <div class="rating-review">

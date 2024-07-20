@@ -17,11 +17,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author TRANG
  */
-public class TutorAvailabilityDAO extends DBContext{
+public class TutorAvailabilityDAO extends DBContext {
+
     public TutorAvailabilityDAO() {
         // Initialize your database connection here
         // For example:
@@ -148,40 +150,52 @@ public class TutorAvailabilityDAO extends DBContext{
         }
         return n;
     }
-    
+
     public Vector<TutorAvailability> getTutorAvailabilityByTutorId(int tutorId) {
         Vector<TutorAvailability> tutorAvailabilities = new Vector<>();
         String sql = "SELECT \n"
-                + "    COALESCE(ta.tutorId, ?) AS tutorId, \n"
-                + "    s.id AS sessionId, \n"
-                + "    COALESCE(ta.status, 'Unavailable') AS status\n"
-                + "FROM [Session] s\n"
-                + "LEFT JOIN TutorAvailability ta ON s.id = ta.sessionId AND ta.tutorId = ?\n"
-                + "ORDER BY \n"
-                + "    CASE \n"
-                + "        WHEN s.id LIKE '%1' THEN 1\n"
-                + "        WHEN s.id LIKE '%2' THEN 2\n"
-                + "        WHEN s.id LIKE '%3' THEN 3\n"
-                + "        WHEN s.id LIKE '%4' THEN 4\n"
-                + "        WHEN s.id LIKE '%5' THEN 5\n"
-                + "    END, \n"
-                + "    CASE \n"
-                + "        WHEN s.id LIKE 'M%' THEN 1\n"
-                + "        WHEN s.id LIKE 'T%' THEN 2\n"
-                + "        WHEN s.id LIKE 'W%' THEN 3\n"
-                + "        WHEN s.id LIKE 'R%' THEN 4\n"
-                + "        WHEN s.id LIKE 'F%' THEN 5\n"
-                + "        WHEN s.id LIKE 'SA%' THEN 6\n"
-                + "        WHEN s.id LIKE 'SU%' THEN 7\n"
-                + "    END,\n"
-                + "    s.startTime;";
+            + " COALESCE(ta.tutorId, ?) AS tutorId, \n"
+            + " s.id AS sessionId, \n"
+            + " CASE \n"
+            + " WHEN EXISTS ("
+            + "    SELECT 1 FROM [Lesson] l "
+            + "    JOIN [Class] c ON l.classId = c.id "
+            + "    WHERE l.sessionId = s.id AND c.tutorId = ?"
+            + " ) THEN 'Unavailable' \n"
+            + " ELSE COALESCE(ta.status, 'Unavailable') \n"
+            + " END AS status\n"
+            + "FROM [Session] s\n"
+            + "LEFT JOIN TutorAvailability ta ON s.id = ta.sessionId AND ta.tutorId = ?\n"
+            + "ORDER BY \n"
+            + " CASE \n"
+            + " WHEN s.id LIKE '%1' THEN 1\n"
+            + " WHEN s.id LIKE '%2' THEN 2\n"
+            + " WHEN s.id LIKE '%3' THEN 3\n"
+            + " WHEN s.id LIKE '%4' THEN 4\n"
+            + " WHEN s.id LIKE '%5' THEN 5\n"
+            + " END, \n"
+            + " CASE \n"
+            + " WHEN s.id LIKE 'M%' THEN 1\n"
+            + " WHEN s.id LIKE 'T%' THEN 2\n"
+            + " WHEN s.id LIKE 'W%' THEN 3\n"
+            + " WHEN s.id LIKE 'R%' THEN 4\n"
+            + " WHEN s.id LIKE 'F%' THEN 5\n"
+            + " WHEN s.id LIKE 'SA%' THEN 6\n"
+            + " WHEN s.id LIKE 'SU%' THEN 7\n"
+            + " END,\n"
+            + " s.startTime;";
+
         TutorDAO tutorDAO = new TutorDAO();
         SessionDAO sessionDAO = new SessionDAO();
+
         try {
             PreparedStatement state = connection.prepareStatement(sql);
             state.setInt(1, tutorId);
             state.setInt(2, tutorId);
+            state.setInt(3, tutorId);
+
             ResultSet rs = state.executeQuery();
+
             while (rs.next()) {
                 int id = rs.getInt("tutorId");
                 String sessionId = rs.getString("sessionId");
@@ -192,18 +206,63 @@ public class TutorAvailabilityDAO extends DBContext{
                 tutorAvailabilities.add(tutorAvailability);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TutorAvailabilityDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+
         return tutorAvailabilities;
     }
     
+    public Vector<TutorAvailability> getAvailableSessions() {
+    Vector<TutorAvailability> availableSessions = new Vector<>();
+
+    String sql = "SELECT ta.tutorId, s.id AS sessionId, 'Available' AS availabilityStatus " +
+                 "FROM TutorAvailability ta " +
+                 "JOIN [Session] s ON ta.sessionId = s.id " +
+                 "WHERE NOT EXISTS ( " +
+                 "    SELECT 1 " +
+                 "    FROM Lesson l " +
+                 "    JOIN Class c ON l.classId = c.Id " +
+                 "    WHERE l.sessionId = ta.sessionId " +
+                 "      AND c.tutorId = ta.tutorId " +
+                 ") " +
+                 "GROUP BY ta.tutorId, s.id";
+
+    try (
+         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+
+        // Cache tutors and sessions to avoid repeated database calls
+        Map<Integer, Tutor> tutorCache = new HashMap<>();
+        Map<String, Session> sessionCache = new HashMap<>();
+        
+        SessionDAO sDAO = new SessionDAO();
+        TutorDAO tDAO = new TutorDAO();
+
+        while (resultSet.next()) {
+            int tutorId = resultSet.getInt("tutorId");
+            String sessionId = resultSet.getString("sessionId");
+            String availabilityStatus = resultSet.getString("availabilityStatus");
+
+            Tutor tutor = tutorCache.computeIfAbsent(tutorId, tDAO::getTutorById);
+            Session session = sessionCache.computeIfAbsent(sessionId, sDAO::getSessionById);
+
+            availableSessions.add(new TutorAvailability(tutor, session, availabilityStatus));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Handle the exception properly in a real application
+    }
+
+    return availableSessions;
+}
+
     
      public static void main(String[] args) {
         TutorAvailabilityDAO t = new TutorAvailabilityDAO();
-        Vector<TutorAvailability> v = t.getTutorAvailabilityByTutorId(7);
-        for(TutorAvailability e : v){
-            System.out.println(e.toString());
+        Vector<TutorAvailability> v = t.getAvailableSessions();
+        for(TutorAvailability d : v){
+            System.out.println(d);
         }
     }
-    
+
 }

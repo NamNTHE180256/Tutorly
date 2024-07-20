@@ -37,7 +37,7 @@
                     <h1><a href="index.html" class="logo"><img style="width: 150px;" src="../image/LOGO_TUTORLY (1).png"> <span>Find tutor Find future</span></a></h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
-                            <a class="nav-link <%= currentPage.contains("dashboard") ? "active" : "" %>" href="${pageContext.request.contextPath}/AdminController?action=dashboard"><span class="mr-3"><i class="fa-solid fa-house"></i></span> Dashboard</a>
+                            <a class="nav-link <%= currentPage.contains("dashboard") ? "active" : ""%>" href="${pageContext.request.contextPath}/AdminController?action=dashboard"><span class="mr-3"><i class="fa-solid fa-house"></i></span> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><span class="mr-3"><i class="fa-solid fa-chalkboard-user"></i></span> Tutor</a>

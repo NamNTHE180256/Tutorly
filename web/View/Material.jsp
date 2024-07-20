@@ -64,6 +64,7 @@
         </style>
     </head>
     <body>
+
         <header>
 
 
@@ -81,23 +82,27 @@
         <h1 class="header">Material</h1>
         <div class="layout">
             <main class="layout-main px-4">
-                <c:if test="${not empty requestScope.mate.getFilePath()}">
-                    <iframe src="${requestScope.mate.getFilePath()}" width="800" height="500" frameborder="0"></iframe>
-                    </c:if>
-            </main>
 
-            <aside class="layout-sidebar bd-h-60 border-end">
-                <ul class="list-group" style="width:250px">
+                <c:if test="${not empty requestScope.mate.getFilePath()}">
+                    <iframe src="${requestScope.mate.getFilePath()}" width="800" height="500" frameborder="0"></iframe></c:if>
+
+                </main>
+
+                <aside class="layout-sidebar bd-h-60 border-end">
+                    <ul class="list-group" style="width:250px">
+
                     <c:forEach var="x" items="${requestScope.listmaterial}">
                         <li class="list-group-item list-group-item-action">
                             <a href="Material?action=download&slotid=${requestScope.slotid}&id=${x.id}&classid=${requestScope.classid}">
-                                ${x.fileName}
-                            </a>
+
+
                         </li>
                     </c:forEach>
                 </ul>
             </aside>
         </div>
-         <%@ include file="tutor-footer.jsp" %>
+
+        <%@ include file="tutor-footer.jsp" %>
+
     </body>
 </html>

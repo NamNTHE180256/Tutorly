@@ -7,6 +7,7 @@ package Controller;
 import DAO.AClassDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
+import DAO.RegisterTrialClassDAO;
 import DAO.SaveTutorListDAO;
 import DAO.SessionDAO;
 import DAO.SubjectDAO;
@@ -14,6 +15,7 @@ import DAO.TutorAvailabilityDAO;
 import DAO.TutorDAO;
 import Model.AClass;
 import Model.Lesson;
+import Model.RegisterTrialClass;
 import Model.SaveTutorList;
 import Model.Subject;
 import Model.Tutor;
@@ -60,73 +62,46 @@ public class RegisterTrialCotroller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String tutor_id = request.getParameter("tutor_id");
-        System.out.println("tutor_id: " + tutor_id);
         TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
         TutorDAO tDAO = new TutorDAO();
         Tutor tutor = tDAO.getTutorById(Integer.parseInt(tutor_id));
-        System.out.println("Tutor: " + tutor);
         Vector<TutorAvailability> tutorAvailabilities = taDao.getTutorAvailabilityByTutorId(Integer.parseInt(tutor_id));
         System.out.println("Tutor Availabilities: " + tutorAvailabilities);
         request.setAttribute("tutorAvailabilities", tutorAvailabilities);
         request.setAttribute("tutor", tutor);
 
         String service = request.getParameter("service");
-        System.out.println("service: " + service);
         if (service != null && !service.isEmpty()) {
             String learner_id = request.getParameter("learner_id");
             System.out.println("learner_id: " + learner_id);
             String session_id = request.getParameter("session");
             System.out.println("session_id: " + session_id);
 
-            AClassDAO aclassDAO = new AClassDAO();
+            //AClassDAO aclassDAO = new AClassDAO();
+            RegisterTrialClassDAO rDAO = new RegisterTrialClassDAO();
             LearnerDAO lDAO = new LearnerDAO();
             LessonDAO lessonDAO = new LessonDAO();
             SessionDAO sDAO = new SessionDAO();
             Date today = new Date();
 
-            AClass aClass = new AClass(
+            RegisterTrialClass rClass = new RegisterTrialClass(
                     lDAO.getLearnerById(Integer.parseInt(learner_id)),
                     tutor,
+                    sDAO.getSessionById(session_id),
                     1,
                     getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek()),
                     getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek()),
-                    "ongoing"
+                    "wait",
+                    tutor.getSubject(),
+                    "unreaded"
             );
+            int trialclass = rDAO.addTrialClass(rClass);
 
-            int classId = aclassDAO.addClass(aClass);
-            System.out.println("Generated Class ID: " + classId);
-
-            int lessonResult = 0;
-            Lesson newLesson = null;
-
-            if (classId != 0) {
-                // Retrieve the newly added AClass with its classId
-                AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
-
-                if (addedClass != null) {
-                    newLesson = new Lesson(
-                            addedClass,
-                            sDAO.getSessionById(session_id),
-                            addedClass.getStartDate(),
-                            "Scheduled"
-                    );
-                    lessonResult = lessonDAO.addLesson(newLesson);
-
-                }
-            }
-            boolean success = false;
-            if (lessonResult != 0) {
-                success = true;
-            }
-            if (success) {
-                HttpSession session = request.getSession();
-                session.setAttribute("successMessage", "Register trial lesson success.");
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("errorMessage", "Register trial lesson fail.");
-            }
             HttpSession session = request.getSession();
             session.setAttribute("success", "Register trial class success");
+            session.setAttribute("trialclass", trialclass);
+            session.setAttribute("successMessage", "Register trial lesson success. Wait for tutor response...");
+            session.setAttribute("session_id", session_id);
             RequestDispatcher dispatcher = request.getRequestDispatcher("TutorController");
             dispatcher.forward(request, response);
         } else {

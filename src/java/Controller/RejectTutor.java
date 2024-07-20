@@ -4,7 +4,10 @@
  */
 package Controller;
 
+import DAO.ManagerDAO;
 import DAO.TutorDAO;
+import Model.ManageTutor;
+import Model.Manager;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -74,17 +77,20 @@ public class RejectTutor extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-   
-            int tutorId = Integer.parseInt(request.getParameter("id"));
-
-            TutorDAO tutorDao = new TutorDAO();
-            tutorDao.deleteTutor(tutorId);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("{\"status\":\"success\"}");
-       
+    throws ServletException, IOException {
+        int tutorId = Integer.parseInt(request.getParameter("id"));
+        HttpSession session = request.getSession();
+        Manager manager = (Manager)session.getAttribute("manager");
+        if (manager != null) {
+            ManagerDAO mDao = new ManagerDAO();
+            ManageTutor mt = new ManageTutor(tutorId, manager.getId(), "reject");
+            mDao.AddManageTutor(mt);
+        }
+        TutorDAO tutorDao = new TutorDAO();
+        tutorDao.deleteTutor(tutorId);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"status\"😕"success\"}");
     }
 
     /**

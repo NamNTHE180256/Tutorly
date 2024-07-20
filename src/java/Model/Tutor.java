@@ -58,7 +58,6 @@ public class Tutor {
         this.Linkmeet = Linkmeet;
     }
 
-  
     // Getters and Setters
     public int getId() {
         return id;

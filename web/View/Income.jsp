@@ -10,6 +10,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <title>Income Tracker</title>
         <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+            }
             .container1 {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 background-color: #f7f9fc;
@@ -17,8 +24,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
-                min-height: 100vh;
-                margin: 0;
+                flex-grow: 1;
                 padding: 20px;
             }
             .wrapper {
@@ -147,6 +153,15 @@
             .total-income:hover {
                 color: #0056b3;
             }
+            footer {
+                background-color: #002147;
+                color: #fff;
+                padding: 20px 0;
+                text-align: center;
+                width: 100%;
+                flex-shrink: 0;
+                margin-top: auto;
+            }
         </style>
     </head>
     <body>
@@ -171,13 +186,14 @@
             <div class="total-income-box">
                 <h2 class="total-income" onclick="showTotalModal()">Total Income: 
                     <c:set var="totalIncome" value="0" />
-                    <c:forEach var="x" items="${listIncome}">
+                    <c:forEach var="x" items="${PaidList}">
                         <c:set var="totalIncome" value="${totalIncome + x.total}" />
                     </c:forEach>
                     ${totalIncome}
                 </h2>
             </div>
             <div class="wrapper">
+                <h5>All of Income</h5>
                 <table class="table">
                     <thead>
                         <tr>
@@ -188,8 +204,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <c:set var="totalIncome2" value="0" />
                         <c:if test="${not empty listIncome}">
                             <c:forEach var="x" items="${listIncome}">
+                                <c:set var="totalIncome2" value="${totalIncome2 + x.total}" />
                                 <tr onclick="showModal('${x.amount}', '${x.tax}', '${x.total}', '${x.status}', '${x.createdAt}', '${x.dayPaid}')">
                                     <td>${x.amount}</td>
                                     <td>${x.tax}</td>
@@ -232,6 +250,7 @@
                         <p><strong>Start Date:</strong> <span id="modalStartDate">${param.start}</span></p>
                         <p><strong>End Date:</strong> <span id="modalEndDate">${param.end}</span></p>
                         <p><strong>Total Income:</strong> <span id="modalTotalIncome">${totalIncome}</span></p>
+                        <p><strong>Potential Income:</strong> <span id="modalPotentialIncome">${totalIncome2}</span></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -265,32 +284,41 @@
             </div>
         </div>
 
-        <%@include file="tutor-footer.jsp" %>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        flatpickr('.datepicker', {
-                                            dateFormat: 'Y-m-d',
-                                            allowInput: true
-                                        });
-                                    });
+            document.addEventListener('DOMContentLoaded', function () {
+                flatpickr('.datepicker', {
+                    dateFormat: 'Y-m-d',
+                    allowInput: true
+                });
+            });
 
-                                    function showTotalModal() {
-                                        $('#totalIncomeModal').modal('show');
-                                    }
+            function showTotalModal() {
+                $('#totalIncomeModal').modal('show');
+            }
 
-                                    function showModal(amount, tax, total, status, createdAt, dayPaid) {
-                                        document.getElementById('modalAmount').innerText = amount;
-                                        document.getElementById('modalTax').innerText = tax;
-                                        document.getElementById('modalTotal').innerText = total;
-                                        document.getElementById('modalStatus').innerText = status;
-                                        document.getElementById('modalCreatedAt').innerText = createdAt;
-                                        document.getElementById('modalDayPaid').innerText = dayPaid;
-                                        $('#incomeModal').modal('show');
-                                    }
+            function showModal(amount, tax, total, status, createdAt, dayPaid) {
+                document.getElementById('modalAmount').innerText = amount;
+                document.getElementById('modalTax').innerText = tax;
+                document.getElementById('modalTotal').innerText = total;
+                document.getElementById('modalStatus').innerText = status;
+                document.getElementById('modalCreatedAt').innerText = createdAt;
+                document.getElementById('modalDayPaid').innerText = dayPaid;
+                $('#incomeModal').modal('show');
+            }
         </script>
+        <footer>
+            <div class="container">
+                <p style="margin: 0; font-size: 16px;">
+                    Mọi góp ý, thắc mắc xin liên hệ Công ty cung cấp dịch vụ gia sư | Email: <a href="mailto:Tutory@gmail.com" style="color: #FFC107;">Tutory@gmail.com</a> | Điện thoại: <a href="tel:0123456789" style="color: #FFC107;">0123456789</a>
+                </p>
+                <p style="margin: 0; font-size: 16px;">
+                    © 2024 Power by TUTORLY
+                </p>
+            </div>
+        </footer>
     </body>
 </html>

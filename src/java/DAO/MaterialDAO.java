@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 
+
 /**
  *
  * @author TRANG
@@ -263,7 +264,9 @@ public class MaterialDAO extends DBContext {
 
     public static void main(String[] args) {
         MaterialDAO materialDAO = new MaterialDAO();
+
         System.out.println(materialDAO.getAllMaterialWithID(2, 13));
+
 
         // Test getMaterialsByClassIdAndFileType method
     }

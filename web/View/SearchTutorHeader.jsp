@@ -82,6 +82,7 @@
         <title>JSP Page</title>
     </head>
     <body >
+
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
@@ -113,12 +114,15 @@
                             </li>
                             <!-- Student name -->
                             <li class="nav-item">
+
                                 <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${sessionScope.learner.name}</p></a>
+
                             </li>
                             <!-- Student profile image -->
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <img class="student_profile_image" src="image/${sessionScope.learner.image}">
+
                                 </a>
                             </li>
                         </ul>

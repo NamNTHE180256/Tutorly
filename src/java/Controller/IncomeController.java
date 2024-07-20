@@ -1,6 +1,5 @@
 package Controller;
 
-
 import DAO.IncomeDao;
 import Model.Income;
 import jakarta.servlet.ServletException;
@@ -61,10 +60,14 @@ public class IncomeController extends HttpServlet {
 
         if (view != null && view.equalsIgnoreCase("week")) {
             ArrayList<Income> list = idao.GetAllIncomeWithDate(startDate, endDate, tutorId);
+            ArrayList<Income> PaidList = new ArrayList<>();
             System.out.println("List size: " + list.size()); // Debugging line
             for (Income income : list) {
-                System.out.println(income); // Debugging line
+                if (income.getStatus().equalsIgnoreCase("paid")) {
+                    PaidList.add(income);
+                }
             }
+            request.setAttribute("PaidList", PaidList);
             request.setAttribute("listIncome", list);
             request.getServletContext().getRequestDispatcher("/View/Income.jsp").forward(request, response);
         } else {
@@ -90,3 +93,4 @@ public class IncomeController extends HttpServlet {
         return "IncomeController Servlet";
     }
 }
+    

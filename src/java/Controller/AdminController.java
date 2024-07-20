@@ -2,17 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
 import DAO.LearnerDAO;
 import DAO.ManagerDAO;
 import DAO.SubjectDAO;
+import DAO.TransactionDAO;
 import DAO.TutorDAO;
 import DAO.UserDAO;
 import Model.Learner;
 import Model.Manager;
 import Model.Subject;
+import Model.Transaction;
 import Model.Tutor;
 import Model.User;
 import java.io.IOException;
@@ -26,23 +27,27 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Map;
 import com.google.gson.Gson;
+import java.util.List;
 
 /**
- *admin
+ * admin
+ *
  * @author Admin
  */
-@WebServlet(name="AdminController", urlPatterns={"/AdminController"})
+@WebServlet(name = "AdminController", urlPatterns = {"/AdminController"})
 public class AdminController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String action = request.getParameter("action");
         ManagerDAO managerDAO = new ManagerDAO();
         LearnerDAO learnerDao = new LearnerDAO();
@@ -90,7 +95,7 @@ public class AdminController extends HttpServlet {
                     try {
                         int id = Integer.parseInt(managerId);
                         managerDAO.deleteManager(id);
-                        response.sendRedirect("AdminController?action=viewManager"); 
+                        response.sendRedirect("AdminController?action=viewManager");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -134,12 +139,12 @@ public class AdminController extends HttpServlet {
                 int tutorQuantity = userDAO.getCount("Tutor");
                 int managerQuantity = userDAO.getCount("Manager");
                 int classQuantity = userDAO.getCount("Class");
-                
+
                 Map<String, Integer> subjectTutorCounts = subjectDAO.getTutorsPerSubject();
-                
+
                 Gson gson = new Gson();
                 String subjectTutorCountsJson = gson.toJson(subjectTutorCounts);
-                
+
                 // Set attributes to be accessed in the JSP
                 request.setAttribute("learnerQuantity", learnerQuantity);
                 request.setAttribute("tutorQuantity", tutorQuantity);
@@ -153,27 +158,31 @@ public class AdminController extends HttpServlet {
                 Map<Subject, Integer> learnersBySubject = subjectDAO.getNumberOfLearnersBySubject();
                 Map<Subject, Integer> classesBySubject = subjectDAO.getNumberOfClassesBySubject();
                 Map<Subject, Integer> tutorsBySubject = subjectDAO.getNumberOfTutorsBySubject();
-
                 request.setAttribute("learnersBySubject", learnersBySubject);
                 request.setAttribute("classesBySubject", classesBySubject);
                 request.setAttribute("tutorsBySubject", tutorsBySubject);
-
+                request.getRequestDispatcher("View/AdminSubject.jsp").forward(request, response);
+                break;
+            case "addSubject":
                 String subjectName = request.getParameter("subject_name");
                 if (subjectName != null && !subjectName.isEmpty()) {
                     int add = subjectDAO.addSubject(subjectName);
                     success = add != 0;
-
-                    HttpSession session = request.getSession();
                     if (success) {
-                        session.setAttribute("successMessage", "Add subject success.");
+                        request.setAttribute("successMessage", "Add subject success.");
                     } else {
-                        session.setAttribute("errorMessage", "Add subject fail.");
+                        request.setAttribute("errorMessage", "Add subject fail.");
                     }
                 }
                 request.getRequestDispatcher("View/AdminSubject.jsp").forward(request, response);
                 break;
-            
                 
+            case "viewIncome":
+                TransactionDAO tranDao = new TransactionDAO();
+                List<Transaction> trans = tranDao.getAllTransactions();
+                request.setAttribute("trans", trans);
+                request.getRequestDispatcher("View/AdminIncome.jsp").forward(request, response);
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
                 break;
@@ -181,8 +190,9 @@ public class AdminController extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -190,12 +200,13 @@ public class AdminController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -203,12 +214,13 @@ public class AdminController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -110,8 +111,8 @@
                             <form class="me-2 mb-2 mb-lg-0">
                                 <input class="form-control form-control-sm" type="text" name="tutorname" placeholder="Search Tutor by name" />
                                 <input type="hidden" name="service" value="filter">
-                               
-                                
+
+
                             </form>
 
                         </li>
@@ -120,7 +121,7 @@
             </div>
         </nav>
 
- 
+
 
         <c:if test="${sessionScope.successMessage!=null}">
             </br>
@@ -129,6 +130,7 @@
                     <span><i class="fa-solid fa-circle-check icon-success"></i></span>
                     <div>
                         ${sessionScope.successMessage}
+
                     </div>
                 </div>
             </div>
@@ -184,8 +186,8 @@
                                 <!-- Right -->
                                 <div class="col-md-3 text-right">
                                     <div class="fee">
-                                        <i style="color: #F7B500" class="fa-solid fa-money-check-dollar mr-2"></i>
-                                        <h2>${t.price}K</h2>
+                                        <i style="color: #F7B500" class="fa-solid fa-money-check-dollar mr-2"> </i> 
+                                        <h2><fmt:formatNumber value="${t.price}" pattern="###,###" />VND</h2>
                                         <p>per session</p>
                                         <form id="addtutorform-${t.id}" onsubmit="return false;">
                                             <button type="button" id="heart-button-${t.id}" style="background: white; border: 1px white;" onclick="change_heart('${t.id}')">
@@ -218,7 +220,7 @@
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerclass"
                                                 style="margin-bottom: 5px; background-color: #A2A2A2">
                                             <a href="RegisterClassController?tutor_id=${t.id}" style="color:white">Register class</a>
-                                            
+
                                         </button>
 
 
@@ -244,7 +246,7 @@
                         errorAlert.style.display = 'none';
                     }
             <% session.removeAttribute("successMessage"); %>
-            <% session.removeAttribute("errorMessage"); %>
+            <% session.removeAttribute("errorMessage");%>
                 }, 5000); // 5000 milliseconds = 5 seconds
             };
 

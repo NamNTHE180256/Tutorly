@@ -1,9 +1,3 @@
-<%-- 
-    Document   : TutorDashboard
-    Created on : Jun 19, 2024, 10:46:10 AM
-    Author     : Tung Duong
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -16,7 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+       
         <style>
             .navmenuitem {
                 margin-right: 25px;
@@ -146,7 +144,7 @@
         <title>Dashboard</title>
     </head>
     <body>
-        <%@ include file = "TutorHeader.jsp" %>
+        <%@ include file="TutorHeader.jsp" %>
         <main style="background-color: #D9D9D9; flex-grow: 1; display: flex; flex-direction: column;">
             <!--Content-->
             <div class="container-fluid content">
@@ -220,6 +218,9 @@
                 </div>
             </div>
         </main>
-        <%@ include file = "tutor-footer.jsp" %>
+        <%@ include file="tutor-footer.jsp" %>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

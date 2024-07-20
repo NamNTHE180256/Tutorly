@@ -238,6 +238,27 @@ public class LearnerDAO extends DBContext {
         return n;
     }
 
+    public List<Learner> getLearnersByTutorId(int tutorId) {
+        List<Learner> vector = new ArrayList<>();
+        String sql = "SELECT l.* FROM Learner l JOIN Class c ON l.id = c.learnerId WHERE c.tutorId = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, tutorId);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String image = rs.getString("image");
+
+                Learner learner = new Learner(id, name, image);
+                vector.add(learner);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LearnerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
     public static void main(String[] args) {
         LearnerDAO l = new LearnerDAO();
         Learner learner = new Learner(200, "ducanh", "dsadada");

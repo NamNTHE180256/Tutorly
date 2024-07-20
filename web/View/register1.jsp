@@ -19,7 +19,7 @@
         <div class="container">
             <div class="form-section">
                 <h1>Join With Us</h1>
-                <form id="registration-form" action="<%=request.getContextPath() %>/TutorRegisterServlet" method="post">
+                <form id="registration-form" action="<%=request.getContextPath()%>/TutorRegisterServlet" method="post">
                     <input type="hidden" name="step" value="1">
                     <label for="full-name">Full name</label>
                     <input type="text" id="full-name" name="full-name" placeholder="Your full name" required>
@@ -67,11 +67,11 @@
             </div>
         </div>
         <script>
-            <% if (request.getAttribute("message") != null) { %>
-            alert('<%= request.getAttribute("message") %>');
+            <% if (request.getAttribute("message") != null) {%>
+            alert('<%= request.getAttribute("message")%>');
             window.location.href = 'View/register1.jsp';
 
-            <% } %>
+            <% }%>
         </script>
         <script>
             const name = localStorage.getItem('full-name');

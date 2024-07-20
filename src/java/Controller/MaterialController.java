@@ -71,17 +71,19 @@ public class MaterialController extends HttpServlet {
                 // Handle the exception, e.g., log it and set an error message
             }
 
-            request.setAttribute("doc", doc);
-            request.setAttribute("slide", slide);
-            request.setAttribute("book", book);
-            request.setAttribute("video", video);
-            request.setAttribute("linfo", linfo);
-            request.setAttribute("video", video);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
-            dispatcher.forward(request, response);
-        }
-    }
 
+        request.setAttribute("doc", doc);
+        request.setAttribute("slide", slide);
+        request.setAttribute("book", book);
+        request.setAttribute("video", video);
+        request.setAttribute("linfo", linfo);
+        request.setAttribute("video", video);
+         request.setAttribute("class_vector", class_vector);
+        request.setAttribute("linfo", linfo);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
+        dispatcher.forward(request, response);
+    }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

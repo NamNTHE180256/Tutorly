@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -23,6 +24,62 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class TutorDAO extends DBContext {
+
+
+    public ArrayList<Tutor> getAllTutors() {
+        ArrayList<Tutor> tutors = new ArrayList<>();
+        SubjectDAO sDao = new SubjectDAO();
+        String sql = "SELECT * FROM Tutor";
+        try {
+            PreparedStatement sp = connection.prepareStatement(sql);
+            ResultSet rs = sp.executeQuery();
+            while (rs.next()) {
+                Tutor tutor = new Tutor();
+                tutor.setId(rs.getInt("id"));
+                tutor.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
+                tutor.setName(rs.getString("name"));
+                tutor.setGender(rs.getBoolean("gender"));
+                tutor.setImage(rs.getString("image"));
+                tutor.setBio(rs.getString("bio"));
+                tutor.setEdu(rs.getString("edu"));
+                tutor.setPrice(rs.getFloat("price"));
+                tutor.setBank(rs.getString("bank"));
+                tutor.setStatus(rs.getString("status"));
+                tutor.setLinkmeet(rs.getString("Linkmeet"));
+                tutors.add(tutor);
+            }
+            rs.close();
+            sp.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tutors;
+    }
+
+    public List<Tutor> getTutorsByLearnerId(int learnerId) {
+        List<Tutor> tutors = new ArrayList<>();
+        String sql = "SELECT  t.* FROM Tutor t "
+                + "JOIN Class c ON t.id = c.tutorId "
+                + "JOIN Learner l ON c.learnerId = l.id "
+                + "WHERE l.id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, learnerId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Tutor tutor = new Tutor();
+                tutor.setId(rs.getInt("id"));
+                tutor.setName(rs.getString("name"));
+                tutor.setImage(rs.getString("image"));
+                tutor.setBio(rs.getString("bio"));
+                tutors.add(tutor);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TutorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tutors;
+    }
+
 
     public ArrayList<Tutor> searchTutors(String searchQuery) {
         ArrayList<Tutor> tutors = new ArrayList<>();
@@ -51,6 +108,7 @@ public class TutorDAO extends DBContext {
                 tutor.setPrice(rs.getFloat("price"));
                 tutor.setBank(rs.getString("bank"));
                 tutor.setStatus(rs.getString("status"));
+                tutor.setLinkmeet(rs.getString("Linkmeet"));
                 tutors.add(tutor);
             }
             rs.close();
@@ -60,35 +118,35 @@ public class TutorDAO extends DBContext {
         }
         return tutors;
     }
-
-    public ArrayList<Tutor> getAllTutors() {
-        ArrayList<Tutor> tutors = new ArrayList<>();
-        SubjectDAO sDao = new SubjectDAO();
-        String sql = "SELECT * FROM Tutor";
-        try {
-            PreparedStatement sp = connection.prepareStatement(sql);
-            ResultSet rs = sp.executeQuery();
-            while (rs.next()) {
-                Tutor tutor = new Tutor();
-                tutor.setId(rs.getInt("id"));
-                tutor.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
-                tutor.setName(rs.getString("name"));
-                tutor.setGender(rs.getBoolean("gender"));
-                tutor.setImage(rs.getString("image"));
-                tutor.setBio(rs.getString("bio"));
-                tutor.setEdu(rs.getString("edu"));
-                tutor.setPrice(rs.getFloat("price"));
-                tutor.setBank(rs.getString("bank"));
-                tutor.setStatus(rs.getString("status"));
-                tutors.add(tutor);
-            }
-            rs.close();
-            sp.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tutors;
-    }
+//
+//    public ArrayList<Tutor> getAllTutors() {
+//        ArrayList<Tutor> tutors = new ArrayList<>();
+//        SubjectDAO sDao = new SubjectDAO();
+//        String sql = "SELECT * FROM Tutor";
+//        try {
+//            PreparedStatement sp = connection.prepareStatement(sql);
+//            ResultSet rs = sp.executeQuery();
+//            while (rs.next()) {
+//                Tutor tutor = new Tutor();
+//                tutor.setId(rs.getInt("id"));
+//                tutor.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
+//                tutor.setName(rs.getString("name"));
+//                tutor.setGender(rs.getBoolean("gender"));
+//                tutor.setImage(rs.getString("image"));
+//                tutor.setBio(rs.getString("bio"));
+//                tutor.setEdu(rs.getString("edu"));
+//                tutor.setPrice(rs.getFloat("price"));
+//                tutor.setBank(rs.getString("bank"));
+//                tutor.setStatus(rs.getString("status"));
+//                tutors.add(tutor);
+//            }
+//            rs.close();
+//            sp.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return tutors;
+//    }
 
     public Tutor getTutorById(int id) {
         Tutor tutor = null;

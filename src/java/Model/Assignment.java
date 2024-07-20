@@ -3,20 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Model;
+
 import java.util.Date;
+
 /**
  *
  * @author Admin
  */
 public class Assignment {
+
     private long id;
     private Lesson lession;
     private String fileName;
     private String filePath;
     private Date createdAt;
     private String status;
+
     // Constructors
-    public Assignment() {}
+    public Assignment() {
+    }
 
     public Assignment(long id, Lesson lession, String fileName, String filePath, Date createdAt, String status) {
         this.id = id;
@@ -86,5 +91,5 @@ public class Assignment {
     public String toString() {
         return "Assignment{" + "id=" + id + ", lession=" + lession + ", fileName=" + fileName + ", filePath=" + filePath + ", createdAt=" + createdAt + ", status=" + status + '}';
     }
-    
+
 }

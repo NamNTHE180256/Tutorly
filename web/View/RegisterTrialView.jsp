@@ -124,11 +124,10 @@
                                         <c:choose>
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
-                                                    
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot1" style="background: #0E3C6E; color: white">
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot1" aria-labelledby="slot1" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot1" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -144,17 +143,17 @@
                                                                             and determine if further lessons would be beneficial. Learners typically engage in introductory 
                                                                             activities or sample lessons relevant to their learning goals during a trial lesson. 
                                                                             Tutors may use this time to evaluate the learner's skills and tailor future lessons accordingly. The outcome of a trial lesson often guides decisions on continuing with regular lessons, ensuring that both parties can make informed choices about their educational journey together.
-                                                                            </span>
+                                                                        </span>
                                                                     </p>
 
                                                                 </div>
-                                                                            <hr/>
+                                                                <hr/>
                                                                 <div class="modal-footer">
                                                                     <form class="row g-3 needs-validation" action="RegisterTrialCotroller" method="get">
                                                                         <div class="col-12">
                                                                             <label for="validationCustom02" class="form-label" style="color: #0E3C6E; font-size: 20px; font-weight: bolder;">You choose the session :</label>
-                                                                         
-                                                                                8:00 - 9:30
+
+                                                                            8:00 - 9:30
                                                                         </div>
                                                                         <p style="color: #A2A2A2; font-size: 15px;">You should make sure that you must attend this lesson</p>
                                                                         <div >
@@ -176,7 +175,7 @@
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
                                                                         </div>
                                                                     </form>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -197,11 +196,11 @@
                                         <c:choose>
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
-                                                    
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot2" style="background: #0E3C6E; color: white">
+
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot2" aria-labelledby="slot2" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot2" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -217,17 +216,17 @@
                                                                             and determine if further lessons would be beneficial. Learners typically engage in introductory 
                                                                             activities or sample lessons relevant to their learning goals during a trial lesson. 
                                                                             Tutors may use this time to evaluate the learner's skills and tailor future lessons accordingly. The outcome of a trial lesson often guides decisions on continuing with regular lessons, ensuring that both parties can make informed choices about their educational journey together.
-                                                                            </span>
+                                                                        </span>
                                                                     </p>
 
                                                                 </div>
-                                                                            <hr/>
+                                                                <hr/>
                                                                 <div class="modal-footer">
                                                                     <form class="row g-3 needs-validation" action="RegisterTrialCotroller" method="get">
                                                                         <div class="col-12">
                                                                             <label for="validationCustom02" class="form-label" style="color: #0E3C6E; font-size: 20px; font-weight: bolder;">You choose the session :</label>
-                                                                         
-                                                                                10:00 - 11:30
+
+                                                                            10:00 - 11:30
                                                                         </div>
                                                                         <p style="color: #A2A2A2; font-size: 15px;">You should make sure that you must attend this lesson</p>
                                                                         <div >
@@ -249,7 +248,7 @@
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
                                                                         </div>
                                                                     </form>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -270,11 +269,11 @@
                                         <c:choose>
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
-                                                    
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot3" style="background: #0E3C6E; color: white">
+
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot3" aria-labelledby="slot3" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot3" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -290,17 +289,17 @@
                                                                             and determine if further lessons would be beneficial. Learners typically engage in introductory 
                                                                             activities or sample lessons relevant to their learning goals during a trial lesson. 
                                                                             Tutors may use this time to evaluate the learner's skills and tailor future lessons accordingly. The outcome of a trial lesson often guides decisions on continuing with regular lessons, ensuring that both parties can make informed choices about their educational journey together.
-                                                                            </span>
+                                                                        </span>
                                                                     </p>
 
                                                                 </div>
-                                                                            <hr/>
+                                                                <hr/>
                                                                 <div class="modal-footer">
                                                                     <form class="row g-3 needs-validation" action="RegisterTrialCotroller" method="get">
                                                                         <div class="col-12">
                                                                             <label for="validationCustom02" class="form-label" style="color: #0E3C6E; font-size: 20px; font-weight: bolder;">You choose the session :</label>
-                                                                         
-                                                                                14:00 - 15:30
+
+                                                                            14:00 - 15:30
                                                                         </div>
                                                                         <p style="color: #A2A2A2; font-size: 15px;">You should make sure that you must attend this lesson</p>
                                                                         <div >
@@ -322,7 +321,7 @@
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
                                                                         </div>
                                                                     </form>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -342,11 +341,11 @@
                                         <c:choose>
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
-                                                    
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot4" style="background: #0E3C6E; color: white">
+
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot4" aria-labelledby="slot4" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot4" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -362,17 +361,17 @@
                                                                             and determine if further lessons would be beneficial. Learners typically engage in introductory 
                                                                             activities or sample lessons relevant to their learning goals during a trial lesson. 
                                                                             Tutors may use this time to evaluate the learner's skills and tailor future lessons accordingly. The outcome of a trial lesson often guides decisions on continuing with regular lessons, ensuring that both parties can make informed choices about their educational journey together.
-                                                                            </span>
+                                                                        </span>
                                                                     </p>
 
                                                                 </div>
-                                                                            <hr/>
+                                                                <hr/>
                                                                 <div class="modal-footer">
                                                                     <form class="row g-3 needs-validation" action="RegisterTrialCotroller" method="get">
                                                                         <div class="col-12">
                                                                             <label for="validationCustom02" class="form-label" style="color: #0E3C6E; font-size: 20px; font-weight: bolder;">You choose the session :</label>
-                                                                         
-                                                                                16:00 - 17:30
+
+                                                                            16:00 - 17:30
                                                                         </div>
                                                                         <p style="color: #A2A2A2; font-size: 15px;">You should make sure that you must attend this lesson</p>
                                                                         <div >
@@ -394,7 +393,7 @@
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
                                                                         </div>
                                                                     </form>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -415,11 +414,11 @@
                                         <c:choose>
                                             <c:when test="${availability.status == 'Available'}">
                                                 <td>
-                                                    
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slot5" style="background: #0E3C6E; color: white">
+
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${availability.session.id}" style="background: #0E3C6E; color: white">
                                                         Available
                                                     </button>
-                                                    <div class="modal fade" tabindex="-1" id="slot5" aria-labelledby="slot5" aria-hidden="true">
+                                                    <div class="modal fade" tabindex="-1" id="${availability.session.id}" aria-labelledby="slot5" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -435,17 +434,17 @@
                                                                             and determine if further lessons would be beneficial. Learners typically engage in introductory 
                                                                             activities or sample lessons relevant to their learning goals during a trial lesson. 
                                                                             Tutors may use this time to evaluate the learner's skills and tailor future lessons accordingly. The outcome of a trial lesson often guides decisions on continuing with regular lessons, ensuring that both parties can make informed choices about their educational journey together.
-                                                                            </span>
+                                                                        </span>
                                                                     </p>
 
                                                                 </div>
-                                                                            <hr/>
+                                                                <hr/>
                                                                 <div class="modal-footer">
                                                                     <form class="row g-3 needs-validation" action="RegisterTrialCotroller" method="get">
                                                                         <div class="col-12">
                                                                             <label for="validationCustom02" class="form-label" style="color: #0E3C6E; font-size: 20px; font-weight: bolder;">You choose the session :</label>
-                                                                         
-                                                                                19:00 - 20:30
+
+                                                                            19:00 - 20:30
                                                                         </div>
                                                                         <p style="color: #A2A2A2; font-size: 15px;">You should make sure that you must attend this lesson</p>
                                                                         <div >
@@ -467,7 +466,7 @@
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
                                                                         </div>
                                                                     </form>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -488,7 +487,7 @@
                 </div>
                 <div class="container center-form">
                     <div class="col-md-6">
-                        
+
                     </div>
                 </div>
             </c:when>

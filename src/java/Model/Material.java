@@ -1,4 +1,5 @@
 package Model;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -75,6 +76,5 @@ public class Material {
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
     }
-   
 
 }

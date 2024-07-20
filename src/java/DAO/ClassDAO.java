@@ -1,9 +1,14 @@
 package DAO;
-
 import Model.AClass;
 import Model.Learner;
-import Model.Session;
 import Model.Tutor;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClassDAO extends DBContext {
-
+    TutorDAO tdao = new TutorDAO();
     public AClass getClassById(int id) {
         String sql = "SELECT * FROM Class WHERE id = ?";
         try {
@@ -27,9 +32,9 @@ public class ClassDAO extends DBContext {
                 Date startDate = rs.getDate("startDate");
                 Date endDate = rs.getDate("endDate");
                 String status = rs.getString("status");
-
+                
                 Learner learner = new LearnerDAO().getStudentById(learnerId); // Assuming LearnerDAO is implemented
-                Tutor tutor = new TutorDAO().getTutorById(tutorId); // Assuming TutorDAO is implemented
+                Tutor tutor = tdao.getTutorById(tutorId); // Assuming TutorDAO is implemented
 
                 AClass aClass = new AClass(learner, tutor, totalSession, startDate, endDate, status);
                 aClass.setId(id);
@@ -40,7 +45,7 @@ public class ClassDAO extends DBContext {
         }
         return null;
     }
-
+    
     public Vector<AClass> getClassesByTutorId(int tutorId) {
         Vector<AClass> classes = new Vector<>();
         LearnerDAO lDao = new LearnerDAO();
@@ -61,7 +66,7 @@ public class ClassDAO extends DBContext {
 //                aClass.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
                 aClass.setTotalSession(rs.getInt("totalSession"));
                 aClass.setStartDate(rs.getDate("startDate"));
-
+                
                 classes.add(aClass);
             }
         } catch (SQLException e) {
@@ -69,7 +74,7 @@ public class ClassDAO extends DBContext {
         }
         return classes;
     }
-
+    
     public Vector<AClass> getClassesBySTudentId(int studentId) {
         Vector<AClass> classes = new Vector<>();
         LearnerDAO lDao = new LearnerDAO();
@@ -91,7 +96,7 @@ public class ClassDAO extends DBContext {
 //                aClass.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
                 aClass.setTotalSession(rs.getInt("totalSession"));
                 aClass.setStartDate(rs.getDate("startDate"));
-
+                
                 classes.add(aClass);
             }
         } catch (SQLException e) {
@@ -99,10 +104,10 @@ public class ClassDAO extends DBContext {
         }
         return classes;
     }
-
+    
     public int getFinishedSessions(int classId) {
         int finishedSessions = 0;
-        String sql = "SELECT COUNT(*) AS finishedSessions FROM Lession WHERE classId = ? AND status = 'Finished'";
+        String sql = "SELECT COUNT(*) AS finishedSessions FROM Lesson WHERE classId = ? AND status = 'Finished'";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, classId);
@@ -115,7 +120,13 @@ public class ClassDAO extends DBContext {
         }
         return finishedSessions;
     }
+
+    public static void main(String[] args) {
+        ClassDAO cdao = new ClassDAO();
+        System.out.println(cdao.getClassById(3));
+    }
 }
+
 //    public Vector<AClass> getClassesByLearnerId(int learnerId) {
 //        Vector<AClass> classes = new Vector<>();
 //        String sql = "SELECT c.*, l.name as learnerName, t.name as tutorName, s.name as subjectName, se.startTime, se.endTime "
@@ -156,7 +167,6 @@ public class ClassDAO extends DBContext {
 //        }
 //        return classes;
 //    }
-
 //    private int getFinishedSessions(int classId) {
 //        int finishedSessions = 0;
 //        String sql = "SELECT COUNT(*) AS finishedCount FROM Lession WHERE classId = ? AND status = 'Finished'";

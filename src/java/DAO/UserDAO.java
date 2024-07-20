@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class UserDAO extends DBContext {
-    
+
     public User getUserById(int id) {
         User user = null;
         String sql = "Select * from [User] where id = ?";
@@ -38,7 +38,7 @@ public class UserDAO extends DBContext {
         }
         return user;
     }
-    
+
     public int addUser(String email, String password, String role) {
         String sql = "INSERT INTO [User] (email, [password], [role])\n"
                 + "VALUES  (?, ?, ?)";
@@ -59,7 +59,7 @@ public class UserDAO extends DBContext {
         }
         return -1;
     }
-    
+
     public void setEmailByUserId(int id, String newEmail) {
         String sql = "UPDATE [User] SET email = ? WHERE id = ?";
         try {
@@ -71,7 +71,7 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public int getCount(String tableName) {
         int count = 0;
         String sql = "SELECT COUNT(*) AS count FROM " + tableName;
@@ -86,7 +86,7 @@ public class UserDAO extends DBContext {
         }
         return count;
     }
-    
+
     public User GetUserWithEmail(String email_login) {
         String sql = "SELECT * FROM [User] WHERE email = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -107,7 +107,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public int ChangePassWord(String password, String email) {
         String sql = "UPDATE [dbo].[User]\n"
                 + "   SET [password] = ?\n"
@@ -123,7 +123,7 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public User Login(String email, String password) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
         try {
@@ -143,7 +143,7 @@ public class UserDAO extends DBContext {
                 user.setPassword(passwordDB);
                 user.setCreatedAt(rs.getTimestamp("createdAt"));
                 user.setRole(role);
-                
+
                 return user;
             }
         } catch (SQLException e) {
@@ -151,12 +151,12 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public int register(User user) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = "INSERT INTO [dbo].[User] ([email], [password], [role], [createdAt]) VALUES (?, ?, ?, ?)";
-        
+
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, user.getEmail());
             st.setString(2, user.getPassword());
@@ -169,7 +169,7 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public String computeMD5Hash(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -183,12 +183,12 @@ public class UserDAO extends DBContext {
             throw new RuntimeException(e);
         }
     }
-    
+
     public int registerLearnerUsingGoogle(GoogleAccount acc) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = "INSERT INTO [dbo].[User] ([email], [password], [role], [createdAt]) VALUES (?, '', ?, ?)";
-        
+
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, acc.getEmail());
             st.setString(2, "learner");
@@ -198,14 +198,13 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
             System.err.println("Error during user registration: " + e.getMessage());
         }
-        
+
         return 0;
     }
-    
+
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
-        User u = dao.GetUserWithEmail("learner1@gmail.com");
-        System.out.println(u);
+        System.out.println(dao.getUserById(1));
     }
 //    public static void main(String[] args) {
 //<<<<<<< HEAD
@@ -226,4 +225,5 @@ public class UserDAO extends DBContext {
 //>>>>>>> bcf475e5a416004d96226e39b60d957e85a1a7bd
 //>>>>>>> 6a4e6a403c1f8ed00a9c9b12aa381ac10eae0541
 //    }
+
 }

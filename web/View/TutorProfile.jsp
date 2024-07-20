@@ -4,13 +4,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-QJHtvGhmr9b+2B4Kndd9+ma4u0p0z6ZR5q3tvJL+3ns5X8+bBiG8mQbtEVxneHBZ" crossorigin="anonymous"></script>
         <style>
             body {
                 background: #D9D9D9;
-                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                margin: 0;
+            }
+            .content {
+                flex: 1;
             }
             .card {
                 background-color: #fff;
@@ -27,7 +34,7 @@
             .container .card-body {
                 padding: 15px;
             }
-            .profile-image{
+            .profile-image {
                 width: 150px;
                 height: 150px;
                 object-fit: cover;
@@ -35,87 +42,125 @@
             .progress {
                 height: 5px;
             }
+            .footer {
+                background-color: #0E3C6E;
+                color: white;
+                padding: 20px 0;
+                text-align: center;
+            }
         </style>
         <title>Profile</title>
     </head>
     <body>
         <%@ include file="TutorHeader.jsp" %>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <img src="image/${sessionScope.tutor.image}" alt="Tutor" class="rounded-circle p-1 profile-image" width="110">
-                            <h4>${t.name}</h4>
-                            <p class="text-secondary mb-1">${t.getUserInfo().role}</p>
-                            <a href="TutorProfileController?service=updateRequest"><i class="fa-solid fa-pen"></i></a>
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="image/${t.image}" alt="Tutor" class="rounded-circle p-1 profile-image" width="110">
+                                <h4>${t.name}</h4>
+                                <p class="text-secondary mb-1">${t.getUserInfo().role}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="TutorProfileController" method="POST" >
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">ID</h6>
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <c:if test="${not empty sessionScope.successMessage}">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
+                                        ${sessionScope.successMessage}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input readonly=""type="text"  class="form-control" value="${t.id}">
+                                    <%
+                                        // Clear the notification after displaying it
+                                        session.removeAttribute("successMessage");
+                                    %>
+                                </c:if>
+                                <c:if test="${not empty sessionScope.errorMessage}">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center">
+                                        ${sessionScope.errorMessage}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                    <%
+                                        // Clear the notification after displaying it
+                                        session.removeAttribute("errorMessage");
+                                    %>
+                                </c:if>
+                                <form action="TutorProfileController" method="POST">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">ID</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input readonly="" type="text" class="form-control" value="${t.id}">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="name"  class="form-control" value="${t.name}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Full Name</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" name="name" class="form-control" value="${t.name}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Email</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Email</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input readonly="" type="text" class="form-control" value="${t.getUserInfo().email}">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input readonly=""type="text"  class="form-control" value="${t.getUserInfo().email}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Join Date</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input readonly="" type="text" class="form-control" value="${t.getUserInfo().createdAt}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Join Date</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Upload cert.</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="file" class="form-control">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input readonly="" type="text"  class="form-control" value="${t.getUserInfo().createdAt}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Description</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <textarea name="bio" class="form-control" rows="6">${t.bio}</textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Upload cert.</h6>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal" style="background-color: #0E3C6E;">Change Password</button>
+                                            <button type="submit" class="btn btn-primary" style="background-color: #0E3C6E;">Save changes</button>
+                                            <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="action" value="add">
+                                            <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="id" value="${t.id}">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="file" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal" style="background-color: #0E3C6E;">Change Password</button>
-                                        <button type="submit" class="btn btn-primary" style="background-color: #0E3C6E;">Save changes</button>
-                                        <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="action" value="add">
-                                        <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="id" value="${t.id}">
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h5 class="d-flex align-items-center mb-3">Subjects registered to teach:</h5>
-                            <ul class="list-unstyled mb-3">
-                                <c:forEach items="${subjectsTaught}" var="subject">
-                                    <li>${subject.name}</li>
-                                    </c:forEach>
-                            </ul>
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="d-flex align-items-center mb-3">Subjects registered to teach:</h5>
+                                <ul class="list-unstyled mb-3">
+                                    <c:forEach items="${subjectsTaught}" var="subject">
+                                        <li>${subject.name}</li>
+                                        </c:forEach>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,7 +193,14 @@
                 </div>
             </div>
         </div>
-        <%@ include file = "tutor-footer.jsp" %>
+        <footer class="footer">
+            <div class="container">
+                <p style="margin: 0; font-size: 16px;">
+                    Mọi góp ý, thắc mắc xin liên hệ Công ty cung cấp dịch vụ gia sư | Email: <a href="mailto:Tutory@gmail.com" style="color: #FFC107;">Tutory@gmail.com</a> | Điện thoại: <a href="tel:0123456789" style="color: #FFC107;">0123456789</a>
+                </p>
+                <p style="margin: 0; font-size: 16px;">© 2024 Power by TUTORLY</p>
+            </div>
+        </footer>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

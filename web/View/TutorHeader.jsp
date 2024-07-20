@@ -8,6 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
@@ -18,7 +19,6 @@
                 margin: 0;
                 padding: 0;
             }
-
             .navheader {
                 margin-top: 0;
                 margin-bottom: 0;
@@ -26,7 +26,6 @@
                 margin-right: 20px;
                 padding: 0;
             }
-
             .logo_img {
                 height: 40px;
             }
@@ -34,14 +33,12 @@
             .head_link a {
                 color: #0E3C6E;
             }
-
             .head_icon {
                 margin-top: 15px;
                 margin-right: 5px;
                 font-size: 20px;
                 color: #0E3C6E;
             }
-
             .tutor_profile_image {
                 margin-top: 15px;
                 height: 60px;
@@ -135,7 +132,6 @@
                 </div>
             </div>
         </nav>
-
         <!-- Menu -->
         <nav class="navbar navbar-expand-sm navbarmenu">
             <!-- Links -->
@@ -172,7 +168,24 @@
                     <!-- History -->
                     <a class="nav-link" href="history"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">History</button></a>
                 </li>
+                <li class="nav-item navmenuitem">
+                    <a class="nav-link" id="income-link" href="#" onclick="redirectToIncome()">Income</a>
+                </li>
             </ul>
+
         </nav>
     </body>
+    <script>
+        function redirectToIncome() {
+            var currentDate = new Date();
+            var sixDaysAgoDate = new Date();
+            sixDaysAgoDate.setDate(currentDate.getDate() - 6);
+
+            var currentDateString = currentDate.toISOString().split('T')[0];
+            var sixDaysAgoDateString = sixDaysAgoDate.toISOString().split('T')[0];
+
+            var url = 'IncomeController?start=' + sixDaysAgoDateString + '&end=' + currentDateString + '&view=week' + '&tutorID=' + ${sessionScope.tutor.getId()};
+            window.location.href = url;
+        }
+    </script>
 </html>

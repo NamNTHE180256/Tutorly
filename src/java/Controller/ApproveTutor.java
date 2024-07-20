@@ -76,7 +76,7 @@ public class ApproveTutor extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         int tutorId = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");

@@ -175,7 +175,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form> <!--<!-- them duong dan kem servlet -->
                             <div class="form-group">
                                 <label for="currentPassword">Current Password</label>
                                 <input type="password" id="currentPassword" class="form-control" placeholder="Current Password">

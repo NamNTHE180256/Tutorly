@@ -71,6 +71,7 @@ public class MaterialController extends HttpServlet {
                 // Handle the exception, e.g., log it and set an error message
             }
 
+
         request.setAttribute("doc", doc);
         request.setAttribute("slide", slide);
         request.setAttribute("book", book);

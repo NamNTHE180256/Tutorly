@@ -1,5 +1,6 @@
-
-﻿--CREATE DATABASE Tutorly
+--CREATE DATABASE Tutorly;
+GO
+--drop database Tutorly
 --go
 use Tutorly
 
@@ -82,6 +83,17 @@ CREATE TABLE SavedTutor (
 	FOREIGN KEY (tutorId) REFERENCES Tutor(id),
     FOREIGN KEY (learnerId) REFERENCES Learner(id)
 );
+CREATE TABLE Income (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    tax FLOAT,
+    amount FLOAT,
+	Total as amount-(tax*amount),
+    createdAt DATETIME DEFAULT GETDATE(),
+	DayPaid DATETIME,
+    [status] VARCHAR(20),
+    tutorID INT,
+    FOREIGN KEY (tutorID) REFERENCES Tutor(id)
+);
 
 CREATE TABLE Class (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -103,7 +115,7 @@ CREATE TABLE [Session] (
     [dayOfWeek] VARCHAR(50)
 );
 
-CREATE TABLE Lession (
+CREATE TABLE lesson (
     id INT IDENTITY(1,1) PRIMARY KEY,
     classId INT,
     sessionId VARCHAR(10),
@@ -132,23 +144,23 @@ CREATE TABLE Payment (
 
 CREATE TABLE Assignment (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
-	lessionId INT,
+	lessonId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
 	score FLOAT,
 	[status] VARCHAR(20),
     createdAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (lessionId) REFERENCES Lession(id)
+    FOREIGN KEY (lessonId) REFERENCES lesson(id)
 );
 
 CREATE TABLE Material (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
-	lessionId INT,
+	lessonId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
     fileType VARCHAR(50),
     uploadedAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (lessionId) REFERENCES Lession(id)
+    FOREIGN KEY (lessonId) REFERENCES lesson(id)
 );
 
 CREATE TABLE RegisterTrialClass (
@@ -399,7 +411,7 @@ VALUES
 ('SU5', '19:00:00', '20:30:00', 'Sunday');
 
 -- Insert into Class_Slot table
-INSERT INTO Lession (classId, sessionId, [date], [status])
+INSERT INTO lesson (classId, sessionId, [date], [status])
 VALUES 
 (1, 'M1', '2024-05-06', 'Finished'),
 (1, 'M1', '2024-05-13', 'Finished'),
@@ -447,7 +459,7 @@ VALUES
 (2, 2000.0, '2024-06-02');
 
 -- Insert into Assignment table
-INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessionId)
+INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessonId)
 VALUES 
 (N'Assignment1', 'path/to/assignment1.docx', 9.5, 'done', GETDATE(), 1),
 (N'Assignment2', 'path/to/assignment2.docx', 8.5, 'done', GETDATE(), 2),
@@ -468,7 +480,7 @@ VALUES
 
 -- Insert into Material table
 -- Insert into Material table
-INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessionId)
+INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessonId)
 VALUES 
 (N'Material1.pdf', 'mas1.pdf', 'document', GETDATE(), 1),
 (N'Material2.ppt', 'mas2.ppt', 'slide', GETDATE(), 2),
@@ -484,6 +496,29 @@ VALUES
 (N'Video2.mp4', 'path/to/video2.mp4', 'video/record', GETDATE(), 10),
 (N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
 (N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
+
+ INSERT INTO Income (tax, amount, createdAt, DayPaid, [status], tutorID)
+VALUES 
+(0.1, 1000, '2023-06-25 00:00:00.000', '2024-08-01 00:00:00.000', 'paid', 7),
+(0.08, 750, '2023-05-20 00:00:00.000', '2024-08-05 00:00:00.000', 'paid', 8),
+(0.05, 500, '2022-04-15 00:00:00.000', NULL, 'pending confirmation', 9),
+(0.065, 850, '2021-04-05 00:00:00.000', '2024-10-01 00:00:00.000', 'paid', 10),
+(0.12, 1100, '2024-07-01 00:00:00.000', NULL, 'processing', 7),
+(0.09, 800, '2023-04-18 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.06, 600, '2022-03-12 00:00:00.000', NULL, 'processing', 9),
+(0.07, 900, '2021-02-08 00:00:00.000', NULL, 'pending confirmation', 10),
+(0.11, 1150, '2020-01-05 00:00:00.000', '2024-12-01 00:00:00.000', 'paid', 7),
+(0.09, 950, '2019-12-25 00:00:00.000', '2024-12-15 00:00:00.000', 'paid', 8),
+(0.07, 950, '2024-07-17 00:00:00.000', '2024-07-18 00:00:00.000', 'paid', 7),
+(0.08, 850, '2024-07-16 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.09, 900, '2024-07-15 00:00:00.000', '2024-07-17 00:00:00.000', 'paid', 9),
+(0.1, 1000, '2024-07-14 00:00:00.000', NULL, 'pending confirmation', 10),
+(0.065, 750, '2024-07-13 00:00:00.000', '2024-07-16 00:00:00.000', 'paid', 7),
+(0.07, 1100, '2024-07-12 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.08, 800, '2024-07-11 00:00:00.000', NULL, 'processing', 9),
+(0.09, 950, '2024-07-10 00:00:00.000', NULL, 'processing', 10),
+(0.06, 600, '2024-07-09 00:00:00.000', '2024-07-12 00:00:00.000', 'paid', 7),
+(0.1, 1200, '2024-07-08 00:00:00.000', '2024-07-11 00:00:00.000', 'paid', 8);
 
 USE [Tutorly]
 GO
@@ -645,4 +680,3 @@ ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutor
 REFERENCES [dbo].[Tutor] ([id])
 GO
 
- 

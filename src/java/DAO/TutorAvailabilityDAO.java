@@ -158,7 +158,7 @@ public class TutorAvailabilityDAO extends DBContext {
             + " s.id AS sessionId, \n"
             + " CASE \n"
             + " WHEN EXISTS ("
-            + "    SELECT 1 FROM [Lession] l "
+            + "    SELECT 1 FROM [Lesson] l "
             + "    JOIN [Class] c ON l.classId = c.id "
             + "    WHERE l.sessionId = s.id AND c.tutorId = ?"
             + " ) THEN 'Unavailable' \n"
@@ -220,7 +220,7 @@ public class TutorAvailabilityDAO extends DBContext {
                  "JOIN [Session] s ON ta.sessionId = s.id " +
                  "WHERE NOT EXISTS ( " +
                  "    SELECT 1 " +
-                 "    FROM Lession l " +
+                 "    FROM Lesson l " +
                  "    JOIN Class c ON l.classId = c.Id " +
                  "    WHERE l.sessionId = ta.sessionId " +
                  "      AND c.tutorId = ta.tutorId " +

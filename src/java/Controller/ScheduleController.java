@@ -64,7 +64,7 @@ public class ScheduleController extends HttpServlet {
                 request.setAttribute("lesson_vector", lesson_vector);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
                 dispatcher.forward(request, response);
-            } else if (service.equals("viewLessonDetail")) {
+            }else if (service.equals("viewLessonDetail")){
                 int lessonid = Integer.parseInt(request.getParameter("lessonid"));
                 Vector<Assignment> assignmentoflesson = aDAO.getTodoAssignmentsByLessonId(lessonid);
                 Vector<Material> document = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "document");

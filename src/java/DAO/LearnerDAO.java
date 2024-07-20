@@ -93,18 +93,19 @@ public class LearnerDAO extends DBContext {
     }
 
     // Method to insert a new learner into the database
-    public boolean insertLearner(Learner learner) {
-        String sql = "INSERT INTO Learner (name, image) VALUES (?, ?)";
+    public int insertLearner(Learner learner) {
+        String sql = "INSERT INTO [dbo].[Learner] ([id], [name], [image]) VALUES (?, ?, ?)";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
-            sp.setString(1, learner.getName());
-            sp.setString(2, learner.getImage());
+            sp.setInt(1, learner.getId());
+            sp.setString(2, learner.getName());
+            sp.setString(3, learner.getImage());
             int rowsAffected = sp.executeUpdate();
             sp.close();
-            return rowsAffected > 0;
+            return rowsAffected;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
@@ -260,9 +261,11 @@ public class LearnerDAO extends DBContext {
 
     public static void main(String[] args) {
         LearnerDAO l = new LearnerDAO();
+        Learner learner = new Learner(200, "ducanh", "dsadada");
 //        Learner le = l.getStudentById(1);
 //        System.out.println(le.toString());
 //        System.out.println(le.getUserInfo().toString());
-        System.out.println(l.displayAllStudents().toString());
+        System.out.println(l.insertLearner(learner));
+        System.out.println(l.getLearnerById(3));
     }
 }

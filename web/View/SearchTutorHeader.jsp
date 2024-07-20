@@ -83,9 +83,6 @@
     </head>
     <body >
 
-
-
-
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
@@ -96,8 +93,6 @@
                 <div class="collapse navbar-collapse" id="navbarExample">
                     <ul class="navbar-nav me-auto mb-0">
                         <!-- Find tutor -->
-
-
                     </ul>
                     <div class="d-flex align-items-center flex-column flex-lg-row">
                         <ul class="navbar-nav ml-auto">
@@ -119,12 +114,15 @@
                             </li>
                             <!-- Student name -->
                             <li class="nav-item">
-                                <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${linfo.name}</p></a>
+
+                                <a href="../Tutorly/StudentProfileController"><p class="nav-link learnername"> ${sessionScope.learner.name}</p></a>
+
                             </li>
                             <!-- Student profile image -->
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    <img class="student_profile_image" src="image/${linfo.image}">
+                                    <img class="student_profile_image" src="image/${sessionScope.learner.image}">
+
                                 </a>
                             </li>
                         </ul>
@@ -132,7 +130,6 @@
                 </div>
             </div>
         </nav>
-
         <!-- Menu -->
         <nav class="navbar navbar-expand-sm navbarmenu">
             <!-- Links -->

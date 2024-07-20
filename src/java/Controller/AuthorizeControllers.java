@@ -4,14 +4,19 @@ import Config.EmailConfig;
 import DAO.LearnerDAO;
 import Model.User;
 import DAO.UserDAO;
+import Model.Learner;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Random;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
@@ -24,7 +29,7 @@ import org.apache.commons.mail.SimpleEmail;
  */
 @WebServlet(name = "AuthorizeControllers", urlPatterns = {"/authorize"})
 public class AuthorizeControllers extends HttpServlet {
-
+    
     EmailConfig email = new EmailConfig();
     private static int doGetCounter = 0;
 
@@ -72,7 +77,7 @@ public class AuthorizeControllers extends HttpServlet {
         String action = request.getParameter("action");
         User userForgotPassword = dao.GetUserWithEmail(request.getParameter("email_for_get_new_password"));
         User userForgotPasswordFromSession = (User) session.getAttribute("User_Forgotpassword");
-
+        
         if ((user != null || (userForgotPassword != null || userForgotPasswordFromSession != null)) && action != null) {
             try {
                 Random random = new Random();
@@ -91,7 +96,7 @@ public class AuthorizeControllers extends HttpServlet {
                 if (userForgotPasswordFromSession != null) {
                     emailGetNewPasswordFromSession = email.sendEmail(userForgotPasswordFromSession.getEmail(), covert);
                 }
-
+                
                 if (emailSent || emailGetNewPassword || emailGetNewPasswordFromSession) {
                     session.setAttribute("code", covert); // Set verification code in session
 
@@ -141,13 +146,15 @@ public class AuthorizeControllers extends HttpServlet {
             throws ServletException, IOException {
         LearnerDAO ldao = new LearnerDAO();
         UserDAO udao = new UserDAO();
-        String codeAuthorize = request.getParameter("codeAuthorize");
         HttpSession session = request.getSession();
+
+        // Retrieve parameters and session attributes
+        String codeAuthorize = request.getParameter("codeAuthorize");
         String covert = (String) session.getAttribute("code");
-        User user = (User) session.getAttribute("userRegister");
+        User user_raw = (User) session.getAttribute("userRegister");
 
         // Check for null values
-        if (codeAuthorize == null || covert == null || user == null) {
+        if (codeAuthorize == null || covert == null || user_raw == null) {
             request.setAttribute("errorMessage", "Có lỗi xảy ra! Vui lòng thử lại.");
             request.getRequestDispatcher("/View/error.jsp").forward(request, response);
             return;
@@ -156,24 +163,43 @@ public class AuthorizeControllers extends HttpServlet {
         // Compare authorization code
         if (codeAuthorize.equalsIgnoreCase(covert)) {
             // Register the user
-            int x = udao.register(user);
-            if (x > 0) {  // Ensure that register method returns the correct number of affected rows
+            int userId = udao.addUser(user_raw.getEmail(), user_raw.getPassword(), user_raw.getRole());
+            LocalDate localDate = LocalDate.now();
+            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            user_raw.setId(userId);
+            user_raw.setCreatedAt(date); // Set current date
+            if (userId > 0) {
+                // Successfully registered user, proceed with learner registration
+                Learner learner = new Learner(userId, "New User", " "); // Adjust learner data as needed
+                int status = ldao.insertLearner(learner);
+                
+                if (status > 0) {
+                    Cookie learnerCookie = new Cookie("learnerId", String.valueOf(userId));
+                    learnerCookie.setMaxAge(60 * 60); // 1 giờ
 
-                if (user.getRole().equalsIgnoreCase("learner")) {
-                    int status = ldao.RegisterLearner(user);
-                    if (status > 0) {
-                        session.setAttribute("LearnerLogin", user);
-                        session.removeAttribute("userRegister");
-                        request.getRequestDispatcher("/TutorController").forward(request, response);
-                    }
-                }// 
+                    Cookie userCookie = new Cookie("userId", String.valueOf(userId));
+                    userCookie.setMaxAge(60 * 60); // 1 giờ
+
+                    // Thêm cookies vào phản hồi
+                    response.addCookie(learnerCookie);
+                    response.addCookie(userCookie);
+                    // Set session attributes
+                    session.setAttribute("learner", learner);
+                    session.setAttribute("user", user_raw);
+                    // Forward to TutorController or appropriate destination
+                    response.sendRedirect("TutorController"); // Assuming TutorController is a servlet or JSP
+                } else {
+                    request.setAttribute("learner", learner);
+                    request.setAttribute("errorMessage", "Learner insertion failed.");
+                    request.getRequestDispatcher("/View/error.jsp").forward(request, response);
+                }
             } else {
-                request.setAttribute("errorMessage", "Đăng ký thất bại. " + x);// gui tam neu co gi thi mai sau chuyen den 1 trang khac
+                request.setAttribute("errorMessage", "User registration failed.");
                 request.getRequestDispatcher("/View/error.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("action", "register");
-            request.setAttribute("messageError", "Verifications code is not correct !! Enter again.");// gui tam neu co gi thi mai sau chuyen den 1 trang khac
+            request.setAttribute("messageError", "Mã xác minh không chính xác!! Vui lòng thử lại.");
             request.getRequestDispatcher("/View/authorize.jsp").forward(request, response);
         }
     }

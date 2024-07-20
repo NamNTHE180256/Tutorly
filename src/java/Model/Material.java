@@ -15,6 +15,11 @@ public class Material {
     public Material() {
     }
 
+    @Override
+    public String toString() {
+        return "Material{" + "id=" + id + ", fileName=" + fileName + ", filePath=" + filePath + ", fileType=" + fileType + ", uploadedAt=" + uploadedAt + ", lesson=" + lesson + '}';
+    }
+
     public Material(int id, String fileName, String filePath, String fileType, Date uploadedAt, Lesson lesson) {
         this.id = id;
         this.fileName = fileName;

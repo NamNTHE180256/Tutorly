@@ -303,7 +303,7 @@
                                     {
                                     title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getLearner().getName()}',
                                                 start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                            url: 'http://google.com/',
+                                                            url: 'http://localhost:9999/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
                                                             end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                         className: 'custom-event'
                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
@@ -314,35 +314,33 @@
                                                                 {
                                                                 title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                                             start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                                        url: 'http://google.com/',
-                                                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
-                                                                                                    className: 'custom-event'
-                                                                                            }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
+                                                                                        url: 'http://localhost:9999/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}'
+                                                                                }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
                                             </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
-                                                                                            ];
-                                                                                            var calendar = new FullCalendar.Calendar(calendarEl, {
-                                                                                            height: '100%',
-                                                                                                    expandRows: true,
-                                                                                                    slotMinTime: '08:00',
-                                                                                                    slotMaxTime: '21:00',
-                                                                                                    headerToolbar: {
-                                                                                                    left: 'prev,next today',
-                                                                                                            center: 'title',
-                                                                                                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                                                                                                    },
-                                                                                                    initialView: 'dayGridMonth',
-                                                                                                    initialDate: new Date().toISOString().split('T')[0], // Current date
-                                                                                                    navLinks: true, // can click day/week names to navigate views
-                                                                                                    editable: false,
-                                                                                                    selectable: false,
-                                                                                                    nowIndicator: true,
-                                                                                                    dayMaxEvents: true, // allow "more" link when too many events
-                                                                                                    events: events
-                                                                                            });
-                                                                                            calendar.render();
-                                                                                            });
+                                                                                ];
+                                                                                var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                                                height: '100%',
+                                                                                        expandRows: true,
+                                                                                        slotMinTime: '08:00',
+                                                                                        slotMaxTime: '21:00',
+                                                                                        headerToolbar: {
+                                                                                        left: 'prev,next today',
+                                                                                                center: 'title',
+                                                                                                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                                                                                        },
+                                                                                        initialView: 'dayGridMonth',
+                                                                                        initialDate: new Date().toISOString().split('T')[0], // Current date
+                                                                                        navLinks: true, // can click day/week names to navigate views
+                                                                                        editable: false,
+                                                                                        selectable: false,
+                                                                                        nowIndicator: true,
+                                                                                        dayMaxEvents: true, // allow "more" link when too many events
+                                                                                        events: events
+                                                                                });
+                                                                                calendar.render();
+                                                                                });
                                 </script>
                                 <div id='calendar-container'>
                                     <div id='calendar'></div>

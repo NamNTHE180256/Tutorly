@@ -38,7 +38,8 @@ public class AssignmentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session1 = request.getSession();
+        
+HttpSession session1 = request.getSession();
         User user = (User) session1.getAttribute("user");
         if (user == null) {
             request.setAttribute("errorMessage", "you dont have permission to access this page");

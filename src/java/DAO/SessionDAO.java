@@ -52,7 +52,7 @@ public class SessionDAO extends DBContext {
     public List<Session> displayAllSessions2() {
         List<Session> vector = new ArrayList<>();
         String sql = "SELECT  distinct s.* FROM Session s  \n"
-                + "                      JOIN Lession l ON s.id = l.sessionId  \n"
+                + "                      JOIN Lesson l ON s.id = l.sessionId  \n"
                 + "                    JOIN Class c ON l.classId = c.id  ";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -117,7 +117,7 @@ public class SessionDAO extends DBContext {
     public Session getSessionByClassId(int classId) {
         String sql = "SELECT top 1 s.id, s.startTime, s.endTime, s.dayOfWeek "
                 + "FROM Session s "
-                + "JOIN Lession l ON s.id = l.sessionId "
+                + "JOIN Lesson l ON s.id = l.sessionId "
                 + "WHERE l.classId = ? ";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -209,7 +209,7 @@ public class SessionDAO extends DBContext {
 
     public List<Session> getSessionsByLearnerId(int learnerId) {
         List<Session> vector = new ArrayList<>();
-        String sql = "SELECT  l.date as ldate, s.* FROM Session s JOIN Lession l ON s.id = l.sessionId JOIN Class c ON l.classId = c.id "
+        String sql = "SELECT  l.date as ldate, s.* FROM Session s JOIN Lesson l ON s.id = l.sessionId JOIN Class c ON l.classId = c.id "
                 + "WHERE c.learnerId = ? and l.status = 'Scheduled'";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -234,7 +234,7 @@ public class SessionDAO extends DBContext {
     public List<Session> getSessionsByTutorId(String tutorId) {
         List<Session> vector = new ArrayList<>();
         String sql = "SELECT l.date as ldate,  s.* FROM Session s "
-                + "JOIN Lession l ON s.id = l.sessionId "
+                + "JOIN Lesson l ON s.id = l.sessionId "
                 + "JOIN Class c ON l.classId = c.id "
                 + "WHERE c.tutorId = ?";
         try {
@@ -257,7 +257,7 @@ public class SessionDAO extends DBContext {
     }
 
     public boolean updateLearnerSession(int learnerId, String fromSessionId, String toSessionId, String date) {
-        String sql = "UPDATE Lession SET sessionId = ? WHERE sessionId = ? AND classId IN (SELECT id FROM Class WHERE learnerId = ?) AND date = ?";
+        String sql = "UPDATE Lesson SET sessionId = ? WHERE sessionId = ? AND classId IN (SELECT id FROM Class WHERE learnerId = ?) AND date = ?";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
             state.setString(1, toSessionId);

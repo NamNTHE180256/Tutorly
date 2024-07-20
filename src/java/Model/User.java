@@ -21,6 +21,14 @@ public class User {
     public User() {
     }
 
+    public User(int id, String email, String password, String role, Date createdAt) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
+
     public User(String email, String password, String role) {
         this.email = email;
         this.password = password;

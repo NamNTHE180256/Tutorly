@@ -25,6 +25,7 @@ public class Tutor {
     private float price;
     private String bank;
     private String status;
+    private String Linkmeet;
 
     // Constructors
     public Tutor() {
@@ -35,7 +36,7 @@ public class Tutor {
         this.name = name;
     }
 
-    public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status) {
+    public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status, String linkmeet) {
         this.id = id;
         this.subject = subject;
         this.name = name;
@@ -46,6 +47,15 @@ public class Tutor {
         this.price = price;
         this.bank = bank;
         this.status = status;
+        this.Linkmeet = linkmeet;
+    }
+
+    public String getLinkmeet() {
+        return Linkmeet;
+    }
+
+    public void setLinkmeet(String Linkmeet) {
+        this.Linkmeet = Linkmeet;
     }
 
     // Getters and Setters

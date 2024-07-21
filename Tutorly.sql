@@ -470,11 +470,4 @@ VALUES
 (N'Video2.mp4', 'path/to/video2.mp4', 'video/record', GETDATE(), 10),
 (N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
 (N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
-
-select * from Class
-SELECT * FROM Class WHERE learnerId = 1
-SELECT L.*
-FROM Lession L 
-JOIN Class C ON L.classId = C.id 
-WHERE C.learnerId = 1 AND C.status != 'finished'
-ORDER BY L.date;
+Select * from Learner

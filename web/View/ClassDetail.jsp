@@ -243,8 +243,7 @@ int classId = Integer.parseInt(request.getParameter("classId"));
             <div class="container-fluid content">
                 <div class="row" style="flex-grow: 1; display: flex;">
                     <div class="col-sm-3 d-flex flex-column">
-                        <div class="todo">
-                            <p class="todohead" style="font-size: 20px;font-weight: bold">                    
+                        <div class="todo">                
                                 <c:choose>
                                     <c:when test="${sessionScope.user.role == 'tutor'}">
                                     <p class="todohead" style="font-size: 20px; font-weight: bold">Class : <%= studentName %></p>

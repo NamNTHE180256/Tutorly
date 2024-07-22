@@ -1,4 +1,5 @@
 package Model;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -12,6 +13,11 @@ public class Material {
     private Lesson lesson;
 
     public Material() {
+    }
+
+    @Override
+    public String toString() {
+        return "Material{" + "id=" + id + ", fileName=" + fileName + ", filePath=" + filePath + ", fileType=" + fileType + ", uploadedAt=" + uploadedAt + ", lesson=" + lesson + '}';
     }
 
     public Material(int id, String fileName, String filePath, String fileType, Date uploadedAt, Lesson lesson) {
@@ -70,6 +76,5 @@ public class Material {
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
     }
-   
 
 }

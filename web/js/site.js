@@ -1,3 +1,4 @@
+
 ﻿function checkEmail(email) {
     // Define the regular expression for a valid email address with specific domains
     const regex = /^[^\s@]+@(gmail\.com|yahoo\.com|lookup\.com)$/i;

@@ -4,10 +4,10 @@
  */
 package Controller;
 
-import DAO.AssignmentDAO;
+import DAO.QuizDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
-import Model.Assignment;
+import Model.Quiz;
 import Model.Learner;
 import Model.Lesson;
 import Model.User;
@@ -24,6 +24,7 @@ import java.util.Vector;
 
 /**
  * learner
+ *
  * @author TRANG
  */
 @WebServlet(name = "DashboardController", urlPatterns = {"/DashboardController"})
@@ -40,30 +41,21 @@ public class DashboardController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session1 = request.getSession();
-        User user = (User) session1.getAttribute("user");
-        if (user == null) {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-        if (user.getRole().equalsIgnoreCase("learner")) {
+   
             response.setContentType("text/html;charset=UTF-8");
             //String id_student = request.getParameter("id");
             LessonDAO lDAO = new LessonDAO();
-            AssignmentDAO aDAO = new AssignmentDAO();
-            Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(1);
+            QuizDAO aDAO = new QuizDAO();
+            Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
             Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
             LearnerDAO leDAO = new LearnerDAO();
             Learner linfo = leDAO.getStudentById(1);
             request.setAttribute("linfo", linfo);
-            request.setAttribute("todoassignment", classAssignmentsToDo.size());
+            request.setAttribute("todoQuiz", classQuizToDo.size());
             request.setAttribute("lesson_vector", lesson_vector);
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/Dashboard.jsp");
             dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("errorMessage", "you dont have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

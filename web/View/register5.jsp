@@ -20,7 +20,7 @@
         <div class="container">
             <div class="registration-form">
                 <h1>INTRODUCE YOURSELF</h1>
-                <form id="introduce-setup-form" action="<%=request.getContextPath() %>/TutorRegisterServlet" method="post">
+                <form id="introduce-setup-form" action="<%=request.getContextPath()%>/TutorRegisterServlet" method="post">
                     <input type="hidden" name="step" value="5">
                     <div class="form-group">
                         <label for="introduction">Introduce yourself</label>
@@ -42,10 +42,10 @@
             </div>
         </div>
         <script>
-            <% if (request.getAttribute("message") != null) { %>
-                alert('<%= request.getAttribute("message") %>');
-                window.location.href = 'View/Login.jsp';
-            <% } %>
+            <% if (request.getAttribute("message") != null) {%>
+            alert('<%= request.getAttribute("message")%>');
+            window.location.href = 'View/Login.jsp';
+            <% }%>
         </script>
     </body>
 </html>

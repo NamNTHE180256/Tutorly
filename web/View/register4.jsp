@@ -19,7 +19,7 @@
         <div class="container">
             <div class="registration-form">
                 <h1>EDUCATION</h1>
-                <form id="education-setup-form" action="<%=request.getContextPath() %>/TutorRegisterServlet" method="post">
+                <form id="education-setup-form" action="<%=request.getContextPath()%>/TutorRegisterServlet" method="post">
                     <input type="hidden" name="step" value="4">
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="no-education" name="no-education">
@@ -59,9 +59,9 @@
             </div>
         </div>
         <script>
-            <% if (request.getAttribute("message") != null) { %>
-            alert('<%= request.getAttribute("message") %>');
-            <% } %>
+            <% if (request.getAttribute("message") != null) {%>
+            alert('<%= request.getAttribute("message")%>');
+            <% }%>
         </script>
         <script >
             const startYearSelect = document.getElementById('start-year');

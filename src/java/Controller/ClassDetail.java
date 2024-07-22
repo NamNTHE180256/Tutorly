@@ -5,12 +5,12 @@
 package Controller;
 
 import DAO.AClassDAO;
-import DAO.AssignmentDAO;
+import DAO.QuizDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
 import DAO.TutorDAO;
 import Model.AClass;
-import Model.Assignment;
+import Model.Quiz;
 import Model.Learner;
 import Model.Lesson;
 import Model.User;
@@ -43,22 +43,14 @@ public class ClassDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session1 = request.getSession();
-        User user = (User) session1.getAttribute("user");
-        if (user == null) {
-            request.setAttribute("errorMessage", "You don't have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-            return; // Ensure no further processing happens
-        }
-
-        if (user.getRole().equalsIgnoreCase("learner") || user.getRole().equalsIgnoreCase("tutor")) {
+ 
             response.setContentType("text/html;charset=UTF-8");
 
             int classId = Integer.parseInt(request.getParameter("classId"));
 
             LessonDAO lDAO = new LessonDAO();
-            AssignmentDAO aDAO = new AssignmentDAO();
-            Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(classId);
+            QuizDAO aDAO = new QuizDAO();
+            Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(classId);
             Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(classId);
 
             LearnerDAO leDAO = new LearnerDAO();
@@ -68,16 +60,13 @@ public class ClassDetail extends HttpServlet {
             AClass aClass = classDAO.getClassById(classId);
 
             request.setAttribute("linfo", linfo);
-            request.setAttribute("todoassignment", classAssignmentsToDo.size());
+            request.setAttribute("todoQuiz", classQuizToDo.size());
             request.setAttribute("lesson_vector", lesson_vector);
             request.setAttribute("aClass", aClass);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/ClassDetail.jsp");
             dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("errorMessage", "You don't have permission to access this page");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
+       
 
     }
 

@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class UserDAO extends DBContext {
 
@@ -29,6 +30,7 @@ public class UserDAO extends DBContext {
                 user.setId(id);
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
                 user.setCreatedAt(rs.getTimestamp("createdAt"));
             }
         } catch (SQLException e) {
@@ -36,10 +38,10 @@ public class UserDAO extends DBContext {
         }
         return user;
     }
-    
+
     public int addUser(String email, String password, String role) {
-        String sql = "INSERT INTO [User] (email, [password], [role])\n" +
-                    "VALUES  (?, ?, ?)";
+        String sql = "INSERT INTO [User] (email, [password], [role])\n"
+                + "VALUES  (?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, email);
@@ -57,7 +59,7 @@ public class UserDAO extends DBContext {
         }
         return -1;
     }
-    
+
     public void setEmailByUserId(int id, String newEmail) {
         String sql = "UPDATE [User] SET email = ? WHERE id = ?";
         try {
@@ -69,7 +71,7 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public int getCount(String tableName) {
         int count = 0;
         String sql = "SELECT COUNT(*) AS count FROM " + tableName;
@@ -85,7 +87,6 @@ public class UserDAO extends DBContext {
         return count;
     }
 
-
     public User GetUserWithEmail(String email_login) {
         String sql = "SELECT * FROM [User] WHERE email = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -96,8 +97,8 @@ public class UserDAO extends DBContext {
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 String role = rs.getString("role");
-                String createdAt = rs.getString("createdAt");
-                User user = new User(email, password, role);
+                Date createdAt = rs.getDate("createdAt");
+                User user = new User(id, email, password, role, createdAt);
                 return user;
             }
         } catch (SQLException e) {
@@ -123,7 +124,7 @@ public class UserDAO extends DBContext {
         return 0;
     }
 
-        public User Login(String email, String password) {
+    public User Login(String email, String password) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -136,9 +137,13 @@ public class UserDAO extends DBContext {
                 String passwordDB = rs.getString("password");
                 String role = rs.getString("role");
                 String createAt = rs.getString("createdAt");
-                User user = new User(emailDB, passwordDB, role);
+                User user = new User();
                 user.setId(id);
+                user.setEmail(emailDB);
+                user.setPassword(passwordDB);
                 user.setCreatedAt(rs.getTimestamp("createdAt"));
+                user.setRole(role);
+
                 return user;
             }
         } catch (SQLException e) {
@@ -197,6 +202,10 @@ public class UserDAO extends DBContext {
         return 0;
     }
 
+    public static void main(String[] args) {
+        UserDAO dao = new UserDAO();
+        System.out.println(dao.getUserById(1));
+    }
 //    public static void main(String[] args) {
 //<<<<<<< HEAD
 //        UserDAO udao = new UserDAO();
@@ -216,4 +225,5 @@ public class UserDAO extends DBContext {
 //>>>>>>> bcf475e5a416004d96226e39b60d957e85a1a7bd
 //>>>>>>> 6a4e6a403c1f8ed00a9c9b12aa381ac10eae0541
 //    }
+
 }

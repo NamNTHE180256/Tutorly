@@ -1,4 +1,4 @@
-  /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -16,6 +16,7 @@ import java.sql.SQLException;
  * @author Admin
  */
 public class ManagerDAO extends DBContext {
+
     public ArrayList<Manager> getAllManagers() {
         ArrayList<Manager> managers = new ArrayList<>();
         String sql = "SELECT * FROM Manager";
@@ -37,7 +38,7 @@ public class ManagerDAO extends DBContext {
         }
         return managers;
     }
-    
+
     public ArrayList<Manager> searchManagers(String query) {
         ArrayList<Manager> managers = new ArrayList<>();
         String sql = "SELECT * FROM Manager WHERE name LIKE ? OR id LIKE ?";
@@ -61,7 +62,7 @@ public class ManagerDAO extends DBContext {
         }
         return managers;
     }
-    
+
     public Manager getManagerById(int id) {
         Manager manager = null;
         String sql = "SELECT * FROM Manager WHERE id = ?";
@@ -128,10 +129,10 @@ public class ManagerDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public boolean AddManageTutor(ManageTutor mt) {
         String sql = "INSERT INTO ManageTutor (tutorId, managerId, [status]) \n"
-                    + "VALUES (?, ?, ?)";
+                + "VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, mt.getTutorId());
@@ -144,27 +145,27 @@ public class ManagerDAO extends DBContext {
         }
         return false;
     }
-    
+
     public int ActionByManagerID(int managerId, String status) {
-    String sql = "SELECT COUNT(*) FROM ManageTutor WHERE managerId = ? AND [status] = ?";
-    try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, managerId);
-        ps.setString(2, status);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1);
+        String sql = "SELECT COUNT(*) FROM ManageTutor WHERE managerId = ? AND [status] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, managerId);
+            ps.setString(2, status);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return 0;
     }
-    return 0;
-}
-    
+
     public static void main(String[] args) {
         ManagerDAO d = new ManagerDAO();
         ArrayList<Manager> m = d.searchManagers("1");
         System.out.println(d.ActionByManagerID(13, "approve"));
     }
-    
+
 }

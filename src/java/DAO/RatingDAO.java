@@ -18,11 +18,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author TRANG
  */
-public class RatingDAO extends DBContext{
+public class RatingDAO extends DBContext {
+
     public RatingDAO() {
         // Initialize your database connection here
         // For example:
@@ -144,8 +146,8 @@ public class RatingDAO extends DBContext{
         // For example, you might have a TutorDAO class with a similar method
         return new Tutor(); // Replace with actual implementation
     }
-    
-     public Vector<Rating> getRatingsByTutorId(int tutorId) {
+
+    public Vector<Rating> getRatingsByTutorId(int tutorId) {
         Vector<Rating> vector = new Vector<>();
         String sql = "SELECT * FROM Rating WHERE tutorId = ?";
         try {
@@ -170,9 +172,9 @@ public class RatingDAO extends DBContext{
         }
         return vector;
     }
-     
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
         RatingDAO r = new RatingDAO();
-         System.out.println(r.getRatingsByTutorId(7));
+        System.out.println(r.getRatingsByTutorId(7));
     }
 }

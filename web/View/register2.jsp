@@ -61,10 +61,10 @@
             </div>
         </div>
         <script>
-            <% if (request.getAttribute("message") != null) { %>
-            alert('<%= request.getAttribute("message") %>');
+            <% if (request.getAttribute("message") != null) {%>
+            alert('<%= request.getAttribute("message")%>');
             window.location.href = 'View/register2.jsp';
-            <% } %>
+            <% }%>
         </script>
         <script src="../js/scriptTutorRegister.js"></script>
     </body>

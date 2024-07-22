@@ -1,9 +1,3 @@
-<%-- 
-    Document   : StudentDashboard
-    Created on : Jun 19, 2024, 10:46:10 AM
-    Author     : Tung Duong
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -20,6 +14,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <style>
             .navmenuitem {
                 margin-right: 25px;
@@ -62,6 +57,8 @@
                 display: flex;
                 flex-grow: 1;
                 overflow: hidden;
+                padding: 20px;
+                background-color: #D9D9D9;
             }
 
             .classofstudent, .upcommingclass {
@@ -71,8 +68,14 @@
 
             .classofstudent {
                 background-color: white;
-                border-radius: 20px;
-                padding-top: 20px;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px;
+                box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             .classofstudent .classofstudenthead {
@@ -80,61 +83,40 @@
                 width: fit-content;
                 border-radius: 5px;
                 padding: 5px;
-                margin-left: 30px;
                 color: white;
                 box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+                margin-bottom: 20px;
             }
 
-            .classofstudent ul {
-                display: inline-flex;
-                text-decoration: none;
-            }
-
-            .classofstudent li {
-                text-decoration: none;
-            }
-
-            .classofstudent .classongoing {
+            .classofstudent .classongoing, .classofstudent .classcomplete {
+                font-size: 60px;
+                margin: 10px 20px;
+                width: 100px;
+                display: inline-block;
                 text-align: center;
-                font-size: 80px;
             }
 
-            .classofstudent .classongoingfoot {
-                text-align: center;
+            .classofstudent .classongoingfoot, .classofstudent .classcompletefoot {
                 color: #A2A2A2;
-                padding-bottom: 10px;
-            }
-
-            .classofstudent .classcomplete {
+                display: inline-block;
+                width: 100px;
                 text-align: center;
-                font-size: 80px;
-            }
-
-            .classofstudent .classcompletefoot {
-                text-align: center;
-                color: #A2A2A2;
-                padding-bottom: 10px;
-            }
-
-            .ongoingclass {
-                margin-left: 40px;
-            }
-
-            .completedclass {
-                margin-right: 40px;
             }
 
             .upcommingclass {
                 background-color: white;
-                border-radius: 20px;
+                border-radius: 10px;
                 padding: 20px;
-                box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+                box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+                flex-grow: 1;
+                margin: 20px;
             }
 
             .upcommingclass .upcommingclasstitle {
                 font-size: 24px;
                 font-weight: bold;
                 margin-bottom: 20px;
+                text-align: center;
             }
 
             .upcommingclass .upcommingclassdetails {
@@ -145,31 +127,32 @@
             .upcommingclass .table td {
                 font-size: 16px;
             }
+
+            .navbar {
+                margin-bottom: 20px;
+            }
         </style>
         <title>Dashboard</title>
     </head>
     <body>
         <%@ include file="StudentHeader.jsp" %>
         <main style="background-color: #D9D9D9; flex-grow: 1; display: flex; flex-direction: column;">
+            <!--Content-->
             <div class="container-fluid content">
                 <div class="row" style="flex-grow: 1; display: flex;">
                     <div class="col-sm-3 d-flex flex-column">
                         <div class="classofstudent">
                             <p class="classofstudenthead">Class</p>
-                            <nav class="navbar navbar-expand-sm">
-                                <ul class="navbar-nav mr-auto ongoingclass">
-                                    <li class="nav-item">
-                                        <p class="classongoing">${og}</p>
-                                        <p class="classongoingfoot">ongoing</p>
-                                    </li>
-                                </ul>
-                                <ul class="navbar-nav ml-auto completedclass">
-                                    <li class="nav-item">
-                                        <p class="classcomplete">${fn}</p>
-                                        <p class="classcompletefoot">completed</p>
-                                    </li>
-                                </ul>
-                            </nav>
+                            <div class="d-flex justify-content-between w-100">
+                                <div>
+                                    <p class="classongoing">${og}</p>
+                                    <p class="classongoingfoot">ongoing</p>
+                                </div>
+                                <div>
+                                    <p class="classcomplete">${fn}</p>
+                                    <p class="classcompletefoot">completed</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-9 d-flex flex-column">

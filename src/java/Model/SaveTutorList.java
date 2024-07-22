@@ -8,7 +8,8 @@ package Model;
  *
  * @author TRANG
  */
-public class SaveTutorList extends Tutor{
+public class SaveTutorList extends Tutor {
+
     private String saveStatus;
 
     public SaveTutorList() {
@@ -18,8 +19,8 @@ public class SaveTutorList extends Tutor{
         this.saveStatus = saveStatus;
     }
 
-    public SaveTutorList(String saveStatus, int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status) {
-        super(id, subject, name, gender, image, bio, edu, price, bank, status);
+    public SaveTutorList(String saveStatus, int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status, String Linkmeet) {
+        super(id, subject, name, gender, image, bio, edu, price, bank, status, Linkmeet);
         this.saveStatus = saveStatus;
     }
 
@@ -35,5 +36,5 @@ public class SaveTutorList extends Tutor{
     public String toString() {
         return "SaveTutorList{" + "saveStatus=" + saveStatus + '}';
     }
-    
+
 }

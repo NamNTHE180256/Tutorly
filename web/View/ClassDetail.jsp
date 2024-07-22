@@ -11,10 +11,10 @@
 <%@ page import="DAO.*" %>
 <%
     // Get class ID from request
-int classId = Integer.parseInt(request.getParameter("classId"));
- 
+    int classId = Integer.parseInt(request.getParameter("classId"));
+
     // Fetch class details using the provided function
-   AClassDAO classDAO = new AClassDAO();
+    AClassDAO classDAO = new AClassDAO();
     AClass aClass = classDAO.getClassById(classId);
 
     // Get current date or date from request parameters
@@ -30,9 +30,9 @@ int classId = Integer.parseInt(request.getParameter("classId"));
     String subjectName = aClass.getTutor().getSubject().getName();
     int attendance = 10; // This should be fetched dynamically based on attended sessions
     int progress = (attendance * 100) / totalSlots;
-    
+
     User user = (User) session.getAttribute("user");
-    
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,7 +234,7 @@ int classId = Integer.parseInt(request.getParameter("classId"));
             <%@ include file="TutorHeader.jsp" %>
             <% } else { %>
             <%@ include file="StudentHeader.jsp" %>
-            <% } %>
+            <% }%>
         </header>
 
         <main style="background-color: #D9D9D9; flex-grow: 1; display: flex; flex-direction: column;">
@@ -246,31 +246,31 @@ int classId = Integer.parseInt(request.getParameter("classId"));
                         <div class="todo">                
                                 <c:choose>
                                     <c:when test="${sessionScope.user.role == 'tutor'}">
-                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : <%= studentName %></p>
+                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : <%= studentName%></p>
                                 </c:when>
                                 <c:otherwise>
-                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : MR <%= tutorName %></p>
+                                    <p class="todohead" style="font-size: 20px; font-weight: bold">Class : MR <%= tutorName%></p>
                                 </c:otherwise>
                             </c:choose> </p>
                             <div class="d-flex justify-content-between">
                                 <p>Total Slots:</p>
-                                <p><%= totalSlots %></p>
+                                <p><%= totalSlots%></p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>Start Date:</p>
-                                <p><%= sdf.format(startDate) %></p>
+                                <p><%= sdf.format(startDate)%></p>
                             </div>                            
                             <div class="d-flex justify-content-between">
                                 <p>End Date:</p>
-                                <p><%= sdf.format(endDate) %></p>
+                                <p><%= sdf.format(endDate)%></p>
                             </div>                            
                             <div class="d-flex justify-content-between">
                                 <p>Subject:</p>
-                                <p><%= subjectName %></p>
+                                <p><%= subjectName%></p>
                             </div>                            
                             <div class="d-flex justify-content-between">
                                 <p>Attendance:</p>
-                                <p><%= attendance %>/<%= totalSlots %></p>
+                                <p><%= attendance%>/<%= totalSlots%></p>
                             </div>
                         </div>
 
@@ -302,7 +302,7 @@ int classId = Integer.parseInt(request.getParameter("classId"));
                                     {
                                     title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getLearner().getName()}',
                                                 start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                            url: 'http://google.com/',
+                                                            url: 'http://localhost:8080/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
                                                             end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                         className: 'custom-event'
                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
@@ -313,35 +313,33 @@ int classId = Integer.parseInt(request.getParameter("classId"));
                                                                 {
                                                                 title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                                             start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                                        url: 'http://google.com/',
-                                                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
-                                                                                                    className: 'custom-event'
-                                                                                            }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
+                                                                                        url: 'http://localhost:8080/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}'
+                                                                                }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
                                             </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
-                                                                                            ];
-                                                                                            var calendar = new FullCalendar.Calendar(calendarEl, {
-                                                                                            height: '100%',
-                                                                                                    expandRows: true,
-                                                                                                    slotMinTime: '08:00',
-                                                                                                    slotMaxTime: '21:00',
-                                                                                                    headerToolbar: {
-                                                                                                    left: 'prev,next today',
-                                                                                                            center: 'title',
-                                                                                                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                                                                                                    },
-                                                                                                    initialView: 'dayGridMonth',
-                                                                                                    initialDate: new Date().toISOString().split('T')[0], // Current date
-                                                                                                    navLinks: true, // can click day/week names to navigate views
-                                                                                                    editable: false,
-                                                                                                    selectable: false,
-                                                                                                    nowIndicator: true,
-                                                                                                    dayMaxEvents: true, // allow "more" link when too many events
-                                                                                                    events: events
-                                                                                            });
-                                                                                            calendar.render();
-                                                                                            });
+                                                                                ];
+                                                                                var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                                                height: '100%',
+                                                                                        expandRows: true,
+                                                                                        slotMinTime: '08:00',
+                                                                                        slotMaxTime: '21:00',
+                                                                                        headerToolbar: {
+                                                                                        left: 'prev,next today',
+                                                                                                center: 'title',
+                                                                                                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                                                                                        },
+                                                                                        initialView: 'dayGridMonth',
+                                                                                        initialDate: new Date().toISOString().split('T')[0], // Current date
+                                                                                        navLinks: true, // can click day/week names to navigate views
+                                                                                        editable: false,
+                                                                                        selectable: false,
+                                                                                        nowIndicator: true,
+                                                                                        dayMaxEvents: true, // allow "more" link when too many events
+                                                                                        events: events
+                                                                                });
+                                                                                calendar.render();
+                                                                                });
                                 </script>
                                 <div id='calendar-container'>
                                     <div id='calendar'></div>

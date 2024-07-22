@@ -99,7 +99,7 @@
                                     <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                                         <c:forEach var="material" items="${book}">
                                             <p><strong>${material.getFileName()}</strong> : <a href="#" onclick="displayMaterial('${material.getFilePath()}'); return false;">Link book</a></p>
-                                            </c:forEach>
+                                        </c:forEach>
 
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </ul>
                     </nav>
                 </div>

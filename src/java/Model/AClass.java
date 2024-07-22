@@ -12,7 +12,6 @@ public class AClass {
     private Date endDate;
     private String status;
     private Subject subject;
-    
     // Constructors
     public AClass() {
         this.subject = new Subject(); // Ensure subject is initialized
@@ -27,7 +26,7 @@ public class AClass {
         this.status = status;
         this.subject = subject;
     }
-    
+
     public AClass(Learner learner, Tutor tutor, int totalSession, Date startDate, Date endDate, String status) {
         this.learner = learner;
         this.tutor = tutor;
@@ -36,7 +35,10 @@ public class AClass {
         this.endDate = endDate;
         this.status = status;
         this.subject = new Subject(); // Ensure subject is initialized
+    
     }
+
+ 
 
     // Getters and Setters
     public int getId() {
@@ -107,5 +109,5 @@ public class AClass {
     public String toString() {
         return "AClass{" + "id=" + id + ", learner=" + learner + ", tutor=" + tutor + ", totalSession=" + totalSession + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + ", subject=" + subject + '}';
     }
-    
+
 }

@@ -48,12 +48,14 @@
 
         <%
             String lessonIdStr = request.getParameter("lessonId");
+            String classIdStr = request.getParameter("classId");
             if (lessonIdStr == null || lessonIdStr.isEmpty()) {
                 out.println("Lesson ID is missing.");
                 return;
             }
 
             int lessonId = Integer.parseInt(lessonIdStr);
+            int classId = Integer.parseInt(classIdStr);
             QuizDAO quizDAO = new QuizDAO();
             Quiz existingQuiz = quizDAO.getQuizByLessonId(lessonId);
             if (existingQuiz != null) {
@@ -73,7 +75,7 @@
             <form action="/Tutorly/QuizServlet" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="role" value="tutor">
                 <input type="hidden" name="lessonId" value="<%= lessonIdStr %>">
-                
+                <input type="hidden" name="classId" value="<%= classIdStr %>">
                 <input type="file" name="file" required>
                 <button type="submit">Upload</button>
             </form>

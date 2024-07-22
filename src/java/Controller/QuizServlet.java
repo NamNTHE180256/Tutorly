@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import jakarta.servlet.annotation.MultipartConfig;
+
 /**
  *
  * @author asus
@@ -43,15 +44,18 @@ public class QuizServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         String role = user.getRole();
         String lessonIdStr = request.getParameter("lessonId");
+        String classIdStr = request.getParameter("classId");
         String action = request.getParameter("action");
 
         LOGGER.info("doGet - Lesson ID: " + lessonIdStr);
-        if (lessonIdStr == null || lessonIdStr.isEmpty()) {
-            throw new ServletException("lessonId parameter is missing");
+        if (lessonIdStr == null || lessonIdStr.isEmpty() || classIdStr == null || classIdStr.isEmpty()) {
+            throw new ServletException("lessonId or classId parameter is missing");
         }
 
         int lessonId = Integer.parseInt(lessonIdStr);
+        int classId = Integer.parseInt(classIdStr);
         session.setAttribute("lessonId", lessonIdStr); // Store lessonId as string
+        session.setAttribute("classId", classIdStr); // Store classId as string
 
         QuizDAO quizDAO = new QuizDAO();
         Quiz quiz = quizDAO.getQuizByLessonId(lessonId);
@@ -62,7 +66,7 @@ public class QuizServlet extends HttpServlet {
             // Reset action parameter
             request.removeAttribute("action");
             // Redirect to UploadQuiz.jsp for creating a new quiz
-            response.sendRedirect("View/UploadQuiz.jsp?lessonId=" + lessonIdStr);
+            response.sendRedirect("View/UploadQuiz.jsp?lessonId=" + lessonIdStr + "&classId=" + classIdStr);
         } else if (quiz != null) {
             if ("learner".equalsIgnoreCase(role)) {
                 // Learner views quiz
@@ -71,16 +75,19 @@ public class QuizServlet extends HttpServlet {
 
                 session.setAttribute("quizTime", quiz.getQuizTime()); // Set quizTime in session
                 request.setAttribute("lessonId", lessonIdStr);
+                request.setAttribute("classId", classIdStr);
                 request.getRequestDispatcher("View/DoQuiz.jsp").forward(request, response);
             } else if ("tutor".equalsIgnoreCase(role)) {
                 // If quiz exists, show prompt to create new
                 request.setAttribute("lessonId", lessonIdStr);
+                request.setAttribute("classId", classIdStr);
                 request.getRequestDispatcher("View/UploadQuiz.jsp").forward(request, response);
             }
         } else {
             if ("tutor".equalsIgnoreCase(role)) {
                 // Tutor views questions to set quiz time
                 request.setAttribute("lessonId", lessonIdStr);
+                request.setAttribute("classId", classIdStr);
                 request.getRequestDispatcher("View/UploadQuiz.jsp").forward(request, response);
             }
         }
@@ -98,15 +105,18 @@ public class QuizServlet extends HttpServlet {
         }
 
         String lessonIdStr = request.getParameter("lessonId");
-        if (lessonIdStr == null || lessonIdStr.isEmpty()) {
-            throw new ServletException("lessonId parameter is missing");
+        String classIdStr = request.getParameter("classId");
+        if (lessonIdStr == null || lessonIdStr.isEmpty() || classIdStr == null || classIdStr.isEmpty()) {
+            throw new ServletException("lessonId or classId parameter is missing");
         }
 
         int lessonId;
+        int classId;
         try {
             lessonId = Integer.parseInt(lessonIdStr);
+            classId = Integer.parseInt(classIdStr);
         } catch (NumberFormatException e) {
-            throw new ServletException("Invalid lessonId parameter", e);
+            throw new ServletException("Invalid lessonId or classId parameter", e);
         }
 
         QuizDAO quizDAO = new QuizDAO();
@@ -133,9 +143,10 @@ public class QuizServlet extends HttpServlet {
 
             request.setAttribute("questions", questions);
             request.setAttribute("lessonId", lessonIdStr);
+            request.setAttribute("classId", classIdStr);
             request.getRequestDispatcher("View/QuestionList.jsp").forward(request, response);
         } else if ("learner".equalsIgnoreCase(role)) {
-            response.sendRedirect("QuizServlet?lessonId=" + lessonId);
+            response.sendRedirect("QuizServlet?lessonId=" + lessonId + "&classId=" + classId);
         }
     }
 

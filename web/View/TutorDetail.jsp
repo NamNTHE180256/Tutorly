@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -759,9 +760,9 @@
                                                 <c:when test="${tutorRatings.NewTutor == null}">
 
                                                     <div class="rating mt-2">
-                                                        <span class="rate" style="font-size: 35px;"> <i class="fa-solid fa-star text-warning"></i>${tutorRatings.avgRate}</span>
+                                                        <span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
 
-                                                        <p class="ratedby">rated by ${tutorRatings.rateCount} learner(s)</p>
+                                                        <p class="ratedby" style="font-size: 10px;">rated by ${tutorRatings.rateCount} learner(s)</p>
                                                     </div>
 
                                                 </c:when>
@@ -773,9 +774,9 @@
                                         <li class="nav-item">
                                             <div>
                                                 <div class="fee">
-                                                    <h2>${tutor.price}k</h2>
+                                                    <h3><fmt:formatNumber value="${tutor.price}" pattern="###,###" /></h3>
                                                 </div>
-                                                <p>per session</p>
+                                                <p style="font-size: 10px;">per session</p>
                                             </div>
                                         </li>
                                         
@@ -807,8 +808,8 @@
                     </div> 
                       <div class="buttons ">
                             <div class="d-grid gap-2">
-                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
+                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
                             </div>
                         </div>
                 </div>

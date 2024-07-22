@@ -99,7 +99,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         String fileUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/uploads/" + file.getName();
         String fileType = getFileExtension(fileName);
 
-        Material material = new Material(0, fileName, fileUrl, fileType, date, ldao.getLessionById(slotid, classid));
+        Material material = new Material(0, fileName, fileUrl, fileType, date, ldao.getLessonById(slotid, classid));
         // Now you can insert the material into the database
 
         int result = mdao.insertMaterialWithCondition(material, classid);

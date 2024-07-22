@@ -1,19 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package Controller;
 
-import DAO.LessonDAO;
-import Model.Lesson;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class lessonDetailControllers
+ *
+ * @author asus
  */
-@WebServlet(name = "lessonDetailControllers", urlPatterns = {"/lessonDetailControllers"})
-public class lessonDetailControllers extends HttpServlet {
+@WebServlet(name = "UpdateTimeServlet", urlPatterns = {"/UpdateTimeServlet"})
+public class UpdateTimeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,28 +31,18 @@ public class lessonDetailControllers extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        LessonDAO ldao = new LessonDAO();
         response.setContentType("text/html;charset=UTF-8");
-
-        String classIdStr = request.getParameter("classid");
-        String lessonIdStr = request.getParameter("lessonId");
-
-        if (classIdStr != null && lessonIdStr != null) {
-            int classid = Integer.parseInt(classIdStr);
-            int lessonId = Integer.parseInt(lessonIdStr);
-
-            Lesson lesson = ldao.getLessonById(lessonId, classid);
-            System.out.println("1: "+lesson);
-            if (lesson != null) {
-                request.setAttribute("lesson", lesson);
-                request.getRequestDispatcher("View/lessonDetails.jsp").forward(request, response);
-            } else {
-                request.setAttribute("error", "No lesson found for the provided class ID and lesson ID.");
-                request.getRequestDispatcher("View/lessonDetails.jsp").forward(request, response);
-            }
-        } else {
-            request.setAttribute("error", "Invalid class ID or lesson ID");
-            request.getRequestDispatcher("View/lessonDetails.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateTimeServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateTimeServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -77,7 +72,9 @@ public class lessonDetailControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        int timeLeft = Integer.parseInt(request.getParameter("timeLeft"));
+        session.setAttribute("timeLeft", timeLeft);
     }
 
     /**

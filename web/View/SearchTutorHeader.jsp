@@ -148,8 +148,8 @@
                     <a class="nav-link" href="../Tutorly/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
-                    <!-- Assignment -->
-                    <a class="nav-link" href="../Tutorly/AssignmentController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Assignment</button></a>
+                    <!-- Quiz -->
+                    <a class="nav-link" href="../Tutorly/QuizController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Quiz</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->

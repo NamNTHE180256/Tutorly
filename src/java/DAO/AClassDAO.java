@@ -277,7 +277,7 @@ public class AClassDAO extends DBContext {
 
     public int getFinishedSessions(int classId) {
         int finishedSessions = 0;
-        String sql = "SELECT COUNT(*) AS finishedSessions FROM Lession WHERE classId = ? AND status = 'Finished'";
+        String sql = "SELECT COUNT(*) AS finishedSessions FROM Lesson WHERE classId = ? AND status = 'Finished'";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, classId);

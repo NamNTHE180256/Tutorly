@@ -202,8 +202,8 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
-                    <!-- Assignment -->
-                    <a class="nav-link" href="${pageContext.request.contextPath}/AssignmentController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Assignment</button></a>
+                    <!-- Quiz -->
+                    <a class="nav-link" href="${pageContext.request.contextPath}/QuizController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Quiz</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Change session -->

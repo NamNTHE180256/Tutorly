@@ -4,9 +4,9 @@
  */
 package Controller;
 
-import DAO.AssignmentDAO;
+import DAO.QuizDAO;
 import DAO.LearnerDAO;
-import Model.Assignment;
+import Model.Quiz;
 import Model.Learner;
 import Model.User;
 import jakarta.servlet.RequestDispatcher;
@@ -24,8 +24,8 @@ import java.util.Vector;
  *
  * @author TRANG
  */
-@WebServlet(name = "AssignmentController", urlPatterns = {"/AssignmentController"})
-public class AssignmentController extends HttpServlet {
+@WebServlet(name = "QuizController", urlPatterns = {"/QuizController"})
+public class QuizController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,8 +38,8 @@ public class AssignmentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-HttpSession session1 = request.getSession();
+
+        HttpSession session1 = request.getSession();
         User user = (User) session1.getAttribute("user");
         if (user == null) {
             request.setAttribute("errorMessage", "you dont have permission to access this page");
@@ -48,35 +48,35 @@ HttpSession session1 = request.getSession();
         if (user.getRole().equalsIgnoreCase("learner")) {
             response.setContentType("text/html;charset=UTF-8");
             String service = request.getParameter("service");
-            AssignmentDAO aDAO = new AssignmentDAO();
+            QuizDAO aDAO = new QuizDAO();
             LearnerDAO lDAO = new LearnerDAO();
             Learner linfo = lDAO.getStudentById(1);
             if (service == null || service.isEmpty()) {
-                Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(1);
-                Vector<Assignment> classAssignmentsDone = aDAO.getAssignmentsByLearnerIdAndStatusDone(1);
-                request.setAttribute("classAssignments", classAssignmentsToDo);
-                request.setAttribute("todoassignment", classAssignmentsToDo.size());
+                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
+                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(1);
+                request.setAttribute("classQuiz", classQuizToDo);
+                request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);
 
-                //request.setAttribute("classAssignmentsDone", classAssignmentsDone);
+                //request.setAttribute("classQuizDone", classQuizDone);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/Assigment.jsp");
                 dispatcher.forward(request, response);
             } else if (service.equals("done")) {
-                Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(1);
-                Vector<Assignment> classAssignmentsDone = aDAO.getAssignmentsByLearnerIdAndStatusDone(1);
-                request.setAttribute("classAssignments", classAssignmentsDone);
-                request.setAttribute("todoassignment", classAssignmentsToDo.size());
+                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
+                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(1);
+                request.setAttribute("classQuiz", classQuizDone);
+                request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);
-                request.setAttribute("classAssignmentsDone", classAssignmentsDone);
+                request.setAttribute("classQuizDone", classQuizDone);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/Assigment.jsp");
                 dispatcher.forward(request, response);
             } else {
-                Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(1);
-                Vector<Assignment> classAssignmentsDone = aDAO.getAssignmentsByLearnerIdAndStatusDone(1);
-                request.setAttribute("classAssignments", classAssignmentsToDo);
-                request.setAttribute("todoassignment", classAssignmentsToDo.size());
+                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
+                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(1);
+                request.setAttribute("classQuiz", classQuizToDo);
+                request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);
-                //request.setAttribute("classAssignmentsDone", classAssignmentsDone);
+                //request.setAttribute("classQuizDone", classQuizDone);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/Assigment.jsp");
                 dispatcher.forward(request, response);
             }

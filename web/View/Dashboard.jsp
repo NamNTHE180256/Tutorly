@@ -207,9 +207,9 @@
                     <div class="col-sm-3 d-flex flex-column">
                         <div class="todo">
                             <p class="todohead">To do</p>
-                            <!--Number of assignment which have status : Not completed-->
-                            <p class="todonumber">${todoassignment}</p>
-                            <p class="foot">Assignment(s) not completed</p>
+                            <!--Number of Quiz which have status : Not completed-->
+                            <p class="todonumber">${todoQuiz}</p>
+                            <p class="foot">Quiz(s) not completed</p>
                         </div>
 
                         <img style="width: 310px" src="image/Dashboard3.png">

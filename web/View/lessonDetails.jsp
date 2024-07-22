@@ -38,7 +38,7 @@
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
             .lesson-details .materials,
-            .lesson-details .assignment {
+            .lesson-details .Quiz {
                 margin-top: 20px;
             }
             .buttons-row {
@@ -86,12 +86,16 @@
                             <button id="joinClass" class="btn btn-primary">Enter Class</button>
                         </div>
                     </div>
-                    <div class="assignment mt-3">
-                        <p><strong>Assignment:</strong></p>
+                    <div class="Quiz mt-3">
+                        <p><strong>Quiz:</strong></p>
                         <div class="buttons-row">
-                            <button class="btn btn-primary" type="button">View</button>
+
                             <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                <button class="btn btn-primary" type="button">Upload</button>
+                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/QuestionList.jsp?lessonId=${requestScope.lesson.getId()}'">View</button>
+                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/UploadQuiz.jsp?lessonId=${requestScope.lesson.getId()}'">Upload</button>
+                            </c:if>
+                            <c:if test="${sessionScope.user.role eq 'learner'}">
+                                <button class="btn btn-primary" type="button" onclick="location.href = 'QuizServlet?lessonId=${requestScope.lesson.getId()}'">Take Quiz</button>
                             </c:if>
                         </div>
                     </div>

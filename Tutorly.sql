@@ -1,6 +1,8 @@
+
 --CREATE DATABASE Tutorly;
 GO
 --drop database Tutorly
+
 --go
 use Tutorly
 
@@ -142,6 +144,34 @@ CREATE TABLE Payment (
     FOREIGN KEY (classId) REFERENCES Class(id)
 );
 
+CREATE TABLE Quiz (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    lessonId INT,
+    [fileName] NVARCHAR(255),
+    filePath VARCHAR(255),
+    score FLOAT,
+    [status] VARCHAR(20),
+    createdAt DATETIME DEFAULT GETDATE(),
+    timeOfQuiz INT,
+    startedOn DATETIME,
+    completedOn DATETIME,
+    timeTaken INT,
+    numberOfTimeDone INT DEFAULT 0,
+    FOREIGN KEY (lessonId) REFERENCES Lesson(id)
+);
+CREATE TABLE Question (
+    quizId BIGINT,
+    questionNumber INT,
+    questionText VARCHAR(255),
+    answerA VARCHAR(100),
+    answerB VARCHAR(100),
+    answerC VARCHAR(100),
+    answerD VARCHAR(100),
+    correctAnswer VARCHAR(100),
+    chooseAnswer VARCHAR(100),
+    PRIMARY KEY (quizId, questionNumber),
+    FOREIGN KEY (quizId) REFERENCES Quiz(id)
+);
 CREATE TABLE Assignment (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
 	lessonId INT,
@@ -152,7 +182,6 @@ CREATE TABLE Assignment (
     createdAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (lessonId) REFERENCES lesson(id)
 );
-
 CREATE TABLE Material (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
 	lessonId INT,
@@ -333,8 +362,7 @@ VALUES
 (30, 2, N'Nguyễn Thị Hoa', 0, 'tutor23.jpg', 
     N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
     N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending');
-
-																		
+																	
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 
@@ -459,24 +487,25 @@ VALUES
 (2, 2000.0, '2024-06-02');
 
 -- Insert into Assignment table
-INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessonId)
+INSERT INTO Quiz ([fileName], filePath, score, [status], createdAt, lessonId)
+
 VALUES 
-(N'Assignment1', 'path/to/assignment1.docx', 9.5, 'done', GETDATE(), 1),
-(N'Assignment2', 'path/to/assignment2.docx', 8.5, 'done', GETDATE(), 2),
-(N'Assignment3', 'path/to/assignment3.docx', 7.5, 'done', GETDATE(), 3),
-(N'Assignment4', 'path/to/assignment4.docx', 6.5, 'done', GETDATE(), 4),
-(N'Assignment5', 'path/to/assignment5.docx', 5.5, 'done', GETDATE(), 5),
-(N'Assignment6', 'path/to/assignment6.docx', null, 'todo', GETDATE(), 6),
-(N'Assignment7', 'path/to/assignment7.docx', null, 'todo', GETDATE(), 7),
-(N'Assignment8', 'path/to/assignment8.docx', null, 'todo', GETDATE(), 8),
-(N'Assignment9', 'path/to/assignment9.docx', null, 'todo', GETDATE(), 9),
-(N'Assignment10', 'path/to/assignment10.docx', null, 'done', GETDATE(), 10),
-(N'Assignment11', 'path/to/assignment11.docx', null, 'done', GETDATE(), 11),
-(N'Assignment12', 'path/to/assignment12.docx', null, 'done', GETDATE(), 12),
-(N'Assignment13', 'path/to/assignment13.docx', null, 'done', GETDATE(), 13),
-(N'Assignment14', 'path/to/assignment14.docx', null, 'todo', GETDATE(), 14),
-(N'Assignment15', 'path/to/assignment15.docx', null, 'todo', GETDATE(), 15),
-(N'Assignment16', 'path/to/assignment16.docx', null, 'todo', GETDATE(), 16);
+(N'Quiz1', 'path/to/Quiz1.docx', 9.5, 'done', GETDATE(), 1),
+(N'Quiz2', 'path/to/Quiz2.docx', 8.5, 'done', GETDATE(), 2),
+(N'Quiz3', 'path/to/Quiz3.docx', 7.5, 'done', GETDATE(), 3),
+(N'Quiz4', 'path/to/Quiz4.docx', 6.5, 'done', GETDATE(), 4),
+(N'Quiz5', 'path/to/Quiz5.docx', 5.5, 'done', GETDATE(), 5),
+(N'Quiz6', 'path/to/Quiz6.docx', null, 'todo', GETDATE(), 6),
+(N'Quiz7', 'path/to/Quiz7.docx', null, 'todo', GETDATE(), 7),
+(N'Quiz8', 'path/to/Quiz8.docx', null, 'todo', GETDATE(), 8),
+(N'Quiz9', 'path/to/Quiz9.docx', null, 'todo', GETDATE(), 9),
+(N'Quiz10', 'path/to/Quiz10.docx', null, 'done', GETDATE(), 10),
+(N'Quiz11', 'path/to/Quiz11.docx', null, 'done', GETDATE(), 11),
+(N'Quiz12', 'path/to/Quiz12.docx', null, 'done', GETDATE(), 12),
+(N'Quiz13', 'path/to/Quiz13.docx', null, 'done', GETDATE(), 13),
+(N'Quiz14', 'path/to/Quiz14.docx', null, 'todo', GETDATE(), 14),
+(N'Quiz15', 'path/to/Quiz15.docx', null, 'todo', GETDATE(), 15),
+(N'Quiz16', 'path/to/Quiz16.docx', null, 'todo', GETDATE(), 16);
 
 -- Insert into Material table
 -- Insert into Material table
@@ -496,6 +525,7 @@ VALUES
 (N'Video2.mp4', 'path/to/video2.mp4', 'video/record', GETDATE(), 10),
 (N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
 (N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
+
 
  INSERT INTO Income (tax, amount, createdAt, DayPaid, [status], tutorID)
 VALUES 
@@ -680,3 +710,7 @@ ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutor
 REFERENCES [dbo].[Tutor] ([id])
 GO
 
+
+select * from [User] 
+SELECT * FROM Lesson WHERE classId = 2
+Select * from [Question]

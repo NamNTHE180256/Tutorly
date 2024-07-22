@@ -66,8 +66,6 @@
     <body>
 
         <header>
-
-
             <c:choose>
                 <c:when test="${user.role eq 'tutor'}">
                     <%@ include file="TutorHeader.jsp" %>
@@ -76,33 +74,100 @@
                     <%@ include file="StudentHeader.jsp" %>
                 </c:otherwise>
             </c:choose>
-
         </header>
         <hr/>
         <h1 class="header">Material</h1>
         <div class="layout">
-            <main class="layout-main px-4">
+            <main style="width: 50%;" class="layout-main px-4">
+                <c:if test="${not empty fileUrl}">
+                    <iframe src="${fileUrl}" width="800" height="500" frameborder="0"></iframe>
+                    </c:if>
+                    <c:if test="${not empty fileUrlYtb}">
+                    <iframe src="${fileUrlYtb}" width="800" height="500" frameborder="0"></iframe>
+                    </c:if>
 
-                <c:if test="${not empty requestScope.mate.getFilePath()}">
-                    <iframe src="${requestScope.mate.getFilePath()}" width="800" height="500" frameborder="0"></iframe></c:if>
-
-                </main>
-
-                <aside class="layout-sidebar bd-h-60 border-end">
-                    <ul class="list-group" style="width:250px">
-
-                    <c:forEach var="x" items="${requestScope.listmaterial}">
-                        <li class="list-group-item list-group-item-action">
-                            <a href="Material?action=download&slotid=${requestScope.slotid}&id=${x.id}&classid=${requestScope.classid}">
+            </main>
 
 
-                        </li>
-                    </c:forEach>
-                </ul>
-            </aside>
+            <div class="col-2"  style="margin-left:50px">
+                <nav id="myScrollspy">
+                    <ul class="nav nav-pills flex-column">
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                                        Documents
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                                    <div class="accordion-body">
+                                        <c:forEach var="x" items="${listmaterial}">
+                                            <li class="list-group-item list-group-item-action">
+                                                <a href="Material?action=download&slotid=${slotid}&id=${x.id}&classid=${classid}">
+                                                    ${x.fileName}
+                                                </a>
+                                            </li>
+                                        </c:forEach>                                        </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                        Slides
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                                    <div class="accordion-body">
+                                        <c:forEach var="material" items="${slide}">
+                                            <p><strong>${material.getFileName()}</strong> : <a href="${material.getFilePath()}">${material.getFilePath()}</a></p>
+                                            </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                        E-book
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                                    <c:forEach var="material" items="${book}">
+                                        <p><strong>${material.getFileName()}</strong> : <a href="#" onclick="displayMaterial('${material.getFilePath()}'); return false;">Link book</a></p>
+                                    </c:forEach>
+
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                        Records/ Videos
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                                    <c:forEach var="x" items="${listvideo}">
+                                        <li class="list-group-item list-group-item-action">
+                                            <a href="Material?action=downloadVideo&slotid=${slotid}&id=${x.id}&classid=${classid}">
+                                                ${x.fileName}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ul>
+                </nav>
+            </div>
+
         </div>
-
-        <%@ include file="tutor-footer.jsp" %>
-
-    </body>
+        <footer style="background-color: #0E3C6E; color: white; padding: 20px 0; text-align: center; bottom: 0; width: 100%;">
+            <p style="margin: 0; font-size: 16px;">
+                Mọi góp ý, thắc mắc xin liên hệ Công ty cung cấp dịch vụ gia sư | Email: <a href="mailto:Tutory@gmail.com" style="color: #FFC107;">Tutory@gmail.com</a> | Điện thoại: <a href="tel:0123456789" style="color: #FFC107;">0123456789</a>
+            </p>
+            <p style="margin: 0; font-size: 16px;">
+                © 2024 Power by TUTORLY
+            </p>
+        </div>
+    </footer>
+</body>
 </html>

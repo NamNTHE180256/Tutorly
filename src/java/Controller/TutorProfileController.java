@@ -46,6 +46,10 @@ public class TutorProfileController extends HttpServlet {
         System.out.println(currTutor);
         request.setAttribute("t", currTutor);
         if (service == null || service.isEmpty()) {
+            String error = request.getParameter("error");
+            if (error != null) {
+                request.setAttribute("error", error);
+            }
             request.setAttribute("t", currTutor);
             request.setAttribute("scp_vector", scp_vector);
             request.setAttribute("subjectsTaught", subjectsTaught);

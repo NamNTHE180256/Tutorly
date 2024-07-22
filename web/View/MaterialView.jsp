@@ -199,7 +199,7 @@
                                                                 // Render the PDF page on the canvas
                                                                 const renderContext = {
                                                                     canvasContext: canvas.getContext('2d'),
-                                                                    viewport: viewport,
+                                                                    viewport: viewport
                                                                 };
                                                                 page.render(renderContext);
                                                             }).catch(err => {

@@ -1,32 +1,35 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
-public class Material {
-
+/**
+ *
+ * @author Acer
+ */
+public class Video {
     private int id;
+    private Lesson lesson;
     private String fileName;
-    private byte[] filePath;
+    private String filePath;
     private String fileType;
     private Date uploadedAt;
-    private Lesson lesson;
 
-    public Material() {
-    }
-
-    @Override
-    public String toString() {
-        return "Material{" + "id=" + id + ", fileName=" + fileName + ", filePath=" + filePath + ", fileType=" + fileType + ", uploadedAt=" + uploadedAt + ", lesson=" + lesson + '}';
-    }
-
-    public Material(int id, String fileName, byte[] filePath, String fileType, Date uploadedAt, Lesson lesson) {
+    public Video(int id, Lesson lesson, String fileName, String filePath, String fileType, Date uploadedAt) {
         this.id = id;
+        this.lesson = lesson;
         this.fileName = fileName;
         this.filePath = filePath;
         this.fileType = fileType;
         this.uploadedAt = uploadedAt;
-        this.lesson = lesson;
+    }
+
+    @Override
+    public String toString() {
+        return "Video{" + "id=" + id + ", lesson=" + lesson + ", fileName=" + fileName + ", filePath=" + filePath + ", fileType=" + fileType + ", uploadedAt=" + uploadedAt + '}';
     }
 
     public int getId() {
@@ -37,6 +40,14 @@ public class Material {
         this.id = id;
     }
 
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -45,11 +56,11 @@ public class Material {
         this.fileName = fileName;
     }
 
-    public byte[] getFilePath() {
+    public String getFilePath() {
         return filePath;
     }
 
-    public void setFilePath(byte[] filePath) {
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
@@ -69,12 +80,5 @@ public class Material {
         this.uploadedAt = uploadedAt;
     }
 
-    public Lesson getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
-    }
 
 }

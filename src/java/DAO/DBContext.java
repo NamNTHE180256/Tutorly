@@ -15,7 +15,7 @@ public class DBContext {
             String url = "jdbc:sqlserver://ADMINACER\\SQLEXPRESS:1433;databaseName=Tutorly";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, userName, password);
-            System.out.println("Connection successful!");
+           
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
             connection = null; // Ensure connection is null if an exception occurs

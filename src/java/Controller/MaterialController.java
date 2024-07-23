@@ -8,7 +8,7 @@ import DAO.AClassDAO;
 import DAO.LearnerDAO;
 import DAO.MaterialDAO;
 import Model.AClass;
-import Model.Assignment;
+import Model.Quiz;
 import Model.Learner;
 import Model.Material;
 import jakarta.servlet.RequestDispatcher;

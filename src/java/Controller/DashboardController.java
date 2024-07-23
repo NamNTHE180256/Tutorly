@@ -4,10 +4,10 @@
  */
 package Controller;
 
-import DAO.AssignmentDAO;
+import DAO.QuizDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
-import Model.Assignment;
+import Model.Quiz;
 import Model.Learner;
 import Model.Lesson;
 import Model.User;
@@ -45,13 +45,13 @@ public class DashboardController extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             //String id_student = request.getParameter("id");
             LessonDAO lDAO = new LessonDAO();
-            AssignmentDAO aDAO = new AssignmentDAO();
-            Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(1);
+            QuizDAO aDAO = new QuizDAO();
+            Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
             Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
             LearnerDAO leDAO = new LearnerDAO();
             Learner linfo = leDAO.getStudentById(1);
             request.setAttribute("linfo", linfo);
-            request.setAttribute("todoassignment", classAssignmentsToDo.size());
+            request.setAttribute("todoQuiz", classQuizToDo.size());
             request.setAttribute("lesson_vector", lesson_vector);
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/Dashboard.jsp");
             dispatcher.forward(request, response);

@@ -38,7 +38,7 @@
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
             .lesson-details .materials,
-            .lesson-details .assignment {
+            .lesson-details .Quiz {
                 margin-top: 20px;
             }
             .buttons-row {
@@ -86,12 +86,15 @@
                             <button id="joinClass" class="btn btn-primary">Enter Class</button>
                         </div>
                     </div>
-                    <div class="assignment mt-3">
-                        <p><strong>Assignment:</strong></p>
+                    <div class="Quiz mt-3">
+                        <p><strong>Quiz:</strong></p>
                         <div class="buttons-row">
-                            <button class="btn btn-primary" type="button">View</button>
                             <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                <button class="btn btn-primary" type="button">Upload</button>
+                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/QuestionList.jsp?lessonId=${requestScope.lesson.getId()}&classId=${requestScope.classId}'">View</button>
+                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/UploadQuiz.jsp?lessonId=${requestScope.lesson.getId()}&classId=${requestScope.classId}'">Upload</button>
+                            </c:if>
+                            <c:if test="${sessionScope.user.role eq 'learner'}">
+                                <button class="btn btn-primary" type="button" onclick="takeQuiz(${requestScope.lesson.getId()}, ${requestScope.classId})">Take Quiz</button>
                             </c:if>
                         </div>
                     </div>
@@ -189,10 +192,13 @@
             });
             document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("joinClass").addEventListener("click", function () {
-                    window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet() 
-            }";
+                    window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
                 });
             });
+
+            function takeQuiz(lessonId, classId) {
+                window.location.href = "QuizServlet?lessonId=" + lessonId + "&classId=" + classId + "&action=takeQuiz";
+            }
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

@@ -4,11 +4,11 @@
  */
 package Controller;
 
-import DAO.AssignmentDAO;
+import DAO.QuizDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
 import DAO.MaterialDAO;
-import Model.Assignment;
+import Model.Quiz;
 import Model.Learner;
 import Model.Lesson;
 import Model.Material;
@@ -54,7 +54,7 @@ public class ScheduleController extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             LessonDAO lDAO = new LessonDAO();
             MaterialDAO mDAO = new MaterialDAO();
-            AssignmentDAO aDAO = new AssignmentDAO();
+            QuizDAO aDAO = new QuizDAO();
             Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
             LearnerDAO leDAO = new LearnerDAO();
             Learner linfo = leDAO.getStudentById(1);
@@ -66,7 +66,7 @@ public class ScheduleController extends HttpServlet {
                 dispatcher.forward(request, response);
             }else if (service.equals("viewLessonDetail")){
                 int lessonid = Integer.parseInt(request.getParameter("lessonid"));
-                Vector<Assignment> assignmentoflesson = aDAO.getTodoAssignmentsByLessonId(lessonid);
+                Vector<Quiz> Quizoflesson = aDAO.getTodoQuizByLessonId(lessonid);
                 Vector<Material> document = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "document");
                 Vector<Material> book = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "book");
                 Vector<Material> video = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "video/record");
@@ -76,7 +76,7 @@ public class ScheduleController extends HttpServlet {
                 request.setAttribute("book", book);
                 request.setAttribute("video", video);
                 request.setAttribute("slide", slide);
-                request.setAttribute("assignmentoflesson", assignmentoflesson);
+                request.setAttribute("Quizoflesson", Quizoflesson);
                 request.setAttribute("linfo", linfo);
                 request.setAttribute("lesson_vector", lesson_vector);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");

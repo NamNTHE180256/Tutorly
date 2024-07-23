@@ -5,12 +5,12 @@
 package Controller;
 
 import DAO.AClassDAO;
-import DAO.AssignmentDAO;
+import DAO.QuizDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
 import DAO.TutorDAO;
 import Model.AClass;
-import Model.Assignment;
+import Model.Quiz;
 import Model.Learner;
 import Model.Lesson;
 import Model.User;
@@ -49,8 +49,8 @@ public class ClassDetail extends HttpServlet {
             int classId = Integer.parseInt(request.getParameter("classId"));
 
             LessonDAO lDAO = new LessonDAO();
-            AssignmentDAO aDAO = new AssignmentDAO();
-            Vector<Assignment> classAssignmentsToDo = aDAO.getAssignmentsByLearnerIdAndStatusTodo(classId);
+            QuizDAO aDAO = new QuizDAO();
+            Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(classId);
             Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(classId);
 
             LearnerDAO leDAO = new LearnerDAO();
@@ -60,7 +60,7 @@ public class ClassDetail extends HttpServlet {
             AClass aClass = classDAO.getClassById(classId);
 
             request.setAttribute("linfo", linfo);
-            request.setAttribute("todoassignment", classAssignmentsToDo.size());
+            request.setAttribute("todoQuiz", classQuizToDo.size());
             request.setAttribute("lesson_vector", lesson_vector);
             request.setAttribute("aClass", aClass);
 

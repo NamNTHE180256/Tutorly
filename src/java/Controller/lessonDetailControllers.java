@@ -36,9 +36,11 @@ public class lessonDetailControllers extends HttpServlet {
             int classid = Integer.parseInt(classIdStr);
             int lessonId = Integer.parseInt(lessonIdStr);
 
-            Lesson lesson = ldao.getLessionById(lessonId, classid);
+            Lesson lesson = ldao.getLessonById(lessonId, classid);
             System.out.println("1: "+lesson);
             if (lesson != null) {
+                request.setAttribute("lessonId", lessonIdStr);
+                request.setAttribute("classId", classIdStr);
                 request.setAttribute("lesson", lesson);
                 request.getRequestDispatcher("View/lessonDetails.jsp").forward(request, response);
             } else {

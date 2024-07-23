@@ -21,14 +21,14 @@ public class LessonDAO extends DBContext {
     SessionDAO sdao = new SessionDAO();
     ClassDAO cdao = new ClassDAO();
 
-    public Lesson getLessionById(int lessionId, int classId) {
+    public Lesson getLessonById(int LessonId, int classId) {
         Lesson lesson = null;
         String query = "SELECT Lesson.* FROM Lesson JOIN Class ON Lesson.classId = Class.id WHERE Lesson.id = ? AND Class.id = ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(query);
 
-            st.setInt(1, lessionId);
+            st.setInt(1, LessonId);
             st.setInt(2, classId);
 
             ResultSet rs = st.executeQuery();
@@ -349,7 +349,7 @@ public class LessonDAO extends DBContext {
 
 
         // Example: Fetch lessons by class ID
-        Vector<Lesson> lessonsByClass = lessonDAO.getLessonsByClassId(1);
+        Vector<Lesson> lessonsByClass = lessonDAO.getLessonsByClassId(3);
         for (Lesson lesson : lessonsByClass) {
             System.out.println(lesson);
         }
@@ -365,7 +365,7 @@ public class LessonDAO extends DBContext {
 //        Vector<Lesson> learnerLessons = lessonDAO.getLessonsByLearnerId(learnerId);
 //        for (Lesson lesson : learnerLessons) {
 //            System.out.println(lesson.getAClass().getTutor().getName());
-System.out.println("1:"+lessonDAO.getLessionById(13, 2));
+System.out.println("1:"+lessonDAO.getLessonById(13, 2));
         }
     }
 

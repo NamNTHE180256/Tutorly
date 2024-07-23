@@ -134,7 +134,7 @@ public class ClassDAO extends DBContext {
 //                   + "JOIN Learner l ON c.learnerId = l.id "
 //                   + "JOIN Tutor t ON c.tutorId = t.id "
 //                   + "JOIN Subject s ON c.subjectId = s.id "
-//                   + "JOIN Lession le ON c.id = le.classId "
+//                   + "JOIN Lesson le ON c.id = le.classId "
 //                   + "JOIN Session se ON le.sessionId = se.id "
 //                   + "WHERE c.learnerId = ?";
 //        try {
@@ -169,7 +169,7 @@ public class ClassDAO extends DBContext {
 //    }
 //    private int getFinishedSessions(int classId) {
 //        int finishedSessions = 0;
-//        String sql = "SELECT COUNT(*) AS finishedCount FROM Lession WHERE classId = ? AND status = 'Finished'";
+//        String sql = "SELECT COUNT(*) AS finishedCount FROM Lesson WHERE classId = ? AND status = 'Finished'";
 //        try {
 //            PreparedStatement ps = connection.prepareStatement(sql);
 //            ps.setInt(1, classId);

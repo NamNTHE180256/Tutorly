@@ -70,6 +70,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
+                        <i>${requestScope.error}</i>
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mb-3">

@@ -169,7 +169,7 @@ public class TutorDAO extends DBContext {
                 tutor.setBank(rs.getString("bank"));
                 tutor.setStatus(rs.getString("status"));
                 tutor.setLinkmeet(rs.getString("Linkmeet"));
-                System.out.println(rs.getString("Linkmeet"));
+               
             }
             rs.close();
             sp.close();

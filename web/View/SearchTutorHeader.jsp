@@ -125,6 +125,12 @@
 
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <button id="logoutButton" type="button" class="btn btn-primary">Logout</button>
+
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -166,4 +172,9 @@
             </ul>
         </nav>
     </body>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            window.location.href = "logout"; // Chuyển hướng đến servlet LogoutController
+        });
+    </script>
 </html>

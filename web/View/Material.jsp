@@ -80,10 +80,10 @@
         <div class="layout">
             <main style="width: 50%;" class="layout-main px-4">
                 <c:if test="${not empty fileUrl}">
-                    <iframe src="${fileUrl}" width="800" height="500" frameborder="0"></iframe>
+                    <iframe  src="${fileUrl}" width="1500" height="600" frameborder="0"></iframe>
                     </c:if>
                     <c:if test="${not empty fileUrlYtb}">
-                    <iframe src="${fileUrlYtb}" width="800" height="500" frameborder="0"></iframe>
+                    <iframe style="" src="${fileUrlYtb}" width="1200" height="600" frameborder="0"></iframe>
                     </c:if>
 
             </main>
@@ -160,7 +160,14 @@
             </div>
 
         </div>
-        <footer style="background-color: #0E3C6E; color: white; padding: 20px 0; text-align: center; bottom: 0; width: 100%;">
+        <footer style="
+                margin-top: 5%;
+                background-color: #0E3C6E;
+                color: white;
+                padding: 20px 0;
+                text-align: center;
+                bottom: 0;
+                width: 100%;">
             <p style="margin: 0; font-size: 16px;">
                 Mọi góp ý, thắc mắc xin liên hệ Công ty cung cấp dịch vụ gia sư | Email: <a href="mailto:Tutory@gmail.com" style="color: #FFC107;">Tutory@gmail.com</a> | Điện thoại: <a href="tel:0123456789" style="color: #FFC107;">0123456789</a>
             </p>

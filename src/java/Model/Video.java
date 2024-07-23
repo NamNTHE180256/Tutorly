@@ -11,12 +11,22 @@ import java.util.Date;
  * @author Acer
  */
 public class Video {
+
     private int id;
     private Lesson lesson;
     private String fileName;
     private String filePath;
     private String fileType;
     private Date uploadedAt;
+
+    public Video(Lesson lesson, String fileName, String filePath, String fileType) {
+
+        this.lesson = lesson;
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.fileType = fileType;
+
+    }
 
     public Video(int id, Lesson lesson, String fileName, String filePath, String fileType, Date uploadedAt) {
         this.id = id;
@@ -79,6 +89,5 @@ public class Video {
     public void setUploadedAt(Date uploadedAt) {
         this.uploadedAt = uploadedAt;
     }
-
 
 }

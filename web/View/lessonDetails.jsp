@@ -98,7 +98,7 @@
                     <div class="materials mt-3">
                         <p><strong>Material:</strong></p>
                         <div class="buttons-row">
-                            <button class="btn btn-primary" type="button" id="viewButton">View</button>
+
 
                             <c:if test="${sessionScope.user.role eq 'tutor'}">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload">Upload</button>
@@ -108,10 +108,18 @@
                     <div class="assignment mt-3">
                         <p><strong>Records</strong></p>
                         <div class="buttons-row">
-                            <button class="btn btn-primary" type="button">View</button>
+
                             <c:if test="${sessionScope.user.role eq 'tutor'}">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadRecords">Upload</button>
                             </c:if>
+                        </div>
+                    </div>
+                    <div class="materials mt-3">
+                        <p><strong>Material And Records:</strong></p>
+                        <div class="buttons-row">
+                            <button class="btn btn-primary" type="button" id="viewButton">View</button>
+
+
                         </div>
                     </div>
                 </div>
@@ -145,7 +153,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal" id="uploadRecords">
+        <div  class="modal" id="uploadRecords">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -154,7 +162,7 @@
                     </div>
                     <div class="modal-body">
                         <i style="color: red"> ${requestScope.error}</i>
-                        <form action="${pageContext.request.contextPath}/Material" method="post" enctype="multipart/form-data">
+                        <form action="${pageContext.request.contextPath}/addVideoControllers" method="get" enctype="multipart/form-data">
                             <input type="hidden" name="classid" value="${requestScope.lesson.getAClass().getId()}">
                             <input type="hidden" name="slotid" value="${requestScope.lesson.getId()}">
                             <input type="hidden" value="upload" name="action">
@@ -162,7 +170,7 @@
                                 <label for="fileName">Name</label>
                                 <input type="text" id="fileName" class="form-control" name="fileName" placeholder="Enter a file's name">
                                 <label for="file" class="mt-2">Choose File</label>
-                                <input type="text" id="file" name="file" class="form-control">
+                                <input type="text" name="linkYtb" id="file" name="file" class="form-control">
                             </div>
                             <button style="display: block; margin: 0 auto;" type="submit" class="btn btn-primary">Submit</button>
                         </form>

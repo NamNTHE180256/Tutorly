@@ -241,13 +241,13 @@
                                                                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                                                         <div class="accordion-body">
                                                                             <c:forEach items="${slide}" var="s">
-                                                                            <div class="accordion-body">
-                                                                                <strong>${s.fileName} :</strong>
-                                                                                <a href="#">${s.filePath}</a>
-                                                                                <p style="margin: 0; color: #A2A2A2">${s.uploadedAt}</p>
-                                                                            </div>
-                                                                            <hr/>
-                                                                        </c:forEach>
+                                                                                <div class="accordion-body">
+                                                                                    <strong>${s.fileName} :</strong>
+                                                                                    <a href="#">${s.filePath}</a>
+                                                                                    <p style="margin: 0; color: #A2A2A2">${s.uploadedAt}</p>
+                                                                                </div>
+                                                                                <hr/>
+                                                                            </c:forEach>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -260,13 +260,13 @@
                                                                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                                                                         <div class="accordion-body">
                                                                             <c:forEach items="${book}" var="b">
-                                                                            <div class="accordion-body">
-                                                                                <strong>${b.fileName} :</strong>
-                                                                                <a href="#">${b.filePath}</a>
-                                                                                <p style="margin: 0; color: #A2A2A2">${b.uploadedAt}</p>
-                                                                            </div>
-                                                                            <hr/>
-                                                                        </c:forEach>
+                                                                                <div class="accordion-body">
+                                                                                    <strong>${b.fileName} :</strong>
+                                                                                    <a href="#">${b.filePath}</a>
+                                                                                    <p style="margin: 0; color: #A2A2A2">${b.uploadedAt}</p>
+                                                                                </div>
+                                                                                <hr/>
+                                                                            </c:forEach>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -279,13 +279,13 @@
                                                                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                                                                         <div class="accordion-body">
                                                                             <c:forEach items="${video}" var="v">
-                                                                            <div class="accordion-body">
-                                                                                <strong>${v.fileName} :</strong>
-                                                                                <a href="#">${v.filePath}</a>
-                                                                                <p style="margin: 0; color: #A2A2A2">${v.uploadedAt}</p>
-                                                                            </div>
-                                                                            <hr/>
-                                                                        </c:forEach>
+                                                                                <div class="accordion-body">
+                                                                                    <strong>${v.fileName} :</strong>
+                                                                                    <a href="#">${v.filePath}</a>
+                                                                                    <p style="margin: 0; color: #A2A2A2">${v.uploadedAt}</p>
+                                                                                </div>
+                                                                                <hr/>
+                                                                            </c:forEach>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -307,7 +307,7 @@
                                     <!-- Left -->
                                     <ul class="navbar-nav mr-auto">
                                         <li class="nav-item">
-                                            <p><strong>Assignment:</strong></p>
+                                            <p><strong>Quiz:</strong></p>
                                         </li>
                                     </ul>
                                     <!-- Right -->
@@ -316,7 +316,7 @@
                                             <!-- Button to Open the Modal -->
                                             <button type="button" class="btn" data-toggle="modal"
                                                     data-target="#assigment" style="background-color: #0E3C6E; color: white;">
-                                                View Assignment
+                                                View Quiz
                                             </button>
 
                                             <!-- The Modal -->
@@ -325,7 +325,7 @@
                                                     <div class="modal-content">
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" style="color: #0E3C6E">Assignments:</h4>
+                                                            <h4 class="modal-title" style="color: #0E3C6E">Quizs:</h4>
                                                             <button type="button" class="close"
                                                                     data-dismiss="modal">&times;</button>
                                                         </div>
@@ -333,8 +333,8 @@
                                                         <div class="modal-body">
                                                             <nav class="navbar navbar-expand-sm">
                                                                 <c:choose>
-                                                                    <c:when test="${not empty assignmentoflesson}">
-                                                                        <c:forEach items="${assignmentoflesson}" var="a">
+                                                                    <c:when test="${not empty Quizoflesson}">
+                                                                        <c:forEach items="${Quizoflesson}" var="a">
                                                                             <!-- Left -->
                                                                             <ul class="navbar-nav mr-auto">
                                                                                 <li class="nav-item">
@@ -345,14 +345,14 @@
                                                                             <!-- Right -->
                                                                             <ul class="navbar-nav ml-auto" >
                                                                                 <li class="nav-item">
-                                                                                    <button class="btn" style="background-color: #0E3C6E; color: white; " type="submit">Do assignment</button>
+                                                                                    <button class="btn" style="background-color: #0E3C6E; color: white; " type="submit">Do Quiz</button>
                                                                                 </li>
                                                                             </ul>
                                                                             <hr/>
                                                                         </c:forEach>
                                                                     </c:when>
                                                                     <c:otherwise>
-                                                                        <p>No assignment for this lesson</p>
+                                                                        <p>No Quiz for this lesson</p>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </nav>

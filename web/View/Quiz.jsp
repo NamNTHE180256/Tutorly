@@ -76,9 +76,9 @@
                                     Homework Status
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a class="dropdown-item" href="AssignmentController?service=done">Done</a></li>
-                                    <li><a class="dropdown-item" href="AssignmentController?service=todo">On going</a></li>
-                                    
+                                    <li><a class="dropdown-item" href="QuizController?service=done">Done</a></li>
+                                    <li><a class="dropdown-item" href="QuizController?service=todo">On going</a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -91,21 +91,26 @@
                 <div class="col-sm-9 d-flex flex-wrap" >
                     <div class="container mt-5">
                         <div class="row">
-                            <c:forEach items="${classAssignments}" var="todo">
+                            <c:forEach items="${classQuiz}" var="todo">
                                 <div class="col-md-4" style="border-radius: 15px; margin-bottom: 15px ">
                                     <div class="card p-3">
                                         <ul style="">
 
-                                            <h2 class="tutorname">${todo.getLession().getAClass().getTutor().getSubject().getName()}</h2>
-                                            <p class="subject">${todo.getLession().getAClass().getTutor().getName()}</p>
+                                            <h2 class="tutorname">${todo.getLessonbyId().getAClass().getTutor().getSubject().getName()}</h2>
+                                            <p class="subject">${todo.getLessonbyId().getAClass().getTutor().getName()}</p>
 
                                         </ul>
                                         <hr>
                                         <p class="homework"><a href="#">${todo.getFileName()}</a></p>
                                         <p>Public date : ${todo.getCreatedAt()}</p>
-
+                                        <c:if test="${todo.getStatus() == 'done'}">
+                                            <button type="button" class="btn btn-danger">Results: ${todo.getScore()}</button>
+                                            
+                                        </c:if>
+                                        
                                         <c:if test="${todo.getStatus() != 'done'}">
-                                            <p class="btndohomework">Do homework</p>
+                                            <button type="button" class="btn btn-outline-warning">Do homework</button>
+                                           
                                         </c:if>
                                     </div>
                                 </div>
@@ -115,14 +120,17 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="todohomework">
-                        <h1>${todoassignment}</h1>
+                        <h1>${todoQuiz}</h1>
                         <p>Homework(s) not completed</p>
                     </div>
                 </div>
             </div>
         </div>
-                        <%@ include file = "tutor-footer.jsp" %>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+     
+            
+        
     </body>
 </html>

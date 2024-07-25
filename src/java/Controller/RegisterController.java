@@ -72,7 +72,7 @@ public class RegisterController extends HttpServlet {
         }
     }
 
-   public boolean checkEmail(String email) {
+    public boolean checkEmail(String email) {
         String EMAIL_PATTERN = "^[\\w.-]+@(gmail\\.com|lookup\\.com)$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);

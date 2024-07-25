@@ -14,10 +14,10 @@ public class SaveTutorListDAO extends DBContext {
     public ArrayList<SaveTutorList> getAllTutors() {
         ArrayList<SaveTutorList> tutors = new ArrayList<>();
         SubjectDAO sDao = new SubjectDAO();
-        String sql = "SELECT t.*, " +
-                     "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status " +
-                     "FROM Tutor t " +
-                     "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId";
+        String sql = "SELECT t.*, "
+                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                + "FROM Tutor t "
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
             ResultSet rs = sp.executeQuery();
@@ -47,11 +47,11 @@ public class SaveTutorListDAO extends DBContext {
     public SaveTutorList getTutorById(int id) {
         SaveTutorList tutor = null;
         SubjectDAO sDao = new SubjectDAO();
-        String sql = "SELECT t.*, " +
-                     "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status " +
-                     "FROM Tutor t " +
-                     "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId " +
-                     "WHERE t.id = ?";
+        String sql = "SELECT t.*, "
+                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                + "FROM Tutor t "
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                + "WHERE t.id = ?";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
             sp.setInt(1, id);
@@ -139,10 +139,10 @@ public class SaveTutorListDAO extends DBContext {
 
     public Vector<SaveTutorList> displayAllTutors() {
         Vector<SaveTutorList> vector = new Vector<>();
-        String sql = "SELECT t.*, " +
-                     "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status " +
-                     "FROM Tutor t " +
-                     "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId";
+        String sql = "SELECT t.*, "
+                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                + "FROM Tutor t "
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId";
         SubjectDAO sDAO = new SubjectDAO();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -287,16 +287,16 @@ public class SaveTutorListDAO extends DBContext {
     public Vector<SaveTutorList> RateTutors(double start, double end) {
         Vector<SaveTutorList> vector = new Vector<>();
         SubjectDAO sDAO = new SubjectDAO();
-        String sql = "SELECT t.*, " +
-                     "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status " +
-                     "FROM Tutor t " +
-                     "JOIN ( " +
-                     "    SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count " +
-                     "    FROM Rating " +
-                     "    GROUP BY tutorId " +
-                     "    HAVING AVG(rating) BETWEEN " + start + " AND " + end + " " +
-                     ") r ON t.id = r.tutorId " +
-                     "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId;";
+        String sql = "SELECT t.*, "
+                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                + "FROM Tutor t "
+                + "JOIN ( "
+                + "    SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count "
+                + "    FROM Rating "
+                + "    GROUP BY tutorId "
+                + "    HAVING AVG(rating) BETWEEN " + start + " AND " + end + " "
+                + ") r ON t.id = r.tutorId "
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId;";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
             ResultSet rs = state.executeQuery();
@@ -324,17 +324,17 @@ public class SaveTutorListDAO extends DBContext {
     public Vector<SaveTutorList> getTop10TutorsByRating() {
         Vector<SaveTutorList> topTutors = new Vector<>();
         SubjectDAO sDAO = new SubjectDAO();
-        String sql = "SELECT TOP 10 t.*, " +
-                     "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status, " +
-                     "avg_rating " +
-                     "FROM Tutor t " +
-                     "JOIN ( " +
-                     "    SELECT tutorId, AVG(rating) as avg_rating " +
-                     "    FROM Rating " +
-                     "    GROUP BY tutorId " +
-                     ") r ON t.id = r.tutorId " +
-                     "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId " +
-                     "ORDER BY avg_rating DESC;";
+        String sql = "SELECT TOP 10 t.*, "
+                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status, "
+                + "avg_rating "
+                + "FROM Tutor t "
+                + "JOIN ( "
+                + "    SELECT tutorId, AVG(rating) as avg_rating "
+                + "    FROM Rating "
+                + "    GROUP BY tutorId "
+                + ") r ON t.id = r.tutorId "
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                + "ORDER BY avg_rating DESC;";
 
         try {
             PreparedStatement state = connection.prepareStatement(sql);

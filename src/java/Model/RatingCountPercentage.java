@@ -9,6 +9,7 @@ package Model;
  * @author TRANG
  */
 public class RatingCountPercentage {
+
     private int rate;
     private int count;
     private double percentage;
@@ -51,6 +52,4 @@ public class RatingCountPercentage {
         return "RatingCountPercentage{" + "rate=" + rate + ", count=" + count + ", percentage=" + percentage + '}';
     }
 
-    
-    
 }

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
 import DAO.LearnerDAO;
@@ -30,25 +29,27 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- *learner
+ * learner
+ *
  * @author TRANG
  */
-@WebServlet(name="TutorDetailController", urlPatterns={"/TutorDetailController"})
+@WebServlet(name = "TutorDetailController", urlPatterns = {"/TutorDetailController"})
 public class TutorDetailController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-                HttpSession session1 = request.getSession();
-    
-      
-       TutorDAO tuDAO = new TutorDAO();
+            throws ServletException, IOException {
+        HttpSession session1 = request.getSession();
+
+        TutorDAO tuDAO = new TutorDAO();
         RatingDAO rDAO = new RatingDAO();
         SaveTutorListDAO tDAO = new SaveTutorListDAO();
         TutorAvailabilityDAO taDao = new TutorAvailabilityDAO();
@@ -86,9 +87,11 @@ public class TutorDetailController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorDetail.jsp");
         dispatcher.forward(request, response);
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -96,12 +99,13 @@ public class TutorDetailController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -109,12 +113,13 @@ public class TutorDetailController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

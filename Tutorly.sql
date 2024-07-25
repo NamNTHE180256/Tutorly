@@ -1,5 +1,9 @@
-﻿CREATE DATABASE Tutorly
-go
+
+--CREATE DATABASE Tutorly;
+GO
+--drop database Tutorly
+
+--go
 use Tutorly
 
 --drop database Tutorly
@@ -81,6 +85,17 @@ CREATE TABLE SavedTutor (
 	FOREIGN KEY (tutorId) REFERENCES Tutor(id),
     FOREIGN KEY (learnerId) REFERENCES Learner(id)
 );
+CREATE TABLE Income (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    tax FLOAT,
+    amount FLOAT,
+	Total as amount-(tax*amount),
+    createdAt DATETIME DEFAULT GETDATE(),
+	DayPaid DATETIME,
+    [status] VARCHAR(20),
+    tutorID INT,
+    FOREIGN KEY (tutorID) REFERENCES Tutor(id)
+);
 
 CREATE TABLE Class (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -102,7 +117,7 @@ CREATE TABLE [Session] (
     [dayOfWeek] VARCHAR(50)
 );
 
-CREATE TABLE Lession (
+CREATE TABLE lesson (
     id INT IDENTITY(1,1) PRIMARY KEY,
     classId INT,
     sessionId VARCHAR(10),
@@ -129,25 +144,52 @@ CREATE TABLE Payment (
     FOREIGN KEY (classId) REFERENCES Class(id)
 );
 
+CREATE TABLE Quiz (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    lessonId INT,
+    [fileName] NVARCHAR(255),
+    filePath VARCHAR(255),
+    score FLOAT,
+    [status] VARCHAR(20),
+    createdAt DATETIME DEFAULT GETDATE(),
+    timeOfQuiz INT,
+    startedOn DATETIME,
+    completedOn DATETIME,
+    timeTaken INT,
+    numberOfTimeDone INT DEFAULT 0,
+    FOREIGN KEY (lessonId) REFERENCES Lesson(id)
+);
+CREATE TABLE Question (
+    quizId BIGINT,
+    questionNumber INT,
+    questionText VARCHAR(255),
+    answerA VARCHAR(100),
+    answerB VARCHAR(100),
+    answerC VARCHAR(100),
+    answerD VARCHAR(100),
+    correctAnswer VARCHAR(100),
+    chooseAnswer VARCHAR(100),
+    PRIMARY KEY (quizId, questionNumber),
+    FOREIGN KEY (quizId) REFERENCES Quiz(id)
+);
 CREATE TABLE Assignment (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
-	lessionId INT,
+	lessonId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
 	score FLOAT,
 	[status] VARCHAR(20),
     createdAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (lessionId) REFERENCES Lession(id)
+    FOREIGN KEY (lessonId) REFERENCES lesson(id)
 );
-
 CREATE TABLE Material (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
-	lessionId INT,
+	lessonId INT,
     [fileName] NVARCHAR(255),
     filePath VARCHAR(255),
     fileType VARCHAR(50),
     uploadedAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (lessionId) REFERENCES Lession(id)
+    FOREIGN KEY (lessonId) REFERENCES lesson(id)
 );
 
 CREATE TABLE RegisterTrialClass (
@@ -164,6 +206,18 @@ CREATE TABLE RegisterTrialClass (
     FOREIGN KEY (learnerId) REFERENCES Learner(id),
     FOREIGN KEY (tutorId) REFERENCES Tutor(id),
     FOREIGN KEY (subjectId) REFERENCES Subject(id)
+);
+
+CREATE TABLE Transactions (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    userId INT NOT NULL,
+    transactionDate DATETIME NOT NULL,
+    amount int NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    transaction_type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    description TEXT,
+    FOREIGN KEY (userId) REFERENCES [User](id)
 );
 
 
@@ -234,7 +288,7 @@ VALUES
 (N'Literature 11'),
 (N'Literature 12')
 -- Insert into Tutor table
-INSERT INTO Tutor (id, subjectId, [name], gender, [image], bio, edu, price, bank, [status])
+	INSERT INTO Tutor (id, subjectId, [name], gender, [image], bio, edu, price, bank, [status])
 VALUES 
 (7, 2, N'Đặng Anh Hiển', 1, 'tutor1.jpg', 
     N'Với hơn 15 năm kinh nghiệm giảng dạy Toán học tại các trường đại học hàng đầu, tôi, Đặng Anh Hiển, luôn tự hào về khả năng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi. Phương pháp giảng dạy của tôi không chỉ tập trung vào việc giải thích các khái niệm khó một cách dễ hiểu mà còn khơi gợi sự hứng thú và đam mê học tập ở mỗi học sinh. Tôi tin rằng mỗi học sinh đều có tiềm năng và nhiệm vụ của tôi là giúp các em phát huy tối đa khả năng của mình.', 
@@ -308,8 +362,7 @@ VALUES
 (30, 2, N'Nguyễn Thị Hoa', 0, 'tutor23.jpg', 
     N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
     N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending');
-
-																		
+																	
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 
@@ -386,7 +439,7 @@ VALUES
 ('SU5', '19:00:00', '20:30:00', 'Sunday');
 
 -- Insert into Class_Slot table
-INSERT INTO Lession (classId, sessionId, [date], [status])
+INSERT INTO lesson (classId, sessionId, [date], [status])
 VALUES 
 (1, 'M1', '2024-05-06', 'Finished'),
 (1, 'M1', '2024-05-13', 'Finished'),
@@ -434,28 +487,29 @@ VALUES
 (2, 2000.0, '2024-06-02');
 
 -- Insert into Assignment table
-INSERT INTO Assignment ([fileName], filePath, score, [status], createdAt, lessionId)
+INSERT INTO Quiz ([fileName], filePath, score, [status], createdAt, lessonId)
+
 VALUES 
-(N'Assignment1', 'path/to/assignment1.docx', 9.5, 'done', GETDATE(), 1),
-(N'Assignment2', 'path/to/assignment2.docx', 8.5, 'done', GETDATE(), 2),
-(N'Assignment3', 'path/to/assignment3.docx', 7.5, 'done', GETDATE(), 3),
-(N'Assignment4', 'path/to/assignment4.docx', 6.5, 'done', GETDATE(), 4),
-(N'Assignment5', 'path/to/assignment5.docx', 5.5, 'done', GETDATE(), 5),
-(N'Assignment6', 'path/to/assignment6.docx', null, 'todo', GETDATE(), 6),
-(N'Assignment7', 'path/to/assignment7.docx', null, 'todo', GETDATE(), 7),
-(N'Assignment8', 'path/to/assignment8.docx', null, 'todo', GETDATE(), 8),
-(N'Assignment9', 'path/to/assignment9.docx', null, 'todo', GETDATE(), 9),
-(N'Assignment10', 'path/to/assignment10.docx', null, 'done', GETDATE(), 10),
-(N'Assignment11', 'path/to/assignment11.docx', null, 'done', GETDATE(), 11),
-(N'Assignment12', 'path/to/assignment12.docx', null, 'done', GETDATE(), 12),
-(N'Assignment13', 'path/to/assignment13.docx', null, 'done', GETDATE(), 13),
-(N'Assignment14', 'path/to/assignment14.docx', null, 'todo', GETDATE(), 14),
-(N'Assignment15', 'path/to/assignment15.docx', null, 'todo', GETDATE(), 15),
-(N'Assignment16', 'path/to/assignment16.docx', null, 'todo', GETDATE(), 16);
+(N'Quiz1', 'path/to/Quiz1.docx', 9.5, 'done', GETDATE(), 1),
+(N'Quiz2', 'path/to/Quiz2.docx', 8.5, 'done', GETDATE(), 2),
+(N'Quiz3', 'path/to/Quiz3.docx', 7.5, 'done', GETDATE(), 3),
+(N'Quiz4', 'path/to/Quiz4.docx', 6.5, 'done', GETDATE(), 4),
+(N'Quiz5', 'path/to/Quiz5.docx', 5.5, 'done', GETDATE(), 5),
+(N'Quiz6', 'path/to/Quiz6.docx', null, 'todo', GETDATE(), 6),
+(N'Quiz7', 'path/to/Quiz7.docx', null, 'todo', GETDATE(), 7),
+(N'Quiz8', 'path/to/Quiz8.docx', null, 'todo', GETDATE(), 8),
+(N'Quiz9', 'path/to/Quiz9.docx', null, 'todo', GETDATE(), 9),
+(N'Quiz10', 'path/to/Quiz10.docx', null, 'done', GETDATE(), 10),
+(N'Quiz11', 'path/to/Quiz11.docx', null, 'done', GETDATE(), 11),
+(N'Quiz12', 'path/to/Quiz12.docx', null, 'done', GETDATE(), 12),
+(N'Quiz13', 'path/to/Quiz13.docx', null, 'done', GETDATE(), 13),
+(N'Quiz14', 'path/to/Quiz14.docx', null, 'todo', GETDATE(), 14),
+(N'Quiz15', 'path/to/Quiz15.docx', null, 'todo', GETDATE(), 15),
+(N'Quiz16', 'path/to/Quiz16.docx', null, 'todo', GETDATE(), 16);
 
 -- Insert into Material table
 -- Insert into Material table
-INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessionId)
+INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessonId)
 VALUES 
 (N'Material1.pdf', 'mas1.pdf', 'document', GETDATE(), 1),
 (N'Material2.ppt', 'mas2.ppt', 'slide', GETDATE(), 2),
@@ -472,3 +526,191 @@ VALUES
 (N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
 (N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
 
+
+ INSERT INTO Income (tax, amount, createdAt, DayPaid, [status], tutorID)
+VALUES 
+(0.1, 1000, '2023-06-25 00:00:00.000', '2024-08-01 00:00:00.000', 'paid', 7),
+(0.08, 750, '2023-05-20 00:00:00.000', '2024-08-05 00:00:00.000', 'paid', 8),
+(0.05, 500, '2022-04-15 00:00:00.000', NULL, 'pending confirmation', 9),
+(0.065, 850, '2021-04-05 00:00:00.000', '2024-10-01 00:00:00.000', 'paid', 10),
+(0.12, 1100, '2024-07-01 00:00:00.000', NULL, 'processing', 7),
+(0.09, 800, '2023-04-18 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.06, 600, '2022-03-12 00:00:00.000', NULL, 'processing', 9),
+(0.07, 900, '2021-02-08 00:00:00.000', NULL, 'pending confirmation', 10),
+(0.11, 1150, '2020-01-05 00:00:00.000', '2024-12-01 00:00:00.000', 'paid', 7),
+(0.09, 950, '2019-12-25 00:00:00.000', '2024-12-15 00:00:00.000', 'paid', 8),
+(0.07, 950, '2024-07-17 00:00:00.000', '2024-07-18 00:00:00.000', 'paid', 7),
+(0.08, 850, '2024-07-16 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.09, 900, '2024-07-15 00:00:00.000', '2024-07-17 00:00:00.000', 'paid', 9),
+(0.1, 1000, '2024-07-14 00:00:00.000', NULL, 'pending confirmation', 10),
+(0.065, 750, '2024-07-13 00:00:00.000', '2024-07-16 00:00:00.000', 'paid', 7),
+(0.07, 1100, '2024-07-12 00:00:00.000', NULL, 'pending confirmation', 8),
+(0.08, 800, '2024-07-11 00:00:00.000', NULL, 'processing', 9),
+(0.09, 950, '2024-07-10 00:00:00.000', NULL, 'processing', 10),
+(0.06, 600, '2024-07-09 00:00:00.000', '2024-07-12 00:00:00.000', 'paid', 7),
+(0.1, 1200, '2024-07-08 00:00:00.000', '2024-07-11 00:00:00.000', 'paid', 8);
+
+USE [Tutorly]
+GO
+/****** Object:  Table [dbo].[Notification]    Script Date: 2024-07-17 오후 11:04:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Notification](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[learnerId] [int] NULL,
+	[message] [nvarchar](255) NULL,
+	[isRead] [bit] NULL,
+	[createdAt] [datetime] NULL,
+	[type] [nvarchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SessionChangeRequest]    Script Date: 2024-07-17 오후 11:04:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SessionChangeRequest](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[learnerId] [int] NULL,
+	[tutorId] [int] NULL,
+	[fromSessionId] [varchar](10) NULL,
+	[toSessionId] [varchar](10) NULL,
+	[reason] [nvarchar](255) NULL,
+	[status] [nvarchar](20) NULL,
+	[createdAt] [datetime] NULL,
+	[dateChange] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TutorNotification]    Script Date: 2024-07-17 오후 11:04:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TutorNotification](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[tutorId] [int] NULL,
+	[message] [nvarchar](255) NULL,
+	[isRead] [bit] NULL,
+	[createdAt] [datetime] NULL,
+	[type] [nvarchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TutorSessionChangeRequest]    Script Date: 2024-07-17 오후 11:04:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TutorSessionChangeRequest](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[learnerId] [int] NULL,
+	[tutorId] [int] NULL,
+	[fromSessionId] [varchar](10) NULL,
+	[toSessionId] [varchar](10) NULL,
+	[reason] [nvarchar](255) NULL,
+	[status] [nvarchar](20) NULL,
+	[createdAt] [datetime] NULL,
+	[dateChange] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Notification] ON 
+
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (8, 1, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T14:58:02.450' AS DateTime), N'TutorRequest')
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (9, 1, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:17:15.823' AS DateTime), N'TutorRequest')
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (10, 1, N'Your request have been approved change 08:00:00 in Saturday  to session 19:00:00 in Saturday of  null', 1, CAST(N'2024-07-16T15:22:55.520' AS DateTime), N'TurorResponse')
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (11, 1, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 19:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:39:10.277' AS DateTime), N'TurorResponse')
+SET IDENTITY_INSERT [dbo].[Notification] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SessionChangeRequest] ON 
+
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (7, 1, 7, N'M1', N'T5', N'ses', N'Approved', CAST(N'2024-07-16T14:47:52.547' AS DateTime), CAST(N'2024-06-17' AS Date))
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (8, 1, 7, N'M1', N'SA1', N'ss', N'Approved', CAST(N'2024-07-16T14:52:20.880' AS DateTime), CAST(N'2024-06-17' AS Date))
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (9, 1, 7, N'SA1', N'SA5', N'ok', N'Approved', CAST(N'2024-07-16T15:18:57.940' AS DateTime), CAST(N'2024-06-17' AS Date))
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (10, 1, 7, N'W4', N'T5', N's', N'Rejected', CAST(N'2024-07-16T15:29:57.723' AS DateTime), CAST(N'2024-06-10' AS Date))
+SET IDENTITY_INSERT [dbo].[SessionChangeRequest] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TutorNotification] ON 
+
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (6, 7, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  null', 1, CAST(N'2024-07-16T15:18:43.917' AS DateTime), N'StudentResponse')
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (7, 7, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  null', 1, CAST(N'2024-07-16T15:18:44.427' AS DateTime), N'StudentResponse')
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (8, 7, N'Your request have been rejected to change 08:00:00 in Monday  to session 19:00:00 in Monday of  null', 1, CAST(N'2024-07-16T15:18:45.047' AS DateTime), N'StudentResponse')
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (9, 7, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 19:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:29:57.737' AS DateTime), N'StudentRequest')
+SET IDENTITY_INSERT [dbo].[TutorNotification] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TutorSessionChangeRequest] ON 
+
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (6, 1, 7, N'M1', N'SA1', N'sss', N'Rejected', CAST(N'2024-07-16T14:22:51.407' AS DateTime), NULL)
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (7, 1, 7, N'M1', N'W4', N'sss', N'Approved', CAST(N'2024-07-16T14:28:19.520' AS DateTime), CAST(N'2024-06-10' AS Date))
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (8, 1, 7, N'M1', N'T5', N'sssss', N'Rejected', CAST(N'2024-07-16T14:57:08.353' AS DateTime), CAST(N'2024-07-01' AS Date))
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (9, 1, 7, N'W4', N'M1', N'ss', N'Rejected', CAST(N'2024-07-16T14:58:02.447' AS DateTime), CAST(N'2024-06-10' AS Date))
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (10, 1, 7, N'W4', N'M1', N'ss', N'Rejected', CAST(N'2024-07-16T15:17:15.810' AS DateTime), CAST(N'2024-06-10' AS Date))
+SET IDENTITY_INSERT [dbo].[TutorSessionChangeRequest] OFF
+GO
+ALTER TABLE [dbo].[Notification] ADD  DEFAULT ((0)) FOR [isRead]
+GO
+ALTER TABLE [dbo].[Notification] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[SessionChangeRequest] ADD  DEFAULT ('Pending') FOR [status]
+GO
+ALTER TABLE [dbo].[SessionChangeRequest] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[TutorNotification] ADD  DEFAULT ((0)) FOR [isRead]
+GO
+ALTER TABLE [dbo].[TutorNotification] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest] ADD  DEFAULT ('Pending') FOR [status]
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[Notification]  WITH CHECK ADD FOREIGN KEY([learnerId])
+REFERENCES [dbo].[Learner] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([fromSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([learnerId])
+REFERENCES [dbo].[Learner] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([toSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
+REFERENCES [dbo].[Tutor] ([id])
+GO
+ALTER TABLE [dbo].[TutorNotification]  WITH CHECK ADD FOREIGN KEY([tutorId])
+REFERENCES [dbo].[Tutor] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([fromSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([learnerId])
+REFERENCES [dbo].[Learner] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([toSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
+REFERENCES [dbo].[Tutor] ([id])
+GO
+
+
+select * from [User] 
+SELECT * FROM Lesson WHERE classId = 2
+Select * from [Question]

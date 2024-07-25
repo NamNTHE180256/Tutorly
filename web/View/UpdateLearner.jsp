@@ -47,59 +47,59 @@
         <title>Update Profile</title>
     <body>
         <%@ include file = "StudentHeader.jsp" %>
-        
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">ID</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.id}">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
-                                    </div>
-                                    
-                                            <div class="col-sm-9 text-secondary">
-                                                <form action="StudentProfileController" method="get">
-                                                    <input type="text" class="form-control" name="name" value="${linfo.name}">
-                                                    <input type="hidden" name="service" value="update">
-                                                    <input type="submit" class="btn btn-primary" value="Submit">
-                                                </form>
-                                            </div>
-                                       
 
-
-
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Email</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.getUserInfo().email}">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Join Date</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" readonly class="form-control" value="${linfo.getUserInfo().createdAt}">
-                                    </div>
-                                </div>
-                                
-
-                          
-                        
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">ID</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input type="text" readonly class="form-control" value="${linfo.id}">
+                        </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Full Name</h6>
+                        </div>
+
+                        <div class="col-sm-9 text-secondary">
+                            <form action="StudentProfileController" method="get">
+                                <input type="text" class="form-control" name="name" value="${linfo.name}">
+                                <input type="hidden" name="service" value="update">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </form>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input type="text" readonly class="form-control" value="${linfo.getUserInfo().email}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Join Date</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input type="text" readonly class="form-control" value="${linfo.getUserInfo().createdAt}">
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

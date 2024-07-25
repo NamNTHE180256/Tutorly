@@ -5,7 +5,6 @@
 package Controller;
 
 import DAO.AClassDAO;
-import DAO.ClassDAO;
 import DAO.SessionDAO;
 import Model.AClass;
 import Model.Session;
@@ -39,9 +38,8 @@ public class TutorDashboardController extends HttpServlet {
         if (tutor != null) {
             int tutorId = tutor.getId();
             AClassDAO aClassDAO = new AClassDAO();
-            ClassDAO classDAO = new ClassDAO();
             SessionDAO sessionDAO = new SessionDAO();
-            Vector<AClass> classes = classDAO.getClassesByTutorId(tutorId);
+            Vector<AClass> classes = aClassDAO.getClassesByTutorId(tutorId);
 
             Map<Integer, Session> sessionData = new HashMap<>();
             for (AClass aClass : classes) {
@@ -51,14 +49,14 @@ public class TutorDashboardController extends HttpServlet {
 
             Map<Integer, Double> progressMap = new HashMap<>();
             for (AClass aClass : classes) {
-                int finishedSessions = classDAO.getFinishedSessions(aClass.getId());
+                int finishedSessions = aClassDAO.getFinishedSessions(aClass.getId());
                 double progressPercentage = (double) finishedSessions / aClass.getTotalSession() * 100;
                 progressMap.put(aClass.getId(), progressPercentage);
             }
-           
+
             request.setAttribute("classes", classes);
-            //request.setAttribute("fn", aClassDAO.countClassByStatus("finished", tutorId));
-            //request.setAttribute("og", aClassDAO.countClassByStatus("ongoing", tutorId));
+            request.setAttribute("fn", aClassDAO.countClassByStatus("finished", tutorId));
+            request.setAttribute("og", aClassDAO.countClassByStatus("ongoing", tutorId));
             request.setAttribute("sessionData", sessionData);
             System.out.println(sessionData);
             request.setAttribute("progressMap", progressMap);

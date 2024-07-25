@@ -61,8 +61,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     String dateStr = request.getParameter("date");
 
                     rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "accepted");
-                    
-                    
+
                     AClassDAO aclassDAO = new AClassDAO();
                     LearnerDAO lDAO = new LearnerDAO();
                     LessonDAO lessonDAO = new LessonDAO();

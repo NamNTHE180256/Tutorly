@@ -81,13 +81,13 @@ public class TutorController extends HttpServlet {
                 String priceFilter = "";
                 switch (price) {
                     case 1:
-                        priceFilter = "t.price < 200";
+                        priceFilter = "t.price < 200000";
                         break;
                     case 2:
-                        priceFilter = "t.price BETWEEN 200 AND 400";
+                        priceFilter = "t.price BETWEEN 200000 AND 400000";
                         break;
                     case 3:
-                        priceFilter = "t.price > 400";
+                        priceFilter = "t.price > 400000";
                         break;
                 }
                 tutor_vector = tDAO.getTutors("SELECT t.*, "

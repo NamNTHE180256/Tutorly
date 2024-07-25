@@ -19,7 +19,7 @@
         <div class="container">
             <div class="registration-form">
                 <h1>CERTIFICATION</h1>
-                <form id="certification-setup-form" action="<%=request.getContextPath() %>/TutorRegisterServlet" method="post" >
+                <form id="certification-setup-form" action="<%=request.getContextPath()%>/TutorRegisterServlet" method="post" >
                     <input type="hidden" name="step" value="3">
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="no-certification" name="no-certification">
@@ -63,9 +63,9 @@
             </div>
         </div>
         <script>
-            <% if (request.getAttribute("message") != null) { %>
-            alert('<%= request.getAttribute("message") %>');
-            <% } %>
+            <% if (request.getAttribute("message") != null) {%>
+            alert('<%= request.getAttribute("message")%>');
+            <% }%>
         </script>
         <script >
             const subject = localStorage.getItem('subject-name');

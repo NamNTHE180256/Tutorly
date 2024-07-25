@@ -11,6 +11,7 @@ import DAO.UserDAO;
  * @author Admin
  */
 public class Learner {
+
     private int id;
     private String name;
     private String image;
@@ -23,7 +24,7 @@ public class Learner {
         this.name = name;
         this.image = image;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -47,9 +48,8 @@ public class Learner {
     public void setImage(String image) {
         this.image = image;
     }
-    
 
-    public User getUserInfo(){
+    public User getUserInfo() {
         UserDAO uDAO = new UserDAO();
         return uDAO.getUserById(id);
     }
@@ -59,5 +59,5 @@ public class Learner {
         return "Learner{" + "id=" + id + ", name=" + name + ", image=" + image + '}';
 
     }
-    
+
 }

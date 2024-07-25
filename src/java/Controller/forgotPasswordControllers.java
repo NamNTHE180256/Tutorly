@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import DAO.LearnerDAO;
+import DAO.TutorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,8 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import DAO.UserDAO;
+import Model.Learner;
+import Model.Tutor;
 import Model.User;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -21,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Acer
  */
-@WebServlet(name="forgotPasswordControllers", urlPatterns={"/forgotPassword"})
+@WebServlet(name = "forgotPasswordControllers", urlPatterns = {"/forgotPassword"})
 public class forgotPasswordControllers extends HttpServlet {
 
     /**
@@ -87,6 +92,8 @@ public class forgotPasswordControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        TutorDAO tdao = new TutorDAO();
+        LearnerDAO ldao = new LearnerDAO();
         UserDAO udao = new UserDAO();
         int status = 0;
         String password = request.getParameter("password");
@@ -104,12 +111,37 @@ public class forgotPasswordControllers extends HttpServlet {
         }
         if (status > 0) {
             if (user.getRole().equalsIgnoreCase("learner")) {
-                session.setAttribute("LearnerLogin", user);
-                request.getRequestDispatcher("TutorController").forward(request, response);
+                session.setAttribute("user", user);
+                Learner learner = ldao.getLearnerById(user.getId());
+                session.setAttribute("learner", learner);
+                Cookie learnerCookie = new Cookie("learnerId", String.valueOf(learner.getId()));
+                learnerCookie.setMaxAge(60 * 60); // 1 giờ
+
+                Cookie userCookie = new Cookie("userId", String.valueOf(user.getId()));
+                userCookie.setMaxAge(60 * 60); // 1 giờ
+
+                // Thêm cookies vào phản hồi
+                response.addCookie(learnerCookie);
+                response.addCookie(userCookie);
+            response.sendRedirect("TutorController");
+            } else if (user.getRole().equalsIgnoreCase("tutor")) {
+                session.setAttribute("user", user);
+                Tutor tutor = tdao.getTutorById(user.getId());
+                session.setAttribute("tutor", tutor);
+
+                Cookie tutorCookie = new Cookie("tutorId", String.valueOf(tutor.getId()));
+                tutorCookie.setMaxAge(60 * 60); // 1 hour
+
+                Cookie userCookie = new Cookie("userId", String.valueOf(user.getId()));
+                userCookie.setMaxAge(60 * 60); // 1 hour
+
+                // Add cookies to the response
+                response.addCookie(tutorCookie);
+                response.addCookie(userCookie);
+                 response.sendRedirect("tutor-dashboard");
             } else {
                 request.setAttribute("errorMessage", "Change Password faileddd!!!");
                 request.getRequestDispatcher("error.jsp").forward(request, response);
-
             }
         }
     }

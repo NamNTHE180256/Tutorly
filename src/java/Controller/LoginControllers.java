@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import DAO.LearnerDAO;
@@ -14,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,7 +27,7 @@ import java.util.regex.Pattern;
 @WebServlet(name = "LoginControllers", urlPatterns = {"/Login"})
 public class LoginControllers extends HttpServlet {
 
-    UserDAO userDao = new UserDAO();
+    private UserDAO userDao = new UserDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -86,22 +83,48 @@ public class LoginControllers extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
-        String password1 = request.getParameter("password");
+        String password = request.getParameter("password");
         LearnerDAO ldao = new LearnerDAO();
         TutorDAO tDao = new TutorDAO();
-        if (password1 != null && email != null) {
 
-            User userLogin = userDao.Login(email, password1);
+        if (password != null && email != null) {
+            User userLogin = userDao.Login(email, password);
 
             if (userLogin != null) {
+                clearPreviousCookies(request, response);
+
                 if (userLogin.getRole().equalsIgnoreCase("Learner")) {
                     Learner learner = ldao.getLearnerById(userLogin.getId());
+
+                    // Create cookies for learner
+                    Cookie learnerCookie = new Cookie("learnerId", String.valueOf(learner.getId()));
+                    learnerCookie.setMaxAge(60 * 60); // 1 hour
+
+                    Cookie userCookie = new Cookie("userId", String.valueOf(userLogin.getId()));
+                    userCookie.setMaxAge(60 * 60); // 1 hour
+
+                    // Add cookies to the response
+                    response.addCookie(learnerCookie);
+                    response.addCookie(userCookie);
+
+                    // Save information in the session
                     session.setAttribute("learner", learner);
                     session.setAttribute("user", userLogin);
-                    request.getRequestDispatcher("TutorController").forward(request, response);
+                    response.sendRedirect("DashboardController");
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
                     Tutor tutor = tDao.getTutorById(userLogin.getId());
                     if (tutor != null) {
+                        // Create cookies for tutor
+                        Cookie tutorCookie = new Cookie("tutorId", String.valueOf(tutor.getId())); // Ensure cookie name is consistent
+                        tutorCookie.setMaxAge(60 * 60); // 1 hour
+
+                        Cookie userCookie = new Cookie("userId", String.valueOf(userLogin.getId()));
+                        userCookie.setMaxAge(60 * 60); // 1 hour
+
+                        // Add cookies to the response
+                        response.addCookie(tutorCookie);
+                        response.addCookie(userCookie);
+
                         session.setAttribute("tutor", tutor);
                         session.setAttribute("user", userLogin);
                         response.sendRedirect("tutor-dashboard");
@@ -116,6 +139,20 @@ public class LoginControllers extends HttpServlet {
             } else {
                 request.setAttribute("messageError", "Incorrect email or password!");
                 request.getRequestDispatcher("View/Login.jsp").forward(request, response);
+            }
+        }
+    }
+
+    private void clearPreviousCookies(HttpServletRequest request, HttpServletResponse response) {
+      
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("learnerId".equals(cookie.getName()) || "tutorId".equals(cookie.getName()) || "userId".equals(cookie.getName())) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
             }
         }
     }
@@ -150,5 +187,4 @@ public class LoginControllers extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

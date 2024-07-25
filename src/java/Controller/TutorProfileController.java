@@ -16,6 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 
+/**
+ *
+ * @author Tung Duong
+ */
 @WebServlet(name = "TutorProfileController", urlPatterns = {"/TutorProfileController"})
 public class TutorProfileController extends HttpServlet {
 
@@ -81,12 +85,19 @@ public class TutorProfileController extends HttpServlet {
         String action = request.getParameter("action");
         if (action.equals("add")) {
             String name = request.getParameter("name");
+            String bio = request.getParameter("bio");
             int id = Integer.parseInt(request.getParameter("id"));
             TutorDAO tutorDAO = new TutorDAO();
             Tutor t = tutorDAO.getTutorById(id);
             t.setName(name);
-            System.out.println(t.getName());
-            tutorDAO.updateTutor(t);
+            t.setBio(bio);
+            try {
+                tutorDAO.updateTutor(t);
+                session.setAttribute("successMessage", "Update successfully!");
+            } catch (Exception e) {
+                session.setAttribute("errorMessage", "Update failed!");
+            }
+
             response.sendRedirect("TutorProfileController");
         }
     }

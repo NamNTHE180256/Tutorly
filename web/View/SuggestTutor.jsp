@@ -125,26 +125,26 @@
     </head>
     <body>
         <div class="container-fluid">
-    <div class="row">
-      <div class="scrollcards">
-        <c:forEach items="${suggesttutor_vector}" var="s">
-          <div class="card">
-            <div class="profile-card">
-                <div class="image">
-                  <img src="image/${s.getImage()}" alt="" class="profile-pic">
+            <div class="row">
+                <div class="scrollcards">
+                    <c:forEach items="${suggesttutor_vector}" var="s">
+                        <div class="card">
+                            <div class="profile-card">
+                                <div class="image">
+                                    <img src="image/${s.getImage()}" alt="" class="profile-pic">
+                                </div>
+                                <div class="data">
+                                    <h2>${s.getName()}</h2>
+                                    <span>${s.getSubject().getName()}</span>
+                                </div>
+                                <div class="buttons">
+                                    <a href="#" class="btn">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-                <div class="data">
-                  <h2>${s.getName()}</h2>
-                  <span>${s.getSubject().getName()}</span>
-                </div>
-                <div class="buttons">
-                  <a href="#" class="btn">View Details</a>
-                </div>
-              </div>
-          </div>
-        </c:forEach>
-      </div>
-    </div>
-   </div>
+            </div>
+        </div>
     </body>
 </html>

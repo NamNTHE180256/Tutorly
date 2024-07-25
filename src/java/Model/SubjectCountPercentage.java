@@ -9,13 +9,15 @@ package Model;
  * @author TRANG
  */
 public class SubjectCountPercentage {
+
     private int learnerId;
     private String subjectName;
     private int subjectClassCount;
     private double averagePercentage;
 
     // Constructors
-    public SubjectCountPercentage() {}
+    public SubjectCountPercentage() {
+    }
 
     public SubjectCountPercentage(int learnerId, String subjectName, int subjectClassCount, double averagePercentage) {
         this.learnerId = learnerId;
@@ -59,11 +61,11 @@ public class SubjectCountPercentage {
 
     @Override
     public String toString() {
-        return "ClassStatistics{" +
-                "learnerId=" + learnerId +
-                ", subjectName='" + subjectName + '\'' +
-                ", subjectClassCount=" + subjectClassCount +
-                ", averagePercentage=" + averagePercentage +
-                '}';
+        return "ClassStatistics{"
+                + "learnerId=" + learnerId
+                + ", subjectName='" + subjectName + '\''
+                + ", subjectClassCount=" + subjectClassCount
+                + ", averagePercentage=" + averagePercentage
+                + '}';
     }
 }

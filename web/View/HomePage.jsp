@@ -11,6 +11,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tutorly</title>
+<!--        <link rel="icon" type="image/x-icon" href="image/LOGO_TUTORLY-_1_.ico">-->
         <!-- Font Awesome CDN Link -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <!-- Bootstrap CSS -->
@@ -42,7 +43,7 @@
                                     <a class="nav-link mx-lg-2 active" aria-current="page" href="../View/Register.jsp">Become a tutor</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mx-lg-2 active" aria-current="page" href="../TutorController">Finding a tutor</a>
+                                    <a class="nav-link mx-lg-2 active" aria-current="page" href="../FindingTutorController">Finding a tutor</a>
                                 </li>
                             </ul>
                         </div>

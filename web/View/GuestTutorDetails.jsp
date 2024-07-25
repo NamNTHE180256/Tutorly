@@ -18,6 +18,71 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <title>Tutor Profile</title>
         <style>
+            .head {
+                margin: 0;
+                padding: 0;
+            }
+
+            .navheader {
+                margin-top: 0;
+                margin-bottom: 0;
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 0;
+            }
+
+            .logo_img {
+                height: 40px;
+            }
+
+            .head_link a {
+                color: #0E3C6E;
+            }
+
+            .head_icon {
+                margin-top: 15px;
+                margin-right: 5px;
+                font-size: 20px;
+                color: #0E3C6E;
+            }
+
+            .student_profile_image {
+                margin-top: 15px;
+                height: 50px;
+            }
+
+            .learnername {
+                margin-top: 15px;
+                color: #0E3C6E;
+            }
+
+
+            /*            .navbarmenu {
+                            margin-top: 0;
+                            margin-bottom: 10px;
+                            margin-left: 20px;
+                            
+                        }
+            
+                        .navmenuitem {
+                            margin-right: 25px;
+                            background-color: #0E3C6E;
+                            border-radius: 10px;
+                            width: 120px;
+                            
+                             text-align: center;
+                        }
+                        
+                        .navmenuitem a {
+                            color: aliceblue;
+                             justify-content: center;
+                        }*/
+
+
+            .content {
+                padding-top: 20px;
+                background-color: #E6E6E6;
+            }
             body {
                 background-color: #A2A2A2;
             }
@@ -437,7 +502,25 @@
     </head>
     <body>
 
-        <%@ include file = "SearchTutorHeader.jsp" %>
+         <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand" href="View/HomePage.jsp"><img src="image/LOGO_TUTORLY.png" class="logo_img"></a>
+                <div class="collapse navbar-collapse" id="navbarExample">
+                    <ul class="navbar-nav me-auto mb-0">
+                        <!-- Find tutor -->
+                        <li class="nav-item">
+
+                            <a class="nav-link" href="../Tutorly/TutorController">Finding a tutor</a>
+
+                        </li>
+
+                    </ul>
+                </div>   
+            </div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 " style="background-color: white; margin: 20px; margin-left: 40px; border-radius: 20px; padding: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
@@ -727,7 +810,7 @@
                                                     <span style="color: white">${s.subject.name}</span>
                                                 </div>
                                                 <div class="buttons">
-                                                    <a href="../Tutorly/TutorDetailController?id=${s.id}&idsub=${s.getSubject().id}" class="btn">View Details</a>
+                                                    <a href="../Tutorly/GuestTutorDetails?id=${s.id}&idsub=${s.getSubject().id}" class="btn">View Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -782,21 +865,9 @@
                                         </li>
                                         
                                         <li class="nav-item">
-                                            <form id="addtutorform-${tutor.id}" onsubmit="return false;">
-                                                <button type="button" id="heart-button-${tutor.id}" style="background: white; border: 1px white;" onclick="change_heart('${tutor.id}')">
-                                                    <c:choose>
-                                                        <c:when test="${tutor.saveStatus == 'saved'}">
-                                                            <i class="fa-solid fa-heart heart ml-2" style="font-size:35px;color: #A34343;"></i>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <i class="fa-regular fa-heart heart ml-2" style="font-size:35px;"></i>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </button>
-                                                <input type="hidden" name="service" value="add">
-                                                <input type="hidden" name="tutor_id" value="${tutor.id}">
-                                                <input type="hidden" name="learn_id" value="1">
-                                            </form>
+                                            
+                                                 <a href="View/Login.jsp"> <i class="fa-regular fa-heart heart ml-2" style="font-size:35px; color: #0E3C6E"></i></a>
+                                                   
                                         </li>
 
                                     </ul>
@@ -809,108 +880,14 @@
                     </div> 
                       <div class="buttons ">
                             <div class="d-grid gap-2">
-                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
+                                <a href="View/Login.jsp" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                                <a href="View/Login.jsp" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
                             </div>
                         </div>
                 </div>
             </div>
         </div>
-                                                <script type="text/javascript">
-            window.onload = function () {
-                setTimeout(function () {
-                    var successAlert = document.getElementById('successAlert');
-                    if (successAlert) {
-                        successAlert.style.display = 'none';
-                    }
-                    var errorAlert = document.getElementById('errorAlert');
-                    if (errorAlert) {
-                        errorAlert.style.display = 'none';
-                    }
-            <% session.removeAttribute("successMessage"); %>
-            <% session.removeAttribute("errorMessage"); %>
-                }, 5000); // 5000 milliseconds = 5 seconds
-            };
-
-            function change_heart(tutorId) {
-                var button = document.getElementById('heart-button-' + tutorId);
-                var icon = button.querySelector('i');
-
-                if (icon.classList.contains('fa-regular')) {
-                    icon.classList.remove('fa-regular');
-                    icon.classList.add('fa-solid');
-                    icon.style.color = '#A34343';
-                    button.onclick = function () {
-                        reset_heart(tutorId);
-                    };
-
-                    // Perform the AJAX request to add the tutor
-                    var formId = 'addtutorform-' + tutorId;
-                    var form = document.getElementById(formId);
-                    var tId = form.querySelector('input[name="tutor_id"]').value;
-                    var lId = form.querySelector('input[name="learn_id"]').value;
-                    var service = form.querySelector('input[name="service"]').value;
-
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function () {
-                        if (this.readyState == 4 && this.status == 200) {
-                            alert('Data sent successfully!');
-                        }
-                    };
-
-                    xhttp.onerror = function () {
-                        alert('Request failed');
-                    };
-
-                    xhttp.open("POST", "SavedTutorController", true);
-                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;
-                    xhttp.send(data);
-                } else {
-                    reset_heart(tutorId);
-                }
-                return false; // Prevent form submission
-            }
-
-            function reset_heart(tutorId) {
-                var button = document.getElementById('heart-button-' + tutorId);
-                var icon = button.querySelector('i');
-
-                icon.classList.remove('fa-solid');
-                icon.classList.add('fa-regular');
-                icon.style.color = '';
-                button.onclick = function () {
-                    change_heart(tutorId);
-                };
-
-                // Perform the AJAX request to remove the tutor
-                var formId = 'addtutorform-' + tutorId;
-                var form = document.getElementById(formId);
-                var tId = form.querySelector('input[name="tutor_id"]').value;
-                var lId = form.querySelector('input[name="learn_id"]').value;
-                var service = "remove";
-
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        alert(tId);
-                        alert(lID);
-                        alert('Data removed successfully!');
-                    }
-                };
-
-                xhttp.onerror = function () {
-                    alert('Request failed');
-                };
-
-                xhttp.open("POST", "SavedTutorController", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;
-                xhttp.send(data);
-
-                return false; // Prevent form submission
-            }
-        </script>
+           
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     </body>

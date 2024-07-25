@@ -71,9 +71,6 @@
         <c:if test="${tutor != null}">
             <%@ include file="TutorHeader.jsp" %>
         </c:if>
-        <c:if test="${learner != null}">
-            <%@ include file="StudentHeader.jsp" %>
-        </c:if>
         <div class="container">
             <h2>Change Session</h2>
             <c:if test="${not empty sessionScope.successMessage}">

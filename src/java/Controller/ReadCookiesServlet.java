@@ -78,8 +78,11 @@ public class ReadCookiesServlet extends HttpServlet {
         // Debugging prints
         System.out.println("Learner: " + learner);
         System.out.println("Tutor: " + tutor);
-        System.out.println("User: " + user.getRole());
-
+      
+        if (user == null) {
+          
+            request.getRequestDispatcher("View/Login.jsp").forward(request, response);
+        }
         // Redirect to the appropriate page based on u  ser role
         if (user != null && user.getRole() != null) {
             if (user.getRole().equalsIgnoreCase("Learner")) {
@@ -90,9 +93,6 @@ public class ReadCookiesServlet extends HttpServlet {
                 request.setAttribute("messageError", "Unknown role!");
                 request.getRequestDispatcher("View/Login.jsp").forward(request, response);
             }
-        } else {
-            request.setAttribute("messageError", "User not found or not authenticated!");
-            request.getRequestDispatcher("View/Login.jsp").forward(request, response);
         }
     }
 

@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 
-
 /**
  *
  * @author TRANG
@@ -43,7 +42,7 @@ public class MaterialDAO extends DBContext {
                 int id = rs.getInt("id");
                 int lessonID = rs.getInt("lessonId");
                 String name = rs.getString("fileName");
-                String fileData = rs.getString("filePath");
+                byte[] fileData = rs.getBytes("filePath"); // Chuyển đổi thành byte[]
                 String fileType = rs.getString("fileType");
                 Date uploadedAt = rs.getDate("uploadedAt");
                 Lesson lesson = lessonDAO.getLessonById(lessonID);
@@ -51,26 +50,10 @@ public class MaterialDAO extends DBContext {
                 list.add(material);
             }
         } catch (SQLException e) {
-
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
         }
 
         return list;
-    }
-
-    public boolean addMaterial(Material material) {
-        String sql = "INSERT INTO Material (id, lessonId, fileName, filePath, fileType, uploadedAt) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, material.getId());
-            ps.setInt(2, material.getLesson().getId());
-            ps.setString(3, material.getFileName());
-            ps.setString(4, material.getFilePath());
-            ps.setString(5, material.getFileType());
-            ps.setDate(6, new java.sql.Date(material.getUploadedAt().getTime()));
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public Vector<Material> displayAllMaterials() {
@@ -178,19 +161,45 @@ public class MaterialDAO extends DBContext {
                 int id = rs.getInt("id");
                 int lessonID = rs.getInt("lessonId");
                 String name = rs.getString("fileName");
-                String fileData = rs.getString("filePath");
+                byte[] fileData = rs.getBytes("filePath"); // Chuyển đổi thành byte[]
                 String fileType = rs.getString("fileType");
                 Date uploadedAt = rs.getDate("uploadedAt");
                 Lesson lesson = lessonDAO.getLessonById(lessonID);
                 material = new Material(id, name, fileData, fileType, uploadedAt, lesson);
             }
         } catch (SQLException e) {
-
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
         }
         return material;
     }
 
-    public int insertMaterialWithCondition(Material material, int classId) {
+//    public int insertMaterialWithCondition(Material material, int classId) {
+//        String query = "IF EXISTS (\n"
+//                + "    SELECT 1\n"
+//                + "    FROM Lesson l\n"
+//                + "    JOIN Class c ON l.classId = c.id\n"
+//                + "    WHERE c.id = ? AND l.id = ?\n"
+//                + ")\n"
+//                + "BEGIN\n"
+//                + "    INSERT INTO Material (fileName, filePath, fileType, uploadedAt, lessonId)\n"
+//                + "    VALUES (?, ?, ?, GETDATE(), ?)\n"
+//                + "END";
+//
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            stmt.setInt(1, classId);
+//            stmt.setInt(2, material.getLesson().getId());
+//            stmt.setString(3, material.getFileName());
+//            stmt.setString(4, material.getFilePath());
+//            stmt.setString(5, material.getFileType());
+//            stmt.setInt(6, material.getLesson().getId());
+//
+//            return stmt.executeUpdate();
+//        } catch (SQLException e) {
+//
+//        }
+//        return 0;
+//    }
+    public int insertMaterialWithCondition(Material material, int classId, int lessonId) {
         String query = "IF EXISTS (\n"
                 + "    SELECT 1\n"
                 + "    FROM Lesson l\n"
@@ -203,16 +212,19 @@ public class MaterialDAO extends DBContext {
                 + "END";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            // Đặt các giá trị cho điều kiện EXISTS
             stmt.setInt(1, classId);
-            stmt.setInt(2, material.getLesson().getId());
+            stmt.setInt(2, lessonId);
+
+            // Đặt các giá trị cho việc INSERT
             stmt.setString(3, material.getFileName());
-            stmt.setString(4, material.getFilePath());
+            stmt.setBytes(4, material.getFilePath()); // sửa thành getBytes
             stmt.setString(5, material.getFileType());
             stmt.setInt(6, material.getLesson().getId());
 
             return stmt.executeUpdate();
         } catch (SQLException e) {
-
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
         }
         return 0;
     }
@@ -251,22 +263,20 @@ public class MaterialDAO extends DBContext {
         return materials;
     }
 
-    private Material createMaterialFromResultSet(ResultSet rs) throws SQLException {
-        Material material = new Material();
-        material.setId(rs.getInt("id"));
-        material.setLesson(lessonDAO.getLessonById(rs.getInt("lessonId")));
-        material.setFileName(rs.getString("fileName"));
-        material.setFilePath(rs.getString("filePath"));
-        material.setFileType(rs.getString("fileType"));
-        material.setUploadedAt(rs.getDate("uploadedAt"));
-        return material;
-    }
-
+//    private Material createMaterialFromResultSet(ResultSet rs) throws SQLException {
+//        Material material = new Material();
+//        material.setId(rs.getInt("id"));
+//        material.setLesson(lessonDAO.getLessonById(rs.getInt("lessonId")));
+//        material.setFileName(rs.getString("fileName"));
+//        material.setFilePath(rs.getString("filePath"));
+//        material.setFileType(rs.getString("fileType"));
+//        material.setUploadedAt(rs.getDate("uploadedAt"));
+//        return material;
+//    }
     public static void main(String[] args) {
         MaterialDAO materialDAO = new MaterialDAO();
 
-        System.out.println(materialDAO.getAllMaterialWithID(2, 13));
-
+        System.out.println(materialDAO.getAllMaterialWithID(3, 17).get(0).getFilePath());
 
         // Test getMaterialsByClassIdAndFileType method
     }

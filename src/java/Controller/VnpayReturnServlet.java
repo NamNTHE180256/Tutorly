@@ -58,159 +58,164 @@ public class VnpayReturnServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> vnp_Params = new HashMap<>();
-        for (Enumeration<String> params = req.getParameterNames(); params.hasMoreElements();) {
-            String paramName = params.nextElement();
-            String paramValue = req.getParameter(paramName);
-            vnp_Params.put(paramName, paramValue);
-        }
-
-        String vnp_SecureHash = req.getParameter("vnp_SecureHash");
-        if (vnp_Params.containsKey("vnp_SecureHash")) {
-            vnp_Params.remove("vnp_SecureHash");
-        }
-
-        List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
-        Collections.sort(fieldNames);
-        StringBuilder hashData = new StringBuilder();
-        for (String fieldName : fieldNames) {
-            String fieldValue = vnp_Params.get(fieldName);
-            if (fieldValue != null && fieldValue.length() > 0) {
-                hashData.append(fieldName).append('=').append(URLEncoder.encode(fieldValue, StandardCharsets.UTF_8.toString()));
-                if (!fieldName.equals(fieldNames.get(fieldNames.size() - 1))) {
-                    hashData.append('&');
-                }
+        protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            Map<String, String> vnp_Params = new HashMap<>();
+            for (Enumeration<String> params = req.getParameterNames(); params.hasMoreElements();) {
+                String paramName = params.nextElement();
+                String paramValue = req.getParameter(paramName);
+                vnp_Params.put(paramName, paramValue);
             }
-        }
 
-        String secureHash = VNPayConfig.hmacSHA512(VNPayConfig.secretKey, hashData.toString());
-        if (secureHash.equals(vnp_SecureHash)) {
-            String responseCode = req.getParameter("vnp_ResponseCode");
-            if ("00".equals(responseCode)) {
-//                addTransaction(req, resp, vnp_Params);
-                RegisterOfficialClass(req, resp);
-            } else {
-                resp.getWriter().write("Payment failed. Response code: " + responseCode);
+            String vnp_SecureHash = req.getParameter("vnp_SecureHash");
+            if (vnp_Params.containsKey("vnp_SecureHash")) {
+                vnp_Params.remove("vnp_SecureHash");
             }
-        } else {
-            resp.getWriter().write("Invalid signature \n" + secureHash + "\n" + vnp_SecureHash);
-        }
-    }
 
-    
-    public void RegisterOfficialClass(HttpServletRequest req, HttpServletResponse resp) 
-    throws ServletException, IOException{
-        String tutor_id = (String) req.getSession().getAttribute("tutor_id");
-        String learner_id = (String) req.getSession().getAttribute("learner_id");
-        String session_id = (String) req.getSession().getAttribute("session");
-        String totallesson = (String) req.getSession().getAttribute("totallesson");
-        
-        if (tutor_id == null || learner_id == null || session_id == null || totallesson == null) {
-        resp.getWriter().write("Missing parameters for registering class");
-        return;
-    }
-        TutorDAO tDAO = new TutorDAO();
-        Tutor tutor = tDAO.getTutorById(Integer.parseInt(tutor_id));
-        LearnerDAO lDAO = new LearnerDAO();
-        SessionDAO sDAO = new SessionDAO();
-        AClassDAO aclassDAO = new AClassDAO();
-        LessonDAO lessonDAO = new LessonDAO();
-        SubjectDAO sbDAO = new SubjectDAO();
-
-        Date today = new Date();
-        Date startDate = getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek());
-        Date endDate = getEndDate(startDate, Integer.parseInt(totallesson));
-
-        AClass aClass = new AClass(
-                lDAO.getLearnerById(Integer.parseInt(learner_id)),
-                tutor,
-                Integer.parseInt(totallesson),
-                startDate,
-                endDate,
-                "ongoing",
-                sbDAO.getSubjectById(tutor.getSubject().getId())
-        );
-
-        int classId = aclassDAO.addClass(aClass);
-        boolean success = false;
-        if (classId != 0) {
-            AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
-            if (addedClass != null) {
-                for (int i = 0; i < Integer.parseInt(totallesson); i++) {
-                    Date lessonDate = getLessonDate(startDate, i);
-                    Lesson newLesson = new Lesson(
-                            addedClass,
-                            sDAO.getSessionById(session_id),
-                            lessonDate,
-                            "Scheduled"
-                    );
-                    int lessonResult = lessonDAO.addLesson(newLesson);
-                    if (lessonResult == 0) {
-                        success = false;
-                        break;
+            List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
+            Collections.sort(fieldNames);
+            StringBuilder hashData = new StringBuilder();
+            for (String fieldName : fieldNames) {
+                String fieldValue = vnp_Params.get(fieldName);
+                if (fieldValue != null && fieldValue.length() > 0) {
+                    hashData.append(fieldName).append('=').append(URLEncoder.encode(fieldValue, StandardCharsets.UTF_8.toString()));
+                    if (!fieldName.equals(fieldNames.get(fieldNames.size() - 1))) {
+                        hashData.append('&');
                     }
-                    success = true;
                 }
+            }
+
+            String secureHash = VNPayConfig.hmacSHA512(VNPayConfig.secretKey, hashData.toString());
+            if (secureHash.equals(vnp_SecureHash)) {
+                String responseCode = req.getParameter("vnp_ResponseCode");
+                if ("00".equals(responseCode)) {
+                    addTransaction(req, resp, vnp_Params);
+                    RegisterOfficialClass(req, resp);
+                } else {
+                    resp.getWriter().write("Payment failed. Response code: " + responseCode);
+                }
+            } else {
+                resp.getWriter().write("Invalid signature \n" + secureHash + "\n" + vnp_SecureHash);
             }
         }
 
-        HttpSession session = req.getSession();
-        if (success) {
-            session.setAttribute("successMessage", "Register official class success.");
-        } else {
-            session.setAttribute("errorMessage", "Register official class fail.");
+        public void RegisterOfficialClass(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            String tutor_id = (String) req.getSession().getAttribute("tutor_id");
+            String learner_id = (String) req.getSession().getAttribute("learner_id");
+            String session_id = (String) req.getSession().getAttribute("session");
+            String totallesson = (String) req.getSession().getAttribute("totallesson");
+
+            if (tutor_id == null || learner_id == null || session_id == null || totallesson == null) {
+                resp.getWriter().write("Missing parameters for registering class");
+                return;
+            }
+            TutorDAO tDAO = new TutorDAO();
+            Tutor tutor = tDAO.getTutorById(Integer.parseInt(tutor_id));
+            LearnerDAO lDAO = new LearnerDAO();
+            SessionDAO sDAO = new SessionDAO();
+            AClassDAO aclassDAO = new AClassDAO();
+            LessonDAO lessonDAO = new LessonDAO();
+            SubjectDAO sbDAO = new SubjectDAO();
+
+            Date today = new Date();
+            Date startDate = getNearestDayOfWeek(today, sDAO.getSessionById(session_id).getDayOfWeek());
+            Date endDate = getEndDate(startDate, Integer.parseInt(totallesson));
+
+            
+            AClass aClass = new AClass(
+                    lDAO.getLearnerById(Integer.parseInt(learner_id)),
+                    tutor,
+                    Integer.parseInt(totallesson),
+                    startDate,
+                    endDate,
+                    "ongoing",
+                    sbDAO.getSubjectById(tutor.getSubject().getId())
+            );
+
+            int classId = aclassDAO.addClass(aClass);
+            boolean success = false;
+            if (classId != 0) {
+                AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
+                if (addedClass != null) {
+                    for (int i = 0; i < Integer.parseInt(totallesson); i++) {
+                        Date lessonDate = getLessonDate(startDate, i);
+                        Lesson newLesson = new Lesson(
+                                addedClass,
+                                sDAO.getSessionById(session_id),
+                                lessonDate,
+                                "Scheduled"
+                        );
+                        int lessonResult = lessonDAO.addLesson(newLesson);
+                        if (lessonResult == 0) {
+                            success = false;
+                            break;
+                        }
+                        success = true;
+                    }
+                }
+            }
+
+            HttpSession session = req.getSession();
+            if (success) {
+                session.setAttribute("successMessage", "Register official class success.");
+            } else {
+                session.setAttribute("errorMessage", "Register official class fail.");
+            }
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("TutorController");
+            dispatcher.forward(req, resp);
         }
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("TutorController");
-        dispatcher.forward(req, resp);
-    }
-    
-    private void addTransaction(HttpServletRequest req, HttpServletResponse resp, Map<String, String> vnp_Params) throws IOException {
-        UserDAO uDao = new UserDAO();
-        TutorDAO tDao = new TutorDAO();
-        Learner learner = (Learner) req.getSession().getAttribute("learner"); // Assuming user_id is stored in the session
-        User user = uDao.getUserById(learner.getId());
-        String amountParam = vnp_Params.get("vnp_Amount");
-        
-        String paymentMethod = "VNPay"; // Hardcoded for VNPay
-        String transactionType = "Payment"; // Hardcoded for payment
-        String status = "Completed"; // Assuming success status
-        String tutor_id = (String) req.getSession().getAttribute("tutor_id");
-        String vnp_CreateDate = vnp_Params.get("vnp_CreateDate");
-        Tutor tutor = tDao.getTutorById(Integer.parseInt("tutor_id"));
-        if (user == null || amountParam == null) {
-            resp.getWriter().write("Missing parameters for transaction");
-            return;
-        }
-        String description = "Payment for learning" + tutor.getSubject().getName() + " by tutor " + tutor.getName(); // You can modify this
-        int amount = Integer.parseInt(amountParam) / 100; // Assuming the amount is in the smallest currency unit
-        Date transactionDate;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-            transactionDate = dateFormat.parse(vnp_CreateDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            resp.getWriter().write("Invalid transaction date format");
-            return;
-        }
-        Transaction transaction = new Transaction(
-                user, // userId
-                transactionDate, // transactionDate
-                amount, // amount
-                paymentMethod, // paymentMethod
-                transactionType, // transactionType
-                status, // status
-                description // description
-        );
+        private void addTransaction(HttpServletRequest req, HttpServletResponse resp, Map<String, String> vnp_Params) throws IOException {
+            UserDAO uDao = new UserDAO();
+            TutorDAO tDao = new TutorDAO();
+            LearnerDAO lDao = new LearnerDAO();
+            String learner_id = (String) req.getSession().getAttribute("learner_id");
+            //Learner learner = lDao.getLearnerById(Integer.parseInt(learner_id)); // Assuming learner is stored in the session
+            User user = uDao.getUserById(Integer.parseInt(learner_id));
+            String amountParam = vnp_Params.get("vnp_Amount");
 
-        TransactionDAO transactionDAO = new TransactionDAO();
-        boolean isSuccess = transactionDAO.addTransaction(transaction);
+            String paymentMethod = "VNPay"; // Hardcoded for VNPay
+            String transactionType = "Payment"; // Hardcoded for payment
+            String status = "Completed"; // Assuming success status
+            String tutor_id = (String) req.getSession().getAttribute("tutor_id");
+            String vnp_CreateDate = vnp_Params.get("vnp_CreateDate");
+            if (vnp_CreateDate == null) {
+                resp.getWriter().write("Missing vnp_CreateDate parameter for transaction");
+                return; 
+            }
+            Tutor tutor = tDao.getTutorById(Integer.parseInt(tutor_id));
+            if (user == null || amountParam == null) {
+                resp.getWriter().write("Missing parameters for transaction");
+                return;
+            }
+            String description = "Payment for learning " + tutor.getSubject().getName() + " by tutor " + tutor.getName(); // You can modify this
+            int amount = Integer.parseInt(amountParam) / 100; // Assuming the amount is in the smallest currency unit
+            Date transactionDate;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                transactionDate = dateFormat.parse(vnp_CreateDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                resp.getWriter().write("Invalid transaction date format");
+                return;
+            }
+            Transaction transaction = new Transaction(
+                    user, // user
+                    transactionDate, // transactionDate
+                    amount, // amount
+                    paymentMethod, // paymentMethod
+                    transactionType, // transactionType
+                    status, // status
+                    description // description
+            );
 
-        if (!isSuccess) {
-            resp.getWriter().write("Failed to add transaction.");
+            TransactionDAO transactionDAO = new TransactionDAO();
+            boolean isSuccess = transactionDAO.addTransaction(transaction);
+
+            if (!isSuccess) {
+                resp.getWriter().write("Failed to add transaction.");
+            }
         }
-    }
     
     private static Date getEndDate(Date startDate, int totallesson) {
         Calendar calendar = Calendar.getInstance();

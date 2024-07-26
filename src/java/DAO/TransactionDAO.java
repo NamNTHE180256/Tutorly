@@ -70,27 +70,28 @@ public class TransactionDAO extends DBContext{
     
     public static void main(String[] args) {
         // Create a new Transaction object
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
         Date transactionDate;
         try {
-            transactionDate = dateFormat.parse("20240101010101"); // Example date
+            transactionDate = dateFormat.parse("24072024072600"); // Example date
         } catch (ParseException e) {
             e.printStackTrace();
             return;
         }
-        
+        System.out.println("Parsed Date: " + transactionDate);
         UserDAO udao = new UserDAO();
         User user = udao.getUserById(1);
 
         Transaction transaction = new Transaction(
                 user, // userId (example user id)
                 transactionDate, // transactionDate
-                5000, // amount (example amount)
+                2000000, // amount (example amount)
                 "VNPay", // paymentMethod
                 "Payment", // transactionType
                 "Completed", // status
                 "Payment for tutoring service" // description
         );
         TransactionDAO tdao = new TransactionDAO();
+        tdao.addTransaction(transaction);
         System.out.println(tdao.getAllTransactions());
 }}

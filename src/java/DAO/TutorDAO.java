@@ -489,6 +489,6 @@ public class TutorDAO extends DBContext {
         String name = "hien";
         int subjectId = 15;
         int id = 9;
-        System.out.println(t.getTutorById(7).getLinkmeet());
+        System.out.println(t.getAllTutors());
     }
 }

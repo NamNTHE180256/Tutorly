@@ -41,6 +41,35 @@ public class LearnerDAO extends DBContext {
         }
         return learners;
     }
+    
+    public ArrayList<Learner> searchLearners(String searchQuery) {
+        ArrayList<Learner> learners = new ArrayList<>();
+        String sql = "SELECT Learner.* FROM Learner JOIN \n"
+                + "	[User] ON Learner.id = [User].id\n"
+                + "	WHERE Learner.id LIKE ? \n"
+                + "		OR Learner.[name] LIKE ?\n"
+                + "		OR [User].email LIKE ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            String searchPattern = "%" + searchQuery + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Learner learner = new Learner();
+                learner.setId(rs.getInt("id"));
+                learner.setName(rs.getString("name"));
+                learner.setImage(rs.getString("image"));
+                learners.add(learner);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return learners;
+    }
 
     public int RegisterLearner(User user) {
         String sql = "INSERT INTO [dbo].[Learner] ([id], [name], [image]) VALUES (?, ?, ' ')";

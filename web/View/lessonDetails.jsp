@@ -98,25 +98,27 @@
                             </c:if>
                         </div>
                     </div>
-                    <div class="materials mt-3">
-                        <p><strong>Material:</strong></p>
-                        <div class="buttons-row">
 
-
-                            <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload">Upload</button>
-                            </c:if>
+                    <c:if test="${sessionScope.user.role eq 'tutor'}">
+                        <div class="materials mt-3">
+                            <p><strong>Material:</strong></p>
+                            <div class="buttons-row">
+                            </div>
                         </div>
-                    </div>
-                    <div class="assignment mt-3">
-                        <p><strong>Records</strong></p>
-                        <div class="buttons-row">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload">Upload</button>
+                    </c:if>
 
-                            <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadRecords">Upload</button>
-                            </c:if>
+
+
+                    <c:if test="${sessionScope.user.role eq 'tutor'}">
+                        <div class="assignment mt-3">
+                            <p><strong>Records</strong></p>
+                            <div class="buttons-row">
+                            </div>
                         </div>
-                    </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadRecords">Upload</button>
+                    </c:if>
+
                     <div class="materials mt-3">
                         <p><strong>Material And Records:</strong></p>
                         <div class="buttons-row">

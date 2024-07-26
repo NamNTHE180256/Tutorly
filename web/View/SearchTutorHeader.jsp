@@ -125,12 +125,7 @@
 
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <button id="logoutButton" type="button" class="btn btn-primary">Logout</button>
-
-                                </a>
-                            </li>
+                         
                         </ul>
                     </div>
                 </div>

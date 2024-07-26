@@ -25,6 +25,70 @@ public class MaterialDAO extends DBContext {
 
     private LessonDAO lessonDAO = new LessonDAO();
 
+    public ArrayList<Material> getAllSlideWithID(int classid, int lessonid, String type) {
+        ArrayList<Material> list = new ArrayList<>();
+
+        String query = "SELECT m.*\n"
+                + "FROM Material m\n"
+                + "JOIN Lesson l ON m.lessonId = l.id\n"
+                + "JOIN Class c ON l.classId = c.id\n"
+                + "WHERE c.id = ? AND m.lessonId = ? and m.fileType  LIKE ?;";
+
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setInt(1, classid);
+            st.setInt(2, lessonid);
+            st.setString(3, type);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int lessonID = rs.getInt("lessonId");
+                String name = rs.getString("fileName");
+                byte[] fileData = rs.getBytes("filePath"); // Chuyển đổi thành byte[]
+                String fileType = rs.getString("fileType");
+                Date uploadedAt = rs.getDate("uploadedAt");
+                Lesson lesson = lessonDAO.getLessonById(lessonID);
+                Material material = new Material(id, name, fileData, fileType, uploadedAt, lesson);
+                list.add(material);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
+        }
+
+        return list;
+    }
+
+    public ArrayList<Material> getAllDocWithID(int classid, int lessonid, String type) {
+        ArrayList<Material> list = new ArrayList<>();
+
+        String query = "SELECT m.*\n"
+                + "FROM Material m\n"
+                + "JOIN Lesson l ON m.lessonId = l.id\n"
+                + "JOIN Class c ON l.classId = c.id\n"
+                + "WHERE c.id = ? AND m.lessonId = ? and m.fileType not LIKE ?;";
+
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setInt(1, classid);
+            st.setInt(2, lessonid);
+            st.setString(3, type);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int lessonID = rs.getInt("lessonId");
+                String name = rs.getString("fileName");
+                byte[] fileData = rs.getBytes("filePath"); // Chuyển đổi thành byte[]
+                String fileType = rs.getString("fileType");
+                Date uploadedAt = rs.getDate("uploadedAt");
+                Lesson lesson = lessonDAO.getLessonById(lessonID);
+                Material material = new Material(id, name, fileData, fileType, uploadedAt, lesson);
+                list.add(material);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
+        }
+
+        return list;
+    }
+
     public ArrayList<Material> getAllMaterialWithID(int classid, int lessonid) {
         ArrayList<Material> list = new ArrayList<>();
 
@@ -37,6 +101,68 @@ public class MaterialDAO extends DBContext {
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setInt(1, classid);
             st.setInt(2, lessonid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int lessonID = rs.getInt("lessonId");
+                String name = rs.getString("fileName");
+                byte[] fileData = rs.getBytes("filePath"); // Chuyển đổi thành byte[]
+                String fileType = rs.getString("fileType");
+                Date uploadedAt = rs.getDate("uploadedAt");
+                Lesson lesson = lessonDAO.getLessonById(lessonID);
+                Material material = new Material(id, name, fileData, fileType, uploadedAt, lesson);
+                list.add(material);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
+        }
+
+        return list;
+    }
+
+    public Vector<Material> getSlide(int classid, String type) {
+        Vector<Material> list = new Vector<>();
+
+        String query = "SELECT m.* "
+                + "FROM Material m "
+                + "JOIN Lesson l ON m.lessonId = l.id "
+                + "JOIN Class c ON l.classId = c.id "
+                + "WHERE c.id = ? AND m.fileType not LIKE ?";
+
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setInt(1, classid);
+            st.setString(2, type);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int lessonID = rs.getInt("lessonId");
+                String name = rs.getString("fileName");
+                byte[] fileData = rs.getBytes("filePath"); // Chuyển đổi thành byte[]
+                String fileType = rs.getString("fileType");
+                Date uploadedAt = rs.getDate("uploadedAt");
+                Lesson lesson = lessonDAO.getLessonById(lessonID);
+                Material material = new Material(id, name, fileData, fileType, uploadedAt, lesson);
+                list.add(material);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
+        }
+
+        return list;
+    }
+
+    public Vector<Material> getDocument(int classid, String type) {
+        Vector<Material> list = new Vector<>();
+
+        String query = "SELECT m.* "
+                + "FROM Material m "
+                + "JOIN Lesson l ON m.lessonId = l.id "
+                + "JOIN Class c ON l.classId = c.id "
+                + "WHERE c.id = ? AND m.fileType LIKE ?";
+
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setInt(1, classid);
+            st.setString(2, type);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -275,8 +401,10 @@ public class MaterialDAO extends DBContext {
 //    }
     public static void main(String[] args) {
         MaterialDAO materialDAO = new MaterialDAO();
-
-        System.out.println(materialDAO.getAllMaterialWithID(3, 17).get(0).getFilePath());
+        for (Material mate : materialDAO.getAllMaterialWithClass(3)) {
+            System.out.println(mate);
+        }
+        System.out.println();
 
         // Test getMaterialsByClassIdAndFileType method
     }

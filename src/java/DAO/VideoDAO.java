@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 /**
  *
@@ -63,6 +64,37 @@ public class VideoDAO extends DBContext {
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setInt(1, classid);
             st.setInt(2, lessonid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int lessonID = rs.getInt("lessonId");
+                String name = rs.getString("fileName");
+                String fileData = rs.getString("filePath"); // Chuyển đổi thành byte[]
+                String fileType = rs.getString("fileType");
+                Date uploadedAt = rs.getDate("uploadedAt");
+                Lesson lesson = lessonDAO.getLessonById(lessonID);
+                Video video = new Video(id, lesson, name, fileData, fileType, uploadedAt);
+                list.add(video);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Bạn có thể thay thế bằng việc ghi log thích hợp
+        }
+
+        return list;
+    }
+
+    public Vector<Video> getAllVideoWithClassID(int classid) {
+        Vector<Video> list = new Vector<>();
+
+        String query = "SELECT m.*\n"
+                + "FROM Video m\n"
+                + "JOIN Lesson l ON m.lessonId = l.id\n"
+                + "JOIN Class c ON l.classId = c.id\n"
+                + "WHERE c.id = ?";
+
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setInt(1, classid);
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");

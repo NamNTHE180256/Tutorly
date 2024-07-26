@@ -185,46 +185,44 @@
                                             <p style="margin-left: 5px;">${tutor.subject.name}</p>
                                         </span>
                                     </span>
-                                </span>
-                            </div>
-                            <div class="col-md-4" >
-                                <img style="height: 40px;margin-left: 100px; " src="image/LOGO_TUTORLY.png">
-                            </div>
-                            <hr/>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>    
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <p>InvoiceID</p>
-                                        </td>
-                                        <td>1wq2344335</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p >Session</p>
-                                        </td>
-                                        <td> ${session.dayOfWeek} : ${fn:substring(session.startTime, 0, 5)}-${fn:substring(session.endTime, 0, 5)}</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p >Total lesson</p>
-                                        </td>
-                                        <td>${totallesson}</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <p >Fee per lesson</p>
-                                        </td>
-                                        <td><span><fmt:formatNumber value="${tutor.price}" pattern="###,###" /></td>
-                                    </tr>
+                                </div>
+                                <div class="col-md-4" >
+                                    <img style="height: 40px;margin-left: 100px; " src="image/LOGO_TUTORLY.png">
+                                </div>
+                                <hr/>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p>InvoiceID</p>
+                                            </td>
+                                            <td>1wq2344335</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p >Session</p>
+                                            </td>
+                                            <td> ${session.dayOfWeek} : ${fn:substring(session.startTime, 0, 5)}-${fn:substring(session.endTime, 0, 5)}</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p >Total lesson</p>
+                                            </td>
+                                            <td>${totallesson}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p >Fee per lesson</p>
+                                            </td>
+                                            <td><span><fmt:formatNumber value="${tutor.price}" pattern="###,###" /></td>
+                                        </tr>
                                 </tbody>
                             </table>
                             <hr/>

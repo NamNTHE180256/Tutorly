@@ -4,7 +4,7 @@ GO
 --drop database Tutorly
 
 --go
-use Tutorly
+--use Tutorly
 
 --drop database Tutorly
 CREATE TABLE [User] (
@@ -254,44 +254,6 @@ VALUES
 ('manager7@example.com', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'manager', GETDATE()),
 ('manager8@example.com', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'manager', GETDATE()), 
 ('admin1@example.com', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'admin', GETDATE());--Password = 3
-INSERT INTO [dbo].[Video]
-           ([lessonId]
-           ,[fileName]
-           ,[filePath]
-           ,[fileType]
-           ,[uploadedAt])
-     VALUES
-           (17
-           ,'BBC Learning English'
-           ,'https://www.youtube.com/watch?v=Tefu_NvcC0k'
-           ,'video'
-           ,GETDATE()),
-		              (17
-           ,'Tender And Very Juicy Steaks'
-           ,'https://www.youtube.com/watch?v=Dqstaunpae0'
-           ,'video'
-           ,GETDATE()),
-		              (17
-           ,'Improve Your English Skills '
-           ,'https://www.youtube.com/watch?v=OOSlOiPXins'
-           ,'video'
-           ,GETDATE()),
-		    (18	
-           ,'Improve Your English Skills '
-           ,'https://www.youtube.com/watch?v=OOSlOiPXins'
-           ,'video'
-           ,GETDATE()),
-		   	    (18
-           ,'Feed your brain !! 6 Minute English '
-           ,'https://www.youtube.com/watch?v=FZDImEiPgMk'
-           ,'video'
-           ,GETDATE()),		   	    (17
-           ,'Why do I feel hungry? - BBC World Service '
-           ,'https://www.youtube.com/watch?v=68vrOOdxeWg'
-           ,'video'
-           ,GETDATE())
-GO
-
 
 
 -- Insert into Manager table
@@ -411,16 +373,14 @@ VALUES
     N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
     N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq');
 
-																		
-  
-																	
+
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 
 (1, 7, 5, N'Thầy dạy hay, vui tính', GETDATE()),
 (2, 8, 4, N'Thầy dạy vui tính, hay', GETDATE()),
 (3, 9, 5, N'Cô rất nhiệt tình và dễ hiểu', GETDATE()),
-(4, 10, 3, N'Bài giảng còn hơi nhanh', GETDATE()),
+(4, 10, 3, N'Bài giảng còn hơi nhanh', GETDATE());
 (5, 11, 4, N'Thầy dạy rất tận tâm', GETDATE()),
 (6, 12, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
 (1, 13, 4, N'Rất hài lòng với phương pháp giảng dạy của cô', GETDATE()),
@@ -531,13 +491,6 @@ VALUES
 (10, 'SA5', 'Available'),
 (10, 'M5', 'Available');
 
--- Insert into Payment table
-INSERT INTO Payment (classId, amount, [date])
-VALUES 
-(1, 3000.0, '2024-05-02'),
-(2, 2000.0, '2024-06-02');
-
--- Insert into Assignment table
 INSERT INTO Quiz ([fileName], filePath, score, [status], createdAt, lessonId)
 
 VALUES 
@@ -557,25 +510,6 @@ VALUES
 (N'Quiz14', 'path/to/Quiz14.docx', null, 'todo', GETDATE(), 14),
 (N'Quiz15', 'path/to/Quiz15.docx', null, 'todo', GETDATE(), 15),
 (N'Quiz16', 'path/to/Quiz16.docx', null, 'todo', GETDATE(), 16);
-
--- Insert into Material table
--- Insert into Material table
-INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessonId)
-VALUES 
-(N'Material1.pdf', 'mas1.pdf', 'document', GETDATE(), 1),
-(N'Material2.ppt', 'mas2.ppt', 'slide', GETDATE(), 2),
-(N'Material1.pdf', 'Assig2.pdf', 'document', GETDATE(), 1),
-(N'Material2.ppt', 'path/to/material2.ppt', 'slide', GETDATE(), 2),
-(N'Document1.pdf', 'mas3.pdf', 'document', GETDATE(), 3),
-(N'Presentation1.ppt', 'path/to/presentation1.ppt', 'slide', GETDATE(), 4),
-(N'Video1.mp4', 'https://www.youtube.com/embed/hBx3cV2ugks', 'video/record', GETDATE(), 5),
-(N'Link1', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/dai-so-10_79202111413.pdf', 'book', GETDATE(), 6),
-(N'Book1.pdf', 'mas2.pdf', 'document', GETDATE(), 7),
-(N'Document2.pdf', 'mas291.pdf', 'document', GETDATE(), 8),
-(N'Presentation2.ppt', 'path/to/presentation2.ppt', 'slide', GETDATE(), 9),
-(N'Video2.mp4', 'path/to/video2.mp4', 'video/record', GETDATE(), 10),
-(N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
-(N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
 
 
  INSERT INTO Income (tax, amount, createdAt, DayPaid, [status], tutorID)

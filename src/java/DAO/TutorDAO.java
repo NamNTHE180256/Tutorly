@@ -118,35 +118,7 @@ public class TutorDAO extends DBContext {
         }
         return tutors;
     }
-//
-//    public ArrayList<Tutor> getAllTutors() {
-//        ArrayList<Tutor> tutors = new ArrayList<>();
-//        SubjectDAO sDao = new SubjectDAO();
-//        String sql = "SELECT * FROM Tutor";
-//        try {
-//            PreparedStatement sp = connection.prepareStatement(sql);
-//            ResultSet rs = sp.executeQuery();
-//            while (rs.next()) {
-//                Tutor tutor = new Tutor();
-//                tutor.setId(rs.getInt("id"));
-//                tutor.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
-//                tutor.setName(rs.getString("name"));
-//                tutor.setGender(rs.getBoolean("gender"));
-//                tutor.setImage(rs.getString("image"));
-//                tutor.setBio(rs.getString("bio"));
-//                tutor.setEdu(rs.getString("edu"));
-//                tutor.setPrice(rs.getFloat("price"));
-//                tutor.setBank(rs.getString("bank"));
-//                tutor.setStatus(rs.getString("status"));
-//                tutors.add(tutor);
-//            }
-//            rs.close();
-//            sp.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return tutors;
-//    }
+
 
     public Tutor getTutorById(int id) {
         Tutor tutor = null;
@@ -514,6 +486,6 @@ public class TutorDAO extends DBContext {
         String name = "hien";
         int subjectId = 15;
         int id = 9;
-        System.out.println(t.getTutors("SELECT * FROM Tutor WHERE subjectId = 2 AND id <> 7"));
+        System.out.println(t.getAllTutors());
     }
 }

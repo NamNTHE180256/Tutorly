@@ -140,8 +140,8 @@ public class LoginControllers extends HttpServlet {
                         request.getRequestDispatcher("View/Login.jsp").forward(request, response);
                     }
                 } else {
-                    request.setAttribute("messageError", "Incorrect email or password!");
-                    request.getRequestDispatcher("View/Login.jsp").forward(request, response);
+                    session.setAttribute("user", userLogin);
+                    response.sendRedirect("AdminController?action=dashboard");
                 }
             } else {
                 request.setAttribute("messageError", "Incorrect email or password!");

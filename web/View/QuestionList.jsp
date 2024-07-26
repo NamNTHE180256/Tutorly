@@ -53,10 +53,14 @@
             %>
         </table>
 
+        <h2>ClassId: <%= request.getAttribute("lessonId") %></h2>
+
         <h2>Lesson ID: <%= request.getAttribute("lessonId") %></h2>
 
         <form action="SetQuizTimeServlet" method="post">
             <input type="hidden" name="lessonId" value="<%= request.getAttribute("lessonId") %>">
+            <input type="hidden" name="classId" value="<%= request.getAttribute("classId") %>">
+
             <label for="quizTime">Please choose time of the quiz:</label>
             <select name="quizTime" id="quizTime">
                 <option value="15">15 seconds</option>

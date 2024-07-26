@@ -1,12 +1,6 @@
-<%-- 
-    Document   : Dashboard
-    Created on : May 29, 2024, 3:11:59 AM
-    Author     : TRANG
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -90,6 +84,21 @@
             #calendar {
                 flex-grow: 1;
             }
+
+            .details-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .details-header p {
+                margin: 0;
+            }
+
+            .modal-header .close {
+                padding: 1rem;
+                margin: -1rem -1rem -1rem auto;
+            }
         </style>
         <title>Schedule</title>
     </head>
@@ -126,7 +135,7 @@
                                         {
                                         title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                         start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                        url: '../Tutorly/ScheduleController?service=viewLessonDetail&lessonid=${v.getId()}',
+                                                                        url: '../Tutorly/ScheduleController?service=viewLessonDetail&classid=${v.getAClass().id}&lessonid=${v.getId()}',
                                                                         end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                                         className: 'custom-event'
                                                                                 }<c:if test="${not empty v and v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
@@ -180,194 +189,122 @@
                                     <!-- Right -->
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">A link</a>
+                                            <a href="${requestScope.lesson.getAClass().getTutor().getLinkmeet()}" class="nav-link">A link</a>
                                         </li>
                                     </ul>
                                 </nav>
                                 <hr />
-                                <nav class="navbar navbar-expand-sm">
-                                    <!-- Left -->
-                                    <ul class="navbar-nav mr-auto">
-                                        <li class="nav-item">
-                                            <p><strong>Material:</strong></p>
-                                        </li>
-                                    </ul>
-                                    <!-- Right -->
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item">
-                                            <!-- Button to Open the Modal -->
-                                            <button type="button" class="btn" data-toggle="modal"
-                                                    data-target="#material" style="background-color: #0E3C6E; color: white;">
-                                                View Material
-                                            </button>
-
-                                            <!-- The Modal -->
-                                            <div class="modal" id="material">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title" style="color: #0E3C6E">Materials:</h4>
-                                                            <button type="button" class="close"
-                                                                    data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-
-                                                            <div class="accordion" id="accordionExample">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header" id="headingOne">
-                                                                        <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                            Documents
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                                        <c:forEach items="${document}" var="d">
-                                                                            <div class="accordion-body">
-                                                                                <strong>${d.fileName} :</strong>
-                                                                                <a href="#">${d.filePath}</a>
-                                                                                <p style="margin: 0; color: #A2A2A2">${d.uploadedAt}</p>
-                                                                            </div>
-                                                                            <hr/>
-                                                                        </c:forEach>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header" id="headingTwo">
-                                                                        <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                                            Slides
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                                                        <div class="accordion-body">
-                                                                            <c:forEach items="${slide}" var="s">
-                                                                                <div class="accordion-body">
-                                                                                    <strong>${s.fileName} :</strong>
-                                                                                    <a href="#">${s.filePath}</a>
-                                                                                    <p style="margin: 0; color: #A2A2A2">${s.uploadedAt}</p>
-                                                                                </div>
-                                                                                <hr/>
-                                                                            </c:forEach>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header" id="headingThree">
-                                                                        <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                                            E-Books
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                                                        <div class="accordion-body">
-                                                                            <c:forEach items="${book}" var="b">
-                                                                                <div class="accordion-body">
-                                                                                    <strong>${b.fileName} :</strong>
-                                                                                    <a href="#">${b.filePath}</a>
-                                                                                    <p style="margin: 0; color: #A2A2A2">${b.uploadedAt}</p>
-                                                                                </div>
-                                                                                <hr/>
-                                                                            </c:forEach>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header" id="headingFour">
-                                                                        <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                                            Records/Videos
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-                                                                        <div class="accordion-body">
-                                                                            <c:forEach items="${video}" var="v">
-                                                                                <div class="accordion-body">
-                                                                                    <strong>${v.fileName} :</strong>
-                                                                                    <a href="#">${v.filePath}</a>
-                                                                                    <p style="margin: 0; color: #A2A2A2">${v.uploadedAt}</p>
-                                                                                </div>
-                                                                                <hr/>
-                                                                            </c:forEach>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>  
-                                                        </div>
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn" style="background-color: #0E3C6E; color: white;"
-                                                                    data-dismiss="modal">Close</button>
+                                <div class="details-header">
+                                    <p><strong>Material:</strong></p>
+                                    <!-- Button to Open the Modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#material" id="viewMaterialButton">
+                                        View Material
+                                    </button>
+                                </div>
+                                <div class="modal" id="material">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" style="color: #0E3C6E">Materials:</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <div class="accordion" id="accordionExample">
+                                                    <!-- Documents Accordion Item -->
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingOne">
+                                                            <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                Documents
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                            <div id="documentsContent" class="accordion-body"></div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <!-- Slides Accordion Item -->
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingTwo">
+                                                            <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="materialAccordionButton">
+                                                                Slides
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                            <div id="materialContent" class="accordion-body"></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Videos Accordion Item -->
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingFour">
+                                                            <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" id="videoAccordionButton">
+                                                                Records/Videos
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                                            <div id="videoContent" class="accordion-body"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>  
                                             </div>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn" style="background-color: #0E3C6E; color: white;" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr />
-                                <nav class="navbar navbar-expand-sm">
-                                    <!-- Left -->
-                                    <ul class="navbar-nav mr-auto">
-                                        <li class="nav-item">
-                                            <p><strong>Quiz:</strong></p>
-                                        </li>
-                                    </ul>
-                                    <!-- Right -->
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item">
-                                            <!-- Button to Open the Modal -->
-                                            <button type="button" class="btn" data-toggle="modal"
-                                                    data-target="#assigment" style="background-color: #0E3C6E; color: white;">
-                                                View Quiz
-                                            </button>
-
-                                            <!-- The Modal -->
-                                            <div class="modal" id="assigment">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title" style="color: #0E3C6E">Quizs:</h4>
-                                                            <button type="button" class="close"
-                                                                    data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            <nav class="navbar navbar-expand-sm">
-                                                                <c:choose>
-                                                                    <c:when test="${not empty Quizoflesson}">
-                                                                        <c:forEach items="${Quizoflesson}" var="a">
-                                                                            <!-- Left -->
-                                                                            <ul class="navbar-nav mr-auto">
-                                                                                <li class="nav-item">
-                                                                                    <a class="nav-link" style="font-size: 16px"><strong>${a.getFileName()}</strong></a>
-                                                                                    <p style="color: #A2A2A2;">${a.getCreatedAt()}</p>
-                                                                                </li>
-                                                                            </ul>
-                                                                            <!-- Right -->
-                                                                            <ul class="navbar-nav ml-auto" >
-                                                                                <li class="nav-item">
-                                                                                    <button class="btn" style="background-color: #0E3C6E; color: white; " type="submit">Do Quiz</button>
-                                                                                </li>
-                                                                            </ul>
-                                                                            <hr/>
-                                                                        </c:forEach>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <p>No Quiz for this lesson</p>
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </nav>
-                                                        </div>
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn" style="background-color: #0E3C6E; color: white;"
-                                                                    data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <div class="details-header">
+                                    <p><strong>Quiz:</strong></p>
+                                    <!-- Button to Open the Modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assigment">
+                                        View Quiz
+                                    </button>
+                                </div>
+                                <div class="modal" id="assigment">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" style="color: #0E3C6E">Quizs:</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <nav class="navbar navbar-expand-sm">
+                                                    <c:choose>
+                                                        <c:when test="${not empty Quizoflesson}">
+                                                            <c:forEach items="${Quizoflesson}" var="a">
+                                                                <!-- Left -->
+                                                                <ul class="navbar-nav mr-auto">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link" style="font-size: 16px"><strong>${a.getFileName()}</strong></a>
+                                                                        <p style="color: #A2A2A2;">${a.getCreatedAt()}</p>
+                                                                    </li>
+                                                                </ul>
+                                                                <!-- Right -->
+                                                                <ul class="navbar-nav ml-auto" >
+                                                                    <li class="nav-item">
+                                                                        <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Do Quiz</button>
+                                                                    </li>
+                                                                </ul>
+                                                                <hr/>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p>No Quiz for this lesson</p>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </nav>
+                                            </div>
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn" style="background-color: #0E3C6E; color: white;" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr />
                             </div>
                         </div>
@@ -378,5 +315,55 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script>
+                                                                            $(document).ready(function () {
+                                                                                $('#materialAccordionButton').on('click', function () {
+                                                                                    if (!$(this).data('loaded')) {
+                                                                                        $('#materialContent').html(`
+            <c:forEach var="x" items="${listmaterial}">
+                                <li class="list-group-item list-group-item-action">
+                                    <a href="Material?action=download&slotid=${slotid}&id=${x.id}&classid=${classid}">
+                ${x.fileName}
+                                    </a>
+                                </li>
+            </c:forEach>
+                        `);
+                                                                                        $(this).data('loaded', true);
+                                                                                    }
+                                                                                });
+
+                                                                                $('#videoAccordionButton').on('click', function () {
+                                                                                    if (!$(this).data('loaded')) {
+                                                                                        $('#videoContent').html(`
+            <c:forEach var="x" items="${listvideo}">
+                                <li class="list-group-item list-group-item-action">
+                                    <a href="Material?action=downloadVideo&slotid=${slotid}&id=${x.id}&classid=${classid}">
+                ${x.fileName}
+                                    </a>
+                                </li>
+            </c:forEach>
+                        `);
+                                                                                        $(this).data('loaded', true);
+                                                                                    }
+                                                                                });
+
+                                                                                $('#viewMaterialButton').on('click', function () {
+                                                                                    // Load documents content
+                                                                                    if (!$('#documentsContent').data('loaded')) {
+                                                                                        $('#documentsContent').html(`
+            <c:forEach items="${document}" var="d">
+                                <div class="accordion-body">
+                                    <strong>${d.fileName} :</strong>
+                                    <a href="#">${d.filePath}</a>
+                                    <p style="margin: 0; color: #A2A2A2">${d.uploadedAt}</p>
+                                </div>
+                                <hr/>
+            </c:forEach>
+                        `);
+                                                                                        $('#documentsContent').data('loaded', true);
+                                                                                    }
+                                                                                });
+                                                                            });
+        </script>
     </body>
 </html>

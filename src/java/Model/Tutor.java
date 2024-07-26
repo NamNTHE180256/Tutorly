@@ -36,6 +36,19 @@ public class Tutor {
         this.name = name;
     }
 
+    public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status) {
+        this.id = id;
+        this.subject = subject;
+        this.name = name;
+        this.gender = gender;
+        this.image = image;
+        this.bio = bio;
+        this.edu = edu;
+        this.price = price;
+        this.bank = bank;
+        this.status = status;
+    }
+
     public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status, String linkmeet) {
         this.id = id;
         this.subject = subject;

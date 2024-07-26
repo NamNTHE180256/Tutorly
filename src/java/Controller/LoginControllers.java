@@ -110,24 +110,31 @@ public class LoginControllers extends HttpServlet {
                     // Save information in the session
                     session.setAttribute("learner", learner);
                     session.setAttribute("user", userLogin);
-                    response.sendRedirect("TutorController");
+                    response.sendRedirect("DashboardController");
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
+
                     Tutor tutor = tDao.getTutorById(userLogin.getId());
+
                     if (tutor != null) {
-                        // Create cookies for tutor
-                        Cookie tutorCookie = new Cookie("tutorId", String.valueOf(tutor.getId())); // Ensure cookie name is consistent
-                        tutorCookie.setMaxAge(60 * 60); // 1 hour
+                        if (tutor.getStatus().equalsIgnoreCase("active")) {
+                            // Create cookies for tutor
+                            Cookie tutorCookie = new Cookie("tutorId", String.valueOf(tutor.getId())); // Ensure cookie name is consistent
+                            tutorCookie.setMaxAge(60 * 60); // 1 hour
 
-                        Cookie userCookie = new Cookie("userId", String.valueOf(userLogin.getId()));
-                        userCookie.setMaxAge(60 * 60); // 1 hour
+                            Cookie userCookie = new Cookie("userId", String.valueOf(userLogin.getId()));
+                            userCookie.setMaxAge(60 * 60); // 1 hour
 
-                        // Add cookies to the response
-                        response.addCookie(tutorCookie);
-                        response.addCookie(userCookie);
+                            // Add cookies to the response
+                            response.addCookie(tutorCookie);
+                            response.addCookie(userCookie);
 
-                        session.setAttribute("tutor", tutor);
-                        session.setAttribute("user", userLogin);
-                        response.sendRedirect("tutor-dashboard");
+                            session.setAttribute("tutor", tutor);
+                            session.setAttribute("user", userLogin);
+                            response.sendRedirect("tutor-dashboard");
+                        } else {
+                            request.setAttribute("messageError", "This Account does not Activated by Admin");
+                            request.getRequestDispatcher("View/Login.jsp").forward(request, response);
+                        }
                     } else {
                         request.setAttribute("messageError", "Tutor not found!");
                         request.getRequestDispatcher("View/Login.jsp").forward(request, response);
@@ -144,7 +151,6 @@ public class LoginControllers extends HttpServlet {
     }
 
     private void clearPreviousCookies(HttpServletRequest request, HttpServletResponse response) {
-      
 
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {

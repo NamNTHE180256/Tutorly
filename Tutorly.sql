@@ -1,10 +1,10 @@
 
-CREATE DATABASE Tutorly;
+--CREATE DATABASE Tutorly;
 GO
 --drop database Tutorly
 
 --go
-use Tutorly
+--use Tutorly
 
 --drop database Tutorly
 CREATE TABLE [User] (
@@ -256,8 +256,6 @@ VALUES
 ('admin1@example.com', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'admin', GETDATE());--Password = 3
 
 
-
-
 -- Insert into Manager table
 INSERT INTO Manager (id, [name], approvedTutor, rejectedTutor, blockedTutor, [status])
 VALUES
@@ -319,65 +317,63 @@ VALUES
     N'Đại học Ngoại thương', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
 (12, 11, N'Trần Hữu Dũng', 1, 'tutor6.jpg', 
     N'Tôi là Trần Hữu Dũng, giảng viên Vật lý ứng dụng với hơn 18 năm kinh nghiệm. Tôi tin rằng việc kết hợp lý thuyết với thực hành là cách tốt nhất để học sinh hiểu và yêu thích môn Vật lý. Tôi luôn tìm cách áp dụng các hiện tượng vật lý vào thực tiễn, giúp học sinh không chỉ học tốt mà còn thấy được sự kỳ diệu và ứng dụng của Vật lý trong cuộc sống hàng ngày.', 
-    N'Đại học Sư phạm Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq');
---(13, 5, N'Nguyễn Phương', 0, 'tutor3.jpg', 
---    N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
---    N'Đại học Kinh tế Quốc dân', 400000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(14, 1, N'Vũ Thanh Hải', 1, 'tutor7.jpg', 
---    N'Tôi là Vũ Thanh Hải, giáo viên Toán với 10 năm kinh nghiệm. Tôi luôn nỗ lực giúp học sinh hiểu sâu và nắm vững các khái niệm Toán học, giúp các em đạt được điểm cao trong các kỳ thi.', 
---    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(15, 2, N'Lê Thị Minh', 0, 'tutor8.jpg', 
---    N'Giáo viên Lê Thị Minh, chuyên giảng dạy Toán lớp 11 với 8 năm kinh nghiệm. Tôi luôn mong muốn mang đến phương pháp học hiệu quả và tạo động lực học tập cho các em.', 
---    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(16, 3, N'Phạm Văn Cường', 1, 'tutor9.jpg', 
---    N'Phạm Văn Cường, giáo viên Toán lớp 12, với phương pháp giảng dạy sinh động và trực quan, giúp học sinh hiểu rõ bản chất của các khái niệm toán học.', 
---    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(17, 4, N'Trần Thu Hà', 0, 'tutor10.jpg', 
---    N'Tôi là Trần Thu Hà, chuyên gia Vật lý với 15 năm kinh nghiệm. Tôi luôn khơi gợi sự hứng thú và niềm đam mê Vật lý cho học sinh.', 
---    N'Đại học Khoa học Tự nhiên', 260000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(18, 5, N'Nguyễn Minh Tú', 1, 'tutor11.jpg', 
---    N'Nguyễn Minh Tú, giáo viên Vật lý lớp 11 với 12 năm kinh nghiệm. Tôi luôn cố gắng mang đến phương pháp học hiệu quả nhất cho học sinh.', 
---    N'Đại học Bách Khoa Đà Nẵng', 270000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(19, 6, N'Hoàng Văn Anh', 1, 'tutor12.jpg', 
---    N'Hoàng Văn Anh, giáo viên Vật lý lớp 12. Tôi đã giúp nhiều học sinh đạt điểm cao trong các kỳ thi quốc gia.', 
---    N'Đại học Bách Khoa Hà Nội', 280000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(20, 7, N'Phạm Ngọc Linh', 0, 'tutor13.jpg', 
---    N'Phạm Ngọc Linh, giáo viên Hóa học lớp 10 với 10 năm kinh nghiệm. Tôi luôn mang đến những bài học thú vị và sáng tạo.', 
---    N'Đại học Khoa học Tự nhiên', 250000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(21, 8, N'Nguyễn Hữu Đức', 1, 'tutor14.jpg', 
---    N'Nguyễn Hữu Đức, giáo viên Hóa học lớp 11. Tôi luôn cố gắng giúp học sinh hiểu rõ bản chất và yêu thích môn học.', 
---    N'Đại học Sư phạm Hà Nội', 260000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(22, 9, N'Vũ Thị Hương', 0, 'tutor15.jpg',
---    N'Vũ Thị Hương, giáo viên Hóa học lớp 12. Tôi luôn giúp học sinh nắm vững kiến thức và tự tin trong các kỳ thi.', 
---    N'Đại học Sư phạm TP.HCM', 270000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(23, 10, N'Nguyễn Thị Lan', 0, 'tutor16.jpg', 
---    N'Nguyễn Thị Lan, giáo viên Tiếng Anh lớp 10 với 8 năm kinh nghiệm. Tôi giúp học sinh cải thiện kỹ năng giao tiếp và đạt điểm cao trong các kỳ thi.', 
---    N'Đại học Ngoại thương', 300000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(24, 11, N'Trần Văn Hùng', 1, 'tutor17.jpg', 
---    N'Trần Văn Hùng, giáo viên Tiếng Anh lớp 11. Tôi đã giúp nhiều học sinh đạt chứng chỉ IELTS và TOEFL với điểm số cao.', 
---    N'Đại học Khoa học Xã hội và Nhân văn', 310000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(25, 12, N'Phạm Thị Thanh', 0, 'tutor18.jpg', 
---    N'Phạm Thị Thanh, giáo viên Tiếng Anh lớp 12. Tôi luôn mang đến phương pháp học tập hiệu quả và sáng tạo.', 
---    N'Đại học Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(26, 13, N'Vũ Văn Dũng', 1, 'tutor19.jpg', 
---    N'Vũ Văn Dũng, giáo viên Văn học lớp 10 với 12 năm kinh nghiệm. Tôi luôn giúp học sinh yêu thích và đạt điểm cao trong môn Văn.', 
---    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(27, 14, N'Nguyễn Thu Trang', 0, 'tutor20.jpg', 
---    N'Nguyễn Thu Trang, giáo viên Văn học lớp 11. Tôi luôn nỗ lực mang đến những bài học thú vị và sáng tạo cho học sinh.', 
---    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(28, 15, N'Trần Văn Nam', 1, 'tutor21.jpg', 
---    N'Trần Văn Nam, giáo viên Văn học lớp 12. Tôi luôn cố gắng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
---    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(29, 1, N'Lê Văn Quang', 1, 'tutor22.jpg', 
---    N'Lê Văn Quang, giáo viên Toán học lớp 10 với 10 năm kinh nghiệm. Tôi giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
---    N'Đại học Khoa học Tự nhiên', 290000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
---(30, 2, N'Nguyễn Thị Hoa', 0, 'tutor23.jpg', 
---    N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
---    N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq');
+    N'Đại học Sư phạm Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(13, 5, N'Nguyễn Phương', 0, 'tutor3.jpg', 
+    N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
+    N'Đại học Kinh tế Quốc dân', 400000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(14, 1, N'Vũ Thanh Hải', 1, 'tutor7.jpg', 
+    N'Tôi là Vũ Thanh Hải, giáo viên Toán với 10 năm kinh nghiệm. Tôi luôn nỗ lực giúp học sinh hiểu sâu và nắm vững các khái niệm Toán học, giúp các em đạt được điểm cao trong các kỳ thi.', 
+    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(15, 2, N'Lê Thị Minh', 0, 'tutor8.jpg', 
+    N'Giáo viên Lê Thị Minh, chuyên giảng dạy Toán lớp 11 với 8 năm kinh nghiệm. Tôi luôn mong muốn mang đến phương pháp học hiệu quả và tạo động lực học tập cho các em.', 
+    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(16, 3, N'Phạm Văn Cường', 1, 'tutor9.jpg', 
+    N'Phạm Văn Cường, giáo viên Toán lớp 12, với phương pháp giảng dạy sinh động và trực quan, giúp học sinh hiểu rõ bản chất của các khái niệm toán học.', 
+    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(17, 4, N'Trần Thu Hà', 0, 'tutor10.jpg', 
+    N'Tôi là Trần Thu Hà, chuyên gia Vật lý với 15 năm kinh nghiệm. Tôi luôn khơi gợi sự hứng thú và niềm đam mê Vật lý cho học sinh.', 
+    N'Đại học Khoa học Tự nhiên', 260000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(18, 5, N'Nguyễn Minh Tú', 1, 'tutor11.jpg', 
+    N'Nguyễn Minh Tú, giáo viên Vật lý lớp 11 với 12 năm kinh nghiệm. Tôi luôn cố gắng mang đến phương pháp học hiệu quả nhất cho học sinh.', 
+    N'Đại học Bách Khoa Đà Nẵng', 270000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(19, 6, N'Hoàng Văn Anh', 1, 'tutor12.jpg', 
+    N'Hoàng Văn Anh, giáo viên Vật lý lớp 12. Tôi đã giúp nhiều học sinh đạt điểm cao trong các kỳ thi quốc gia.', 
+    N'Đại học Bách Khoa Hà Nội', 280000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(20, 7, N'Phạm Ngọc Linh', 0, 'tutor13.jpg', 
+    N'Phạm Ngọc Linh, giáo viên Hóa học lớp 10 với 10 năm kinh nghiệm. Tôi luôn mang đến những bài học thú vị và sáng tạo.', 
+    N'Đại học Khoa học Tự nhiên', 250000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(21, 8, N'Nguyễn Hữu Đức', 1, 'tutor14.jpg', 
+    N'Nguyễn Hữu Đức, giáo viên Hóa học lớp 11. Tôi luôn cố gắng giúp học sinh hiểu rõ bản chất và yêu thích môn học.', 
+    N'Đại học Sư phạm Hà Nội', 260000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(22, 9, N'Vũ Thị Hương', 0, 'tutor15.jpg',
+    N'Vũ Thị Hương, giáo viên Hóa học lớp 12. Tôi luôn giúp học sinh nắm vững kiến thức và tự tin trong các kỳ thi.', 
+    N'Đại học Sư phạm TP.HCM', 270000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(23, 10, N'Nguyễn Thị Lan', 0, 'tutor16.jpg', 
+    N'Nguyễn Thị Lan, giáo viên Tiếng Anh lớp 10 với 8 năm kinh nghiệm. Tôi giúp học sinh cải thiện kỹ năng giao tiếp và đạt điểm cao trong các kỳ thi.', 
+    N'Đại học Ngoại thương', 300000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(24, 11, N'Trần Văn Hùng', 1, 'tutor17.jpg', 
+    N'Trần Văn Hùng, giáo viên Tiếng Anh lớp 11. Tôi đã giúp nhiều học sinh đạt chứng chỉ IELTS và TOEFL với điểm số cao.', 
+    N'Đại học Khoa học Xã hội và Nhân văn', 310000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(25, 12, N'Phạm Thị Thanh', 0, 'tutor18.jpg', 
+    N'Phạm Thị Thanh, giáo viên Tiếng Anh lớp 12. Tôi luôn mang đến phương pháp học tập hiệu quả và sáng tạo.', 
+    N'Đại học Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(26, 13, N'Vũ Văn Dũng', 1, 'tutor19.jpg', 
+    N'Vũ Văn Dũng, giáo viên Văn học lớp 10 với 12 năm kinh nghiệm. Tôi luôn giúp học sinh yêu thích và đạt điểm cao trong môn Văn.', 
+    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(27, 14, N'Nguyễn Thu Trang', 0, 'tutor20.jpg', 
+    N'Nguyễn Thu Trang, giáo viên Văn học lớp 11. Tôi luôn nỗ lực mang đến những bài học thú vị và sáng tạo cho học sinh.', 
+    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(28, 15, N'Trần Văn Nam', 1, 'tutor21.jpg', 
+    N'Trần Văn Nam, giáo viên Văn học lớp 12. Tôi luôn cố gắng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
+    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(29, 1, N'Lê Văn Quang', 1, 'tutor22.jpg', 
+    N'Lê Văn Quang, giáo viên Toán học lớp 10 với 10 năm kinh nghiệm. Tôi giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
+    N'Đại học Khoa học Tự nhiên', 290000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+(30, 2, N'Nguyễn Thị Hoa', 0, 'tutor23.jpg', 
+    N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
+    N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq');
 
-																		
 
-select * from Tutor																	
 -- Insert into Rating table
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 
@@ -385,26 +381,26 @@ VALUES
 (2, 8, 4, N'Thầy dạy vui tính, hay', GETDATE()),
 (3, 9, 5, N'Cô rất nhiệt tình và dễ hiểu', GETDATE()),
 (4, 10, 3, N'Bài giảng còn hơi nhanh', GETDATE());
---(5, 11, 4, N'Thầy dạy rất tận tâm', GETDATE()),
---(6, 12, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
---(1, 13, 4, N'Rất hài lòng với phương pháp giảng dạy của cô', GETDATE()),
---(2, 14, 3, N'Bài giảng cần chậm hơn', GETDATE()),
---(3, 15, 5, N'Thầy giảng rất dễ hiểu và vui tính', GETDATE()),
---(4, 16, 4, N'Thầy rất nhiệt tình', GETDATE()),
---(5, 17, 5, N'Cô giáo rất tận tình và chi tiết', GETDATE()),
---(6, 18, 4, N'Rất hài lòng', GETDATE()),
---(1, 19, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
---(2, 20, 3, N'Bài giảng cần chi tiết hơn', GETDATE()),
---(3, 21, 4, N'Cô dạy rất nhiệt tình', GETDATE()),
---(4, 22, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
---(5, 23, 4, N'Thầy rất nhiệt tình và dễ hiểu', GETDATE()),
---(6, 24, 3, N'Cần thêm bài tập thực hành', GETDATE()),
---(1, 25, 5, N'Thầy giảng rất dễ hiểu và nhiệt tình', GETDATE()),
---(2, 26, 4, N'Rất hài lòng với phương pháp giảng dạy', GETDATE()),
---(3, 27, 5, N'Thầy rất tận tâm và nhiệt tình', GETDATE()),
---(4, 28, 4, N'Rất hài lòng', GETDATE()),
---(5, 29, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
---(6, 30, 3, N'Bài giảng cần chậm hơn', GETDATE());
+(5, 11, 4, N'Thầy dạy rất tận tâm', GETDATE()),
+(6, 12, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
+(1, 13, 4, N'Rất hài lòng với phương pháp giảng dạy của cô', GETDATE()),
+(2, 14, 3, N'Bài giảng cần chậm hơn', GETDATE()),
+(3, 15, 5, N'Thầy giảng rất dễ hiểu và vui tính', GETDATE()),
+(4, 16, 4, N'Thầy rất nhiệt tình', GETDATE()),
+(5, 17, 5, N'Cô giáo rất tận tình và chi tiết', GETDATE()),
+(6, 18, 4, N'Rất hài lòng', GETDATE()),
+(1, 19, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
+(2, 20, 3, N'Bài giảng cần chi tiết hơn', GETDATE()),
+(3, 21, 4, N'Cô dạy rất nhiệt tình', GETDATE()),
+(4, 22, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
+(5, 23, 4, N'Thầy rất nhiệt tình và dễ hiểu', GETDATE()),
+(6, 24, 3, N'Cần thêm bài tập thực hành', GETDATE()),
+(1, 25, 5, N'Thầy giảng rất dễ hiểu và nhiệt tình', GETDATE()),
+(2, 26, 4, N'Rất hài lòng với phương pháp giảng dạy', GETDATE()),
+(3, 27, 5, N'Thầy rất tận tâm và nhiệt tình', GETDATE()),
+(4, 28, 4, N'Rất hài lòng', GETDATE()),
+(5, 29, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
+(6, 30, 3, N'Bài giảng cần chậm hơn', GETDATE());
 
 
 
@@ -495,44 +491,6 @@ VALUES
 (10, 'SA5', 'Available'),
 (10, 'M5', 'Available');
 
---INSERT INTO [dbo].[Video]
---           ([lessonId]
---           ,[fileName]
---           ,[filePath]
---           ,[fileType]
---           ,[uploadedAt])
---     VALUES
---           (17
---           ,'BBC Learning English'
---           ,'https://www.youtube.com/watch?v=Tefu_NvcC0k'
---           ,'video'
---           ,GETDATE()),
---		              (17
---           ,'Tender And Very Juicy Steaks'
---           ,'https://www.youtube.com/watch?v=Dqstaunpae0'
---           ,'video'
---           ,GETDATE()),
---		              (17
---           ,'Improve Your English Skills '
---           ,'https://www.youtube.com/watch?v=OOSlOiPXins'
---           ,'video'
---           ,GETDATE()),
---		    (18	
---           ,'Improve Your English Skills '
---           ,'https://www.youtube.com/watch?v=OOSlOiPXins'
---           ,'video'
---           ,GETDATE()),
---		   	    (18
---           ,'Feed your brain !! 6 Minute English '
---           ,'https://www.youtube.com/watch?v=FZDImEiPgMk'
---           ,'video'
---           ,GETDATE()),		   	    (17
---           ,'Why do I feel hungry? - BBC World Service '
---           ,'https://www.youtube.com/watch?v=68vrOOdxeWg'
---           ,'video'
---           ,GETDATE())
-
--- Insert into Assignment table
 INSERT INTO Quiz ([fileName], filePath, score, [status], createdAt, lessonId)
 
 VALUES 
@@ -552,25 +510,6 @@ VALUES
 (N'Quiz14', 'path/to/Quiz14.docx', null, 'todo', GETDATE(), 14),
 (N'Quiz15', 'path/to/Quiz15.docx', null, 'todo', GETDATE(), 15),
 (N'Quiz16', 'path/to/Quiz16.docx', null, 'todo', GETDATE(), 16);
-
--- Insert into Material table
--- Insert into Material table
---INSERT INTO Material ([fileName], filePath, fileType, uploadedAt, lessonId)
---VALUES 
---(N'Material1.pdf', 'mas1.pdf', 'document', GETDATE(), 1),
---(N'Material2.ppt', 'mas2.ppt', 'slide', GETDATE(), 2),
---(N'Material1.pdf', 'Assig2.pdf', 'document', GETDATE(), 1),
---(N'Material2.ppt', 'path/to/material2.ppt', 'slide', GETDATE(), 2),
---(N'Document1.pdf', 'mas3.pdf', 'document', GETDATE(), 3),
---(N'Presentation1.ppt', 'path/to/presentation1.ppt', 'slide', GETDATE(), 4),
---(N'Video1.mp4', 'https://www.youtube.com/embed/hBx3cV2ugks', 'video/record', GETDATE(), 5),
---(N'Link1', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/dai-so-10_79202111413.pdf', 'book', GETDATE(), 6),
---(N'Book1.pdf', 'mas2.pdf', 'document', GETDATE(), 7),
---(N'Document2.pdf', 'mas291.pdf', 'document', GETDATE(), 8),
---(N'Presentation2.ppt', 'path/to/presentation2.ppt', 'slide', GETDATE(), 9),
---(N'Video2.mp4', 'path/to/video2.mp4', 'video/record', GETDATE(), 10),
---(N'Link2', 'https://84864c160d.vws.vegacdn.vn//Data/hcmedu/thptnguyentatthanh/2021_9/giai-tich-12_79202111413.pdf', 'book', GETDATE(), 11),
---(N'Book2.pdf', 'MAS291_REPORT.pdf', 'document', GETDATE(), 12);
 
 
  INSERT INTO Income (tax, amount, createdAt, DayPaid, [status], tutorID)
@@ -755,3 +694,4 @@ GO
 ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
 REFERENCES [dbo].[Tutor] ([id])
 GO
+

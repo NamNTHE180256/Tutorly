@@ -8,11 +8,13 @@ import DAO.QuizDAO;
 import DAO.LearnerDAO;
 import DAO.LessonDAO;
 import DAO.MaterialDAO;
+import DAO.VideoDAO;
 import Model.Quiz;
 import Model.Learner;
 import Model.Lesson;
 import Model.Material;
 import Model.User;
+import Model.Video;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +24,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -31,6 +34,9 @@ import java.util.Vector;
  */
 @WebServlet(name = "ScheduleController", urlPatterns = {"/ScheduleController"})
 public class ScheduleController extends HttpServlet {
+
+    MaterialDAO mdao = new MaterialDAO();
+    VideoDAO vdao = new VideoDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,8 +70,12 @@ public class ScheduleController extends HttpServlet {
                 request.setAttribute("lesson_vector", lesson_vector);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/ScheduleView.jsp");
                 dispatcher.forward(request, response);
-            }else if (service.equals("viewLessonDetail")){
+            } else if (service.equals("viewLessonDetail")) {
                 int lessonid = Integer.parseInt(request.getParameter("lessonid"));
+                int classid = Integer.parseInt(request.getParameter("classid"));
+                Lesson lesson = lDAO.getLessonById(lessonid);
+                ArrayList<Material> list = mDAO.getAllMaterialWithID(classid, lessonid);
+                ArrayList<Video> listVideo = vdao.getAllVideoWithID(classid, lessonid);
                 Vector<Quiz> Quizoflesson = aDAO.getTodoQuizByLessonId(lessonid);
                 Vector<Material> document = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "document");
                 Vector<Material> book = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "book");
@@ -75,6 +85,11 @@ public class ScheduleController extends HttpServlet {
                 request.setAttribute("document", document);
                 request.setAttribute("book", book);
                 request.setAttribute("video", video);
+                request.setAttribute("slotid", lessonid);
+                request.setAttribute("classid", classid);
+                request.setAttribute("lesson", lesson);
+                request.setAttribute("listvideo", listVideo);
+                request.setAttribute("listmaterial", list);
                 request.setAttribute("slide", slide);
                 request.setAttribute("Quizoflesson", Quizoflesson);
                 request.setAttribute("linfo", linfo);

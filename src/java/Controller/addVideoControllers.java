@@ -39,7 +39,7 @@ public class addVideoControllers extends HttpServlet {
         int classid = Integer.parseInt(request.getParameter("classid"));
         String filename = request.getParameter("fileName");
         String linkYtb = request.getParameter("linkYtb");
-        Video video = new Video(dao.getLessionById(slotid, classid), filename, linkYtb, "video");
+        Video video = new Video(dao.getLessonById(slotid, classid), filename, linkYtb, "video");
         int status = vdao.insertVideoWithCondition(video, classid, slotid);
         if (status > 0) {
             response.sendRedirect("lessonDetailControllers?classid=" + classid + "&lessonId=" + slotid + "&error=upload Success");

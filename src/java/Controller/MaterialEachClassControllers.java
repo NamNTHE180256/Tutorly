@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 /**
  *
@@ -46,6 +47,12 @@ public class MaterialEachClassControllers extends HttpServlet {
         int classid = Integer.parseInt(request.getParameter("classid"));
         list = mDao.getAllMaterialWithID(classid, slotid);
         ArrayList<Video> listVideo = vdao.getAllVideoWithID(classid, slotid);
+        ArrayList<Material> doc = new ArrayList<>();
+        ArrayList<Material> slide = new ArrayList<>();
+        ArrayList<Material> book = new ArrayList<>();
+
+        doc = mDao.getAllDocWithID(classid, slotid, "pdf");
+        slide = mDao.getAllSlideWithID(classid, slotid, "pdf");
         if (action.equalsIgnoreCase("download")) {
             int id = Integer.parseInt(request.getParameter("id"));
             Material mate = mDao.getAllMaterialWithLesson(classid, id, slotid);
@@ -67,27 +74,36 @@ public class MaterialEachClassControllers extends HttpServlet {
             request.setAttribute("fileName", mate.getFileName());
             request.setAttribute("fileUrl", fileUrl);
             request.setAttribute("slotid", slotid);
+            request.setAttribute("doc", doc);
+            request.setAttribute("slide", slide);
+            request.setAttribute("book", book);
             request.setAttribute("classid", classid);
             request.setAttribute("listvideo", listVideo);
-            request.setAttribute("listmaterial", list);
+
             request.getRequestDispatcher("View/Material.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("getall")) {
             request.setAttribute("slotid", slotid);
             request.setAttribute("classid", classid);
-            request.setAttribute("listmaterial", list);
+            request.setAttribute("doc", doc);
+            request.setAttribute("slide", slide);
+            request.setAttribute("book", book);
+
             request.setAttribute("listvideo", listVideo);
             request.getRequestDispatcher("View/Material.jsp").forward(request, response);
         } else if (action.equalsIgnoreCase("downloadVideo")) {
             int id = Integer.parseInt(request.getParameter("id"));
-            Video video = vdao.getAllVideoWithLesson(classid, id, slotid);
-            String videoUrl = video.getFilePath();
+            Video video1 = vdao.getAllVideoWithLesson(classid, id, slotid);
+            String videoUrl = video1.getFilePath();
             String videoId = videoUrl.substring(videoUrl.lastIndexOf("v=") + 2); // Trích xuất ID video từ URL
             String embedUrl = "https://www.youtube.com/embed/" + videoId + "?controls=0"; // Tạo URL nhúng
             request.setAttribute("fileUrlYtb", embedUrl);
             request.setAttribute("slotid", slotid);
             request.setAttribute("classid", classid);
+            request.setAttribute("doc", doc);
+            request.setAttribute("slide", slide);
+            request.setAttribute("book", book);
             request.setAttribute("listvideo", listVideo);
-            request.setAttribute("listmaterial", list);
+
             request.getRequestDispatcher("View/Material.jsp").forward(request, response);
         }
     }
@@ -143,7 +159,7 @@ public class MaterialEachClassControllers extends HttpServlet {
             System.out.println("File path: " + file.getAbsolutePath());
 
             // Tạo đối tượng Material
-            Material material = new Material(0, fileName, fileData, fileType, null, dao.getLessionById(slotid, classid));
+            Material material = new Material(0, fileName, fileData, fileType, null, dao.getLessonById(slotid, classid));
 
             int result = mdao.insertMaterialWithCondition(material, classid, slotid);
 

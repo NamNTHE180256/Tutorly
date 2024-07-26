@@ -96,12 +96,12 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                                        Documents
+                                        Slide
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
                                     <div class="accordion-body">
-                                        <c:forEach var="x" items="${listmaterial}">
+                                        <c:forEach var="x" items="${slide}">
                                             <li class="list-group-item list-group-item-action">
                                                 <a href="Material?action=download&slotid=${slotid}&id=${x.id}&classid=${classid}">
                                                     ${x.fileName}
@@ -113,14 +113,16 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                        Slides
+                                        Documents
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
-                                        <c:forEach var="material" items="${slide}">
-                                            <p><strong>${material.getFileName()}</strong> : <a href="${material.getFilePath()}">${material.getFilePath()}</a></p>
-                                            </c:forEach>
+                                        <c:forEach var="x" items="${doc}">
+                                            <a href="Material?action=download&slotid=${slotid}&id=${x.id}&classid=${classid}">
+                                                ${x.fileName}
+                                            </a>
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>

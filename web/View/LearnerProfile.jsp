@@ -256,5 +256,11 @@
                     </div>
                 </div>
             </div>
+            <div>   
+                <a  class="nav-link" href="#">
+                    <button style="    background-color: #0E3C6E;" id="logoutButton" type="button" class="btn btn-primary">Logout</button>
+
+                </a>
+                </li></div>
     </body>
 </html>

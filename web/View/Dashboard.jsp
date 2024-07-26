@@ -252,7 +252,7 @@
                                             {
                                             title: '${v.getAClass().getTutor().getSubject().getName()} - ${v.getAClass().getTutor().getName()}',
                                                                 start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                                    url: 'http://google.com/',
+                                                                                    url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
                                                                                     end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                                                         className: 'custom-event'
                                                                                                 }<c:if test="${v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>

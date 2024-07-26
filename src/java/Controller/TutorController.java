@@ -61,44 +61,45 @@ public class TutorController extends HttpServlet {
             Vector<Subject> subject_vector = sDAO.getSubjects("SELECT * FROM Subject");
             //Vector<TutorAvailability> tutortvailability_vector = taDao.getAvailableSessions();
 
-            String service = request.getParameter("service");
-            if (service != null && !service.isEmpty()) {
-                // Check for subject filter
-                String subject_id = request.getParameter("id");
-                if (subject_id != null && !subject_id.isEmpty()) {
-                    tutor_vector = tDAO.getTutors("SELECT t.*, "
-                            + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
-                            + "FROM Tutor t "
-                            + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                            + "WHERE t.subjectId = " + subject_id);
-                }
 
-                // Check for price filter
-                String price_raw = request.getParameter("price");
-                if (price_raw != null && !price_raw.isEmpty()) {
-                    try {
-                        int price = Integer.parseInt(price_raw);
-                        String priceFilter = "";
-                        switch (price) {
-                            case 1:
-                                priceFilter = "t.price < 200";
-                                break;
-                            case 2:
-                                priceFilter = "t.price BETWEEN 200 AND 400";
-                                break;
-                            case 3:
-                                priceFilter = "t.price > 400";
-                                break;
-                        }
-                        tutor_vector = tDAO.getTutors("SELECT t.*, "
-                                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
-                                + "FROM Tutor t "
-                                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                                + "WHERE " + priceFilter);
-                    } catch (NumberFormatException e) {
-                        // Handle error gracefully
-                    }
+    String service = request.getParameter("service");
+    if (service != null && !service.isEmpty()) {
+        // Check for subject filter
+        String subject_id = request.getParameter("id");
+        if (subject_id != null && !subject_id.isEmpty()) {
+            tutor_vector = tDAO.getTutors("SELECT t.*, "
+                    + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                    + "FROM Tutor t "
+                    + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                    + "WHERE t.subjectId = " + subject_id);
+        }
+
+        // Check for price filter
+        String price_raw = request.getParameter("price");
+        if (price_raw != null && !price_raw.isEmpty()) {
+            try {
+                int price = Integer.parseInt(price_raw);
+                String priceFilter = "";
+                switch (price) {
+                    case 1:
+                        priceFilter = "t.price < 200000";
+                        break;
+                    case 2:
+                        priceFilter = "t.price BETWEEN 200000 AND 400000";
+                        break;
+                    case 3:
+                        priceFilter = "t.price > 400000";
+                        break;
                 }
+                tutor_vector = tDAO.getTutors("SELECT t.*, "
+                        + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                        + "FROM Tutor t "
+                        + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                        + "WHERE " + priceFilter);
+            } catch (NumberFormatException e) {
+                // Handle error gracefully
+            }
+        }
 
                 // Check for session filter
                 String session_raw = request.getParameter("session");

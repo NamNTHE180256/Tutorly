@@ -269,6 +269,33 @@ public class TutorDAO extends DBContext {
     }
 
     // Method to get a list of tutors based on a SQL query
+//    public Vector<Tutor> getTutors(String sql) {
+//        Vector<Tutor> vector = new Vector<>();
+//        SubjectDAO sDAO = new SubjectDAO();
+//        try {
+//            PreparedStatement state = connection.prepareStatement(sql);
+//            ResultSet rs = state.executeQuery();
+//            while (rs.next()) {
+//                int id = rs.getInt("id");
+//                int subjectId = rs.getInt("subjectId");
+//                String name = rs.getString("name");
+//                boolean gender = rs.getBoolean("gender");
+//                String image = rs.getString("image");
+//                String bio = rs.getString("bio");
+//                String edu = rs.getString("edu");
+//                float price = rs.getFloat("price");
+//                String bank = rs.getString("bank");
+//                String status = rs.getString("status");
+//                String linkMeet = rs.getString("Linkmeet");
+//                Tutor tutor = new Tutor(id, sDAO.getSubjectById(subjectId), name, gender, image, bio, edu, price, bank, status, linkMeet);
+//                vector.add(tutor);
+//            }
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//        return vector;
+//    }
+
     public Vector<Tutor> getTutors(String sql) {
         Vector<Tutor> vector = new Vector<>();
         SubjectDAO sDAO = new SubjectDAO();
@@ -286,8 +313,7 @@ public class TutorDAO extends DBContext {
                 float price = rs.getFloat("price");
                 String bank = rs.getString("bank");
                 String status = rs.getString("status");
-                String linkMeet = rs.getString("Linkmeet");
-                Tutor tutor = new Tutor(id, sDAO.getSubjectById(subjectId), name, gender, image, bio, edu, price, bank, status, linkMeet);
+                Tutor tutor = new Tutor(id, sDAO.getSubjectById(subjectId), name, gender, image, bio, edu, price, bank, status);
                 vector.add(tutor);
             }
         } catch (SQLException ex) {
@@ -295,7 +321,6 @@ public class TutorDAO extends DBContext {
         }
         return vector;
     }
-
     // Method to get a tutor by ID
     // Method to add a new tutor
     public int addTutor(Tutor tutor) {
@@ -489,6 +514,6 @@ public class TutorDAO extends DBContext {
         String name = "hien";
         int subjectId = 15;
         int id = 9;
-        System.out.println(t.getTutorById(7).getLinkmeet());
+        System.out.println(t.getTutors("SELECT * FROM Tutor WHERE subjectId = 2 AND id <> 7"));
     }
 }

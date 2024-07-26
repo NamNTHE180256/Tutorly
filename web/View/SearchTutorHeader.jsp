@@ -135,26 +135,37 @@
         <nav class="navbar navbar-expand-sm navbarmenu">
             <!-- Links -->
             <ul class="navbar-nav">
-
-                <li class="nav-item navmenuitem">
+<li class="nav-item navmenuitem">
                     <!-- Dashboard -->
-                    <a class="nav-link" href="../Tutorly/DashboardController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/DashboardController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Schedule -->
-                    <a class="nav-link" href="../Tutorly/ScheduleController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Schedule</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ScheduleController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Schedule</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Material -->
-                    <a class="nav-link" href="../Tutorly/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Quiz -->
-                    <a class="nav-link" href="../Tutorly/QuizController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Quiz</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/QuizController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Quiz</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- Change session -->
+                    <a class="nav-link" href="submit-change-session-request"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Change session</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- Student Request -->
+                    <a class="nav-link" href="learner-change-requests"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">My Request</button></a>
+                </li>
+                <li class="nav-item navmenuitem">
+                    <!-- View Tutor Request -->
+                    <a class="nav-link" href="manage-tutor-request"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Tutor Request</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->
-                    <a class="nav-link" href="../Tutorly/SavedTutorController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Save list tutors</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/SavedTutorController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Save list tutors</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- View classes -->

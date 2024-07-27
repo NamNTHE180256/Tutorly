@@ -216,7 +216,13 @@ CREATE TABLE RegisterTrialClass (
     FOREIGN KEY (tutorId) REFERENCES Tutor(id),
     FOREIGN KEY (subjectId) REFERENCES Subject(id)
 );
-
+CREATE TABLE CancelClass (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+   classId INT,
+    status VARCHAR(50), --wait, accepted, denied
+    readed VARCHAR(50), -- read, unread
+    FOREIGN KEY (classId) REFERENCES Class(id)
+);
 CREATE TABLE Transactions (
     id INT IDENTITY(1,1) PRIMARY KEY,
     userId INT NOT NULL,

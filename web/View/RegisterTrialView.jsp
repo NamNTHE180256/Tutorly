@@ -169,7 +169,7 @@
                                                                         </div>
                                                                         <input type="hidden" name="session" value="${availability.getSession().getId()}">
                                                                         <input type="hidden" name="tutor_id" value="${tutor.getId()}">
-                                                                        <input type="hidden" name="learner_id" value="1">
+                                                                        <input type="hidden" name="learner_id" value="${sessionScope.learner.id}">
                                                                         <input type="hidden" name="service" value="registertrial">
                                                                         <div >
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
@@ -242,7 +242,7 @@
                                                                         </div>
                                                                         <input type="hidden" name="session" value="${availability.getSession().getId()}">
                                                                         <input type="hidden" name="tutor_id" value="${tutor.getId()}">
-                                                                        <input type="hidden" name="learner_id" value="1">
+                                                                        <input type="hidden" name="learner_id" value="${sessionScope.learner.id}">
                                                                         <input type="hidden" name="service" value="registertrial">
                                                                         <div >
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
@@ -315,7 +315,7 @@
                                                                         </div>
                                                                         <input type="hidden" name="session" value="${availability.getSession().getId()}">
                                                                         <input type="hidden" name="tutor_id" value="${tutor.getId()}">
-                                                                        <input type="hidden" name="learner_id" value="1">
+                                                                        <input type="hidden" name="learner_id" value="${sessionScope.learner.id}">
                                                                         <input type="hidden" name="service" value="registertrial">
                                                                         <div >
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
@@ -387,7 +387,7 @@
                                                                         </div>
                                                                         <input type="hidden" name="session" value="${availability.getSession().getId()}">
                                                                         <input type="hidden" name="tutor_id" value="${tutor.getId()}">
-                                                                        <input type="hidden" name="learner_id" value="1">
+                                                                        <input type="hidden" name="learner_id" value="${sessionScope.learner.id}">
                                                                         <input type="hidden" name="service" value="registertrial">
                                                                         <div >
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>
@@ -460,7 +460,7 @@
                                                                         </div>
                                                                         <input type="hidden" name="session" value="${availability.getSession().getId()}">
                                                                         <input type="hidden" name="tutor_id" value="${tutor.getId()}">
-                                                                        <input type="hidden" name="learner_id" value="1">
+                                                                        <input type="hidden" name="learner_id" value="${sessionScope.learner.id}">
                                                                         <input type="hidden" name="service" value="registertrial">
                                                                         <div >
                                                                             <button class="btn" style="background-color: #0E3C6E; color: white;" type="submit">Register</button>

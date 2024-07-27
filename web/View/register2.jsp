@@ -66,6 +66,39 @@
             window.location.href = 'View/register2.jsp';
             <% }%>
         </script>
-        <script src="../js/scriptTutorRegister.js"></script>
+        <script >
+            document.getElementById('upload-image').addEventListener('change', function (event) {
+                const imagePreview = document.getElementById('image-preview');
+                imagePreview.innerHTML = '';
+
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imagePreview.style.backgroundImage = `url(${e.target.result})`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            window.onload = function () {
+                const name = localStorage.getItem('full-name');
+                const subjectName = localStorage.getItem('subject-name');
+                const subjectId = localStorage.getItem('subject-id');
+
+                if (name) {
+                    document.getElementById('display-name').textContent = name;
+                }
+                if (subjectName) {
+                    document.getElementById('display-subject').textContent = subjectName;
+                }
+
+                // Assuming subject ID is stored in local storage as well
+                const subjectSelect = document.getElementById('subject-id');
+                if (subjectId) {
+                    subjectSelect.value = subjectId;
+                }
+            };
+        </script>
     </body>
 </html>

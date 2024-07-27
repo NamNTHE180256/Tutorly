@@ -226,7 +226,7 @@ public class AClassDAO extends DBContext {
         LearnerDAO lDao = new LearnerDAO();
         TutorDAO tDao = new TutorDAO();
         SubjectDAO sDao = new SubjectDAO();
-        String sql = "SELECT c.id, c.learnerId, c.totalSession, c.startDate "
+        String sql = "SELECT c.id, c.learnerId, c.totalSession, c.startDate, c.endDate, c.status "
                 + "FROM Class c "
                 + "WHERE c.tutorId = ?";
         try {
@@ -239,8 +239,10 @@ public class AClassDAO extends DBContext {
                 aClass.setLearner(lDao.getLearnerById(rs.getInt("learnerId")));
                 aClass.setTutor(tDao.getTutorById(tutorId));
 //                aClass.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
+                aClass.setStatus(rs.getString("status"));
                 aClass.setTotalSession(rs.getInt("totalSession"));
                 aClass.setStartDate(rs.getDate("startDate"));
+                aClass.setEndDate(rs.getDate("endDate"));
 
                 classes.add(aClass);
             }
@@ -317,5 +319,63 @@ public class AClassDAO extends DBContext {
         for (AClass aClass : classes) {
             System.out.println(aClass);
         }
+    }
+
+    public Vector<AClass> getClassesByLearnerIdAndStatus(int learnerId, String status) {
+        Vector<AClass> vector = new Vector<>();
+        String sql = "SELECT * FROM Class WHERE learnerId = ? AND status = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, learnerId);
+            state.setString(2, status);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int tutorId = rs.getInt("tutorId");
+                int totalSession = rs.getInt("totalSession");
+                Date startDate = rs.getDate("startDate");
+                Date endDate = rs.getDate("endDate");
+
+                Learner learner = new LearnerDAO().getStudentById(learnerId); // Assuming LearnerDAO is implemented
+                Tutor tutor = new TutorDAO().getTutorById(tutorId); // Assuming TutorDAO is implemented
+
+                AClass aClass = new AClass(learner, tutor, totalSession, startDate, endDate, status);
+                aClass.setId(id);
+                vector.add(aClass);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+
+    }
+
+    public Vector<AClass> getClassesByTutorIdAndStatus(int tutorId, String status) {
+                Vector<AClass> vector = new Vector<>();
+        String sql = "SELECT * FROM Class WHERE tutorId = ? AND status = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, tutorId);
+            state.setString(2, status);
+            ResultSet rs = state.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int learnerId = rs.getInt("learnerId");
+                int totalSession = rs.getInt("totalSession");
+                Date startDate = rs.getDate("startDate");
+                Date endDate = rs.getDate("endDate");
+
+                Learner learner = new LearnerDAO().getStudentById(learnerId); // Assuming LearnerDAO is implemented
+                Tutor tutor = new TutorDAO().getTutorById(tutorId); // Assuming TutorDAO is implemented
+
+                AClass aClass = new AClass(learner, tutor, totalSession, startDate, endDate, status);
+                aClass.setId(id);
+                vector.add(aClass);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+
     }
 }

@@ -88,9 +88,11 @@ public class TutorRegisterServlet extends HttpServlet {
             }
             session.setAttribute("tutor", tutor);
             response.sendRedirect("View/register5.jsp");
+            
         } else if ("5".equals(step)) {
             Tutor tutor = (Tutor) session.getAttribute("tutor");
             tutor.setBio(request.getParameter("introduction"));
+            
 
             try {
                 // Save the user and tutor in the database only after completing the final step
@@ -103,6 +105,7 @@ public class TutorRegisterServlet extends HttpServlet {
                 tutor.setPrice(0);
                 tutor.setBank("Not process");
                 tutor.setStatus("Pending");
+                tutor.setLinkmeet("null");
                 boolean success = tutorDAO.insertTutor(tutor);
 
                 // Log the success status
@@ -114,7 +117,7 @@ public class TutorRegisterServlet extends HttpServlet {
                 Logger.getLogger(TutorRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            request.setAttribute("message", "Registration successful! Wait for email. Click OK to comeback to Login.");
+            request.setAttribute("message", tutor.toString());
             request.getRequestDispatcher("View/register5.jsp").forward(request, response);
         }
     }

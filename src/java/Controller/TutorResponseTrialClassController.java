@@ -1,9 +1,10 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
 
+import Config.EmailConfig;
 import static Controller.RegisterTrialCotroller.getNearestDayOfWeek;
 import DAO.AClassDAO;
 import DAO.LearnerDAO;
@@ -12,9 +13,12 @@ import DAO.RegisterTrialClassDAO;
 import DAO.SessionDAO;
 import DAO.SubjectDAO;
 import DAO.TutorDAO;
+import DAO.UserDAO;
 import Model.AClass;
 import Model.Lesson;
 import Model.RegisterTrialClass;
+import Model.Tutor;
+import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,6 +39,15 @@ import java.util.Vector;
 @WebServlet(name = "TutorResponseTrialClassController", urlPatterns = {"/TutorResponseTrialClassController"})
 public class TutorResponseTrialClassController extends HttpServlet {
 
+    UserDAO udao = new UserDAO();
+    AClassDAO aclassDAO = new AClassDAO();
+    LearnerDAO lDAO = new LearnerDAO();
+    LessonDAO lessonDAO = new LessonDAO();
+    SessionDAO sDAO = new SessionDAO();
+    TutorDAO tDAO = new TutorDAO();
+    SubjectDAO sbDAO = new SubjectDAO();
+    EmailConfig config = new EmailConfig();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,11 +59,15 @@ public class TutorResponseTrialClassController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
         RegisterTrialClassDAO rDAO = new RegisterTrialClassDAO();
         Vector<RegisterTrialClass> listregister = rDAO.getTrialClassesByTutorId(7);
         request.setAttribute("listregister", listregister);
         String service = request.getParameter("service");
+        if (service == null) {
+            response.sendRedirect("../Tutorly/View/Logim.jsp");
+        }
         if (service != null && !service.isEmpty()) {
             if (service.equals("accept")) {
                 try {
@@ -62,12 +79,6 @@ public class TutorResponseTrialClassController extends HttpServlet {
 
                     rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "accepted");
 
-                    AClassDAO aclassDAO = new AClassDAO();
-                    LearnerDAO lDAO = new LearnerDAO();
-                    LessonDAO lessonDAO = new LessonDAO();
-                    SessionDAO sDAO = new SessionDAO();
-                    TutorDAO tDAO = new TutorDAO();
-                    SubjectDAO sbDAO = new SubjectDAO();
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     Date date = formatter.parse(dateStr);
 
@@ -87,7 +98,6 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     Lesson newLesson = null;
 
                     if (classId != 0) {
-                        // Retrieve the newly added AClass using the classId directly
                         AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
 
                         if (addedClass != null) {
@@ -101,30 +111,43 @@ public class TutorResponseTrialClassController extends HttpServlet {
                         }
                     }
 
-                    // Optionally, you can send a response back to the client
                     if (lessonResult != 0) {
-                        response.getWriter().write("Class and lesson added successfully.");
+                        boolean status = config.MailAgreeTrial(udao.getUserById(Integer.parseInt(learner_id)).getEmail(), tDAO.getTutorById(Integer.parseInt(tutor_id)).getName());
+                        response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(tutor_id));
                     } else {
                         response.getWriter().write("Failed to add lesson.");
                     }
-                    response.sendRedirect("TutorResponseTrialClassController");
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     response.getWriter().write("Error: " + e.getMessage());
                 }
+
             } else if (service.equals("deny")) {
                 String responseid = request.getParameter("responseid");
-                rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "denied");
-                response.sendRedirect("TutorResponseTrialClassController");
-            }
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorResponseTrialClassView.jsp");
-            dispatcher.forward(request, response);
-        }
+                String learner_id = request.getParameter("learnerid");
+                User user = udao.getUserById(Integer.parseInt(learner_id));
+                System.out.println("x" + user);
+                Tutor tutor = tDAO.getTutorById(Integer.parseInt(request.getParameter("tutorid")));
+                System.out.println("x:      " + tutor);
+                System.out.println("xx:" + responseid);
+                int status = rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "denied");
+                if (status > 0) {
+                    boolean x = config.MailAgreeTrial("anhndhe182179@fpt.edu.vn", tutor.getName());
 
+                    response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(request.getParameter("tutorid")));
+                } else {
+                    response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(request.getParameter("tutorid")));
+                }
+            } else {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorResponseTrialClassView.jsp");
+                dispatcher.forward(request, response);
+            }
+
+        }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

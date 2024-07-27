@@ -32,7 +32,7 @@ public class MaterialDAO extends DBContext {
                 + "FROM Material m\n"
                 + "JOIN Lesson l ON m.lessonId = l.id\n"
                 + "JOIN Class c ON l.classId = c.id\n"
-                + "WHERE c.id = ? AND m.lessonId = ? and m.fileType  LIKE ?;";
+                + "WHERE c.id = ? AND m.lessonId = ? and m.fileType LIKE ?;";
 
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setInt(1, classid);

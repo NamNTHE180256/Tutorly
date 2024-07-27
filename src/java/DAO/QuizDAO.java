@@ -186,6 +186,15 @@ public class QuizDAO extends DBContext {
         }
     }
 
+    public void updateQuizTime(long quizId, int quizTime) throws SQLException {
+        String sql = "UPDATE Quiz SET timeOfQuiz = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, quizTime);
+            pstmt.setLong(2, quizId);
+            pstmt.executeUpdate();
+        }
+    }
+
     public void updateQuizScoreAndStatus(Long quizId, double score, String status) {
         String sql = "UPDATE Quiz SET score = ?, status = ? WHERE id = ?";
         try {

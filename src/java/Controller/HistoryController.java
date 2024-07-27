@@ -38,7 +38,7 @@ public class HistoryController extends HttpServlet {
         Tutor tutor = (Tutor) session.getAttribute("tutor");
         String classParam = request.getParameter("class");
 
-        Integer classId = (classParam != null && !classParam.isEmpty()) ? Integer.valueOf(classParam) : null;
+        Integer classId = Integer.parseInt(request.getParameter("classId"));
 
         AClassDAO aClassDAO = new AClassDAO();
         if (user == null) {

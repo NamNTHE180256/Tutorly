@@ -226,8 +226,8 @@
                     <a class="nav-link" href="StdudentDashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
-                    <!-- History -->
-                    <a class="nav-link" href="history"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">History</button></a>
+                    <!-- View class -->
+                    <a class="nav-link" href="ViewClassnew"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Class</button></a>
                 </li>
             </ul>
         </nav>

@@ -710,3 +710,8 @@ ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutor
 REFERENCES [dbo].[Tutor] ([id])
 GO
 
+Select * from [Session]
+select * from lesson
+SELECT s.* FROM Lesson s 
+                JOIN Class c ON c.id = s.classId
+                WHERE learnerId = 1 

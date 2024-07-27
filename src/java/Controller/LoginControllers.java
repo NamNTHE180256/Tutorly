@@ -127,7 +127,7 @@ public class LoginControllers extends HttpServlet {
 
                         session.setAttribute("tutor", tutor);
                         session.setAttribute("user", userLogin);
-                        response.sendRedirect("tutor-dashboard");
+                        response.sendRedirect("ViewClassnew");
                     } else {
                         request.setAttribute("messageError", "Tutor not found!");
                         request.getRequestDispatcher("View/Login.jsp").forward(request, response);

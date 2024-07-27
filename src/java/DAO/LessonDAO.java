@@ -268,7 +268,7 @@ public class LessonDAO extends DBContext {
         int n = 0;
         String sql = "INSERT INTO Lesson (classId, sessionId, date, status) VALUES (?, ?, ?, ?)";
         try {
-            PreparedStatement pre = connection.prepareStatement(sql);
+            PreparedStatement pre = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             pre.setInt(1, lesson.getAClass().getId());
             pre.setString(2, lesson.getSession().getId());
             pre.setDate(3, new java.sql.Date(lesson.getDate().getTime()));

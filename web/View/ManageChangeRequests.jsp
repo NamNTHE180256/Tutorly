@@ -40,14 +40,9 @@
     </head>
     <body>
         <header>
-            <c:choose>
-                <c:when test="${user.role eq 'tutor'}">
-                    <%@ include file="TutorHeader.jsp" %>
-                </c:when>
-                <c:otherwise>
-                    <%@ include file="SearchTutorHeader.jsp" %>
-                </c:otherwise>
-            </c:choose>
+
+            <%@ include file="SearchTutorHeader.jsp" %>
+
         </header>
 
         <div class="container-fluid" style="margin-bottom: 20px">

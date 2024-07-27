@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Model.Tutor;
+import DAO.TutorDAO;
 
 /**
  *
@@ -225,9 +227,12 @@ public class SubjectDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        SubjectDAO d = new SubjectDAO();
-        Map<String, Integer> subjectTutorCounts = d.getTutorsPerSubject();
-        System.out.println(subjectTutorCounts);
+        SubjectDAO sbDAO = new SubjectDAO();
+        TutorDAO tDAO = new TutorDAO();
+
+        Subject sub = sbDAO.getSubjectById(tDAO.getTutorById(7).getSubject().getId());
+        System.out.println(sub);
+
     }
 
 }

@@ -47,6 +47,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
     TutorDAO tDAO = new TutorDAO();
     SubjectDAO sbDAO = new SubjectDAO();
     EmailConfig config = new EmailConfig();
+    RegisterTrialClassDAO rDAO = new RegisterTrialClassDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -61,14 +62,16 @@ public class TutorResponseTrialClassController extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
-        RegisterTrialClassDAO rDAO = new RegisterTrialClassDAO();
+
         Vector<RegisterTrialClass> listregister = rDAO.getTrialClassesByTutorId(7);
         request.setAttribute("listregister", listregister);
         String service = request.getParameter("service");
         if (service == null) {
             response.sendRedirect("../Tutorly/View/Logim.jsp");
+            return;
         }
-        if (service != null && !service.isEmpty()) {
+
+        if (!service.isEmpty()) {
             if (service.equals("accept")) {
                 try {
                     String learner_id = request.getParameter("learner_id");
@@ -77,6 +80,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     String tutor_id = request.getParameter("tutor_id");
                     String dateStr = request.getParameter("date");
 
+                    // Update the trial class status to 'accepted'
                     rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "accepted");
 
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -89,7 +93,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                             date,
                             date,
                             "trial",
-                            sbDAO.getSubjectById(tDAO.getTutorById(Integer.parseInt(tutor_id)).getSubject().getId())
+                            tDAO.getTutorById(Integer.parseInt(tutor_id)).getSubject()
                     );
 
                     int classId = aclassDAO.addClass(aClass);
@@ -98,7 +102,7 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     Lesson newLesson = null;
 
                     if (classId != 0) {
-                        AClass addedClass = aclassDAO.getClassById(aclassDAO.getLatestClassId());
+                        AClass addedClass = aclassDAO.getClassById(classId);
 
                         if (addedClass != null) {
                             newLesson = new Lesson(
@@ -112,7 +116,10 @@ public class TutorResponseTrialClassController extends HttpServlet {
                     }
 
                     if (lessonResult != 0) {
-                        boolean status = config.MailAgreeTrial(udao.getUserById(Integer.parseInt(learner_id)).getEmail(), tDAO.getTutorById(Integer.parseInt(tutor_id)).getName());
+                        // Update the status of other classes with specific criteria
+                        int status = rDAO.updateStatusWithSpecificCriteria(Integer.parseInt(tutor_id), session_id, Integer.parseInt(responseid), dateStr);
+                        int Number = rDAO.sendEmailsForUpdatedRecords(Integer.parseInt(tutor_id), session_id, Integer.parseInt(responseid), dateStr);
+                        // Redirect to the appropriate page
                         response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(tutor_id));
                     } else {
                         response.getWriter().write("Failed to add lesson.");
@@ -124,26 +131,27 @@ public class TutorResponseTrialClassController extends HttpServlet {
                 }
 
             } else if (service.equals("deny")) {
-                String responseid = request.getParameter("responseid");
-                String learner_id = request.getParameter("learnerid");
-                User user = udao.getUserById(Integer.parseInt(learner_id));
-                System.out.println("x" + user);
-                Tutor tutor = tDAO.getTutorById(Integer.parseInt(request.getParameter("tutorid")));
-                System.out.println("x:      " + tutor);
-                System.out.println("xx:" + responseid);
-                int status = rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "denied");
-                if (status > 0) {
-                    boolean x = config.MailAgreeTrial("anhndhe182179@fpt.edu.vn", tutor.getName());
+                try {
+                    String responseid = request.getParameter("responseid");
+                    String learner_id = request.getParameter("learnerid");
+                    User user = udao.getUserById(Integer.parseInt(learner_id));
+                    Tutor tutor = tDAO.getTutorById(Integer.parseInt(request.getParameter("tutorid")));
 
-                    response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(request.getParameter("tutorid")));
-                } else {
-                    response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(request.getParameter("tutorid")));
+                    int status = rDAO.updateTrialClassStatus(Integer.parseInt(responseid), "denied");
+                    if (status > 0) {
+                        boolean x = config.MailDenyTrial(user.getEmail(), tutor.getName());
+                        response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(request.getParameter("tutorid")));
+                    } else {
+                        response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=registerTrial&tutorid=" + Integer.parseInt(request.getParameter("tutorid")));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.getWriter().write("Error: " + e.getMessage());
                 }
             } else {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorResponseTrialClassView.jsp");
                 dispatcher.forward(request, response);
             }
-
         }
     }
 

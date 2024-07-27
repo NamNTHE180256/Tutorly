@@ -84,16 +84,23 @@ public class AClassDAO extends DBContext {
     // Method to add a new class
     public int addClass(AClass aClass) {
         int n = 0;
-        String sql = "INSERT INTO Class (learnerId, tutorId, totalSession, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement pre = connection.prepareStatement(sql);
+        String sql = "INSERT INTO Class (learnerId, subjectId, tutorId, totalSession, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pre = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pre.setInt(1, aClass.getLearner().getId());
-            pre.setInt(2, aClass.getTutor().getId());
-            pre.setInt(3, aClass.getTotalSession());
-            pre.setDate(4, new java.sql.Date(aClass.getStartDate().getTime()));
-            pre.setDate(5, new java.sql.Date(aClass.getEndDate().getTime()));
-            pre.setString(6, aClass.getStatus());
+            pre.setInt(2, aClass.getSubject().getId());
+            pre.setInt(3, aClass.getTutor().getId());
+            pre.setInt(4, aClass.getTotalSession());
+            pre.setDate(5, new java.sql.Date(aClass.getStartDate().getTime()));
+            pre.setDate(6, new java.sql.Date(aClass.getEndDate().getTime()));
+            pre.setString(7, aClass.getStatus());
             n = pre.executeUpdate();
+
+            // If you need to retrieve the generated key (id) after insert
+            try (ResultSet generatedKeys = pre.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    n = generatedKeys.getInt(1); // Assuming the id is the first column in the generated keys
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -176,7 +183,6 @@ public class AClassDAO extends DBContext {
         return -1;
     }
 
-
     public int countClassByStatus(String status, int id) {
         int n = 0;
         String sql = "Select count(*) as count_class from class where status = ? and tutorId = ? ";
@@ -195,7 +201,6 @@ public class AClassDAO extends DBContext {
         }
         return -1;
     }
-
 
     public int countClassByStatusLearner(String status, int id) {
         int n = 0;
@@ -290,6 +295,7 @@ public class AClassDAO extends DBContext {
         }
         return finishedSessions;
     }
+
     public int updateClassStatus(int classId, String newStatus) {
         int n = 0;
         String sql = "UPDATE Class SET status = ? WHERE id = ?";

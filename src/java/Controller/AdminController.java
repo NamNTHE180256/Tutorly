@@ -63,8 +63,8 @@ public class AdminController extends HttpServlet {
                 break;
             case "searchLearner":
                 String searchLearner = request.getParameter("searchLearner");
-                //learners = learnerDao.searchLearners(searchLearner);
-                //request.setAttribute("learners", learners);
+                learners = learnerDao.searchLearners(searchLearner);
+                request.setAttribute("learners", learners);
                 request.getRequestDispatcher("/View/AdminLearner.jsp").forward(request, response);
                 break;
             case "tutor":

@@ -23,7 +23,6 @@ public class DBContext {
 
             String password = "12345";
 
-            String password = "17022004";
 
             String url = "jdbc:sqlserver://localhost:1433;databaseName=Tutorly";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

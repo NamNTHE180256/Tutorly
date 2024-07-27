@@ -268,7 +268,7 @@ public class LessonDAO extends DBContext {
         int n = 0;
         String sql = "INSERT INTO Lesson (classId, sessionId, date, status) VALUES (?, ?, ?, ?)";
         try {
-            PreparedStatement pre = connection.prepareStatement(sql);
+            PreparedStatement pre = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             pre.setInt(1, lesson.getAClass().getId());
             pre.setString(2, lesson.getSession().getId());
             pre.setDate(3, new java.sql.Date(lesson.getDate().getTime()));
@@ -321,7 +321,14 @@ public class LessonDAO extends DBContext {
                 + "ORDER BY L.date;";
         return getLessonsWithId(sql, learnerId);
     }
-
+  public Vector<Lesson> getLessonsByTutorId(int learnerId) {
+        String sql = "  SELECT L.* \n"
+                + "FROM Lesson L \n"
+                + "JOIN Class C ON L.classId = C.id \n"
+                + "WHERE C.tutorId = ? AND C.status != 'finished' \n"
+                + "ORDER BY L.date;";
+        return getLessonsWithId(sql, learnerId);
+    }
     // Get lessons by class ID
     public Vector<Lesson> getLessonsByClassId(int classId) {
         String sql = "SELECT * FROM Lesson WHERE classId = ?";
@@ -349,7 +356,7 @@ public class LessonDAO extends DBContext {
 
 
         // Example: Fetch lessons by class ID
-        Vector<Lesson> lessonsByClass = lessonDAO.getLessonsByClassId(3);
+        Vector<Lesson> lessonsByClass =lessonDAO.getLessonsByTutorId(8);
         for (Lesson lesson : lessonsByClass) {
             System.out.println(lesson);
         }
@@ -365,7 +372,7 @@ public class LessonDAO extends DBContext {
 //        Vector<Lesson> learnerLessons = lessonDAO.getLessonsByLearnerId(learnerId);
 //        for (Lesson lesson : learnerLessons) {
 //            System.out.println(lesson.getAClass().getTutor().getName());
-System.out.println("1:"+lessonDAO.getLessonById(17, 3));
+System.out.println();
         }
     }
 

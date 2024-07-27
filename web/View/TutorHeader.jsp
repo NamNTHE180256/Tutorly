@@ -136,17 +136,17 @@
         <nav class="navbar navbar-expand-sm navbarmenu">
             <!-- Links -->
             <ul class="navbar-nav">
-                <li class="nav-item navmenuitem me-2">
+                <li class="nav-item navmenuitem">
                     <!-- Dashboard -->
-                    <a class="nav-link" href="tutor-dashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/DashboardController?type=tutor&tutorid=${sessionScope.tutor.id}"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
                 </li>
                 <li class="nav-item navmenuitem me-2">
                     <!-- Schedule -->
                     <a class="nav-link" href="TutorScheduleController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Schedule</button></a>
                 </li>
-                <li class="nav-item navmenuitem me-2">
+                <li class="nav-item navmenuitem">
                     <!-- Material -->
-                    <a class="nav-link" href="#"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/MaterialController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Material</button></a>
                 </li>
                 <li class="nav-item navmenuitem me-2">
                     <!-- Quiz -->
@@ -162,7 +162,7 @@
                 </li>
                 <li class="nav-item navmenuitem me-2">
                     <!-- View Tutor Request -->
-                    <a class="nav-link" href="manage-change-request"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Learner Request</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/RequestControllersForTutor?requestType"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Learner Request</button></a>
                 </li>
                 <li class="nav-item navmenuitem me-2">
                     <!-- History -->
@@ -172,7 +172,7 @@
                     <a class="nav-link" id="income-link" class="btn"  href="#" ><button   onclick="redirectToIncome()" style="background-color: #0E3C6E; color: white" type="button" class="btn">Income</button></a>
                 </li>
             </ul>
-          
+
         </nav>
     </body>
     <script>

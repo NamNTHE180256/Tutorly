@@ -1,6 +1,9 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+
 <html>
     <head>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Material</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
@@ -10,7 +13,16 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
     <body>
-        <%@ include file = "StudentHeader.jsp" %>
+        <header>
+            <c:choose>
+                <c:when test="${user.role eq 'tutor'}">
+                    <%@ include file="TutorHeader.jsp" %>
+                </c:when>
+                <c:otherwise>
+                    <%@ include file="StudentHeader.jsp" %>
+                </c:otherwise>
+            </c:choose>
+        </header>
 
         <div class="container-fluid" style="margin-bottom: 20px">
             <div class="row justify-content-end">
@@ -18,7 +30,7 @@
                     <select id="classDropdown" class="form-select" onchange="onClassChange()">
                         <option value="">Select a class</option>
                         <c:forEach items="${class_vector}" var="c">
-                            <option value="${c.getId()}">${c.getTutor().getName()} - ${c.getTutor().getSubject().getName()} - ${c.getStartDate()}</option>
+                        <option value="${c.getId()}">${c.getTutor().getName()} - ${c.getTutor().getSubject().getName()} - ${c.getStartDate()}</option>
                         </c:forEach>
                     </select>
                 </div>

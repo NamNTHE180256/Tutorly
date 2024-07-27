@@ -178,12 +178,7 @@
 
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <button id="logoutButton" type="button" class="btn btn-primary">Logout</button>
 
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -197,8 +192,11 @@
 
                 <li class="nav-item navmenuitem">
                     <!-- Dashboard -->
-                    <a class="nav-link" href="${pageContext.request.contextPath}/DashboardController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/DashboardController?type=learner&learnerid=${sessionScope.learner.getId()}">
+                        <button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button>
+                    </a>
                 </li>
+
                 <li class="nav-item navmenuitem">
                     <!-- Schedule -->
                     <a class="nav-link" href="${pageContext.request.contextPath}/ScheduleController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Schedule</button></a>

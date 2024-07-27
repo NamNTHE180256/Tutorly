@@ -41,21 +41,40 @@ public class DashboardController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   
-            response.setContentType("text/html;charset=UTF-8");
-            //String id_student = request.getParameter("id");
-            LessonDAO lDAO = new LessonDAO();
-            QuizDAO aDAO = new QuizDAO();
-            Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
-            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
-            LearnerDAO leDAO = new LearnerDAO();
-            Learner linfo = leDAO.getStudentById(1);
-            request.setAttribute("linfo", linfo);
-            request.setAttribute("todoQuiz", classQuizToDo.size());
-            request.setAttribute("lesson_vector", lesson_vector);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/Dashboard.jsp");
-            dispatcher.forward(request, response);
-      
+        response.setContentType("text/html;charset=UTF-8");
+        LessonDAO lDAO = new LessonDAO();
+        QuizDAO aDAO = new QuizDAO();
+        String type = request.getParameter("type");
+
+        if ("learner".equalsIgnoreCase(type)) {
+            try {
+                int learnerid = Integer.parseInt(request.getParameter("learnerid"));
+                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(learnerid);
+                Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(learnerid);
+                LearnerDAO leDAO = new LearnerDAO();
+                Learner linfo = leDAO.getStudentById(learnerid);
+
+                request.setAttribute("linfo", linfo);
+                request.setAttribute("todoQuiz", classQuizToDo.size());
+                request.setAttribute("lesson_vector", lesson_vector);
+
+                request.getRequestDispatcher("View/Dashboard.jsp").forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred.");
+            }
+        } else if ("tutor".equalsIgnoreCase(type)) {
+            try {
+                int tutorid = Integer.parseInt(request.getParameter("tutorid"));
+                Vector<Lesson> lesson_vector = lDAO.getLessonsByTutorId(tutorid);
+
+                request.setAttribute("lesson_vector", lesson_vector);
+                request.getRequestDispatcher("View/Dashboard.jsp").forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred.");
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

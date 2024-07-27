@@ -125,7 +125,7 @@
 
                                 </a>
                             </li>
-                         
+
                         </ul>
                     </div>
                 </div>
@@ -135,9 +135,11 @@
         <nav class="navbar navbar-expand-sm navbarmenu">
             <!-- Links -->
             <ul class="navbar-nav">
-<li class="nav-item navmenuitem">
+                <li class="nav-item navmenuitem">
                     <!-- Dashboard -->
-                    <a class="nav-link" href="${pageContext.request.contextPath}/DashboardController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/DashboardController?type=learner&learnerid=${sessionScope.learner.getId()}">
+                        <button style="background-color: #0E3C6E; color: white" type="button" class="btn">Dashboard</button>
+                    </a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Schedule -->
@@ -161,7 +163,7 @@
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- View Tutor Request -->
-                    <a class="nav-link" href="manage-tutor-request"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Tutor Request</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/RequestControllerForLearner"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Tutor Request</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->

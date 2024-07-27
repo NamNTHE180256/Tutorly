@@ -110,7 +110,7 @@ public class LoginControllers extends HttpServlet {
                     // Save information in the session
                     session.setAttribute("learner", learner);
                     session.setAttribute("user", userLogin);
-                    response.sendRedirect("DashboardController");
+                    response.sendRedirect("TutorController");
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
 
                     Tutor tutor = tDao.getTutorById(userLogin.getId());
@@ -130,7 +130,9 @@ public class LoginControllers extends HttpServlet {
 
                             session.setAttribute("tutor", tutor);
                             session.setAttribute("user", userLogin);
+
                             response.sendRedirect("ViewClassnew");
+
                         } else {
                             request.setAttribute("messageError", "This Account does not Activated by Admin");
                             request.getRequestDispatcher("View/Login.jsp").forward(request, response);

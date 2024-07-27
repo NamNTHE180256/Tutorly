@@ -36,52 +36,39 @@
                 </thead>
                 <tbody class="table-group-divider">
 
-                    <c:forEach items="${listregister}" var="li">
+                    <c:forEach items="${requestScope.trial}" var="li">
+
+                    <td>
+                        <span class="avatar"><i class="fas fa-user"></i></span>
+                        <a href="#">${li.learner.name}</a>
+                    </td>
+                    <td>${li.startDate}</td>
+                    <td>${fn:substring(li.session.startTime, 0, 5)}-${fn:substring(li.session.endTime, 0, 5)}</td>
+                    <td>Trial Class</td>
+                    <td>
                         <c:choose>
                             <c:when test="${li.status == 'wait'}">
-                                <tr style="background-color: #F7B500;">
-                                </c:when>
-                                <c:when test="${li.status == 'accepted'}">
-                                <tr style="background-color: #1c7430;">
-                                </c:when>
-                                <c:when test="${li.status == 'denied'}">
-                                <tr style="background-color: #bd2130;">
-                                </c:when>
-                                <c:otherwise>
-                                <tr>
-                                </c:otherwise>
-                            </c:choose>
-                            <td>
-                                <span class="avatar"><i class="fas fa-user"></i></span>
-                                <a href="#">${li.learner.name}</a>
-                            </td>
-                            <td>${li.startDate}</td>
-                            <td>${fn:substring(li.session.startTime, 0, 5)}-${fn:substring(li.session.endTime, 0, 5)}</td>
-                            <td>Trial Class</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${li.status == 'wait'}">
-                                        <span style="color: #F7B500;">${li.status}</span>
-                                    </c:when>
-                                    <c:when test="${li.status == 'accepted'}">
-                                        <span style="color: #1c7430;">${li.status}</span>
-                                    </c:when>
-                                    <c:when test="${li.status == 'denied'}">
-                                        <span style="color: #bd2130;">${li.status}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span>${li.status}</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <c:if test="${li.status != 'accepted' && li.status != 'denied'}">
-                                <td>
-                                    <a href="TutorResponseTrialClassController?responseid=${li.id}&service=accept&date=${li.startDate}&learner_id=${li.learner.id}&session_id=${li.session.id}&tutor_id=${li.tutor.id}"><button type="button" class="btn btn-outline-success">Accept</button></a>
-                                    <a href="TutorResponseTrialClassController?service=deny&responseid=${li.id}"><button type="button" class="btn btn-outline-danger">Deny</button></a>
-                                </td>
-                            </c:if>
-                        </tr>
-                    </c:forEach>
+                                <span style="color: #F7B500;">${li.status}</span>
+                            </c:when>
+                            <c:when test="${li.status == 'accepted'}">
+                                <span style="color: #1c7430;">${li.status}</span>
+                            </c:when>
+                            <c:when test="${li.status == 'denied'}">
+                                <span style="color: #bd2130;">${li.status}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span>${li.status}</span>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <c:if test="${li.status != 'accepted' && li.status != 'denied'}">
+                        <td>
+                            <a href="TutorResponseTrialClassController?responseid=${li.id}&service=accept&date=${li.startDate}&learner_id=${li.learner.id}&session_id=${li.session.id}&tutor_id=${li.tutor.id}"><button type="button" class="btn btn-outline-success">Accept</button></a>
+                            <a href="TutorResponseTrialClassController?service=deny&responseid=${li.id}"><button type="button" class="btn btn-outline-danger">Deny</button></a>
+                        </td>
+                    </c:if>
+                    </tr>
+                </c:forEach>
 
 
 

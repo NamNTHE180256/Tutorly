@@ -4,7 +4,7 @@ GO
 --drop database Tutorly
 
 --go
-use Tutorly
+--use Tutorly
 
 --drop database Tutorly
 CREATE TABLE [User] (
@@ -317,61 +317,61 @@ VALUES
     N'Đại học Ngoại thương', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
 (12, 11, N'Trần Hữu Dũng', 1, 'tutor6.jpg', 
     N'Tôi là Trần Hữu Dũng, giảng viên Vật lý ứng dụng với hơn 18 năm kinh nghiệm. Tôi tin rằng việc kết hợp lý thuyết với thực hành là cách tốt nhất để học sinh hiểu và yêu thích môn Vật lý. Tôi luôn tìm cách áp dụng các hiện tượng vật lý vào thực tiễn, giúp học sinh không chỉ học tốt mà còn thấy được sự kỳ diệu và ứng dụng của Vật lý trong cuộc sống hàng ngày.', 
-    N'Đại học Sư phạm Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(13, 5, N'Nguyễn Phương', 0, 'tutor3.jpg', 
-    N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
-    N'Đại học Kinh tế Quốc dân', 400000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(14, 1, N'Vũ Thanh Hải', 1, 'tutor7.jpg', 
-    N'Tôi là Vũ Thanh Hải, giáo viên Toán với 10 năm kinh nghiệm. Tôi luôn nỗ lực giúp học sinh hiểu sâu và nắm vững các khái niệm Toán học, giúp các em đạt được điểm cao trong các kỳ thi.', 
-    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(15, 2, N'Lê Thị Minh', 0, 'tutor8.jpg', 
-    N'Giáo viên Lê Thị Minh, chuyên giảng dạy Toán lớp 11 với 8 năm kinh nghiệm. Tôi luôn mong muốn mang đến phương pháp học hiệu quả và tạo động lực học tập cho các em.', 
-    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(16, 3, N'Phạm Văn Cường', 1, 'tutor9.jpg', 
-    N'Phạm Văn Cường, giáo viên Toán lớp 12, với phương pháp giảng dạy sinh động và trực quan, giúp học sinh hiểu rõ bản chất của các khái niệm toán học.', 
-    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(17, 4, N'Trần Thu Hà', 0, 'tutor10.jpg', 
-    N'Tôi là Trần Thu Hà, chuyên gia Vật lý với 15 năm kinh nghiệm. Tôi luôn khơi gợi sự hứng thú và niềm đam mê Vật lý cho học sinh.', 
-    N'Đại học Khoa học Tự nhiên', 260000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(18, 5, N'Nguyễn Minh Tú', 1, 'tutor11.jpg', 
-    N'Nguyễn Minh Tú, giáo viên Vật lý lớp 11 với 12 năm kinh nghiệm. Tôi luôn cố gắng mang đến phương pháp học hiệu quả nhất cho học sinh.', 
-    N'Đại học Bách Khoa Đà Nẵng', 270000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(19, 6, N'Hoàng Văn Anh', 1, 'tutor12.jpg', 
-    N'Hoàng Văn Anh, giáo viên Vật lý lớp 12. Tôi đã giúp nhiều học sinh đạt điểm cao trong các kỳ thi quốc gia.', 
-    N'Đại học Bách Khoa Hà Nội', 280000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(20, 7, N'Phạm Ngọc Linh', 0, 'tutor13.jpg', 
-    N'Phạm Ngọc Linh, giáo viên Hóa học lớp 10 với 10 năm kinh nghiệm. Tôi luôn mang đến những bài học thú vị và sáng tạo.', 
-    N'Đại học Khoa học Tự nhiên', 250000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(21, 8, N'Nguyễn Hữu Đức', 1, 'tutor14.jpg', 
-    N'Nguyễn Hữu Đức, giáo viên Hóa học lớp 11. Tôi luôn cố gắng giúp học sinh hiểu rõ bản chất và yêu thích môn học.', 
-    N'Đại học Sư phạm Hà Nội', 260000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(22, 9, N'Vũ Thị Hương', 0, 'tutor15.jpg',
-    N'Vũ Thị Hương, giáo viên Hóa học lớp 12. Tôi luôn giúp học sinh nắm vững kiến thức và tự tin trong các kỳ thi.', 
-    N'Đại học Sư phạm TP.HCM', 270000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(23, 10, N'Nguyễn Thị Lan', 0, 'tutor16.jpg', 
-    N'Nguyễn Thị Lan, giáo viên Tiếng Anh lớp 10 với 8 năm kinh nghiệm. Tôi giúp học sinh cải thiện kỹ năng giao tiếp và đạt điểm cao trong các kỳ thi.', 
-    N'Đại học Ngoại thương', 300000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(24, 11, N'Trần Văn Hùng', 1, 'tutor17.jpg', 
-    N'Trần Văn Hùng, giáo viên Tiếng Anh lớp 11. Tôi đã giúp nhiều học sinh đạt chứng chỉ IELTS và TOEFL với điểm số cao.', 
-    N'Đại học Khoa học Xã hội và Nhân văn', 310000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(25, 12, N'Phạm Thị Thanh', 0, 'tutor18.jpg', 
-    N'Phạm Thị Thanh, giáo viên Tiếng Anh lớp 12. Tôi luôn mang đến phương pháp học tập hiệu quả và sáng tạo.', 
-    N'Đại học Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(26, 13, N'Vũ Văn Dũng', 1, 'tutor19.jpg', 
-    N'Vũ Văn Dũng, giáo viên Văn học lớp 10 với 12 năm kinh nghiệm. Tôi luôn giúp học sinh yêu thích và đạt điểm cao trong môn Văn.', 
-    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(27, 14, N'Nguyễn Thu Trang', 0, 'tutor20.jpg', 
-    N'Nguyễn Thu Trang, giáo viên Văn học lớp 11. Tôi luôn nỗ lực mang đến những bài học thú vị và sáng tạo cho học sinh.', 
-    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(28, 15, N'Trần Văn Nam', 1, 'tutor21.jpg', 
-    N'Trần Văn Nam, giáo viên Văn học lớp 12. Tôi luôn cố gắng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
-    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(29, 1, N'Lê Văn Quang', 1, 'tutor22.jpg', 
-    N'Lê Văn Quang, giáo viên Toán học lớp 10 với 10 năm kinh nghiệm. Tôi giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
-    N'Đại học Khoa học Tự nhiên', 290000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
-(30, 2, N'Nguyễn Thị Hoa', 0, 'tutor23.jpg', 
-    N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
-    N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq');
+    N'Đại học Sư phạm Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq');
+--(13, 5, N'Nguyễn Phương', 0, 'tutor3.jpg', 
+--    N'Tôi là Nguyễn Phương, một giáo viên dạy văn với 10 năm kinh nghiệm. Tôi luôn tin rằng văn học không chỉ là môn học mà còn là cách để học sinh hiểu và trân trọng cuộc sống. Với phương pháp giảng dạy nhiệt huyết và tận tâm, tôi đã giúp nhiều học sinh đạt giải cao trong các kỳ thi học sinh giỏi văn cấp quốc gia. Tôi luôn cố gắng tạo ra một môi trường học tập đầy cảm hứng để các em có thể phát triển toàn diện kỹ năng ngôn ngữ và tư duy.', 
+--    N'Đại học Kinh tế Quốc dân', 400000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(14, 1, N'Vũ Thanh Hải', 1, 'tutor7.jpg', 
+--    N'Tôi là Vũ Thanh Hải, giáo viên Toán với 10 năm kinh nghiệm. Tôi luôn nỗ lực giúp học sinh hiểu sâu và nắm vững các khái niệm Toán học, giúp các em đạt được điểm cao trong các kỳ thi.', 
+--    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(15, 2, N'Lê Thị Minh', 0, 'tutor8.jpg', 
+--    N'Giáo viên Lê Thị Minh, chuyên giảng dạy Toán lớp 11 với 8 năm kinh nghiệm. Tôi luôn mong muốn mang đến phương pháp học hiệu quả và tạo động lực học tập cho các em.', 
+--    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(16, 3, N'Phạm Văn Cường', 1, 'tutor9.jpg', 
+--    N'Phạm Văn Cường, giáo viên Toán lớp 12, với phương pháp giảng dạy sinh động và trực quan, giúp học sinh hiểu rõ bản chất của các khái niệm toán học.', 
+--    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(17, 4, N'Trần Thu Hà', 0, 'tutor10.jpg', 
+--    N'Tôi là Trần Thu Hà, chuyên gia Vật lý với 15 năm kinh nghiệm. Tôi luôn khơi gợi sự hứng thú và niềm đam mê Vật lý cho học sinh.', 
+--    N'Đại học Khoa học Tự nhiên', 260000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(18, 5, N'Nguyễn Minh Tú', 1, 'tutor11.jpg', 
+--    N'Nguyễn Minh Tú, giáo viên Vật lý lớp 11 với 12 năm kinh nghiệm. Tôi luôn cố gắng mang đến phương pháp học hiệu quả nhất cho học sinh.', 
+--    N'Đại học Bách Khoa Đà Nẵng', 270000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(19, 6, N'Hoàng Văn Anh', 1, 'tutor12.jpg', 
+--    N'Hoàng Văn Anh, giáo viên Vật lý lớp 12. Tôi đã giúp nhiều học sinh đạt điểm cao trong các kỳ thi quốc gia.', 
+--    N'Đại học Bách Khoa Hà Nội', 280000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(20, 7, N'Phạm Ngọc Linh', 0, 'tutor13.jpg', 
+--    N'Phạm Ngọc Linh, giáo viên Hóa học lớp 10 với 10 năm kinh nghiệm. Tôi luôn mang đến những bài học thú vị và sáng tạo.', 
+--    N'Đại học Khoa học Tự nhiên', 250000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(21, 8, N'Nguyễn Hữu Đức', 1, 'tutor14.jpg', 
+--    N'Nguyễn Hữu Đức, giáo viên Hóa học lớp 11. Tôi luôn cố gắng giúp học sinh hiểu rõ bản chất và yêu thích môn học.', 
+--    N'Đại học Sư phạm Hà Nội', 260000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(22, 9, N'Vũ Thị Hương', 0, 'tutor15.jpg',
+--    N'Vũ Thị Hương, giáo viên Hóa học lớp 12. Tôi luôn giúp học sinh nắm vững kiến thức và tự tin trong các kỳ thi.', 
+--    N'Đại học Sư phạm TP.HCM', 270000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(23, 10, N'Nguyễn Thị Lan', 0, 'tutor16.jpg', 
+--    N'Nguyễn Thị Lan, giáo viên Tiếng Anh lớp 10 với 8 năm kinh nghiệm. Tôi giúp học sinh cải thiện kỹ năng giao tiếp và đạt điểm cao trong các kỳ thi.', 
+--    N'Đại học Ngoại thương', 300000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(24, 11, N'Trần Văn Hùng', 1, 'tutor17.jpg', 
+--    N'Trần Văn Hùng, giáo viên Tiếng Anh lớp 11. Tôi đã giúp nhiều học sinh đạt chứng chỉ IELTS và TOEFL với điểm số cao.', 
+--    N'Đại học Khoa học Xã hội và Nhân văn', 310000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(25, 12, N'Phạm Thị Thanh', 0, 'tutor18.jpg', 
+--    N'Phạm Thị Thanh, giáo viên Tiếng Anh lớp 12. Tôi luôn mang đến phương pháp học tập hiệu quả và sáng tạo.', 
+--    N'Đại học Hà Nội', 320000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(26, 13, N'Vũ Văn Dũng', 1, 'tutor19.jpg', 
+--    N'Vũ Văn Dũng, giáo viên Văn học lớp 10 với 12 năm kinh nghiệm. Tôi luôn giúp học sinh yêu thích và đạt điểm cao trong môn Văn.', 
+--    N'Đại học Sư phạm Hà Nội', 280000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(27, 14, N'Nguyễn Thu Trang', 0, 'tutor20.jpg', 
+--    N'Nguyễn Thu Trang, giáo viên Văn học lớp 11. Tôi luôn nỗ lực mang đến những bài học thú vị và sáng tạo cho học sinh.', 
+--    N'Đại học Sư phạm TP.HCM', 290000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(28, 15, N'Trần Văn Nam', 1, 'tutor21.jpg', 
+--    N'Trần Văn Nam, giáo viên Văn học lớp 12. Tôi luôn cố gắng giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
+--    N'Đại học Quốc gia Hà Nội', 300000, 'Bank3', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(29, 1, N'Lê Văn Quang', 1, 'tutor22.jpg', 
+--    N'Lê Văn Quang, giáo viên Toán học lớp 10 với 10 năm kinh nghiệm. Tôi giúp học sinh nắm vững kiến thức và đạt điểm cao trong các kỳ thi.', 
+--    N'Đại học Khoa học Tự nhiên', 290000, 'Bank1', 'Pending',' https://meet.google.com/msp-qqda-dnq'),
+--(30, 2, N'Nguyễn Thị Hoa', 0, 'tutor23.jpg', 
+--    N'Nguyễn Thị Hoa, giáo viên Toán học lớp 11. Tôi luôn cố gắng mang đến phương pháp học tập hiệu quả nhất cho học sinh.', 
+--    N'Đại học Sư phạm Hà Nội', 300000, 'Bank2', 'Pending',' https://meet.google.com/msp-qqda-dnq');
 
 
 -- Insert into Rating table
@@ -382,25 +382,8 @@ VALUES
 (3, 9, 5, N'Cô rất nhiệt tình và dễ hiểu', GETDATE()),
 (4, 10, 3, N'Bài giảng còn hơi nhanh', GETDATE()),
 (5, 11, 4, N'Thầy dạy rất tận tâm', GETDATE()),
-(6, 12, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
-(1, 13, 4, N'Rất hài lòng với phương pháp giảng dạy của cô', GETDATE()),
-(2, 14, 3, N'Bài giảng cần chậm hơn', GETDATE()),
-(3, 15, 5, N'Thầy giảng rất dễ hiểu và vui tính', GETDATE()),
-(4, 16, 4, N'Thầy rất nhiệt tình', GETDATE()),
-(5, 17, 5, N'Cô giáo rất tận tình và chi tiết', GETDATE()),
-(6, 18, 4, N'Rất hài lòng', GETDATE()),
-(1, 19, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
-(2, 20, 3, N'Bài giảng cần chi tiết hơn', GETDATE()),
-(3, 21, 4, N'Cô dạy rất nhiệt tình', GETDATE()),
-(4, 22, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
-(5, 23, 4, N'Thầy rất nhiệt tình và dễ hiểu', GETDATE()),
-(6, 24, 3, N'Cần thêm bài tập thực hành', GETDATE()),
-(1, 25, 5, N'Thầy giảng rất dễ hiểu và nhiệt tình', GETDATE()),
-(2, 26, 4, N'Rất hài lòng với phương pháp giảng dạy', GETDATE()),
-(3, 27, 5, N'Thầy rất tận tâm và nhiệt tình', GETDATE()),
-(4, 28, 4, N'Rất hài lòng', GETDATE()),
-(5, 29, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
-(6, 30, 3, N'Bài giảng cần chậm hơn', GETDATE());
+(6, 12, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE());
+
 
 
 
@@ -615,88 +598,83 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
---SET IDENTITY_INSERT [dbo].[Notification] ON 
+SET IDENTITY_INSERT [dbo].[Notification] ON 
 
---INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (8, 1, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T14:58:02.450' AS DateTime), N'TutorRequest')
---INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (9, 1, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:17:15.823' AS DateTime), N'TutorRequest')
---INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (10, 1, N'Your request have been approved change 08:00:00 in Saturday  to session 19:00:00 in Saturday of  null', 1, CAST(N'2024-07-16T15:22:55.520' AS DateTime), N'TurorResponse')
---INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (11, 1, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 19:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:39:10.277' AS DateTime), N'TurorResponse')
---SET IDENTITY_INSERT [dbo].[Notification] OFF
---GO
---SET IDENTITY_INSERT [dbo].[SessionChangeRequest] ON 
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (8, 1, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T14:58:02.450' AS DateTime), N'TutorRequest')
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (9, 1, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:17:15.823' AS DateTime), N'TutorRequest')
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (10, 1, N'Your request have been approved change 08:00:00 in Saturday  to session 19:00:00 in Saturday of  null', 1, CAST(N'2024-07-16T15:22:55.520' AS DateTime), N'TurorResponse')
+INSERT [dbo].[Notification] ([id], [learnerId], [message], [isRead], [createdAt], [type]) VALUES (11, 1, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 19:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:39:10.277' AS DateTime), N'TurorResponse')
+SET IDENTITY_INSERT [dbo].[Notification] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SessionChangeRequest] ON 
 
---INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (7, 1, 7, N'M1', N'T5', N'ses', N'Approved', CAST(N'2024-07-16T14:47:52.547' AS DateTime), CAST(N'2024-06-17' AS Date))
---INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (8, 1, 7, N'M1', N'SA1', N'ss', N'Approved', CAST(N'2024-07-16T14:52:20.880' AS DateTime), CAST(N'2024-06-17' AS Date))
---INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (9, 1, 7, N'SA1', N'SA5', N'ok', N'Approved', CAST(N'2024-07-16T15:18:57.940' AS DateTime), CAST(N'2024-06-17' AS Date))
---INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (10, 1, 7, N'W4', N'T5', N's', N'Rejected', CAST(N'2024-07-16T15:29:57.723' AS DateTime), CAST(N'2024-06-10' AS Date))
---SET IDENTITY_INSERT [dbo].[SessionChangeRequest] OFF
---GO
---SET IDENTITY_INSERT [dbo].[TutorNotification] ON 
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (7, 1, 7, N'M1', N'T5', N'ses', N'Approved', CAST(N'2024-07-16T14:47:52.547' AS DateTime), CAST(N'2024-06-17' AS Date))
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (8, 1, 7, N'M1', N'SA1', N'ss', N'Approved', CAST(N'2024-07-16T14:52:20.880' AS DateTime), CAST(N'2024-06-17' AS Date))
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (9, 1, 7, N'SA1', N'SA5', N'ok', N'Approved', CAST(N'2024-07-16T15:18:57.940' AS DateTime), CAST(N'2024-06-17' AS Date))
+INSERT [dbo].[SessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (10, 1, 7, N'W4', N'T5', N's', N'Rejected', CAST(N'2024-07-16T15:29:57.723' AS DateTime), CAST(N'2024-06-10' AS Date))
+SET IDENTITY_INSERT [dbo].[SessionChangeRequest] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TutorNotification] ON 
 
---INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (6, 7, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  null', 1, CAST(N'2024-07-16T15:18:43.917' AS DateTime), N'StudentResponse')
---INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (7, 7, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  null', 1, CAST(N'2024-07-16T15:18:44.427' AS DateTime), N'StudentResponse')
---INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (8, 7, N'Your request have been rejected to change 08:00:00 in Monday  to session 19:00:00 in Monday of  null', 1, CAST(N'2024-07-16T15:18:45.047' AS DateTime), N'StudentResponse')
---INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (9, 7, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 19:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:29:57.737' AS DateTime), N'StudentRequest')
---SET IDENTITY_INSERT [dbo].[TutorNotification] OFF
---GO
---SET IDENTITY_INSERT [dbo].[TutorSessionChangeRequest] ON 
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (6, 7, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  null', 1, CAST(N'2024-07-16T15:18:43.917' AS DateTime), N'StudentResponse')
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (7, 7, N'Your request have been rejected to change 16:00:00 in Wednesday  to session 08:00:00 in Wednesday of  null', 1, CAST(N'2024-07-16T15:18:44.427' AS DateTime), N'StudentResponse')
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (8, 7, N'Your request have been rejected to change 08:00:00 in Monday  to session 19:00:00 in Monday of  null', 1, CAST(N'2024-07-16T15:18:45.047' AS DateTime), N'StudentResponse')
+INSERT [dbo].[TutorNotification] ([id], [tutorId], [message], [isRead], [createdAt], [type]) VALUES (9, 7, N'Your Tutor request to change session 16:00:00 in Wednesday  to session 19:00:00 in Wednesday of  2024-06-10', 1, CAST(N'2024-07-16T15:29:57.737' AS DateTime), N'StudentRequest')
+SET IDENTITY_INSERT [dbo].[TutorNotification] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TutorSessionChangeRequest] ON 
 
---INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (6, 1, 7, N'M1', N'SA1', N'sss', N'Rejected', CAST(N'2024-07-16T14:22:51.407' AS DateTime), NULL)
---INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (7, 1, 7, N'M1', N'W4', N'sss', N'Approved', CAST(N'2024-07-16T14:28:19.520' AS DateTime), CAST(N'2024-06-10' AS Date))
---INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (8, 1, 7, N'M1', N'T5', N'sssss', N'Rejected', CAST(N'2024-07-16T14:57:08.353' AS DateTime), CAST(N'2024-07-01' AS Date))
---INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (9, 1, 7, N'W4', N'M1', N'ss', N'Rejected', CAST(N'2024-07-16T14:58:02.447' AS DateTime), CAST(N'2024-06-10' AS Date))
---INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (10, 1, 7, N'W4', N'M1', N'ss', N'Rejected', CAST(N'2024-07-16T15:17:15.810' AS DateTime), CAST(N'2024-06-10' AS Date))
---SET IDENTITY_INSERT [dbo].[TutorSessionChangeRequest] OFF
---GO
---ALTER TABLE [dbo].[Notification] ADD  DEFAULT ((0)) FOR [isRead]
---GO
---ALTER TABLE [dbo].[Notification] ADD  DEFAULT (getdate()) FOR [createdAt]
---GO
---ALTER TABLE [dbo].[SessionChangeRequest] ADD  DEFAULT ('Pending') FOR [status]
---GO
---ALTER TABLE [dbo].[SessionChangeRequest] ADD  DEFAULT (getdate()) FOR [createdAt]
---GO
---ALTER TABLE [dbo].[TutorNotification] ADD  DEFAULT ((0)) FOR [isRead]
---GO
---ALTER TABLE [dbo].[TutorNotification] ADD  DEFAULT (getdate()) FOR [createdAt]
---GO
---ALTER TABLE [dbo].[TutorSessionChangeRequest] ADD  DEFAULT ('Pending') FOR [status]
---GO
---ALTER TABLE [dbo].[TutorSessionChangeRequest] ADD  DEFAULT (getdate()) FOR [createdAt]
---GO
---ALTER TABLE [dbo].[Notification]  WITH CHECK ADD FOREIGN KEY([learnerId])
---REFERENCES [dbo].[Learner] ([id])
---GO
---ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([fromSessionId])
---REFERENCES [dbo].[Session] ([id])
---GO
---ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([learnerId])
---REFERENCES [dbo].[Learner] ([id])
---GO
---ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([toSessionId])
---REFERENCES [dbo].[Session] ([id])
---GO
---ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
---REFERENCES [dbo].[Tutor] ([id])
---GO
---ALTER TABLE [dbo].[TutorNotification]  WITH CHECK ADD FOREIGN KEY([tutorId])
---REFERENCES [dbo].[Tutor] ([id])
---GO
---ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([fromSessionId])
---REFERENCES [dbo].[Session] ([id])
---GO
---ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([learnerId])
---REFERENCES [dbo].[Learner] ([id])
---GO
---ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([toSessionId])
---REFERENCES [dbo].[Session] ([id])
---GO
---ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
---REFERENCES [dbo].[Tutor] ([id])
---GO
-
---Select * from [Session]
---select * from lesson
---SELECT s.* FROM Lesson s 
---                JOIN Class c ON c.id = s.classId
---                WHERE learnerId = 1 
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (6, 1, 7, N'M1', N'SA1', N'sss', N'Rejected', CAST(N'2024-07-16T14:22:51.407' AS DateTime), NULL)
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (7, 1, 7, N'M1', N'W4', N'sss', N'Approved', CAST(N'2024-07-16T14:28:19.520' AS DateTime), CAST(N'2024-06-10' AS Date))
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (8, 1, 7, N'M1', N'T5', N'sssss', N'Rejected', CAST(N'2024-07-16T14:57:08.353' AS DateTime), CAST(N'2024-07-01' AS Date))
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (9, 1, 7, N'W4', N'M1', N'ss', N'Rejected', CAST(N'2024-07-16T14:58:02.447' AS DateTime), CAST(N'2024-06-10' AS Date))
+INSERT [dbo].[TutorSessionChangeRequest] ([id], [learnerId], [tutorId], [fromSessionId], [toSessionId], [reason], [status], [createdAt], [dateChange]) VALUES (10, 1, 7, N'W4', N'M1', N'ss', N'Rejected', CAST(N'2024-07-16T15:17:15.810' AS DateTime), CAST(N'2024-06-10' AS Date))
+SET IDENTITY_INSERT [dbo].[TutorSessionChangeRequest] OFF
+GO
+ALTER TABLE [dbo].[Notification] ADD  DEFAULT ((0)) FOR [isRead]
+GO
+ALTER TABLE [dbo].[Notification] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[SessionChangeRequest] ADD  DEFAULT ('Pending') FOR [status]
+GO
+ALTER TABLE [dbo].[SessionChangeRequest] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[TutorNotification] ADD  DEFAULT ((0)) FOR [isRead]
+GO
+ALTER TABLE [dbo].[TutorNotification] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest] ADD  DEFAULT ('Pending') FOR [status]
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[Notification]  WITH CHECK ADD FOREIGN KEY([learnerId])
+REFERENCES [dbo].[Learner] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([fromSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([learnerId])
+REFERENCES [dbo].[Learner] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([toSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[SessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
+REFERENCES [dbo].[Tutor] ([id])
+GO
+ALTER TABLE [dbo].[TutorNotification]  WITH CHECK ADD FOREIGN KEY([tutorId])
+REFERENCES [dbo].[Tutor] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([fromSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([learnerId])
+REFERENCES [dbo].[Learner] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([toSessionId])
+REFERENCES [dbo].[Session] ([id])
+GO
+ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
+REFERENCES [dbo].[Tutor] ([id])
+GO
+select * from [tutor]

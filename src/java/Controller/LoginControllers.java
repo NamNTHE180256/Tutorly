@@ -131,10 +131,6 @@ public class LoginControllers extends HttpServlet {
                             session.setAttribute("tutor", tutor);
                             session.setAttribute("user", userLogin);
                             response.sendRedirect("ViewClassnew");
-
-                            session.setAttribute("tutor", tutor);
-                            session.setAttribute("user", userLogin);
-                            response.sendRedirect("ViewClassnew");
                         } else {
                             request.setAttribute("messageError", "This Account does not Activated by Admin");
                             request.getRequestDispatcher("View/Login.jsp").forward(request, response);

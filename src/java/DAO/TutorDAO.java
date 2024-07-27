@@ -151,7 +151,7 @@ public class TutorDAO extends DBContext {
     }
 
     public boolean insertTutor(Tutor tutor) {
-        String sql = "INSERT INTO Tutor (id,subjectId, name, gender, image, bio, edu, price, bank, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Tutor (id,subjectId, name, gender, image, bio, edu, price, bank, status,Linkmeet) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
             sp.setInt(1, tutor.getId());
@@ -164,6 +164,7 @@ public class TutorDAO extends DBContext {
             sp.setFloat(8, tutor.getPrice());
             sp.setString(9, tutor.getBank());
             sp.setString(10, tutor.getStatus());
+            sp.setString(11, tutor.getLinkmeet());
             int rowsAffected = sp.executeUpdate();
             sp.close();
             return rowsAffected > 0;
@@ -482,7 +483,7 @@ public class TutorDAO extends DBContext {
 
     public static void main(String[] args) {
         TutorDAO t = new TutorDAO();
-        String name = "hien";
+        
         int subjectId = 15;
         int id = 9;
         System.out.println(t.getAllTutors());

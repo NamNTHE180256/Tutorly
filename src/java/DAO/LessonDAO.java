@@ -327,8 +327,6 @@ public class LessonDAO extends DBContext {
         return getLessonsWithId(sql, classId);
     }
 
-
-
     public int getFinishedLessonCount(int classId) {
         String sql = "SELECT COUNT(*) AS finishedCount FROM Lesson WHERE classId = ? AND status = 'Finished'";
         try {
@@ -396,11 +394,9 @@ public class LessonDAO extends DBContext {
 //        Vector<Lesson> learnerLessons = lessonDAO.getLessonsByLearnerId(learnerId);
 //        for (Lesson lesson : learnerLessons) {
 //            System.out.println(lesson.getAClass().getTutor().getName());
-<<<<<<< HEAD
         System.out.println("1:" + lessonDAO.getLessonById(13, 2));
-=======
-System.out.println("1:"+lessonDAO.getLessonById(17, 3));
-        }
->>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
+
+        System.out.println("1:" + lessonDAO.getLessonById(17, 3));
     }
+
 }

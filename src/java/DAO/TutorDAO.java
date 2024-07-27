@@ -25,7 +25,6 @@ import java.util.logging.Logger;
  */
 public class TutorDAO extends DBContext {
 
-
     public ArrayList<Tutor> getAllTutors() {
         ArrayList<Tutor> tutors = new ArrayList<>();
         SubjectDAO sDao = new SubjectDAO();
@@ -80,7 +79,6 @@ public class TutorDAO extends DBContext {
         return tutors;
     }
 
-
     public ArrayList<Tutor> searchTutors(String searchQuery) {
         ArrayList<Tutor> tutors = new ArrayList<>();
         SubjectDAO sDao = new SubjectDAO();
@@ -119,7 +117,6 @@ public class TutorDAO extends DBContext {
         return tutors;
     }
 
-
     public Tutor getTutorById(int id) {
         Tutor tutor = null;
         SubjectDAO sDao = new SubjectDAO();
@@ -140,12 +137,10 @@ public class TutorDAO extends DBContext {
                 tutor.setPrice(rs.getFloat("price"));
                 tutor.setBank(rs.getString("bank"));
                 tutor.setStatus(rs.getString("status"));
-<<<<<<< HEAD
+
                 tutor.setLinkmeet(rs.getString("linkMeet"));
-=======
                 tutor.setLinkmeet(rs.getString("Linkmeet"));
-               
->>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
+
             }
             rs.close();
             sp.close();
@@ -271,7 +266,6 @@ public class TutorDAO extends DBContext {
 //        }
 //        return vector;
 //    }
-
     public Vector<Tutor> getTutors(String sql) {
         Vector<Tutor> vector = new Vector<>();
         SubjectDAO sDAO = new SubjectDAO();
@@ -297,6 +291,7 @@ public class TutorDAO extends DBContext {
         }
         return vector;
     }
+
     // Method to get a tutor by ID
     // Method to add a new tutor
     public int addTutor(Tutor tutor) {

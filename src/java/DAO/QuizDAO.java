@@ -393,8 +393,8 @@ public class QuizDAO extends DBContext {
     public Vector<Quiz> getQuizByLearnerIdAndStatusDone(int learnerId) {
         Vector<Quiz> quizzes = new Vector<>();
         String sql = "SELECT a.* FROM Quiz a "
-                + "JOIN Lessons l ON a.lessonId = l.id "
-                + "JOIN Classes c ON l.classId = c.id "
+                + "JOIN lesson l ON a.lessonId = l.id "
+                + "JOIN Class c ON l.classId = c.id "
                 + "WHERE c.learnerId = ? AND a.status = 'Done'";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -403,12 +403,13 @@ public class QuizDAO extends DBContext {
             while (rs.next()) {
                 long id = rs.getLong("id");
                 int lessonId = rs.getInt("lessonId");
+                double score = rs.getDouble("score");
                 String fileName = rs.getString("fileName");
                 String filePath = rs.getString("filePath");
                 Date createdAt = rs.getDate("createdAt");
                 String status = rs.getString("status");
 
-                Quiz quiz = new Quiz(id, lessonId, fileName, filePath, createdAt, status);
+                Quiz quiz = new Quiz(id, lessonId, fileName, filePath, score, status,createdAt);
                 quizzes.add(quiz);
             }
         } catch (SQLException ex) {
@@ -420,8 +421,8 @@ public class QuizDAO extends DBContext {
     public Vector<Quiz> getQuizByLearnerIdAndStatusTodo(int learnerId) {
         Vector<Quiz> quizzes = new Vector<>();
         String sql = "SELECT a.* FROM Quiz a "
-                + "JOIN Lessons l ON a.lessonId = l.id "
-                + "JOIN Classes c ON l.classId = c.id "
+                + "JOIN Lesson l ON a.lessonId = l.id "
+                + "JOIN Class c ON l.classId = c.id "
                 + "WHERE c.learnerId = ? AND a.status = 'Todo'";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -430,12 +431,13 @@ public class QuizDAO extends DBContext {
             while (rs.next()) {
                 long id = rs.getLong("id");
                 int lessonId = rs.getInt("lessonId");
+                double score = rs.getDouble("score");
                 String fileName = rs.getString("fileName");
                 String filePath = rs.getString("filePath");
                 Date createdAt = rs.getDate("createdAt");
                 String status = rs.getString("status");
 
-                Quiz quiz = new Quiz(id, lessonId, fileName, filePath, createdAt, status);
+                Quiz quiz = new Quiz(id, lessonId, fileName, filePath, score, status,createdAt);
                 quizzes.add(quiz);
             }
         } catch (SQLException ex) {
@@ -453,6 +455,7 @@ public class QuizDAO extends DBContext {
             ResultSet rs = state.executeQuery();
             while (rs.next()) {
                 long id = rs.getLong("id");
+                double score = rs.getDouble("score");
                 String fileName = rs.getString("fileName");
                 String filePath = rs.getString("filePath");
                 Date createdAt = rs.getDate("createdAt");
@@ -538,5 +541,10 @@ public class QuizDAO extends DBContext {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Failed to update quiz details", ex);
         }
+    }
+    public static void main(String[] args) {
+        QuizDAO aDAO = new QuizDAO();
+        Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(1);
+        System.out.println(classQuizDone);
     }
 }

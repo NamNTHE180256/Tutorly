@@ -204,7 +204,7 @@ public class UserDAO extends DBContext {
 
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
-        System.out.println(dao.getUserById(1));
+        System.out.println(dao.ChangePassWord("123", "tutor2@example.com"));
     }
 //    public static void main(String[] args) {
 //<<<<<<< HEAD

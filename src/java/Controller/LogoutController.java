@@ -5,9 +5,9 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,14 +20,30 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
 public class LogoutController extends HttpServlet {
 
-    @Override
+      @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Invalidate the session if it exists
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
+
+          clearPreviousCookies(request, response);
+        // Redirect to login page
         response.sendRedirect("View/Login.jsp");
+    }
+private void clearPreviousCookies(HttpServletRequest request, HttpServletResponse response) {
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("learnerId".equals(cookie.getName()) || "tutorId".equals(cookie.getName()) || "userId".equals(cookie.getName())) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+        }
     }
 
     @Override

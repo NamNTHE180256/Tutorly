@@ -48,7 +48,10 @@ public class Tutor {
         this.bank = bank;
         this.status = status;
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
 
     public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status, String linkmeet) {
         this.id = id;

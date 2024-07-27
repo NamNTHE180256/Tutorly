@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -505,7 +506,7 @@
                     </nav>
 
                     <div class="container">
-
+                        
                         <div class="table-responsive">
                             <table class="table table-bordered text-center">
                                 <thead >
@@ -617,6 +618,7 @@
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h4 class="m-0">${ratings.size()} Reviews</h4>
                             </div>
+<<<<<<< HEAD
 
                             <!-- Star Counter Section -->
                             <div class="row">
@@ -656,8 +658,50 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+=======
+<!--                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="stars-counters">
+    <tbody>
+        <c:forEach begin="1" end="5" var="star">
+            <tr class="">
+                <td>
+                    <span>
+                        <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">${star} Stars</button>
+                    </span>
+                </td>
+                <td class="progress-bar-container">
+                    <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                        <div class="fit-progressbar-background">
+                            <c:choose>
+                                <c:when test="${ratecount[star - 1] != null}">
+                                    <span class="progress-fill" style="width: ${ratecount[star - 1].percentage}%;"></span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="progress-fill" style="width: 0%;"></span>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                </td>
+                <td class="star-num">
+                    <c:choose>
+                        <c:when test="${ratecount[star - 1] != null}">
+                            (${ratecount[star - 1].count})
+                        </c:when>
+                        <c:otherwise>
+                            (0)
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+>>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <!-- RATE comment -->
@@ -758,6 +802,7 @@
                                         <c:choose>
                                             <c:when test="${tutorRatings.NewTutor == null}">
 
+<<<<<<< HEAD
                                                 <div class="rating mt-2">
                                                     <span class="rate" style="font-size: 35px;"> <i class="fa-solid fa-star text-warning"></i>${tutorRatings.avgRate}</span>
 
@@ -796,10 +841,51 @@
                                             <input type="hidden" name="learn_id" value="1">
                                         </form>
                                     </li>
+=======
+                                                    <div class="rating mt-2">
+                                                        <span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
+
+                                                        <p class="ratedby" style="font-size: 10px;">rated by ${tutorRatings.rateCount} learner(s)</p>
+                                                    </div>
+
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <p>New tutor</p>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </li>
+                                        <li class="nav-item">
+                                            <div>
+                                                <div class="fee">
+                                                    <h3><fmt:formatNumber value="${tutor.price}" pattern="###,###" /></h3>
+                                                </div>
+                                                <p style="font-size: 10px;">per session</p>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="nav-item">
+                                            <form id="addtutorform-${tutor.id}" onsubmit="return false;">
+                                                <button type="button" id="heart-button-${tutor.id}" style="background: white; border: 1px white;" onclick="change_heart('${tutor.id}')">
+                                                    <c:choose>
+                                                        <c:when test="${tutor.saveStatus == 'saved'}">
+                                                            <i class="fa-solid fa-heart heart ml-2" style="font-size:35px;color: #A34343;"></i>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <i class="fa-regular fa-heart heart ml-2" style="font-size:35px;"></i>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </button>
+                                                <input type="hidden" name="service" value="add">
+                                                <input type="hidden" name="tutor_id" value="${tutor.id}">
+                                                <input type="hidden" name="learn_id" value="1">
+                                            </form>
+                                        </li>
+>>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
 
                                 </ul>
 
                             </div>
+<<<<<<< HEAD
                         </div>
 
                     </nav>
@@ -820,6 +906,73 @@
                 var successAlert = document.getElementById('successAlert');
                 if (successAlert) {
                     successAlert.style.display = 'none';
+=======
+                                                
+                        </nav>
+                        
+                    </div> 
+                      <div class="buttons ">
+                            <div class="d-grid gap-2">
+                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+                                                <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    var successAlert = document.getElementById('successAlert');
+                    if (successAlert) {
+                        successAlert.style.display = 'none';
+                    }
+                    var errorAlert = document.getElementById('errorAlert');
+                    if (errorAlert) {
+                        errorAlert.style.display = 'none';
+                    }
+            <% session.removeAttribute("successMessage"); %>
+            <% session.removeAttribute("errorMessage"); %>
+                }, 5000); // 5000 milliseconds = 5 seconds
+            };
+
+            function change_heart(tutorId) {
+                var button = document.getElementById('heart-button-' + tutorId);
+                var icon = button.querySelector('i');
+
+                if (icon.classList.contains('fa-regular')) {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid');
+                    icon.style.color = '#A34343';
+                    button.onclick = function () {
+                        reset_heart(tutorId);
+                    };
+
+                    // Perform the AJAX request to add the tutor
+                    var formId = 'addtutorform-' + tutorId;
+                    var form = document.getElementById(formId);
+                    var tId = form.querySelector('input[name="tutor_id"]').value;
+                    var lId = form.querySelector('input[name="learn_id"]').value;
+                    var service = form.querySelector('input[name="service"]').value;
+
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            alert('Data sent successfully!');
+                        }
+                    };
+
+                    xhttp.onerror = function () {
+                        alert('Request failed');
+                    };
+
+                    xhttp.open("POST", "SavedTutorController", true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;
+                    xhttp.send(data);
+                } else {
+                    reset_heart(tutorId);
+>>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
                 }
                 var errorAlert = document.getElementById('errorAlert');
                 if (errorAlert) {

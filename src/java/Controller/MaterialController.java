@@ -7,18 +7,20 @@ package Controller;
 import DAO.AClassDAO;
 import DAO.LearnerDAO;
 import DAO.MaterialDAO;
+import DAO.VideoDAO;
 import Model.AClass;
-import Model.Quiz;
 import Model.Learner;
 import Model.Material;
+import Model.Video;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Vector;
 
 /**
@@ -42,48 +44,96 @@ public class MaterialController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         AClassDAO cDAO = new AClassDAO();
         MaterialDAO mDAO = new MaterialDAO();
+        VideoDAO vdao = new VideoDAO();
         LearnerDAO leDAO = new LearnerDAO();
         Learner linfo = leDAO.getStudentById(1);
         Vector<AClass> class_vector = cDAO.getClassesByLearnerId(linfo.getId());
         String service = request.getParameter("service");
-        String type = request.getParameter("type");
         String classid = request.getParameter("classid");
-
-        Vector<Material> doc = new Vector<>(); // Initialize an empty list
+        Vector<Material> doc = new Vector<>();
         Vector<Material> slide = new Vector<>();
         Vector<Material> book = new Vector<>();
-        Vector<Material> video = new Vector<>();
+        Vector<Material> listmate = new Vector<>();
+        Vector<Video> video = new Vector<>();
+        try {
+            int classIdInt = Integer.parseInt(classid);
+            slide = mDAO.getSlide(classIdInt, "pdf");
+            doc = mDAO.getDocument(classIdInt, "pdf");
+            video = vdao.getAllVideoWithClassID(classIdInt);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         if (service == null || service.isEmpty()) {
             request.setAttribute("class_vector", class_vector);
             request.setAttribute("linfo", linfo);
-//        request.setAttribute("materials", materials); // Set the empty list
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
             dispatcher.forward(request, response);
         } else if (service.equals("viewClassMaterial") && classid != null && !classid.isEmpty()) {
 
+            request.setAttribute("classid", classid);
+            request.setAttribute("doc", doc);
+            request.setAttribute("slide", slide);
+            request.setAttribute("book", book);
+            request.setAttribute("video", video);
+            request.setAttribute("class_vector", class_vector);
+            request.setAttribute("linfo", linfo);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
+            dispatcher.forward(request, response);
+
+        } else if (service.equalsIgnoreCase("download")) {
             try {
+                int lessonid = Integer.parseInt(request.getParameter("lessonid"));
+                int id = Integer.parseInt(request.getParameter("id"));
                 int classIdInt = Integer.parseInt(classid);
-                doc = mDAO.getMaterialsByClassIdAndFileType(classIdInt, "document");
-                slide = mDAO.getMaterialsByClassIdAndFileType(classIdInt, "slide");
-                book = mDAO.getMaterialsByClassIdAndFileType(classIdInt, "book");
-                video = mDAO.getMaterialsByClassIdAndFileType(classIdInt, "video/record");
+                Material mate = mDAO.getAllMaterialWithLesson(classIdInt, id, lessonid);
+                String appPath = getServletContext().getRealPath("/") + "uploads";
+                File uploads = new File(appPath);
+                if (!uploads.exists()) {
+                    uploads.mkdirs();
+                }
+
+                File file = new File(uploads, mate.getFileName());
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(mate.getFilePath());
+                }
+
+                // Set attributes to forward to JSP
+                String fileUrl = request.getContextPath() + "/uploads/" + mate.getFileName();
+                request.setAttribute("fileUrl", fileUrl);
+                request.setAttribute("classid", classid);
+                request.setAttribute("doc", doc);
+                request.setAttribute("slide", slide);
+                request.setAttribute("book", book);
+                request.setAttribute("video", video);
+                request.setAttribute("class_vector", class_vector);
+                request.setAttribute("linfo", linfo);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
+                dispatcher.forward(request, response);
             } catch (NumberFormatException e) {
-                // Handle the exception, e.g., log it and set an error message
+                e.printStackTrace();
             }
-
-
-        request.setAttribute("doc", doc);
-        request.setAttribute("slide", slide);
-        request.setAttribute("book", book);
-        request.setAttribute("video", video);
-        request.setAttribute("linfo", linfo);
-        request.setAttribute("video", video);
-         request.setAttribute("class_vector", class_vector);
-        request.setAttribute("linfo", linfo);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
-        dispatcher.forward(request, response);
+        } else if (service.equalsIgnoreCase("downloadVideo")) {
+            int lessonid = Integer.parseInt(request.getParameter("lessonid"));
+            int id = Integer.parseInt(request.getParameter("id"));
+            int classIdInt = Integer.parseInt(classid);
+            Video video1 = vdao.getAllVideoWithLesson(classIdInt, id, lessonid);
+            String videoUrl = video1.getFilePath();
+            String videoId = videoUrl.substring(videoUrl.lastIndexOf("v=") + 2); // Trích xuất ID video từ URL
+            String embedUrl = "https://www.youtube.com/embed/" + videoId + "?controls=0"; // Tạo URL nhúng
+            request.setAttribute("fileUrlYtb", embedUrl);
+            request.setAttribute("classid", classid);
+            request.setAttribute("doc", doc);
+            request.setAttribute("slide", slide);
+            request.setAttribute("book", book);
+            request.setAttribute("video", video);
+            request.setAttribute("class_vector", class_vector);
+            request.setAttribute("linfo", linfo);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("View/MaterialView.jsp");
+            dispatcher.forward(request, response);
+        }
     }
-    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

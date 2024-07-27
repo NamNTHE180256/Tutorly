@@ -7,7 +7,7 @@ public class Material {
 
     private int id;
     private String fileName;
-    private String filePath;
+    private byte[] filePath;
     private String fileType;
     private Date uploadedAt;
     private Lesson lesson;
@@ -20,7 +20,7 @@ public class Material {
         return "Material{" + "id=" + id + ", fileName=" + fileName + ", filePath=" + filePath + ", fileType=" + fileType + ", uploadedAt=" + uploadedAt + ", lesson=" + lesson + '}';
     }
 
-    public Material(int id, String fileName, String filePath, String fileType, Date uploadedAt, Lesson lesson) {
+    public Material(int id, String fileName, byte[] filePath, String fileType, Date uploadedAt, Lesson lesson) {
         this.id = id;
         this.fileName = fileName;
         this.filePath = filePath;
@@ -45,11 +45,11 @@ public class Material {
         this.fileName = fileName;
     }
 
-    public String getFilePath() {
+    public byte[] getFilePath() {
         return filePath;
     }
 
-    public void setFilePath(String filePath) {
+    public void setFilePath(byte[] filePath) {
         this.filePath = filePath;
     }
 

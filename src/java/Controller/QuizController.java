@@ -59,7 +59,7 @@ public class QuizController extends HttpServlet {
                 request.setAttribute("linfo", linfo);
 
                 //request.setAttribute("classQuizDone", classQuizDone);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("View/Assigment.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/Quiz.jsp");
                 dispatcher.forward(request, response);
             } else if (service.equals("done")) {
                 Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
@@ -68,7 +68,7 @@ public class QuizController extends HttpServlet {
                 request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);
                 request.setAttribute("classQuizDone", classQuizDone);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("View/Assigment.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/Quiz.jsp");
                 dispatcher.forward(request, response);
             } else {
                 Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
@@ -77,7 +77,7 @@ public class QuizController extends HttpServlet {
                 request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);
                 //request.setAttribute("classQuizDone", classQuizDone);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("View/Assigment.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/Quiz.jsp");
                 dispatcher.forward(request, response);
             }
 

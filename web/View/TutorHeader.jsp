@@ -169,10 +169,10 @@
                     <a class="nav-link" href="ViewClassnew"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Class</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
-                    <a class="nav-link" id="income-link" href="#" onclick="redirectToIncome()">Income</a>
+                    <a class="nav-link" id="income-link" class="btn"  href="#" ><button   onclick="redirectToIncome()" style="background-color: #0E3C6E; color: white" type="button" class="btn">Income</button></a>
                 </li>
             </ul>
-
+          
         </nav>
     </body>
     <script>

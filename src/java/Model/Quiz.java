@@ -1,5 +1,6 @@
 package Model;
 
+import DAO.LessonDAO;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,16 @@ public class Quiz {
         this.lessonId = lessonId;
         this.fileName = fileName;
         this.filePath = filePath;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public Quiz(long id, int lessonId, String fileName, String filePath, double score, String status, Date createdAt) {
+        this.id = id;
+        this.lessonId = lessonId;
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.score = score;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -150,7 +161,13 @@ public class Quiz {
     public void setNumberOfTimeDone(int numberOfTimeDone) {
         this.numberOfTimeDone = numberOfTimeDone;
     }
+    
+    public Lesson getLessonbyId(){
+        LessonDAO lDAO = new LessonDAO();
+        return lDAO.getLessonById(lessonId);
+    }
 
+    
     @Override
     public String toString() {
         return "Quiz{"

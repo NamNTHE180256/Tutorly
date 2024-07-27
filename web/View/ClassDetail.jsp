@@ -305,7 +305,7 @@
                                     {    
                                     title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getLearner().getName()}',
                                                 start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                            url: 'http://localhost:8080/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
+                                                            url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
                                                             end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                         className: 'custom-event'
                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
@@ -316,7 +316,7 @@
                                                                 {
                                                                 title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                                             start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                                        url: 'http://localhost:8080/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}'
+                                                                                        url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}'
                                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
                                             </c:forEach>
                                         </c:otherwise>

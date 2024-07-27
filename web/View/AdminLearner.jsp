@@ -120,7 +120,7 @@
                                     <td><strong>${learner.name}</strong> </td>
                                     <td>${learner.getUserInfo().email}</td>
                                     <td>1</td>
-                                    <td><a href="#" class="btn btn-outline-info btn-sm">Details</a></td>
+                                    <td><a href="#" class="btn btn-outline-primary btn-sm">Details</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

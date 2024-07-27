@@ -69,6 +69,7 @@ public class SetQuizTimeServlet extends HttpServlet {
             quizDAO.updateQuizTime(lessonId, quizTime);
         }
 
-        response.sendRedirect("Tutorly/lessonDetailControllers?classid=" + classId + "&lessonId=" + lessonId);
+        response.sendRedirect("lessonDetailControllers?classid=" + classId + "&lessonId=" + lessonId);
+
     }
 }

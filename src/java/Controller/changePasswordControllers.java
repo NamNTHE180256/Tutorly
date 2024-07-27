@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -38,23 +40,59 @@ public class changePasswordControllers extends HttpServlet {
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String Currentpass = request.getParameter("Currentpass");
+        System.out.println(Currentpass);
         String newpass = request.getParameter("newpass");
-        String newpass2 = request.getParameter("newpass2");
+        System.out.println(newpass);
         User user = udao.Login(email, Currentpass);
+        String newpass2 = request.getParameter("newpass2");
+        System.out.println(newpass2);
         User user2 = (User) session.getAttribute("user");
-        if (newpass.equals(newpass2)) {
-            user.setPassword(newpass);
-            if (udao.ChangePassWord(user.getPassword(), user.getEmail()) > 0) {
-                request.setAttribute("error", "Change password successfull");
+        if (user != null) {
+            if (newpass.equals(newpass2)) {
                 user2.setPassword(newpass);
-                session.setAttribute("user", user2);
-            } else {
-                request.setAttribute("error", "Change password Failed");
-                request.getRequestDispatcher("error.jsp").forward(request, response);
-            }
+                if (udao.ChangePassWord(user2.getPassword(), user2.getEmail()) > 0) {
+                    request.setAttribute("error", "Change password successfull");
+                    user2.setPassword(newpass);
+                    System.out.println(user2);
+                    session.setAttribute("user", user2);
+                    if (user2.getRole().equalsIgnoreCase("learner")) {
+                        request.setAttribute("error", "Change Password Successfull");
+                        request.getRequestDispatcher("StudentProfileController").forward(request, response);
+                    } else if (user2.getRole().equalsIgnoreCase("tutor")) {
+                        response.sendRedirect("../Tutorly/TutorProfileController?service=&error=Change Password Successfull");
+                    }
+                }
 
+            } else {
+                if (user2.getRole().equalsIgnoreCase("learner")) {
+                    request.setAttribute("error", "Password Confirmation does not match");
+                    request.getRequestDispatcher("StudentProfileController").forward(request, response);
+                } else if (user2.getRole().equalsIgnoreCase("tutor")) {
+                    response.sendRedirect("../Tutorly/TutorProfileController?service=&error=Password Confirmation does not match");
+                }
+            }
+        } else {
+            if (user2.getRole().equalsIgnoreCase("learner")) {
+                request.setAttribute("error", "Wrong Password");
+                request.getRequestDispatcher("StudentProfileController").forward(request, response);
+            } else if (user2.getRole().equalsIgnoreCase("tutor")) {
+                response.sendRedirect("../Tutorly/TutorProfileController?service=&error=Wrong Password");
+            }
         }
-        request.getRequestDispatcher("StudentProfileController").forward(request, response);
+    }
+
+    public String computeMD5Hash(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

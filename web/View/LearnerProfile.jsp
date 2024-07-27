@@ -70,6 +70,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
+                        <i>${requestScope.error}</i>
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mb-3">
@@ -255,5 +256,16 @@
                     </div>
                 </div>
             </div>
+            <div >   
+                <a  class="nav-link" href="#">
+                    <button style="    background-color: #0E3C6E;" id="logoutButton" type="button" class="btn btn-primary">Logout</button>
+
+                </a>
+                </li></div>
     </body>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            window.location.href = "logout"; // Chuyển hướng đến servlet LogoutController
+        });
+    </script>
 </html>

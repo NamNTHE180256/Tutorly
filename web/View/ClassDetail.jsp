@@ -244,8 +244,8 @@
                 <div class="row" style="flex-grow: 1; display: flex;">
                     <div class="col-sm-3 d-flex flex-column">
                         <div class="todo">                
-                                <c:choose>
-                                    <c:when test="${sessionScope.user.role == 'tutor'}">
+                            <c:choose>
+                                <c:when test="${sessionScope.user.role == 'tutor'}">
                                     <p class="todohead" style="font-size: 20px; font-weight: bold">Class : <%= studentName%></p>
                                 </c:when>
                                 <c:otherwise>
@@ -299,10 +299,10 @@
                                     <c:choose>
                                         <c:when test="${sessionScope.user.role == 'tutor'}">
                                             <c:forEach items="${lesson_vector}" var="v">
-                                    {
+                                    {    
                                     title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getLearner().getName()}',
                                                 start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                            url: 'http://localhost:8080/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
+                                                            url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
                                                             end: '${v.getDate()}T${v.getSession().getEndTime()}',
                                                                         className: 'custom-event'
                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
@@ -313,7 +313,7 @@
                                                                 {
                                                                 title: '${v.getAClass().getTutor().getSubject().getName()}-${v.getAClass().getTutor().getName()}',
                                                                             start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                                        url: 'http://localhost:8080/Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}'
+                                                                                        url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}'
                                                                                 }${not empty v and v != vector[vector.size() - 1] ? ',' : ''}
                                             </c:forEach>
                                         </c:otherwise>

@@ -89,24 +89,42 @@
                     <div class="Quiz mt-3">
                         <p><strong>Quiz:</strong></p>
                         <div class="buttons-row">
-
                             <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/QuestionList.jsp?lessonId=${requestScope.lesson.getId()}'">View</button>
-                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/UploadQuiz.jsp?lessonId=${requestScope.lesson.getId()}'">Upload</button>
+                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/QuestionList.jsp?lessonId=${requestScope.lesson.getId()}&classId=${requestScope.classId}'">View</button>
+                                <button class="btn btn-primary" type="button" onclick="location.href = 'View/UploadQuiz.jsp?lessonId=${requestScope.lesson.getId()}&classId=${requestScope.classId}'">Upload</button>
                             </c:if>
                             <c:if test="${sessionScope.user.role eq 'learner'}">
-                                <button class="btn btn-primary" type="button" onclick="location.href = 'QuizServlet?lessonId=${requestScope.lesson.getId()}'">Take Quiz</button>
+                                <button class="btn btn-primary" type="button" onclick="takeQuiz(${requestScope.lesson.getId()}, ${requestScope.classId})">Take Quiz</button>
                             </c:if>
                         </div>
                     </div>
+
+                    <c:if test="${sessionScope.user.role eq 'tutor'}">
+                        <div class="materials mt-3">
+                            <p><strong>Material:</strong></p>
+                            <div class="buttons-row">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload">Upload</button>
+                    </c:if>
+
+
+
+                    <c:if test="${sessionScope.user.role eq 'tutor'}">
+                        <div class="assignment mt-3">
+                            <p><strong>Records</strong></p>
+                            <div class="buttons-row">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadRecords">Upload</button>
+                    </c:if>
+
                     <div class="materials mt-3">
-                        <p><strong>Material:</strong></p>
+                        <p><strong>Material And Records:</strong></p>
                         <div class="buttons-row">
                             <button class="btn btn-primary" type="button" id="viewButton">View</button>
 
-                            <c:if test="${sessionScope.user.role eq 'tutor'}">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload">Upload</button>
-                            </c:if>
+
                         </div>
                     </div>
                 </div>
@@ -140,6 +158,34 @@
                 </div>
             </div>
         </div>
+        <div  class="modal" id="uploadRecords">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Upload Records</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <i style="color: red"> ${requestScope.error}</i>
+                        <form action="${pageContext.request.contextPath}/addVideoControllers" method="get" enctype="multipart/form-data">
+                            <input type="hidden" name="classid" value="${requestScope.lesson.getAClass().getId()}">
+                            <input type="hidden" name="slotid" value="${requestScope.lesson.getId()}">
+                            <input type="hidden" value="upload" name="action">
+                            <div class="form-group">
+                                <label for="fileName">Name</label>
+                                <input type="text" id="fileName" class="form-control" name="fileName" placeholder="Enter a file's name">
+                                <label for="file" class="mt-2">Choose File</label>
+                                <input type="text" name="linkYtb" id="file" name="file" class="form-control">
+                            </div>
+                            <button style="display: block; margin: 0 auto;" type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("viewButton").addEventListener("click", function () {
@@ -148,10 +194,13 @@
             });
             document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("joinClass").addEventListener("click", function () {
-                    window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet() 
-            }";
+                    window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
                 });
             });
+
+            function takeQuiz(lessonId, classId) {
+                window.location.href = "QuizServlet?lessonId=" + lessonId + "&classId=" + classId + "&action=takeQuiz";
+            }
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

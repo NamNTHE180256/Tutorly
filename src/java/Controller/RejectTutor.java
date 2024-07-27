@@ -90,7 +90,7 @@ public class RejectTutor extends HttpServlet {
         tutorDao.deleteTutor(tutorId);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-//        response.getWriter().write("{\"status\"😕"success\"}");
+        response.getWriter().write("{\"status\":\"success\"}");
     }
 
     /**

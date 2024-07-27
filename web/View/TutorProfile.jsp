@@ -92,7 +92,9 @@
                                         session.removeAttribute("errorMessage");
                                     %>
                                 </c:if>
+                                <i>${requestScope.error}</i>
                                 <form action="TutorProfileController" method="POST">
+
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">ID</h6>
@@ -175,14 +177,16 @@
                         <button type="button" class="close" data-dismiss="modal">&times;"></button>
                     </div>
                     <div class="modal-body">
-                        <form> <!--<!-- them duong dan kem servlet -->
+                        <form action="${pageContext.request.contextPath}/changePassword" method="post">
+
                             <div class="form-group">
                                 <label for="currentPassword">Current Password</label>
-                                <input type="password" id="currentPassword" class="form-control" placeholder="Current Password">
+                                <input type="password" name="Currentpass" id="currentPassword" class="form-control" placeholder="Current Password">
                                 <label for="newPassword" class="mt-2">New Password</label>
-                                <input type="password" id="newPassword" class="form-control" placeholder="New Password">
-                                <label for="confirmNewPassword" class="mt-2">Confirm New Password</label>
-                                <input type="password" id="confirmNewPassword" class="form-control" placeholder="Confirm New Password">
+                                <input type="hidden" name="email" value="${sessionScope.user.email}">
+                                <input type="password" name="newpass" id="newPassword" class="form-control" placeholder="New Password">
+                                <label for="confirmNewPassword"  class="mt-2">Confirm New Password</label>
+                                <input type="password" name="newpass2" id="confirmNewPassword" class="form-control" placeholder="Confirm New Password">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

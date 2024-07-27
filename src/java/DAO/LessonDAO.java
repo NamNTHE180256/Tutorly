@@ -365,7 +365,7 @@ public class LessonDAO extends DBContext {
 //        Vector<Lesson> learnerLessons = lessonDAO.getLessonsByLearnerId(learnerId);
 //        for (Lesson lesson : learnerLessons) {
 //            System.out.println(lesson.getAClass().getTutor().getName());
-System.out.println("1:"+lessonDAO.getLessonById(13, 2));
+System.out.println("1:"+lessonDAO.getLessonById(17, 3));
         }
     }
 

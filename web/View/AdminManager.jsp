@@ -152,7 +152,7 @@
                                                 data-email="${manager.getUserInfo().email}">
                                             Update
                                         </button>
-                                        <a href="ManagerController?action=details&managerId=${manager.id}" class="btn btn-outline-info btn-sm">Details</a>
+                                        <a href="ManagerController?action=details&managerId=${manager.id}" class="btn btn-outline-primary btn-sm">Details</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -250,66 +250,66 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 
         <script>
-                                               window.onload = function () {
-                                                   setTimeout(function () {
-                                                       var successAlert = document.getElementById('successAlert');
-                                                       if (successAlert) {
-                                                           successAlert.style.display = 'none';
-                                                       }
-                                                       var errorAlert = document.getElementById('errorAlert');
-                                                       if (errorAlert) {
-                                                           errorAlert.style.display = 'none';
-                                                       }
-            <% session.removeAttribute("successMessage"); %>
-            <% session.removeAttribute("errorMessage");%>
-                                                   }, 5000); // 5000 milliseconds = 5 seconds
-                                               };
+            window.onload = function () {
+                setTimeout(function () {
+                    var successAlert = document.getElementById('successAlert');
+                    if (successAlert) {
+                        successAlert.style.display = 'none';
+                    }
+                    var errorAlert = document.getElementById('errorAlert');
+                    if (errorAlert) {
+                        errorAlert.style.display = 'none';
+                    }
+                 <% session.removeAttribute("successMessage"); %>
+                 <% session.removeAttribute("errorMessage");%>
+                }, 5000); // 5000 milliseconds = 5 seconds
+            };
 
-                                               $('#updateModal').on('show.bs.modal', function (event) {
-                                                   var button = $(event.relatedTarget); // Button that triggered the modal
-                                                   var id = button.data('id');
-                                                   var name = button.data('name');
-                                                   var email = button.data('email');
+            $('#updateModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var id = button.data('id');
+                var name = button.data('name');
+                var email = button.data('email');
 
-                                                   var modal = $(this);
-                                                   modal.find('#managerId').val(id);
-                                                   modal.find('#managerName').val(name);
-                                                   modal.find('#managerEmail').val(email);
-                                               });
+                var modal = $(this);
+                modal.find('#managerId').val(id);
+                modal.find('#managerName').val(name);
+                modal.find('#managerEmail').val(email);
+            });
 
-                                               function validateForm() {
-                                                   var isValid = true;
-                                                   var alertDiv = document.getElementById("passwordAlert");
+            function validateForm() {
+                var isValid = true;
+                var alertDiv = document.getElementById("passwordAlert");
 
-                                                   // Reset alert
-                                                   alertDiv.classList.add("d-none");
+                // Reset alert
+                alertDiv.classList.add("d-none");
 
-                                                   // Validate fields
-                                                   var fields = ["addManagerName", "addManagerEmail", "managerPassword", "confirmPassword"];
-                                                   fields.forEach(function (fieldId) {
-                                                       var field = document.getElementById(fieldId);
-                                                       if (!field.value.trim()) {
-                                                           field.classList.add("is-invalid");
-                                                           isValid = false;
-                                                       } else {
-                                                           field.classList.remove("is-invalid");
-                                                       }
-                                                   });
+                // Validate fields
+                var fields = ["addManagerName", "addManagerEmail", "managerPassword", "confirmPassword"];
+                fields.forEach(function (fieldId) {
+                    var field = document.getElementById(fieldId);
+                    if (!field.value.trim()) {
+                        field.classList.add("is-invalid");
+                        isValid = false;
+                    } else {
+                        field.classList.remove("is-invalid");
+                    }
+                });
 
-                                                   // Validate password match
-                                                   var password = document.getElementById("managerPassword").value;
-                                                   var confirmPassword = document.getElementById("confirmPassword").value;
-                                                   if (password !== confirmPassword) {
-                                                       alertDiv.classList.remove("d-none");
-                                                       isValid = false;
-                                                   }
+                // Validate password match
+                var password = document.getElementById("managerPassword").value;
+                var confirmPassword = document.getElementById("confirmPassword").value;
+                if (password !== confirmPassword) {
+                    alertDiv.classList.remove("d-none");
+                    isValid = false;
+                }
 
-                                                   return isValid;
-                                               }
+                return isValid;
+            }
 
-                                               document.getElementById("addManagerForm").onsubmit = function () {
-                                                   return validateForm();
-                                               };
+            document.getElementById("addManagerForm").onsubmit = function () {
+                return validateForm();
+            };
         </script>
     </body>
 </html>

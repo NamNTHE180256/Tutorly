@@ -62,7 +62,7 @@
                 <%@ include file="TutorHeader.jsp" %>
             </c:when>
             <c:when test="${learner != null}">
-                <%@ include file="StudentHeader.jsp" %>
+                <%@ include file="SearchTutorHeader.jsp" %>
             </c:when>
         </c:choose>
         <div class="container-fluid">
@@ -71,7 +71,7 @@
                     <nav class="navbar navbar-expand-sm ">
                         <ul class="navbar-nav col-md-8">
                             <li class="nav-item">
-                                <p class="title">History Lesson</p>
+                                <p class="title">Class Details</p>
                             </li>
                         </ul>
                         <ul class="navbar-nav col-md-4">
@@ -105,7 +105,7 @@
                                         <td>${fn:substring(l.session.startTime, 0, 5)}</td>
                                         <td><fmt:formatDate value="${l.date}" pattern="dd/MM/yyyy"/></td>
                                         <td class="${l.status eq 'Finished' ? 'text-success' : 'text-warning'}">${l.status}</td>
-                                        <td><a href="#" class="btn btn-primary">View Materials</a></td>
+                                        <td><a href="lessonDetailControllers?classid=${l.getAClass().id}&lessonId=${l.getId()}" class="btn btn-primary">View lesson details</a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -117,16 +117,10 @@
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <div class="container">
-                <p style="margin: 0; font-size: 16px;">
-                    Mọi góp ý, thắc mắc xin liên hệ Công ty cung cấp dịch vụ gia sư | Email: <a href="mailto:Tutory@gmail.com" style="color: #FFC107;">Tutory@gmail.com</a> | Điện thoại: <a href="tel:0123456789" style="color: #FFC107;">0123456789</a>
-                </p>
-                <p style="margin: 0; font-size: 16px;">© 2024 Power by TUTORLY</p>
-            </div>
-        </footer>
+       
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
     </body>
 </html>

@@ -80,7 +80,7 @@ public class SubmitQuizServlet extends HttpServlet {
         if (assignmentId != null) {
             int numberOfTimeDone = assignmentDAO.getNumberOfTimeDoneByQuizId(assignmentId);
             numberOfTimeDone++;
-            assignmentDAO.updateQuizDetails(assignmentId, score, "Finished", numberOfTimeDone, startedOn, completedOn, timeTakenSeconds);
+            assignmentDAO.updateQuizDetails(assignmentId, score, "done", numberOfTimeDone, startedOn, completedOn, timeTakenSeconds);
         }
 
         request.getRequestDispatcher("View/ReviewQuiz.jsp").forward(request, response);

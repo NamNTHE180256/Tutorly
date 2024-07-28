@@ -4,9 +4,9 @@
     Author     : TRANG
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,7 +45,7 @@
                 overflow: hidden;
             }
 
-            .todo, .classofstudent, .upcommingclass {
+            .todo, .classofstudent, .upcomingclass {
                 margin-bottom: 20px;
                 flex-shrink: 0;
             }
@@ -132,7 +132,7 @@
                 margin-right: 40px;
             }
 
-            .upcommingclass {
+            .upcomingclass {
                 background-color: white;
                 border-radius: 20px;
                 padding-top: 10px;
@@ -144,16 +144,16 @@
                 flex-grow: 1;
             }
 
-            .upcommingclasstitle {
+            .upcomingclasstitle {
                 color: #0E3C6E;
                 font-weight: bold;
             }
 
-            .upcommingclassnote {
+            .upcomingclassnote {
                 color: #A2A2A2;
             }
 
-            .upcommingclassdedtails {
+            .upcomingclassdetails {
                 background-color: #E6E6E6;
                 border-radius: 20px;
                 flex-grow: 1;
@@ -162,7 +162,6 @@
                 padding: 20px;
                 box-sizing: border-box;
                 overflow: auto;
-
             }
 
             #calendar-container {
@@ -198,78 +197,146 @@
     </head>
     <body>
 
-        <%@ include file = "StudentHeader.jsp" %>
+        <header>
+            <c:choose>
+                <c:when test="${user.role eq 'tutor'}">
+                    <%@ include file="TutorHeader.jsp" %>
+                </c:when>
+                <c:otherwise>
+                    <%@ include file="StudentHeader.jsp" %>
+                </c:otherwise>
+            </c:choose>
+        </header>
         <main style="background-color: #D9D9D9; flex-grow: 1; display: flex; flex-direction: column;">
 
             <!--Content-->
             <div class="container-fluid content" style="padding-bottom: 20px">
                 <div class="row" style="flex-grow: 1; display: flex;">
-                    <div class="col-sm-3 d-flex flex-column">
-                        <div class="todo">
-                            <p class="todohead">To do</p>
-                            <!--Number of Quiz which have status : Not completed-->
-                            <p class="todonumber">${todoQuiz}</p>
-                            <p class="foot">Quiz(s) not completed</p>
+                    <c:if test="${ not empty requestScope.linfo }">
+                        <div class="col-sm-3 d-flex flex-column">
+                            <div class="todo">
+                                <p class="todohead">To do</p>
+                                <!--Number of Quiz which have status : Not completed-->
+                                <p class="todonumber">${todoQuiz}</p>
+                                <p class="foot">Quiz(s) not completed</p>
+                            </div>
+
+                            <img style="width: 310px" src="image/Dashboard3.png">
                         </div>
+                        <div class="col-sm-9 d-flex flex-column">
+                            <div class="upcomingclass flex-grow-1">
+                                <!--HEAD-->
+                                <nav class="navbar navbar-expand-sm">
+                                    <!-- Left -->
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item">
+                                            <h1 class="upcomingclasstitle">Upcoming...</h1>
+                                        </li>
+                                    </ul>
+                                </nav>
 
-                        <img style="width: 310px" src="image/Dashboard3.png">
-                    </div>
-                    <!-- Session occur in 5 hours -->
-                    <div class="col-sm-9 d-flex flex-column" >
-                        <div class="upcommingclass flex-grow-1">
-                            <!--HEAD-->
-                            <nav class="navbar navbar-expand-sm">
-                                <!-- Left -->
-                                <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item">
-                                        <h1 class="upcommingclasstitle">Upcoming...</h1>
-                                    </li>
-                                </ul>
-                            </nav>
+                                <!--Content-->
+                                <div class="upcomingclassdetails" style="height: 450px">
+                                    <script>
+                                        $(document).ready(function() {
+                                        var calendarEl = document.getElementById('calendar');
+                                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                                        headerToolbar: {
+                                        left: 'prev,next today',
+                                                center: 'title',
+                                                right: 'listDay,listWeek'
+                                        },
+                                                views: {
+                                                listDay: { buttonText: 'list day' },
+                                                        listWeek: { buttonText: 'list week' }
+                                                },
+                                                initialView: 'listWeek',
+                                                initialDate: new Date().toISOString().split('T')[0],
+                                                navLinks: true,
+                                                editable: true,
+                                                dayMaxEvents: true,
+                                                events: [
+                                        <c:forEach items="${lesson_vector}" var="v">
+                                                {
+                                                title: '${v.getAClass().getTutor().getSubject().getName()} - ${v.getAClass().getTutor().getName()}',
+                                                                    start: '${v.getDate()}T${v.getSession().getStartTime()}',
+                                                                                        url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
+                                                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
+                                                                                                            className: 'custom-event'
+                                                                                                    }<c:if test="${v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
+                                        </c:forEach>
+                                                                                                    ]
+                                                                                            });
+                                                                                            calendar.render();
+                                                                                            });
+                                    </script>
 
-                            <!--Content-->
-                            <div class="upcommingclassdedtails" style="height: 450px">
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                    var calendarEl = document.getElementById('calendar');
-                                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                                    headerToolbar: {
-                                    left: 'prev,next today',
-                                            center: 'title',
-                                            right: 'listDay,listWeek'
-                                    },
-                                            views: {
-                                            listDay: { buttonText: 'list day' },
-                                                    listWeek: { buttonText: 'list week' }
-                                            },
-                                            initialView: 'listWeek',
-                                            initialDate: new Date().toISOString().split('T')[0],
-                                            navLinks: true,
-                                            editable: true,
-                                            dayMaxEvents: true,
-                                            events: [
-                                    <c:forEach items="${lesson_vector}" var="v">
-                                            {
-                                            title: '${v.getAClass().getTutor().getSubject().getName()} - ${v.getAClass().getTutor().getName()}',
-                                                                start: '${v.getDate()}T${v.getSession().getStartTime()}',
-                                                                                    url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
-                                                                                    end: '${v.getDate()}T${v.getSession().getEndTime()}',
-                                                                                                        className: 'custom-event'
-                                                                                                }<c:if test="${v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
-                                    </c:forEach>
-                                                                                                ]
-                                                                                        });
-                                                                                        calendar.render();
-                                                                                        });
-                                </script>
-                                <div id='calendar-container'>
-                                    <div id='calendar'></div>
+                                    <div id='calendar-container'>
+                                        <div id='calendar'></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
+                    <c:if test="${ empty requestScope.linfo }">
+                        <div class="col-sm-12 d-flex flex-column">
+                            <div class="upcomingclass flex-grow-1">
+                                <!--HEAD-->
+                                <nav class="navbar navbar-expand-sm">
+                                    <!-- Left -->
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item">
+                                            <h1 class="upcomingclasstitle">Upcoming...</h1>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                                <!--Content-->
+                                <div class="upcomingclassdetails" style="height: 450px">
+                                    <script>
+                                        $(document).ready(function() {
+                                        var calendarEl = document.getElementById('calendar');
+                                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                                        headerToolbar: {
+                                        left: 'prev,next today',
+                                                center: 'title',
+                                                right: 'listDay,listWeek'
+                                        },
+                                                views: {
+                                                listDay: { buttonText: 'list day' },
+                                                        listWeek: { buttonText: 'list week' }
+                                                },
+                                                initialView: 'listWeek',
+                                                initialDate: new Date().toISOString().split('T')[0],
+                                                navLinks: true,
+                                                editable: true,
+                                                dayMaxEvents: true,
+                                                events: [
+                                        <c:forEach items="${lesson_vector}" var="v">
+                                                {
+                                                title: '${v.getAClass().getTutor().getSubject().getName()} - ${v.getAClass().getTutor().getName()}',
+                                                                    start: '${v.getDate()}T${v.getSession().getStartTime()}',
+                                                                                        url: '../Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}',
+                                                                                        end: '${v.getDate()}T${v.getSession().getEndTime()}',
+                                                                                                            className: 'custom-event'
+                                                                                                    }<c:if test="${v != lesson_vector[lesson_vector.size() - 1]}">,</c:if>
+                                        </c:forEach>
+                                                                                                    ]
+                                                                                            });
+                                                                                            calendar.render();
+                                                                                            });
+                                    </script>
+
+                                    <div id='calendar-container'>
+                                        <div id='calendar'></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </main>
+        
     </body>
 </html>

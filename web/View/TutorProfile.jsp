@@ -149,6 +149,13 @@
                                             <button type="submit" class="btn btn-primary" style="background-color: #0E3C6E;">Save changes</button>
                                             <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="action" value="add">
                                             <input type="hidden" class="btn btn-primary" style="background-color: #0E3C6E;" name="id" value="${t.id}">
+
+
+                                            <button class="btn btn-primary" type="button" style="    background-color: #0E3C6E;" id="logoutButton" type="button" class="btn btn-primary">Logout</button>
+
+
+
+
                                         </div>
                                     </div>
                                 </form>
@@ -176,6 +183,7 @@
                         <h4 class="modal-title">Change password</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;"></button>
                     </div>
+
                     <div class="modal-body">
                         <form action="${pageContext.request.contextPath}/changePassword" method="post">
 
@@ -197,16 +205,14 @@
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <div class="container">
-                <p style="margin: 0; font-size: 16px;">
-                    Mọi góp ý, thắc mắc xin liên hệ Công ty cung cấp dịch vụ gia sư | Email: <a href="mailto:Tutory@gmail.com" style="color: #FFC107;">Tutory@gmail.com</a> | Điện thoại: <a href="tel:0123456789" style="color: #FFC107;">0123456789</a>
-                </p>
-                <p style="margin: 0; font-size: 16px;">© 2024 Power by TUTORLY</p>
-            </div>
-        </footer>
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </body>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            window.location.href = "logout"; // Chuyển hướng đến servlet LogoutController
+        });
+    </script>
 </html>

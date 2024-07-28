@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.text.*, Model.*" %>
+<%@ page import="java.util.*, java.text.*, Model.*, DAO.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page import="DAO.*" %>
@@ -21,6 +21,9 @@
     // Format dates
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String tutorName = aClass.getTutor().getName();
+    LessonDAO lessonDAO = new LessonDAO();
+    int finishedLessons = lessonDAO.getFinishedLessonCount(classId);
+    int totalLessons = lessonDAO.getTotalLessonCount(classId);
 
     // Get class details
     String studentName = aClass.getLearner().getName();
@@ -28,7 +31,7 @@
     Date startDate = aClass.getStartDate();
     Date endDate = aClass.getEndDate();
     String subjectName = aClass.getTutor().getSubject().getName();
-    int attendance = 10; // This should be fetched dynamically based on attended sessions
+    int attendance = finishedLessons; // This should be fetched dynamically based on attended sessions
     int progress = (attendance * 100) / totalSlots;
 
     User user = (User) session.getAttribute("user");
@@ -350,6 +353,8 @@
                 </div>
             </div>
         </main>
-
+<span>
+            <%@ include file = "Footer.jsp" %>
+        </span>
     </body>
 </html>

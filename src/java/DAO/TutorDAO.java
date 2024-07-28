@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  */
 public class TutorDAO extends DBContext {
 
-
     public ArrayList<Tutor> getAllTutors() {
         ArrayList<Tutor> tutors = new ArrayList<>();
         SubjectDAO sDao = new SubjectDAO();
@@ -81,7 +80,6 @@ public class TutorDAO extends DBContext {
         return tutors;
     }
 
-
     public ArrayList<Tutor> searchTutors(String searchQuery) {
         ArrayList<Tutor> tutors = new ArrayList<>();
         SubjectDAO sDao = new SubjectDAO();
@@ -120,7 +118,6 @@ public class TutorDAO extends DBContext {
         return tutors;
     }
 
-
     public Tutor getTutorById(int id) {
         Tutor tutor = null;
         SubjectDAO sDao = new SubjectDAO();
@@ -141,8 +138,10 @@ public class TutorDAO extends DBContext {
                 tutor.setPrice(rs.getFloat("price"));
                 tutor.setBank(rs.getString("bank"));
                 tutor.setStatus(rs.getString("status"));
+
+                tutor.setLinkmeet(rs.getString("linkMeet"));
                 tutor.setLinkmeet(rs.getString("Linkmeet"));
-               
+
             }
             rs.close();
             sp.close();
@@ -153,7 +152,7 @@ public class TutorDAO extends DBContext {
     }
 
     public boolean insertTutor(Tutor tutor) {
-        String sql = "INSERT INTO Tutor (id,subjectId, name, gender, image, bio, edu, price, bank, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Tutor (id,subjectId, name, gender, image, bio, edu, price, bank, status,Linkmeet) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
             sp.setInt(1, tutor.getId());
@@ -166,6 +165,7 @@ public class TutorDAO extends DBContext {
             sp.setFloat(8, tutor.getPrice());
             sp.setString(9, tutor.getBank());
             sp.setString(10, tutor.getStatus());
+            sp.setString(11, tutor.getLinkmeet());
             int rowsAffected = sp.executeUpdate();
             sp.close();
             return rowsAffected > 0;
@@ -268,7 +268,6 @@ public class TutorDAO extends DBContext {
 //        }
 //        return vector;
 //    }
-
     public Vector<Tutor> getTutors(String sql) {
         Vector<Tutor> vector = new Vector<>();
         SubjectDAO sDAO = new SubjectDAO();
@@ -294,6 +293,7 @@ public class TutorDAO extends DBContext {
         }
         return vector;
     }
+
     // Method to get a tutor by ID
     // Method to add a new tutor
     public int addTutor(Tutor tutor) {
@@ -511,9 +511,23 @@ public class TutorDAO extends DBContext {
 
     public static void main(String[] args) {
         TutorDAO t = new TutorDAO();
-        String name = "hien";
+
         int subjectId = 15;
         int id = 9;
         t.deleteTutor(14);
+    }
+
+    public boolean insertTutorAvailability(int tutorId, String sessionId, String status) {
+        String sql = "INSERT INTO TutorAvailability (tutorId, sessionId, status) VALUES (?, ?, ?)";
+        try (PreparedStatement sp = connection.prepareStatement(sql)) {
+            sp.setInt(1, tutorId);
+            sp.setString(2, sessionId);
+            sp.setString(3, status);
+            int rowsAffected = sp.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(TutorDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 }

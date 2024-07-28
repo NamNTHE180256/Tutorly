@@ -117,6 +117,7 @@
                                     <div class="col-sm-9 text-secondary">
                                         <input type="button" class="btn btn-primary px-4" class="btn btn-primary" data-toggle="modal" 
                                                data-target="#myModal" style="background-color: #0E3C6E;" value="Change password">
+                                        <input style="    background-color: #0E3C6E;" id="logoutButton" type="button"class="btn btn-primary px-4" value="LogOut">
                                     </div>
                                 </div>
 
@@ -142,6 +143,7 @@
                                                             <input type="password" name="newpass" id="myPassword" class="form-control" placeholder="Password" style="margin-bottom: 5px" required>
                                                             <input type="password" name="newpass2" id="myPassword" class="form-control" placeholder="Enter password again" style="margin-bottom: 5px" required>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
+
                                                         </div>
                                                     </form>
                                                 </div>
@@ -256,16 +258,16 @@
                     </div>
                 </div>
             </div>
-            <div >   
-                <a  class="nav-link" href="#">
-                    <button style="    background-color: #0E3C6E;" id="logoutButton" type="button" class="btn btn-primary">Logout</button>
 
-                </a>
-                </li></div>
+
+
+
     </body>
-    <script>
-        document.getElementById("logoutButton").addEventListener("click", function () {
-            window.location.href = "logout"; // Chuyển hướng đến servlet LogoutController
+ <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("logoutButton").addEventListener("click", function () {
+                window.location.href = "logout"; // Chuyển hướng đến servlet LogoutController
+            });
         });
     </script>
 </html>

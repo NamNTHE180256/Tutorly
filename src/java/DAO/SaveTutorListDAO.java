@@ -17,7 +17,8 @@ public class SaveTutorListDAO extends DBContext {
         String sql = "SELECT t.*, "
                 + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
                 + "FROM Tutor t "
-                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId";
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                + "WHERE t.status = 'Active'";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
             ResultSet rs = sp.executeQuery();
@@ -51,7 +52,7 @@ public class SaveTutorListDAO extends DBContext {
                 + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
                 + "FROM Tutor t "
                 + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                + "WHERE t.id = ?";
+                + "WHERE t.id = ? AND t.status = 'Active'";
         try {
             PreparedStatement sp = connection.prepareStatement(sql);
             sp.setInt(1, id);
@@ -142,7 +143,8 @@ public class SaveTutorListDAO extends DBContext {
         String sql = "SELECT t.*, "
                 + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
                 + "FROM Tutor t "
-                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId";
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                + "WHERE t.status = 'Active'";
         SubjectDAO sDAO = new SubjectDAO();
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -294,11 +296,14 @@ public class SaveTutorListDAO extends DBContext {
                 + "    SELECT tutorId, AVG(rating) as avg_rate, COUNT(rating) as rate_count "
                 + "    FROM Rating "
                 + "    GROUP BY tutorId "
-                + "    HAVING AVG(rating) BETWEEN " + start + " AND " + end + " "
+                + "    HAVING AVG(rating) BETWEEN ? AND ? "
                 + ") r ON t.id = r.tutorId "
-                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId;";
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
+                + "WHERE t.status = 'Active'";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
+            state.setDouble(1, start);
+            state.setDouble(2, end);
             ResultSet rs = state.executeQuery();
             while (rs.next()) {
                 SaveTutorList tutor = new SaveTutorList();
@@ -324,17 +329,18 @@ public class SaveTutorListDAO extends DBContext {
     public Vector<SaveTutorList> getTop10TutorsByRating() {
         Vector<SaveTutorList> topTutors = new Vector<>();
         SubjectDAO sDAO = new SubjectDAO();
-        String sql = "SELECT TOP 10 t.*, "
-                + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status, "
-                + "avg_rating "
-                + "FROM Tutor t "
-                + "JOIN ( "
-                + "    SELECT tutorId, AVG(rating) as avg_rating "
-                + "    FROM Rating "
-                + "    GROUP BY tutorId "
-                + ") r ON t.id = r.tutorId "
-                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                + "ORDER BY avg_rating DESC;";
+        String sql = "SELECT TOP 10 t.*, \n"
+                + "       CASE WHEN t.status = 'Active' AND st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status, \n"
+                + "       r.avg_rating\n"
+                + "FROM Tutor t\n"
+                + "JOIN (\n"
+                + "    SELECT tutorId, AVG(rating) AS avg_rating\n"
+                + "    FROM Rating\n"
+                + "    GROUP BY tutorId\n"
+                + ") r ON t.id = r.tutorId\n"
+                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId\n"
+                + "WHERE t.status = 'Active'\n"
+                + "ORDER BY r.avg_rating DESC;";
 
         try {
             PreparedStatement state = connection.prepareStatement(sql);

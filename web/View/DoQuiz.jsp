@@ -1,11 +1,6 @@
-<%-- 
-    Document   : DoQuiz
-    Created on : 21 thg 7, 2024, 23:20:13
-    Author     : asus
---%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="Model.Question"%>
 <!DOCTYPE html>
 <html>
@@ -92,7 +87,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: 'timeLeft=' + timeLeft
+                    body: 'action=updateTime&timeLeft=' + timeLeft
                 });
             }
 
@@ -104,11 +99,23 @@
             }
 
             function cancelQuiz() {
-                window.location.href = '/Tutorly/View/HomePage.jsp'; // Redirect to homepage or another page
+                window.location.href = '/Tutorly/QuizController'; // Redirect to homepage or another page
             }
 
             function markQuestionCompleted(questionNumber) {
                 document.getElementById('nav-question-' + questionNumber).classList.add('completed');
+            }
+
+            function saveAnswer(questionNumber, answer) {
+                fetch('UpdateTimeServlet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'action=saveAnswer&questionNumber=' + questionNumber + '&answer=' + answer
+                }).then(() => {
+                    markQuestionCompleted(questionNumber);
+                });
             }
 
             function validateForm() {
@@ -133,10 +140,35 @@
             function stopTimer() {
                 clearInterval(timerId);
             }
+
+            function handleSubmit(event) {
+                if (validateForm()) {
+                    stopTimer();
+                    return true;
+                }
+                event.preventDefault();
+                return false;
+            }
+
+            window.onload = function () {
+            <% 
+            if (session.getAttribute("completedQuestions") != null) {
+                List<Integer> completedQuestions = (List<Integer>) session.getAttribute("completedQuestions");
+                for (Integer questionNumber : completedQuestions) {
+            %>
+                markQuestionCompleted(<%= questionNumber %>);
+            <% 
+                }
+            }
+            %>
+                if (document.getElementById("quizContent").style.display === "block") {
+                    timerId = setInterval(updateTimer, 1000);
+                }
+            }
         </script>
     </head>
     <body class="container">
-        
+
         <div id="alertBox" class="border p-4">
             <h1>Take Quiz</h1>
             <% List<Question> questions = (List<Question>) session.getAttribute("questions"); %>
@@ -150,34 +182,41 @@
 
         <div id="quizContent" class="mt-2">
             <h1>Take Quiz</h1>
-            <form id="quizForm" action="SubmitQuizServlet" method="post" onsubmit="stopTimer(); return validateForm();">
-                
-                <% if (questions != null && !questions.isEmpty()) {
-                        int questionNumber = 1;
-                        for (Question question : questions) {
+            <form id="quizForm" action="SubmitQuizServlet" method="post" onsubmit="handleSubmit(event);">
+
+                <% 
+                if (questions != null && !questions.isEmpty()) {
+                    List<Integer> completedQuestions = new ArrayList<>();
+                    int questionNumber = 1;
+                    for (Question question : questions) {
+                        if (session.getAttribute("answer" + questionNumber) != null) {
+                            completedQuestions.add(questionNumber);
+                        }
                 %>
                 <div class="question p-3 border mb-4 col-md-9" id="question-<%= questionNumber %>">
                     <p style="font-weight: bold ">Question <%= questionNumber %>. <%= question.getQuestionText() %></p>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="A" onclick="markQuestionCompleted(<%= questionNumber %>)" <%= "A".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
+                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="A" onclick="saveAnswer(<%= questionNumber %>, 'A')" <%= "A".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
                         <label class="form-check-label"><%= question.getAnswerA() %></label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="B" onclick="markQuestionCompleted(<%= questionNumber %>)" <%= "B".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
+                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="B" onclick="saveAnswer(<%= questionNumber %>, 'B')" <%= "B".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
                         <label class="form-check-label"><%= question.getAnswerB() %></label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="C" onclick="markQuestionCompleted(<%= questionNumber %>)" <%= "C".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
+                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="C" onclick="saveAnswer(<%= questionNumber %>, 'C')" <%= "C".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
                         <label class="form-check-label"><%= question.getAnswerC() %></label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="D" onclick="markQuestionCompleted(<%= questionNumber %>)" <%= "D".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
+                        <input type="radio" class="form-check-input" name="answer<%= questionNumber %>" value="D" onclick="saveAnswer(<%= questionNumber %>, 'D')" <%= "D".equals(session.getAttribute("answer" + questionNumber)) ? "checked" : "" %>> 
                         <label class="form-check-label"><%= question.getAnswerD() %></label>
                     </div>
                 </div>
-                <% questionNumber++;
-                        }
-                    } else {
+                <% 
+                        questionNumber++;
+                    }
+                    session.setAttribute("completedQuestions", completedQuestions);
+                } else {
                 %>
                 <p>No questions available.</p>
                 <% } %>
@@ -204,5 +243,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
     </body>
 </html>

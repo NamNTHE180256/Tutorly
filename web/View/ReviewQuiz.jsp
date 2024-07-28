@@ -88,13 +88,13 @@
                             }
                         %>
                 </ul>
-                <button class="btn btn-primary mt-2" onclick="window.location.href = '/Tutorly/View/HomePage.jsp'">Finish Review</button>
+                <button class="btn btn-primary mt-2" onclick="window.location.href = '/Tutorly/QuizController'">Finish Review</button>
             </div>
         </div>
 
         <div id="reviewInfo" class="border p-3 mb-4 col-md-9">
             <p><strong>Started on:</strong> <%= session.getAttribute("startedOn") != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Date) session.getAttribute("startedOn")) : "N/A" %></p>
-            <p><strong>Status:</strong> Finished</p>
+            <p><strong>Status:</strong> Done</p>
             <p><strong>Completed on:</strong> <%= session.getAttribute("completedOn") != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Date) session.getAttribute("completedOn")) : "N/A" %></p>
             <p><strong>Time taken:</strong> <%= session.getAttribute("timeTaken") != null ? session.getAttribute("timeTaken") : "N/A" %></p>
             <p><strong>Marks:</strong> <%= session.getAttribute("score") %> ( <%= session.getAttribute("correctAnswers") %> / <%= questions != null ? questions.size() : "N/A" %> )</p>
@@ -139,5 +139,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
     </body>
 </html>

@@ -109,7 +109,7 @@
                                         </c:if>
                                         
                                         <c:if test="${todo.getStatus() != 'done'}">
-                                            <button type="button" class="btn btn-outline-warning">Do homework</button>
+                                            <a href="QuizServlet?classId=${todo.getLessonbyId().getAClass().getId()}&lessonId=${todo.getLessonId()}&action=takeQuiz" type="button" class="btn btn-outline-warning" >Do homework</a>
                                            
                                         </c:if>
                                     </div>

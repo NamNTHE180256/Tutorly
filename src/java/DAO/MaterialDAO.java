@@ -32,7 +32,7 @@ public class MaterialDAO extends DBContext {
                 + "FROM Material m\n"
                 + "JOIN Lesson l ON m.lessonId = l.id\n"
                 + "JOIN Class c ON l.classId = c.id\n"
-                + "WHERE c.id = ? AND m.lessonId = ? and m.fileType  LIKE ?;";
+                + "WHERE c.id = ? AND m.lessonId = ? and m.fileType LIKE ?;";
 
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setInt(1, classid);
@@ -210,21 +210,21 @@ public class MaterialDAO extends DBContext {
         return null;
     }
 
-    public boolean updateMaterial(Material material) {
-        String sql = "UPDATE Material SET lessonId = ?, fileName = ?, filePath = ?, fileType = ?, uploadedAt = ? WHERE id = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, material.getLesson().getId());
-            ps.setString(2, material.getFileName());
-            ps.setString(3, material.getFilePath());
-            ps.setString(4, material.getFileType());
-            ps.setDate(5, new java.sql.Date(material.getUploadedAt().getTime()));
-            ps.setInt(6, material.getId());
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+//    public boolean updateMaterial(Material material) {
+//        String sql = "UPDATE Material SET lessonId = ?, fileName = ?, filePath = ?, fileType = ?, uploadedAt = ? WHERE id = ?";
+//        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+//            ps.setInt(1, material.getLesson().getId());
+//            ps.setString(2, material.getFileName());
+//            ps.setString(3, material.getFilePath());
+//            ps.setString(4, material.getFileType());
+//            ps.setDate(5, new java.sql.Date(material.getUploadedAt().getTime()));
+//            ps.setInt(6, material.getId());
+//            return ps.executeUpdate() > 0;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
     public boolean removeMaterial(int id) {
         String sql = "DELETE FROM Material WHERE id = ?";
@@ -399,13 +399,17 @@ public class MaterialDAO extends DBContext {
 //        material.setUploadedAt(rs.getDate("uploadedAt"));
 //        return material;
 //    }
-    public static void main(String[] args) {
-        MaterialDAO materialDAO = new MaterialDAO();
-        for (Material mate : materialDAO.getAllMaterialWithClass(3)) {
-            System.out.println(mate);
-        }
-        System.out.println();
+//    public static void main(String[] args) {
+//        MaterialDAO materialDAO = new MaterialDAO();
+//        for (Material mate : materialDAO.getAllMaterialWithClass(3)) {
+//            System.out.println(mate);
+//        }
+//        System.out.println();
+//
+//        // Test getMaterialsByClassIdAndFileType method
+//    }
 
-        // Test getMaterialsByClassIdAndFileType method
+    private Material createMaterialFromResultSet(ResultSet rs) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

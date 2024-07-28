@@ -51,7 +51,7 @@ public class ClassDetail extends HttpServlet {
             LessonDAO lDAO = new LessonDAO();
             QuizDAO aDAO = new QuizDAO();
             Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(classId);
-            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(classId);
+            Vector<Lesson> lesson_vector = lDAO.getLessonsByClassId(classId);
 
             LearnerDAO leDAO = new LearnerDAO();
             Learner linfo = leDAO.getStudentById(classId);

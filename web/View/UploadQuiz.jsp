@@ -62,7 +62,7 @@
         %>
         <script type="text/javascript">
             if (confirm("A quiz already exists for this lesson. Do you want to create a new one?")) {
-                window.location.href = "QuizServlet?action=createNew&lessonId=<%= lessonIdStr %>";
+                window.location.href = "http://localhost:8080/Tutorly/QuizServlet?action=createNew&lessonId=<%= lessonIdStr %>&classId=<%= classIdStr %>";
             } else {
                 window.location.href = "Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}";
             }
@@ -86,6 +86,8 @@
         <%
             }
         %>
+    
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -135,16 +135,58 @@ public class RatingDAO extends DBContext {
 
     // Placeholder method to get a learner by ID
     private Learner getLearnerById(int learnerId) {
-        // Implement the method to get a Learner by its ID
-        // For example, you might have a LearnerDAO class with a similar method
-        return new Learner(); // Replace with actual implementation
+        Learner learner = null;
+        String sql = "SELECT * FROM Learner WHERE id = ?";
+        try {
+            PreparedStatement sp = connection.prepareStatement(sql);
+            sp.setInt(1, learnerId);
+            ResultSet rs = sp.executeQuery();
+            if (rs.next()) {
+                learner = new Learner();
+                learner.setId(rs.getInt("id"));
+                learner.setName(rs.getString("name"));
+                learner.setImage(rs.getString("image"));
+            }
+            rs.close();
+            sp.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return learner;
     }
 
     // Placeholder method to get a tutor by ID
     private Tutor getTutorById(int tutorId) {
-        // Implement the method to get a Tutor by its ID
-        // For example, you might have a TutorDAO class with a similar method
-        return new Tutor(); // Replace with actual implementation
+        Tutor tutor = null;
+        SubjectDAO sDao = new SubjectDAO();
+        String sql = "SELECT * FROM Tutor WHERE id = ?";
+        try {
+            PreparedStatement sp = connection.prepareStatement(sql);
+            sp.setInt(1, tutorId);
+            ResultSet rs = sp.executeQuery();
+            if (rs.next()) {
+                tutor = new Tutor();
+                tutor.setId(rs.getInt("id"));
+                tutor.setSubject(sDao.getSubjectById(rs.getInt("subjectId")));
+                tutor.setName(rs.getString("name"));
+                tutor.setGender(rs.getBoolean("gender"));
+                tutor.setImage(rs.getString("image"));
+                tutor.setBio(rs.getString("bio"));
+                tutor.setEdu(rs.getString("edu"));
+                tutor.setPrice(rs.getFloat("price"));
+                tutor.setBank(rs.getString("bank"));
+                tutor.setStatus(rs.getString("status"));
+
+                tutor.setLinkmeet(rs.getString("linkMeet"));
+                tutor.setLinkmeet(rs.getString("Linkmeet"));
+
+            }
+            rs.close();
+            sp.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tutor;
     }
 
     public Vector<Rating> getRatingsByTutorId(int tutorId) {
@@ -157,6 +199,7 @@ public class RatingDAO extends DBContext {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Learner learner = getLearnerById(rs.getInt("learnerId")); // Implement getLearnerById method
+                System.out.println(rs.getInt("learnerId"));
                 Tutor tutor = getTutorById(tutorId); // You can reuse the existing method to get tutor details
                 int rating = rs.getInt("rating");
                 String review = rs.getString("review");
@@ -174,7 +217,14 @@ public class RatingDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        RatingDAO r = new RatingDAO();
-        System.out.println(r.getRatingsByTutorId(7));
+        RatingDAO ratingDAO = new RatingDAO();
+        Vector<Rating> r = ratingDAO.getRatingsByTutorId(7);
+
+        for (Rating rating : r) {
+            System.out.println(r);
+        }
+
+        //System.out.println(ratings);
+
     }
 }

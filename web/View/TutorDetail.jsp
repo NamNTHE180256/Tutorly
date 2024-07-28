@@ -264,8 +264,7 @@
                 padding-top: 64px;
             }
             .review-section select, .review-section .select2-container {
-                width: 188px !important;
-                border-radius: 3px;
+                width: 188px !important;border-radius: 3px;
             }
             ul, ul li {
                 list-style: none;
@@ -359,8 +358,7 @@
             div.scrollcards .card {
                 display: inline-block;
                 padding: 14px;
-                text-decoration: none;
-                height: auto;
+                text-decoration: none;height: auto;
                 width: 300px;
             }
             .profile-card {
@@ -441,8 +439,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 " style="background-color: white; margin: 20px; margin-left: 40px; border-radius: 20px; padding: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
-                    <!-- Tutor information -->
-                    <nav class="navbar navbar-expand-sm " style="padding: 10px">
+                    <!-- Tutor information --><nav class="navbar navbar-expand-sm " style="padding: 10px">
                         <!-- Links -->
 
                         <ul class="navbar-nav">
@@ -503,10 +500,8 @@
                                 <div class="line"></div>
                             </li>
                         </ul>
-                    </nav>
+                    </nav><div class="container">
 
-                    <div class="container">
-                        
                         <div class="table-responsive">
                             <table class="table table-bordered text-center">
                                 <thead >
@@ -544,8 +539,7 @@
                                         <c:forEach var="availability" items="${tutorAvailabilities}" begin="7" end="13">
                                             <c:choose>
                                                 <c:when test="${availability.status == 'Available'}">
-                                                    <td>
-                                                        <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Available</span>
+                                                    <td><span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Available</span>
                                                         <div class="margin-10px-top font-size14">10:00 - 11:30</div>
                                                         <div class="font-size13 text-light-gray">Tutor ${availability.tutor.name}</div>
                                                     </td>
@@ -579,8 +573,7 @@
                                                 <c:when test="${availability.status == 'Available'}">
                                                     <td>
                                                         <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Available</span>
-                                                        <div class="margin-10px-top font-size14">16:00 - 17:30</div>
-                                                        <div class="font-size13 text-light-gray">Tutor ${availability.tutor.name}</div>
+                                                        <div class="margin-10px-top font-size14">16:00 - 17:30</div><div class="font-size13 text-light-gray">Tutor ${availability.tutor.name}</div>
                                                     </td>
                                                 </c:when>
                                                 <c:otherwise>
@@ -618,48 +611,45 @@
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h4 class="m-0">${ratings.size()} Reviews</h4>
                             </div>
-<!--                            <div class="row">
+                            <!-- Star Counter Section -->
+                            <div class="row">
                                 <div class="col-md-6">
                                     <table class="stars-counters">
-    <tbody>
-        <c:forEach begin="1" end="5" var="star">
-            <tr class="">
-                <td>
-                    <span>
-                        <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">${star} Stars</button>
-                    </span>
-                </td>
-                <td class="progress-bar-container">
-                    <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
-                        <div class="fit-progressbar-background">
-                            <c:choose>
-                                <c:when test="${ratecount[star - 1] != null}">
-                                    <span class="progress-fill" style="width: ${ratecount[star - 1].percentage}%;"></span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="progress-fill" style="width: 0%;"></span>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                </td>
-                <td class="star-num">
-                    <c:choose>
-                        <c:when test="${ratecount[star - 1] != null}">
-                            (${ratecount[star - 1].count})
-                        </c:when>
-                        <c:otherwise>
-                            (0)
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-
+                                        <tbody>
+                                            <c:forEach begin="1" end="5" var="star">
+                                                <tr class="">
+                                                    <td><span>
+                                                            <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">${star} Stars</button>
+                                                        </span>
+                                                    </td>
+                                                    <td class="progress-bar-container">
+                                                        <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                                            <div class="fit-progressbar-background">
+                                                                <c:set var="starPercentage" value="0" />
+                                                                <c:forEach var="ratecount" items="${ratecount}">
+                                                                    <c:if test="${ratecount.rate == star}">
+                                                                        <c:set var="starPercentage" value="${ratecount.percentage}" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <span class="progress-fill" style="width: ${starPercentage}%;"></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="star-num">
+                                                        <c:set var="starCount" value="0" />
+                                                        <c:forEach var="ratecount" items="${ratecount}">
+                                                            <c:if test="${ratecount.rate == star}">
+                                                                <c:set var="starCount" value="${ratecount.count}" />
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        (${starCount})
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
 
                         <!-- RATE comment -->
@@ -667,8 +657,7 @@
                             <ul>
                                 <li>
                                     <c:forEach var="rating" items="${ratings}">
-                                        <div class="d-flex">
-                                            <div class="left">
+                                        <div class="d-flex"><div class="left">
                                                 <span>
                                                     <img src="image/${rating.learner.image}" class="profile-pict-img img-fluid" alt="${rating.learner.name}'s photo" />
                                                 </span>
@@ -715,8 +704,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <c:forEach items="${suggesttutor_vector}" var="s">
+                                <div class="carousel-inner"><c:forEach items="${suggesttutor_vector}" var="s">
                                         <div class="carousel-item active">
                                             <div class="profile-card" style="background-color: #0E3C6E">
                                                 <div class="image">
@@ -760,8 +748,7 @@
                                             <c:choose>
                                                 <c:when test="${tutorRatings.NewTutor == null}">
 
-                                                    <div class="rating mt-2">
-                                                        <span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
+                                                    <div class="rating mt-2"><span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
 
                                                         <p class="ratedby" style="font-size: 10px;">rated by ${tutorRatings.rateCount} learner(s)</p>
                                                     </div>
@@ -780,7 +767,7 @@
                                                 <p style="font-size: 10px;">per session</p>
                                             </div>
                                         </li>
-                                        
+
                                         <li class="nav-item">
                                             <form id="addtutorform-${tutor.id}" onsubmit="return false;">
                                                 <button type="button" id="heart-button-${tutor.id}" style="background: white; border: 1px white;" onclick="change_heart('${tutor.id}')">
@@ -803,20 +790,19 @@
 
                                 </div>
                             </div>
-                                                
+
                         </nav>
-                        
-                    </div> 
-                      <div class="buttons ">
-                            <div class="d-grid gap-2">
-                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
-                            </div>
+
+                    </div><div class="buttons ">
+                        <div class="d-grid gap-2">
+                            <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                            <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
-                                                <script type="text/javascript">
+        <script type="text/javascript">
             window.onload = function () {
                 setTimeout(function () {
                     var successAlert = document.getElementById('successAlert');
@@ -864,8 +850,7 @@
 
                     xhttp.open("POST", "SavedTutorController", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;
-                    xhttp.send(data);
+                    var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;xhttp.send(data);
                 } else {
                     reset_heart(tutorId);
                 }

@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
- <head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
@@ -50,91 +50,117 @@
         <title>Profile</title>
     </head>
     <body>
-        <%@ include file = "StudentHeader.jsp" %>
-        <div class="container">
-            <c:if test="${not empty sessionScope.successMessage}">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    ${sessionScope.successMessage}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+        <header>
+            <c:choose>
+                <c:when test="${user.role eq 'tutor'}">
+                    <%@ include file="TutorHeader.jsp" %>
+                </c:when>
+                <c:otherwise>
+                    <%@ include file="SearchTutorHeader.jsp" %>
+                </c:otherwise>
+            </c:choose>
+        </header>
+
+        <div class="container-fluid" style="margin-bottom: 20px">
+            <div class="row justify-content-end">
+                <div class="col-auto">
+                    <select id="classDropdown" class="form-select" onchange="onRequestChange()">
+                        <option value="#"  disabled selected hidden >Select type Request</option>
+                        <option value="registerTrial">Register Trial Class</option>
+                        <option value="sessionChange">Sessions Change Request</option>
+                        <option value="cancelClass">Cancel Class Request</option>
+                    </select>
                 </div>
-                <%
-                    // Clear the notification after displaying it
-                    session.removeAttribute("successMessage");
-                %>
-            </c:if>
-            <c:if test="${not empty sessionScope.errorMessage}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    ${sessionScope.errorMessage}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
-                </div>
-                <%
-                    // Clear the notification after displaying it
-                    session.removeAttribute("errorMessage");
-                %>
-            </c:if>
-            <h2>Tutor Request</h2>
-            <c:if test="${not empty requests}">
-                <table class="table table-bordered table-hover table-striped text-center">
-                    <thead>
-                        <tr>
-                            <th>Tutor</th>
-                            <th>Current Session</th>
-                            <th>New Session</th>
-                            <th>Reason</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="request" items="${requests}">
-                            <tr>
-                                <td>${request.tutor.name}</td>
-                                <td>${fn:substring(request.fromSession.startTime, 0, 5)} - ${fn:substring(request.fromSession.endTime, 0, 5)} <br> ${request.fromSession.dayOfWeek} <br><fmt:formatDate value="${request.date}" pattern="dd/MM/yyyy"/></td>
-                                <td>${fn:substring(request.toSession.startTime, 0, 5)} - ${fn:substring(request.toSession.endTime, 0, 5)} <br> ${request.toSession.dayOfWeek}</td>
-                                <td>${request.reason}</td>
-                                <td>
-                                    <c:if test="${request.status eq 'Pending'}">
-                                        <span style="color: orange">${request.status}</span>
-                                    </c:if>
-                                    <c:if test="${request.status eq 'Approved'}">
-                                        <span style="color: green">${request.status}</span>
-                                    </c:if>
-                                    <c:if test="${request.status eq 'Rejected'}">
-                                        <span style="color: red">${request.status}</span>
-                                    </c:if>
-                                    <c:if test="${request.status eq 'Cancel'}">
-                                        <span style="color: red">${request.status}</span>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <form action="manage-tutor-request" method="post">
-                                        <c:if test="${request.status eq 'Pending'}">
-                                            <input type="hidden" name="action" value="change-status" />
-                                            <input type="hidden" name="requestId" value="${request.id}" />
-                                            <input type="hidden" name="lid" value="${request.tutor.id}" />
-                                            <input type="hidden" name="from_session" value="${request.fromSessionId}" />
-                                            <input type="hidden" name="to_session" value="${request.toSessionId}" />
-                                            <input type="hidden" name="date" value="${request.date}" />
-                                            <button type="submit" name="status" value="Approved" class="btn btn-success">Approve</button>
-                                            <button type="submit" name="status" value="Rejected" class="btn btn-danger">Reject</button>
-                                        </c:if>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
-            <c:if test="${empty requests}">
-                <p>Không có yêu cầu đổi buổi học nào.</p>
-            </c:if>
+            </div>
         </div>
-        <%@ include file = "tutor-footer.jsp" %>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-                                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+        <c:if test="${empty requestScope.trial}">
+            <div class="blankslate">
+                <img style="width: 200px" src="image/Click.png" />
+                <div class="blankslate-body">
+                    <h4>You must choose the type of Request</h4>
+                    <p>To view the Request, you will need to choose the type of Request</p>
+                </div>
+                <div class="blankslate-actions">
+                    <a class="nav-link" href="DashboardController?type=tutor&tutorid=${sessionScope.tutor.id}"><button class="btn btn-default" style="background-color: #0E3C6E; color: white;" type="button">Back to Dashboard</button></a>
+                </div>
+            </div>
+        </c:if>
 
-                          
+        <c:if test="${not empty requestScope.trial}">
+            <table class="table table-bordered table-hover table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Learner</th>
+                        <th>Subject</th>
+                        <th>Total Session</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="trial" items="${requestScope.trial}">
+                        <tr>
+                            <th>${trial.id}</th>
+                            <td>${trial.learner.name}</td>
+                            <td>${trial.subject.name}</td>
+                            <td>${trial.totalSession}</td>
+                            <td><fmt:formatDate value="${trial.startDate}" pattern="yyyy-MM-dd"/></td>
+                            <td><fmt:formatDate value="${trial.endDate}" pattern="yyyy-MM-dd"/></td>
+                            <td>${trial.status}</td>
+                            <td>
+                                <c:if test="${trial.status != 'denied' && trial.status != 'accepted'}">
+                                    <button type="button" class="btn btn-default active" onclick="agreeRequest(${trial.id}, ${trial.learner.id}, '${trial.session.id}', '${trial.startDate}')">Approve</button>
+                                    <button type="button" class="btn btn-danger" onclick="denyRequest(${trial.id}, ${trial.learner.id})">Deny</button>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    JavaScript:
+                </tbody>
+            </table>
+        </c:if>
+
+        <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+        <script>
+                                        function onRequestChange() {
+                                            var selectedValue = document.getElementById('classDropdown').value;
+                                            if (selectedValue) {
+                                                window.location.href = 'RequestControllersForTutor?tutorid=${sessionScope.tutor.id}&requestType=' + selectedValue;
+                                            }
+                                        }
+
+                                        function agreeRequest(trialId, learnerId, sessionId, startDate) {
+                                            var trialid = trialId;
+                                            var learnerid = learnerId;
+                                            var sessionId = sessionId;
+                                            var date = startDate;
+                                            var tutorId = '${sessionScope.tutor.id}'; // Đảm bảo rằng sessionScope.tutor.id được định nghĩa và có giá trị
+                                            var selectedValue = true;
+
+                                            if (selectedValue) {
+                                                window.location.href = 'TutorResponseTrialClassController?tutor_id=' + tutorId + '&service=accept&responseid=' + trialId + '&learner_id=' + learnerId + '&session_id=' + sessionId + '&date=' + startDate;
+                                            }
+                                        }
+
+                                        function denyRequest(trialId, learnerId) {
+                                            console.log('denyRequest called');
+                                            console.log('trialId:', trialId, 'learnerId:', learnerId);
+
+                                            var tutorId = '${sessionScope.tutor.id}'; // Đảm bảo rằng sessionScope.tutor.id được định nghĩa và có giá trị
+                                            var selectedValue = true;
+
+                                            if (selectedValue) {
+                                                window.location.href = 'TutorResponseTrialClassController?tutorid=' + tutorId + '&service=deny&responseid=' + trialId + '&learnerid=' + learnerId;
+                                            }
+                                        }
+
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
     </body>
 </html>

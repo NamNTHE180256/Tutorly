@@ -49,7 +49,7 @@
                     <select id="classDropdown" class="form-select" onchange="onRequestChange()">
                         <option value="#" disabled selected hidden> Select type Request</option>
                         <option value="registerTrial">Register Trial Class</option>
-                        <option value="sessionChange"> Sessions Change Request</option>
+
                         <option value="cancelClass"> Cancel Class Request</option>
                     </select>
                 </div>
@@ -124,11 +124,14 @@
                             <td>${cancel.AClass.getStartDate()}</td>
                             <td>${cancel.AClass.getEndDate()}</td>
                             <td>${cancel.getStatus()}</td>
-                            <td>   <form method="post" action="${pageContext.request.contextPath}/CancelClassController">
-                            <input type="hidden" name="cancelId" value="${cancel.id}" />
-                          
-                            <button type="submit" class="btn btn-danger">Cancel Request</button>
-                        </form> 
+                            <td>
+                                <c:if test="${cancel.getStatus() != 'accepted' && cancel.getStatus() != 'denied'}">
+                                    <form method="post" action="${pageContext.request.contextPath}/CancelClassController">
+                                        <input type="hidden" name="cancelId" value="${cancel.id}" />
+                                        <button type="submit" class="btn btn-danger">Cancel Request</button>
+                                    </form>
+                                </c:if></td>
+
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -147,14 +150,9 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
-        <%@ include file="tutor-footer.jsp" %>
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
     </body>
 </html>

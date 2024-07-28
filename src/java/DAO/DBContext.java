@@ -26,16 +26,10 @@ public class DBContext {
         try {
             String userName = "sa";
 
-<<<<<<< HEAD
+
             String password = "123";
             String url = "jdbc:sqlserver://ADMINACER\\SQLEXPRESS:1433;databaseName=Tutorly";
 
-=======
-          
-            String password = "17022004";
-
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=Tutorly";
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, userName, password);
 
@@ -46,8 +40,4 @@ public class DBContext {
     public Connection getConnection(){
         return connection;
     }
-    
-    
 }
-
-

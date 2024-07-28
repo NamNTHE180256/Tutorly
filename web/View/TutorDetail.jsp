@@ -611,10 +611,6 @@
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h4 class="m-0">${ratings.size()} Reviews</h4>
                             </div>
-<<<<<<< HEAD
-=======
-                            <!-- Star Counter Section -->
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
                             <div class="row">
                                 <div class="col-md-6">
                                     <table class="stars-counters">
@@ -662,12 +658,8 @@
                             <ul>
                                 <li>
                                     <c:forEach var="rating" items="${ratings}">
-<<<<<<< HEAD
                                         <div class="d-flex">
                                             <div class="left">
-=======
-                                        <div class="d-flex"><div class="left">
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
                                                 <span>
                                                     <img src="image/${rating.learner.image}" class="profile-pict-img img-fluid" alt="${rating.learner.name}'s photo" />
                                                 </span>
@@ -714,12 +706,8 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-<<<<<<< HEAD
                                 <div class="carousel-inner">
                                     <c:forEach items="${suggesttutor_vector}" var="s">
-=======
-                                <div class="carousel-inner"><c:forEach items="${suggesttutor_vector}" var="s">
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
                                         <div class="carousel-item active">
                                             <div class="profile-card" style="background-color: #0E3C6E">
                                                 <div class="image">
@@ -745,7 +733,6 @@
                                     <span class="visually-hidden">Next</span>
                                 </button>
                             </div>
-<<<<<<< HEAD
 
 
                         </div>
@@ -766,27 +753,6 @@
 
                                                     <div class="rating mt-2">
                                                         <span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
-=======
-
-
-                        </div>
-                    </div>
-                </div>    
-
-                <div class="col-md-3 leftconttent" style="background-color: white; margin: 20px;border-radius: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
-                    <div class="col-md-3 text-right ">
-
-                        <nav class="navbar navbar-expand-lg">
-                            <div class="container-fluid">
-
-                                <div class="collapse navbar-collapse" id="navbarExample">
-                                    <ul class="navbar-nav me-auto mb-0">
-                                        <li class="nav-item">
-                                            <c:choose>
-                                                <c:when test="${tutorRatings.NewTutor == null}">
-
-                                                    <div class="rating mt-2"><span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
 
                                                         <p class="ratedby" style="font-size: 10px;">rated by ${tutorRatings.rateCount} learner(s)</p>
                                                     </div>
@@ -828,7 +794,6 @@
 
                                 </div>
                             </div>
-<<<<<<< HEAD
                                                 
                         </nav>
                         
@@ -843,21 +808,6 @@
             </div>
         </div>
                                                 <script type="text/javascript">
-=======
-
-                        </nav>
-
-                    </div><div class="buttons ">
-                        <div class="d-grid gap-2">
-                            <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                            <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
             window.onload = function () {
                 setTimeout(function () {
                     var successAlert = document.getElementById('successAlert');
@@ -954,8 +904,4 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a

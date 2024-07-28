@@ -1,11 +1,10 @@
-
---CREATE DATABASE Tutorly;
+CREATE DATABASE Tutorly;
 GO
 --drop database Tutorly
 
 --go
 --use Tutorly
-
+DELETE FROM Tutor WHERE id = 14
 --drop database Tutorly
 CREATE TABLE [User] (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -14,6 +13,7 @@ CREATE TABLE [User] (
     [role] VARCHAR(50) NOT NULL,
     createdAt DATETIME DEFAULT GETDATE()
 );
+
 
 CREATE TABLE Learner (
     id INT PRIMARY KEY,
@@ -378,29 +378,29 @@ VALUES
 INSERT INTO Rating (learnerId, tutorId, rating, review, createdAt)
 VALUES 
 (1, 7, 5, N'Thầy dạy hay, vui tính', GETDATE()),
-(2, 8, 4, N'Thầy dạy vui tính, hay', GETDATE()),
-(3, 9, 5, N'Cô rất nhiệt tình và dễ hiểu', GETDATE()),
-(4, 10, 3, N'Bài giảng còn hơi nhanh', GETDATE());
-(5, 11, 4, N'Thầy dạy rất tận tâm', GETDATE()),
-(6, 12, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
-(1, 13, 4, N'Rất hài lòng với phương pháp giảng dạy của cô', GETDATE()),
-(2, 14, 3, N'Bài giảng cần chậm hơn', GETDATE()),
-(3, 15, 5, N'Thầy giảng rất dễ hiểu và vui tính', GETDATE()),
-(4, 16, 4, N'Thầy rất nhiệt tình', GETDATE()),
-(5, 17, 5, N'Cô giáo rất tận tình và chi tiết', GETDATE()),
-(6, 18, 4, N'Rất hài lòng', GETDATE()),
-(1, 19, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
-(2, 20, 3, N'Bài giảng cần chi tiết hơn', GETDATE()),
-(3, 21, 4, N'Cô dạy rất nhiệt tình', GETDATE()),
-(4, 22, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
-(5, 23, 4, N'Thầy rất nhiệt tình và dễ hiểu', GETDATE()),
-(6, 24, 3, N'Cần thêm bài tập thực hành', GETDATE()),
-(1, 25, 5, N'Thầy giảng rất dễ hiểu và nhiệt tình', GETDATE()),
-(2, 26, 4, N'Rất hài lòng với phương pháp giảng dạy', GETDATE()),
-(3, 27, 5, N'Thầy rất tận tâm và nhiệt tình', GETDATE()),
-(4, 28, 4, N'Rất hài lòng', GETDATE()),
-(5, 29, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
-(6, 30, 3, N'Bài giảng cần chậm hơn', GETDATE());
+(2, 8, 4, N'Thầy dạy vui tính, hay', GETDATE());
+--(3, 9, 5, N'Cô rất nhiệt tình và dễ hiểu', GETDATE()),
+--(4, 10, 3, N'Bài giảng còn hơi nhanh', GETDATE()),
+--(5, 11, 4, N'Thầy dạy rất tận tâm', GETDATE()),
+--(6, 12, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
+--(1, 13, 4, N'Rất hài lòng với phương pháp giảng dạy của cô', GETDATE()),
+--(2, 14, 3, N'Bài giảng cần chậm hơn', GETDATE()),
+--(3, 15, 5, N'Thầy giảng rất dễ hiểu và vui tính', GETDATE()),
+--(4, 16, 4, N'Thầy rất nhiệt tình', GETDATE()),
+--(5, 17, 5, N'Cô giáo rất tận tình và chi tiết', GETDATE()),
+--(6, 18, 4, N'Rất hài lòng', GETDATE()),
+--(1, 19, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
+--(2, 20, 3, N'Bài giảng cần chi tiết hơn', GETDATE()),
+--(3, 21, 4, N'Cô dạy rất nhiệt tình', GETDATE()),
+--(4, 22, 5, N'Bài giảng chi tiết và dễ hiểu', GETDATE()),
+--(5, 23, 4, N'Thầy rất nhiệt tình và dễ hiểu', GETDATE()),
+--(6, 24, 3, N'Cần thêm bài tập thực hành', GETDATE()),
+--(1, 25, 5, N'Thầy giảng rất dễ hiểu và nhiệt tình', GETDATE()),
+--(2, 26, 4, N'Rất hài lòng với phương pháp giảng dạy', GETDATE()),
+--(3, 27, 5, N'Thầy rất tận tâm và nhiệt tình', GETDATE()),
+--(4, 28, 4, N'Rất hài lòng', GETDATE()),
+--(5, 29, 5, N'Thầy dạy rất dễ hiểu và tận tâm', GETDATE()),
+--(6, 30, 3, N'Bài giảng cần chậm hơn', GETDATE());
 
 
 

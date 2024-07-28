@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.LearnerDAO;
+import DAO.SaveTutorListDAO;
 import DAO.SavedTutorDAO;
 import Model.Learner;
 import Model.SavedTutor;
@@ -17,6 +18,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -41,6 +43,8 @@ public class SavedTutorController extends HttpServlet {
         LearnerDAO leDAO = new LearnerDAO();
         Learner linfo = leDAO.getStudentById(1);
         SavedTutorDAO stDAO = new SavedTutorDAO();
+         SaveTutorListDAO tDAO = new SaveTutorListDAO();
+        Map<Integer, Map<String, Object>> tutorRatings = tDAO.getAllTutorRatings();
         String service = request.getParameter("service");
         if (service == null || service.isEmpty()) {
             //String tutorId = request.getParameter("tutorId");
@@ -48,18 +52,22 @@ public class SavedTutorController extends HttpServlet {
             Vector<Tutor> savedTutors = stDAO.getTutorsByLearnerId(1);
             request.setAttribute("linfo", linfo);
             request.setAttribute("savedTutors", savedTutors);
+            request.setAttribute("tutorRatings", tutorRatings);
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/SavedTutorView.jsp");
+            
             dispatcher.forward(request, response);
         } else if (service.equals("add")) {
             String tutorId = request.getParameter("tutor_id");
             String learnId = request.getParameter("learn_id");
             boolean addTutortoSavelist = stDAO.addSavedTutor(Integer.parseInt(learnId),
                     Integer.parseInt(tutorId));
+            request.setAttribute("tutorRatings", tutorRatings);
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/SavedTutorView.jsp");
             dispatcher.forward(request, response);
         } else if (service.equals("remove")) {
             String tutorId = request.getParameter("tutor_id");
             String learnId = request.getParameter("learn_id");
+            request.setAttribute("tutorRatings", tutorRatings);
             boolean addTutortoSavelist = stDAO.removeSavedTutor(Integer.parseInt(learnId),
                     Integer.parseInt(tutorId));
             RequestDispatcher dispatcher = request.getRequestDispatcher("View/SavedTutorView.jsp");

@@ -61,17 +61,19 @@ public class TutorDetailController extends HttpServlet {
         Vector<RatingCountPercentage> ratecount = null;
         String id_raw = request.getParameter("id");
         String subjectId_raw = request.getParameter("idsub");
-        if(id_raw!= null & !id_raw.isEmpty()){
+        if (id_raw != null & !id_raw.isEmpty()) {
             int id = Integer.parseInt(id_raw);
             int subjectId = Integer.parseInt(subjectId_raw);
             t = tDAO.getTutorById(id);
             rateofstudent = rDAO.getRatingsByTutorId(id);
             tutorRatings = tDAO.getTutorRatingsById(id);
             ratecount = ratecountDAO.getPercentageByTutorID(id);
+           
             suggesttutor_vector = tuDAO.getTutors("SELECT *\n"
                     + "FROM Tutor\n"
-                    + "WHERE subjectId ="+ subjectId 
-                    + "AND id <> "+id);
+                    + "WHERE status = 'Active'\n"
+                    + "  AND subjectId =" + subjectId+
+                        "  AND id <> "+ id);
         }
         
         Vector<TutorAvailability> tutorAvailabilities = taDao.getTutorAvailabilityByTutorId(Integer.parseInt(id_raw));

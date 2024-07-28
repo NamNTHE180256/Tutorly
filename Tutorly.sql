@@ -68,12 +68,13 @@ CREATE TABLE [Certificate] (
 	FOREIGN KEY (tutorId) REFERENCES Tutor(id)
 );
 
+
 CREATE TABLE Rating (
     id INT IDENTITY(1,1) PRIMARY KEY,
 	learnerId INT,
     tutorId INT,
     rating INT,
-    review TEXT,
+    review NVARCHAR(255),
     createdAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (tutorId) REFERENCES Tutor(id),
     FOREIGN KEY (learnerId) REFERENCES Learner(id)
@@ -216,13 +217,7 @@ CREATE TABLE RegisterTrialClass (
     FOREIGN KEY (tutorId) REFERENCES Tutor(id),
     FOREIGN KEY (subjectId) REFERENCES Subject(id)
 );
-CREATE TABLE CancelClass (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-   classId INT,
-    status VARCHAR(50), --wait, accepted, denied
-    readed VARCHAR(50), -- read, unread
-    FOREIGN KEY (classId) REFERENCES Class(id)
-);
+
 CREATE TABLE Transactions (
     id INT IDENTITY(1,1) PRIMARY KEY,
     userId INT NOT NULL,
@@ -683,4 +678,3 @@ GO
 ALTER TABLE [dbo].[TutorSessionChangeRequest]  WITH CHECK ADD FOREIGN KEY([tutorId])
 REFERENCES [dbo].[Tutor] ([id])
 GO
-select * from [tutor]

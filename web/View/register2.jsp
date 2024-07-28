@@ -1,16 +1,23 @@
-<%-- 
-    Document   : register2
-    Created on : 29 thg 5, 2024, 11:24:41
-    Author     : asus
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Become a tutor</title>
         <link rel="stylesheet" href="../style/styleTutorRegister.css"/>
+        <style>
+            .image-preview {
+                width: 150px;
+                height: 150px;
+                border: 1px solid #ccc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f0f0f0;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -27,8 +34,8 @@
                         <div class="profile-display">
                             <div id="image-preview" class="image-preview">Tutor image</div>
                             <div class="name-subject">
-                                <div id="display-name" class="name">Name</div>
-                                <div id="display-subject" class="subject">Subject</div>
+                                <div id="display-name" class="name">Name: <%= (String) session.getAttribute("name") %></div>
+                                <div id="display-subject" class="subject">Subject: <%= (String) session.getAttribute("subject") %></div>
                             </div>
                         </div>
                     </div>
@@ -61,44 +68,29 @@
             </div>
         </div>
         <script>
-            <% if (request.getAttribute("message") != null) {%>
-            alert('<%= request.getAttribute("message")%>');
+            <% if (request.getAttribute("message") != null) { %>
+            alert('<%= request.getAttribute("message") %>');
             window.location.href = 'View/register2.jsp';
-            <% }%>
-        </script>
-        <script >
-            document.getElementById('upload-image').addEventListener('change', function (event) {
-                const imagePreview = document.getElementById('image-preview');
-                imagePreview.innerHTML = '';
-
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        imagePreview.style.backgroundImage = `url(${e.target.result})`;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
+            <% } %>
             window.onload = function () {
-                const name = localStorage.getItem('full-name');
-                const subjectName = localStorage.getItem('subject-name');
-                const subjectId = localStorage.getItem('subject-id');
+                document.getElementById('upload-image').addEventListener('change', function (event) {
+                    const imagePreview = document.getElementById('image-preview');
+                    imagePreview.innerHTML = ''; // Clear any existing content
 
-                if (name) {
-                    document.getElementById('display-name').textContent = name;
-                }
-                if (subjectName) {
-                    document.getElementById('display-subject').textContent = subjectName;
-                }
-
-                // Assuming subject ID is stored in local storage as well
-                const subjectSelect = document.getElementById('subject-id');
-                if (subjectId) {
-                    subjectSelect.value = subjectId;
-                }
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            imagePreview.style.backgroundImage = `url(${e.target.result})`;
+                            imagePreview.style.backgroundSize = 'cover';
+                            imagePreview.style.backgroundPosition = 'center';
+                            imagePreview.style.backgroundRepeat = 'no-repeat';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
             };
         </script>
+
     </body>
 </html>

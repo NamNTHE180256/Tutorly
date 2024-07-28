@@ -1,9 +1,3 @@
-<%-- 
-    Document   : register3
-    Created on : 29 thg 5, 2024, 11:24:49
-    Author     : asus
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,7 +13,7 @@
         <div class="container">
             <div class="registration-form">
                 <h1>CERTIFICATION</h1>
-                <form id="certification-setup-form" action="<%=request.getContextPath()%>/TutorRegisterServlet" method="post" >
+                <form id="certification-setup-form" action="<%=request.getContextPath()%>/TutorRegisterServlet" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="step" value="3">
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="no-certification" name="no-certification">
@@ -28,13 +22,14 @@
                     <div id="certification-fields">
                         <div class="form-group">
                             <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" placeholder="Tutor's subject" required readonly>
+                            <input type="text" id="subject" name="subject" placeholder="Tutor's subject" value="<%= (String) session.getAttribute("subject")%> " required readonly>
                         </div>
                         <div class="upload-section">
                             <label for="upload-certification" class="upload-label">
                                 <input type="file" id="upload-certification" name="upload-certification" accept="image/*">
                                 Upload certification
                             </label>
+                            <span id="file-name-display">No file chosen</span>
                             <span>JPG or PNG format, maximum size of 20MB</span>
                         </div>
                         <div class="form-group">
@@ -67,7 +62,7 @@
             alert('<%= request.getAttribute("message")%>');
             <% }%>
         </script>
-        <script >
+        <script>
             const subject = localStorage.getItem('subject-name');
             if (subject) {
                 document.getElementById('subject').value = subject;
@@ -104,6 +99,15 @@
                 localStorage.setItem('certification', JSON.stringify(certification));
             }
 
+            document.getElementById('upload-certification').addEventListener('change', function (event) {
+                const fileNameDisplay = document.getElementById('file-name-display');
+                const file = event.target.files[0];
+                if (file) {
+                    fileNameDisplay.textContent = file.name;
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
         </script>
     </body>
 </html>

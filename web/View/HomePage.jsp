@@ -112,39 +112,19 @@
         <!-- End Body -->
 
         <!-- Start Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 text-center text-md-start">
-                        <div class="logo-footer">
-                            <a href="../View/HomePage.jsp" class="img me-auto">
-                                <img src="../image/LOGO_TUTORLY_W.png" style="max-height: 50px;">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <div class="info-footer">
-                            <p>&copy; 2024 VerblingTerms | Privacy</p>
-                            <p>Respecting your "do not sell my personal information" rights</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center text-md-start">
-                        <div class="share">
-                            <a href="mailto:support@tutorly.com" class="fa fa-envelope"> tutorly@gmail.com </a>
-                            <a href="tel:+1234567890" class="fa fa-phone"> 0969.995.633</a>
-                            <a href="https://instagram.com/tutorly" class="fa-brands fa-instagram"> _tutorly</a>
-                            <a href="https://facebook.com/tutorly" class="fab fa-facebook"> Tutorly</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <span>
+            <%@ include file = "Footer.jsp" %>
+        </span>
+            
+      
         <!-- End Footer -->
-
+        
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        
     </body>
+    
 </html>

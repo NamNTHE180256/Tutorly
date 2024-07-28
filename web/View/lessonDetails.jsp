@@ -212,8 +212,7 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-=======
+
         <div  class="modal" id="uploadRecords">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -252,8 +251,7 @@
                 document.getElementById("joinClass").addEventListener("click", function () {
                     window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
                 });
-            });
->>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
+
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

@@ -310,15 +310,6 @@
                 $('#incomeModal').modal('show');
             }
         </script>
-        <footer>
-            <div class="container">
-                <p style="margin: 0; font-size: 16px;">
-                    Mọi góp ý, thắc mắc xin liên hệ Công ty cung cấp dịch vụ gia sư | Email: <a href="mailto:Tutory@gmail.com" style="color: #FFC107;">Tutory@gmail.com</a> | Điện thoại: <a href="tel:0123456789" style="color: #FFC107;">0123456789</a>
-                </p>
-                <p style="margin: 0; font-size: 16px;">
-                    © 2024 Power by TUTORLY
-                </p>
-            </div>
-        </footer>
+        
     </body>
 </html>

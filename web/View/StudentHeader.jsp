@@ -107,54 +107,7 @@
                         <ul class="navbar-nav ml-auto">
                             <!-- Notification from system or tutor -->
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa-solid fa-bell head_icon"></i>
-                                    <c:if test="${not empty notifications}">
-                                        <span class="badge badge-danger">${count}</span>
-                                    </c:if>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
-                                    <c:forEach var="notification" items="${notifications}">
-                                        <c:if test="${notification.type eq 'TutorRequest'}" >
-                                            <c:if test="${notification.isRead == 'false'}">
-
-                                                <a class="dropdown-item" href="student-noti?action=request&id=${notification.id}">
-                                                    <strong> ${notification.message}</strong>
-                                                    <small class="text-muted">${notification.createdAt}</small>
-                                                </a>
-                                            </c:if>
-                                            <c:if test="${notification.isRead == 'true'}">
-
-                                                <a class="dropdown-item" href="student-noti?action=request&id=${notification.id}">
-                                                    ${notification.message} 
-                                                    <small class="text-muted">${notification.createdAt}</small>
-                                                </a>
-                                            </c:if>
-
-                                        </c:if>
-                                        <c:if test="${notification.type eq 'TurorResponse'}" >
-                                            <c:if test="${notification.isRead == 'false'}">
-
-                                                <a class="dropdown-item" href="student-noti?action=request&id=${notification.id}">
-                                                    <strong> ${notification.message}</strong>
-                                                    <small class="text-muted">${notification.createdAt}</small>
-                                                </a>
-                                            </c:if>
-                                            <c:if test="${notification.isRead == 'true'}">
-
-                                                <a class="dropdown-item" href="student-noti?action=request&id=${notification.id}">
-                                                    ${notification.message} 
-                                                    <small class="text-muted">${notification.createdAt}</small>
-                                                </a>
-                                            </c:if>
-                                        </c:if>
-                                    </c:forEach>
-                                    <c:if test="${empty notifications}">
-                                        <a class="dropdown-item" href="#">No notifications available</a>
-                                    </c:if>
-                                </div>
-                            </li>
+                            
                             <!-- Message from tutor -->
                             <li class="nav-item">
                                 <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-regular fa-message head_icon"></i></a></button>
@@ -225,13 +178,13 @@
                     <!-- Save list -->
                     <a class="nav-link" href="${pageContext.request.contextPath}/SavedTutorController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Save list tutors</button></a>
                 </li>
-                <li class="nav-item navmenuitem">
-                    <!-- View classes -->
+<!--                <li class="nav-item navmenuitem">
+                     View classes 
                     <a class="nav-link" href="StdudentDashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
-                </li>
+                </li>-->
                 <li class="nav-item navmenuitem">
                     <!-- View class -->
-                    <a class="nav-link" href="ViewClassnew"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Class</button></a>
+                    <a class="nav-link" href="ViewClassnew"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
                 </li>
             </ul>
         </nav>

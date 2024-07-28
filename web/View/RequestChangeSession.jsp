@@ -133,6 +133,6 @@
                 <button type="submit" class="btn btn-primary">Submit Request</button>
             </form>
         </div>
-        <%@ include file = "tutor-footer.jsp" %>
+       
     </body>
 </html>

@@ -264,8 +264,7 @@
                 padding-top: 64px;
             }
             .review-section select, .review-section .select2-container {
-                width: 188px !important;
-                border-radius: 3px;
+                width: 188px !important;border-radius: 3px;
             }
             ul, ul li {
                 list-style: none;
@@ -359,8 +358,7 @@
             div.scrollcards .card {
                 display: inline-block;
                 padding: 14px;
-                text-decoration: none;
-                height: auto;
+                text-decoration: none;height: auto;
                 width: 300px;
             }
             .profile-card {
@@ -441,8 +439,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 " style="background-color: white; margin: 20px; margin-left: 40px; border-radius: 20px; padding: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
-                    <!-- Tutor information -->
-                    <nav class="navbar navbar-expand-sm " style="padding: 10px">
+                    <!-- Tutor information --><nav class="navbar navbar-expand-sm " style="padding: 10px">
                         <!-- Links -->
 
                         <ul class="navbar-nav">
@@ -503,10 +500,8 @@
                                 <div class="line"></div>
                             </li>
                         </ul>
-                    </nav>
+                    </nav><div class="container">
 
-                    <div class="container">
-                        
                         <div class="table-responsive">
                             <table class="table table-bordered text-center">
                                 <thead >
@@ -544,8 +539,7 @@
                                         <c:forEach var="availability" items="${tutorAvailabilities}" begin="7" end="13">
                                             <c:choose>
                                                 <c:when test="${availability.status == 'Available'}">
-                                                    <td>
-                                                        <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Available</span>
+                                                    <td><span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Available</span>
                                                         <div class="margin-10px-top font-size14">10:00 - 11:30</div>
                                                         <div class="font-size13 text-light-gray">Tutor ${availability.tutor.name}</div>
                                                     </td>
@@ -579,8 +573,7 @@
                                                 <c:when test="${availability.status == 'Available'}">
                                                     <td>
                                                         <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Available</span>
-                                                        <div class="margin-10px-top font-size14">16:00 - 17:30</div>
-                                                        <div class="font-size13 text-light-gray">Tutor ${availability.tutor.name}</div>
+                                                        <div class="margin-10px-top font-size14">16:00 - 17:30</div><div class="font-size13 text-light-gray">Tutor ${availability.tutor.name}</div>
                                                     </td>
                                                 </c:when>
                                                 <c:otherwise>
@@ -618,8 +611,6 @@
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h4 class="m-0">${ratings.size()} Reviews</h4>
                             </div>
-<<<<<<< HEAD
-
                             <!-- Star Counter Section -->
                             <div class="row">
                                 <div class="col-md-6">
@@ -627,8 +618,7 @@
                                         <tbody>
                                             <c:forEach begin="1" end="5" var="star">
                                                 <tr class="">
-                                                    <td>
-                                                        <span>
+                                                    <td><span>
                                                             <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">${star} Stars</button>
                                                         </span>
                                                     </td>
@@ -658,192 +648,107 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
-=======
-<!--                            <div class="row">
-                                <div class="col-md-6">
-                                    <table class="stars-counters">
-    <tbody>
-        <c:forEach begin="1" end="5" var="star">
-            <tr class="">
-                <td>
-                    <span>
-                        <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">${star} Stars</button>
-                    </span>
-                </td>
-                <td class="progress-bar-container">
-                    <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
-                        <div class="fit-progressbar-background">
-                            <c:choose>
-                                <c:when test="${ratecount[star - 1] != null}">
-                                    <span class="progress-fill" style="width: ${ratecount[star - 1].percentage}%;"></span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="progress-fill" style="width: 0%;"></span>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                </td>
-                <td class="star-num">
-                    <c:choose>
-                        <c:when test="${ratecount[star - 1] != null}">
-                            (${ratecount[star - 1].count})
-                        </c:when>
-                        <c:otherwise>
-                            (0)
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-
->>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
                                 </div>
-                            </div>-->
+                            </div>
+                        </div>
+
+                        <!-- RATE comment -->
+                        <div class="review-list">
+                            <ul>
+                                <li>
+                                    <c:forEach var="rating" items="${ratings}">
+                                        <div class="d-flex"><div class="left">
+                                                <span>
+                                                    <img src="image/${rating.learner.image}" class="profile-pict-img img-fluid" alt="${rating.learner.name}'s photo" />
+                                                </span>
+                                            </div>
+                                            <div class="right">
+                                                <h4>
+                                                    ${rating.learner.name}
+                                                    <span class="gig-rating text-body-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                                                        <path
+                                                            fill="currentColor"
+                                                            d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"
+                                                            ></path>
+                                                        </svg>
+                                                        ${rating.rating}
+                                                    </span>
+                                                </h4>
+
+                                                <div class="review-description">
+                                                    <p>
+                                                        ${rating.review}
+                                                    </p>
+                                                </div>
+                                                <span class="publish py-3 d-inline-block w-100">Published ${rating.createdAt}</span>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- RATE comment -->
-                    <div class="review-list">
-                        <ul>
-                            <li>
-                                <c:forEach var="rating" items="${ratings}">
-                                    <div class="d-flex">
-                                        <div class="left">
-                                            <span>
-                                                <img src="image/${rating.learner.image}" class="profile-pict-img img-fluid" alt="${rating.learner.name}'s photo" />
-                                            </span>
-                                        </div>
-                                        <div class="right">
-                                            <h4>
-                                                ${rating.learner.name}
-                                                <span class="gig-rating text-body-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
-                                                    <path
-                                                        fill="currentColor"
-                                                        d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"
-                                                        ></path>
-                                                    </svg>
-                                                    ${rating.rating}
-                                                </span>
-                                            </h4>
 
-                                            <div class="review-description">
-                                                <p>
-                                                    ${rating.review}
-                                                </p>
-                                            </div>
-                                            <span class="publish py-3 d-inline-block w-100">Published ${rating.createdAt}</span>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </li>
+
+                    <!--Certificate-->    
+                    <p class="title">Certificate</p>
+                    <div class="container mt-3">
+                        <ul class="list-group">
+                            <li class="list-group-item">${tutor.getEdu()}</li>
                         </ul>
                     </div>
-                </div>
+                    <!--Suggest--> 
 
-
-                <!--Certificate-->    
-                <p class="title">Certificate</p>
-                <div class="container mt-3">
-                    <ul class="list-group">
-                        <li class="list-group-item">${tutor.getEdu()}</li>
-                    </ul>
-                </div>
-                <!--Suggest--> 
-
-                <p class="title">Suggest</p>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <c:forEach items="${suggesttutor_vector}" var="s">
-                                    <div class="carousel-item active">
-                                        <div class="profile-card" style="background-color: #0E3C6E">
-                                            <div class="image">
-                                                <img src="image/${s.image}" alt="${s.name}'s profile picture" class="profile-pic">
-                                            </div>
-                                            <div class="data">
-                                                <h2 style="color: white">${s.name}</h2>
-                                                <span style="color: white">${s.subject.name}</span>
-                                            </div>
-                                            <div class="buttons">
-                                                <a href="../Tutorly/TutorDetailController?id=${s.id}&idsub=${s.getSubject().id}" class="btn">View Details</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </div>
-                            <button class="carousel-control-prev" type="button"  data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>    
-
-            <div class="col-md-3 leftconttent" style="background-color: white; margin: 20px;border-radius: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
-                <div class="col-md-3 text-right ">
-
-                    <nav class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-
-                            <div class="collapse navbar-collapse" id="navbarExample">
-                                <ul class="navbar-nav me-auto mb-0">
-                                    <li class="nav-item">
-                                        <c:choose>
-                                            <c:when test="${tutorRatings.NewTutor == null}">
-
-<<<<<<< HEAD
-                                                <div class="rating mt-2">
-                                                    <span class="rate" style="font-size: 35px;"> <i class="fa-solid fa-star text-warning"></i>${tutorRatings.avgRate}</span>
-
-                                                    <p class="ratedby">rated by ${tutorRatings.rateCount} learner(s)</p>
+                    <p class="title">Suggest</p>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner"><c:forEach items="${suggesttutor_vector}" var="s">
+                                        <div class="carousel-item active">
+                                            <div class="profile-card" style="background-color: #0E3C6E">
+                                                <div class="image">
+                                                    <img src="image/${s.image}" alt="${s.name}'s profile picture" class="profile-pic">
                                                 </div>
-
-                                            </c:when>
-                                            <c:otherwise>
-                                                <p>New tutor</p>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div>
-                                            <div class="fee">
-                                                <h2>${tutor.price}k</h2>
+                                                <div class="data">
+                                                    <h2 style="color: white">${s.name}</h2>
+                                                    <span style="color: white">${s.subject.name}</span>
+                                                </div>
+                                                <div class="buttons">
+                                                    <a href="../Tutorly/TutorDetailController?id=${s.id}&idsub=${s.getSubject().id}" class="btn">View Details</a>
+                                                </div>
                                             </div>
-                                            <p>per session</p>
                                         </div>
-                                    </li>
+                                    </c:forEach>
+                                </div>
+                                <button class="carousel-control-prev" type="button"  data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
 
-                                    <li class="nav-item">
-                                        <form id="addtutorform-${tutor.id}" onsubmit="return false;">
-                                            <button type="button" id="heart-button-${tutor.id}" style="background: white; border: 1px white;" onclick="change_heart('${tutor.id}')">
-                                                <c:choose>
-                                                    <c:when test="${tutor.saveStatus == 'saved'}">
-                                                        <i class="fa-solid fa-heart heart ml-2" style="font-size:35px;color: #A34343;"></i>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <i class="fa-regular fa-heart heart ml-2" style="font-size:35px;"></i>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </button>
-                                            <input type="hidden" name="service" value="add">
-                                            <input type="hidden" name="tutor_id" value="${tutor.id}">
-                                            <input type="hidden" name="learn_id" value="1">
-                                        </form>
-                                    </li>
-=======
-                                                    <div class="rating mt-2">
-                                                        <span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
+
+                        </div>
+                    </div>
+                </div>    
+
+                <div class="col-md-3 leftconttent" style="background-color: white; margin: 20px;border-radius: 20px; box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);">
+                    <div class="col-md-3 text-right ">
+
+                        <nav class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+
+                                <div class="collapse navbar-collapse" id="navbarExample">
+                                    <ul class="navbar-nav me-auto mb-0">
+                                        <li class="nav-item">
+                                            <c:choose>
+                                                <c:when test="${tutorRatings.NewTutor == null}">
+
+                                                    <div class="rating mt-2"><span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
 
                                                         <p class="ratedby" style="font-size: 10px;">rated by ${tutorRatings.rateCount} learner(s)</p>
                                                     </div>
@@ -862,7 +767,7 @@
                                                 <p style="font-size: 10px;">per session</p>
                                             </div>
                                         </li>
-                                        
+
                                         <li class="nav-item">
                                             <form id="addtutorform-${tutor.id}" onsubmit="return false;">
                                                 <button type="button" id="heart-button-${tutor.id}" style="background: white; border: 1px white;" onclick="change_heart('${tutor.id}')">
@@ -880,47 +785,24 @@
                                                 <input type="hidden" name="learn_id" value="1">
                                             </form>
                                         </li>
->>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
 
-                                </ul>
+                                    </ul>
 
+                                </div>
                             </div>
-<<<<<<< HEAD
+
+                        </nav>
+
+                    </div><div class="buttons ">
+                        <div class="d-grid gap-2">
+                            <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                            <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
                         </div>
-
-                    </nav>
-
-                </div> 
-                <div class="buttons ">
-                    <div class="d-grid gap-2">
-                        <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                        <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript">
-        window.onload = function () {
-            setTimeout(function () {
-                var successAlert = document.getElementById('successAlert');
-                if (successAlert) {
-                    successAlert.style.display = 'none';
-=======
-                                                
-                        </nav>
-                        
-                    </div> 
-                      <div class="buttons ">
-                            <div class="d-grid gap-2">
-                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-                                                <script type="text/javascript">
+        <script type="text/javascript">
             window.onload = function () {
                 setTimeout(function () {
                     var successAlert = document.getElementById('successAlert');
@@ -968,44 +850,37 @@
 
                     xhttp.open("POST", "SavedTutorController", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;
-                    xhttp.send(data);
+                    var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;xhttp.send(data);
                 } else {
                     reset_heart(tutorId);
->>>>>>> 6bba887d95ba536aff8fb3d5cd7f91eb00c8350a
                 }
-                var errorAlert = document.getElementById('errorAlert');
-                if (errorAlert) {
-                    errorAlert.style.display = 'none';
-                }
-        <% session.removeAttribute("successMessage"); %>
-        <% session.removeAttribute("errorMessage");%>
-            }, 5000); // 5000 milliseconds = 5 seconds
-        };
+                return false; // Prevent form submission
+            }
 
-        function change_heart(tutorId) {
-            var button = document.getElementById('heart-button-' + tutorId);
-            var icon = button.querySelector('i');
+            function reset_heart(tutorId) {
+                var button = document.getElementById('heart-button-' + tutorId);
+                var icon = button.querySelector('i');
 
-            if (icon.classList.contains('fa-regular')) {
-                icon.classList.remove('fa-regular');
-                icon.classList.add('fa-solid');
-                icon.style.color = '#A34343';
+                icon.classList.remove('fa-solid');
+                icon.classList.add('fa-regular');
+                icon.style.color = '';
                 button.onclick = function () {
-                    reset_heart(tutorId);
+                    change_heart(tutorId);
                 };
 
-                // Perform the AJAX request to add the tutor
+                // Perform the AJAX request to remove the tutor
                 var formId = 'addtutorform-' + tutorId;
                 var form = document.getElementById(formId);
                 var tId = form.querySelector('input[name="tutor_id"]').value;
                 var lId = form.querySelector('input[name="learn_id"]').value;
-                var service = form.querySelector('input[name="service"]').value;
+                var service = "remove";
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        alert('Data sent successfully!');
+                        alert(tId);
+                        alert(lID);
+                        alert('Data removed successfully!');
                     }
                 };
 
@@ -1017,52 +892,11 @@
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;
                 xhttp.send(data);
-            } else {
-                reset_heart(tutorId);
+
+                return false; // Prevent form submission
             }
-            return false; // Prevent form submission
-        }
-
-        function reset_heart(tutorId) {
-            var button = document.getElementById('heart-button-' + tutorId);
-            var icon = button.querySelector('i');
-
-            icon.classList.remove('fa-solid');
-            icon.classList.add('fa-regular');
-            icon.style.color = '';
-            button.onclick = function () {
-                change_heart(tutorId);
-            };
-
-            // Perform the AJAX request to remove the tutor
-            var formId = 'addtutorform-' + tutorId;
-            var form = document.getElementById(formId);
-            var tId = form.querySelector('input[name="tutor_id"]').value;
-            var lId = form.querySelector('input[name="learn_id"]').value;
-            var service = "remove";
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    alert(tId);
-                    alert(lID);
-                    alert('Data removed successfully!');
-                }
-            };
-
-            xhttp.onerror = function () {
-                alert('Request failed');
-            };
-
-            xhttp.open("POST", "SavedTutorController", true);
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            var data = "tutor_id=" + tId + "&learn_id=" + lId + "&service=" + service;
-            xhttp.send(data);
-
-            return false; // Prevent form submission
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-</body>
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    </body>
 </html>

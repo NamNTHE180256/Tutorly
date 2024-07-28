@@ -170,7 +170,7 @@ public class Tutor {
 
     @Override
     public String toString() {
-        return "Tutor{" + "id=" + id + ", subject=" + subject.getId() + ", name=" + name + ", gender=" + gender + ", image=" + image + ", bio=" + bio + ", edu=" + edu + ", price=" + price + ", bank=" + bank + ", status=" + status + ", Linkmeet: "+ Linkmeet + "}";
+        return "Tutor{" + "id=" + id + ", subject=" + subject + ", name=" + name + ", gender=" + gender + ", image=" + image + ", bio=" + bio + ", edu=" + edu + ", price=" + price + ", bank=" + bank + ", status=" + status + ", Linkmeet: "+ Linkmeet + "}";
     }
 
 }

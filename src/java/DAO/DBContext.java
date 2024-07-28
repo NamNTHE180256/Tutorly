@@ -21,7 +21,7 @@ public class DBContext {
         try {
             String userName = "sa";
 
-            String password = "12345";
+          
 
             String password = "17022004";
 

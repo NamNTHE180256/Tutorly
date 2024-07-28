@@ -52,8 +52,8 @@ public class QuizController extends HttpServlet {
             LearnerDAO lDAO = new LearnerDAO();
             Learner linfo = lDAO.getStudentById(1);
             if (service == null || service.isEmpty()) {
-                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
-                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(1);
+                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(user.getId());
+                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(user.getId());
                 request.setAttribute("classQuiz", classQuizToDo);
                 request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);
@@ -62,8 +62,8 @@ public class QuizController extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/Quiz.jsp");
                 dispatcher.forward(request, response);
             } else if (service.equals("done")) {
-                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
-                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(1);
+                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(user.getId());
+                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(user.getId());
                 request.setAttribute("classQuiz", classQuizDone);
                 request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);
@@ -71,8 +71,8 @@ public class QuizController extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("View/Quiz.jsp");
                 dispatcher.forward(request, response);
             } else {
-                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(1);
-                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(1);
+                Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(user.getId());
+                Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(user.getId());
                 request.setAttribute("classQuiz", classQuizToDo);
                 request.setAttribute("todoQuiz", classQuizToDo.size());
                 request.setAttribute("linfo", linfo);

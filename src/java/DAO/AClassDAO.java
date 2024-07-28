@@ -26,6 +26,7 @@ import java.util.logging.Logger;
  */
 public class AClassDAO extends DBContext {
 
+    TutorDAO tutordao = new TutorDAO();
     SubjectDAO sdao = new SubjectDAO();
 
     public Vector<AClass> displayAllClasses() {
@@ -75,7 +76,7 @@ public class AClassDAO extends DBContext {
                 System.out.println(subjectId);
                 Subject subject = sdao.getSubjectById(subjectId);
                 Learner learner = new LearnerDAO().getStudentById(learnerId); // Assuming LearnerDAO is implemented
-                Tutor tutor = new TutorDAO().getTutorById(tutorId); // Assuming TutorDAO is implemented
+                Tutor tutor = tutordao.getTutorById(tutorId); // Assuming TutorDAO is implemented
 
                 AClass aClass = new AClass(learner, tutor, totalSession, startDate, endDate, status, subject);
                 aClass.setId(idCLass);
@@ -136,7 +137,8 @@ public class AClassDAO extends DBContext {
         }
         return n;
     }
-   public int UpdateStatusClass(String status, int id) {
+
+    public int UpdateStatusClass(String status, int id) {
         String sql = "UPDATE [dbo].[Class] SET [status] = ? WHERE id = ?";
         int rowsUpdated = 0;
 
@@ -150,6 +152,7 @@ public class AClassDAO extends DBContext {
 
         return rowsUpdated;
     }
+
     // Method to delete a class
     public int removeClass(int classId) {
         int n = 0;
@@ -396,6 +399,6 @@ public class AClassDAO extends DBContext {
 
     public static void main(String[] args) {
         AClassDAO dao = new AClassDAO();
-        System.out.println(dao.getClassById(1));
+        System.out.println(dao.getClassById(15).getSubject());
     }
 }

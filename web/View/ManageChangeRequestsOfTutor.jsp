@@ -58,16 +58,7 @@
             </div>
         </div>
 
-        <c:if test="${not empty requestScope.error}">
-            <div class="alert alert-danger" role="alert" id="errorAlert">
-                <div class="d-flex gap-4">
-                    <span><i class="fa-solid fa-circle-check icon-error"></i></span>
-                    <div>
-                        ${requestScope.error}
-                    </div>
-                </div>
-            </div>
-        </c:if>
+      
 
         <c:if test="${empty requestScope.trial && empty requestScope.cancel}">
             <div class="blankslate">
@@ -77,7 +68,7 @@
                     <p>To view the Request, you will need to choose the type of Request</p>
                 </div>
                 <div class="blankslate-actions">
-                    <a class="nav-link" href="../Tutorly/DashboardController?type=learner&learnerid=${sessionScope.learner.id}">
+                    <a class="nav-link" href="../Tutorly/DashboardController?type=tutor&tutorid=${sessionScope.tutor.id}">
                         <button class="btn btn-default" style="background-color: #0E3C6E; color: white;" type="button">Back to Dashboard</button>
                     </a>
                 </div>
@@ -143,10 +134,10 @@
                             <td><fmt:formatDate value="${cancel.AClass.endDate}" pattern="yyyy-MM-dd" /></td>
                             <td>${cancel.status}</td>
                             <td>
-                            <c:if test="${cancel.status == 'wait'}">
-    <button type="button" class="btn btn-success" onclick="sendRequest('approve', ${cancel.AClass.tutor.id}, ${cancel.id}, '${cancel.AClass.startDate}')">Approve</button>
-    <button type="button" class="btn btn-danger" onclick="sendRequest('deny', ${cancel.AClass.tutor.id}, ${cancel.id}, '${cancel.AClass.startDate}')">Deny</button>
-</c:if>
+                                <c:if test="${cancel.status == 'wait'}">
+                                    <button type="button" class="btn btn-success" onclick="sendRequest('approve', ${cancel.AClass.tutor.id}, ${cancel.id}, '${cancel.AClass.startDate}')">Approve</button>
+                                    <button type="button" class="btn btn-danger" onclick="sendRequest('deny', ${cancel.AClass.tutor.id}, ${cancel.id}, '${cancel.AClass.startDate}')">Deny</button>
+                                </c:if>
 
                             </td>
                         </tr>

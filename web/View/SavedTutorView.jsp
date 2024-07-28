@@ -68,10 +68,7 @@
                                         <i class="fa-solid fa-chalkboard-user mr-2"></i>
                                         <h3>${t.getSubject().name}</h3>
                                     </div>
-                                    <div class="students my-2">
-                                        <i class="fa-solid fa-user mr-2"></i>
-                                        <h3>Students: 15</h3>
-                                    </div>
+                                    
                                     <p class="description">${t.getBio()}</p>
                                     <a href="../Tutorly/TutorDetailController?id=${t.getId()}&idsub=${t.getSubject().id}" class="read-more">Read more</a>
                                 </div>
@@ -125,12 +122,12 @@
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
-                            alert('Data sent successfully!');
+                            //alert('Data sent successfully!');
                         }
                     };
 
                     xhttp.onerror = function () {
-                        alert('Request failed');
+                        //alert('Request failed');
                     };
 
                     xhttp.open("POST", "SavedTutorController", true);
@@ -164,14 +161,14 @@
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        alert(tId);
-                        alert(lID);
-                        alert('Data removed successfully!');
+                        //alert(tId);
+                        //alert(lID);
+                        //alert('Data removed successfully!');
                     }
                 };
 
                 xhttp.onerror = function () {
-                    alert('Request failed');
+                    //alert('Request failed');
                 };
 
                 xhttp.open("POST", "SavedTutorController", true);

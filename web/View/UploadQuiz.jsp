@@ -64,7 +64,7 @@
             if (confirm("A quiz already exists for this lesson. Do you want to create a new one?")) {
                 window.location.href = "http://localhost:8080/Tutorly/QuizServlet?action=createNew&lessonId=<%= lessonIdStr %>&classId=<%= classIdStr %>";
             } else {
-                window.location.href = "Tutorly/lessonDetailControllers?classid=${v.getAClass().id}&lessonId=${v.getId()}";
+                window.location.href = "Tutorly/QuizController";
             }
         </script>
         <%

@@ -40,7 +40,7 @@
                                     <a class="nav-link mx-lg-2 active" aria-current="page" href="../View/Login.jsp">Become a learner</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mx-lg-2 active" aria-current="page" href="../View/Register.jsp">Become a tutor</a>
+                                    <a class="nav-link mx-lg-2 active" aria-current="page" href="../View/register1.jsp">Become a tutor</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link mx-lg-2 active" aria-current="page" href="../FindingTutorController">Finding a tutor</a>

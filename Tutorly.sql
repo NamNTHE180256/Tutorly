@@ -475,26 +475,128 @@ VALUES
 (10, 'SA5', 'Available'),
 (10, 'M5', 'Available');
 
-INSERT INTO Quiz ([fileName], filePath, score, [status], createdAt, lessonId)
+INSERT INTO Quiz (id,[fileName], filePath, score, [status], createdAt, lessonId, completedOn, startedOn,timeOfQuiz,timeTaken )
 
 VALUES 
-(N'Quiz1', 'path/to/Quiz1.docx', 9.5, 'done', GETDATE(), 1),
-(N'Quiz2', 'path/to/Quiz2.docx', 8.5, 'done', GETDATE(), 2),
-(N'Quiz3', 'path/to/Quiz3.docx', 7.5, 'done', GETDATE(), 3),
-(N'Quiz4', 'path/to/Quiz4.docx', 6.5, 'done', GETDATE(), 4),
-(N'Quiz5', 'path/to/Quiz5.docx', 5.5, 'done', GETDATE(), 5),
-(N'Quiz6', 'path/to/Quiz6.docx', null, 'todo', GETDATE(), 6),
-(N'Quiz7', 'path/to/Quiz7.docx', null, 'todo', GETDATE(), 7),
-(N'Quiz8', 'path/to/Quiz8.docx', null, 'todo', GETDATE(), 8),
-(N'Quiz9', 'path/to/Quiz9.docx', null, 'todo', GETDATE(), 9),
-(N'Quiz10', 'path/to/Quiz10.docx', null, 'done', GETDATE(), 10),
-(N'Quiz11', 'path/to/Quiz11.docx', null, 'done', GETDATE(), 11),
-(N'Quiz12', 'path/to/Quiz12.docx', null, 'done', GETDATE(), 12),
-(N'Quiz13', 'path/to/Quiz13.docx', null, 'done', GETDATE(), 13),
-(N'Quiz14', 'path/to/Quiz14.docx', null, 'todo', GETDATE(), 14),
-(N'Quiz15', 'path/to/Quiz15.docx', null, 'todo', GETDATE(), 15),
-(N'Quiz16', 'path/to/Quiz16.docx', null, 'todo', GETDATE(), 16);
+(1,N'Quiz1', 'path/to/Quiz1.docx', 9.5, 'done', GETDATE(), 1, null, null, 900,null),
+(2,N'Quiz2', 'path/to/Quiz2.docx', 8.5, 'done', GETDATE(), 2, null, null, 900,null),
+(3,N'Quiz3', 'path/to/Quiz3.docx', 7.5, 'done', GETDATE(), 3, null, null, 900,null),
+(4,N'Quiz4', 'path/to/Quiz4.docx', 6.5, 'done', GETDATE(), 4, null, null, 900,null),
+(5,N'Quiz5', 'path/to/Quiz5.docx', 5.5, 'done', GETDATE(), 5, null, null, 900,null),
+(6,N'Quiz6', 'path/to/Quiz6.docx', null, 'todo', GETDATE(), 6, null, null, 900,null),
+(7,N'Quiz7', 'path/to/Quiz7.docx', null, 'todo', GETDATE(), 7, null, null, 900,null),
+(8,N'Quiz8', 'path/to/Quiz8.docx', null, 'todo', GETDATE(), 8, null, null, 900,null),
+(9,N'Quiz9', 'path/to/Quiz9.docx', null, 'todo', GETDATE(), 9, null, null, 900,null),
+(10,N'Quiz10', 'path/to/Quiz10.docx', null, 'done', GETDATE(), 10, null, null, 900,null),
+(11,N'Quiz11', 'path/to/Quiz11.docx', null, 'done', GETDATE(), 11, null, null, 900,null),
+(12,N'Quiz12', 'path/to/Quiz12.docx', null, 'done', GETDATE(), 12, null, null, 900,null),
+(13,N'Quiz13', 'path/to/Quiz13.docx', null, 'done', GETDATE(), 13, null, null, 900,null),
+(14,N'Quiz14', 'path/to/Quiz14.docx', null, 'todo', GETDATE(), 14, null, null, 900,null),
+(15,N'Quiz15', 'path/to/Quiz15.docx', null, 'todo', GETDATE(), 15, null, null, 900,null),
+(16,N'Quiz16', 'path/to/Quiz16.docx', null, 'todo', GETDATE(), 16, null, null, 900,null);
 
+INSERT INTO Question (quizId, questionNumber, questionText, answerA, answerB, answerC , answerD, correctAnswer, chooseAnswer)
+VALUES
+-- Insert questions for Quiz 6
+(6, 1, 'What is the capital of Canada?', 'Ottawa', 'Toronto', 'Vancouver', 'Montreal', 'Ottawa', null),
+(6, 2, 'What is the chemical symbol for helium?', 'H', 'He', 'H2', 'Hi', 'He', null),
+(6, 3, 'What is 3 + 5?', '5', '6', '7', '8', '8', null),
+(6, 4, 'What is the longest river in the world?', 'Amazon', 'Nile', 'Yangtze', 'Mississippi', 'Nile', null),
+(6, 5, 'Who is known as the Father of Computers?', 'Albert Einstein', 'Isaac Newton', 'Charles Babbage', 'Thomas Edison', 'Charles Babbage', null),
+(6, 6, 'What is the process of converting water vapor into liquid water?', 'Evaporation', 'Condensation', 'Precipitation', 'Sublimation', 'Condensation', null),
+(6, 7, 'What is the first element on the periodic table?', 'Oxygen', 'Carbon', 'Hydrogen', 'Nitrogen', 'Hydrogen', null),
+
+-- Insert questions for Quiz 7
+(7, 1, 'What is the capital of Australia?', 'Sydney', 'Canberra', 'Melbourne', 'Brisbane', 'Canberra', null),
+(7, 2, 'What is the chemical symbol for potassium?', 'P', 'K', 'Pt', 'Po', 'K', null),
+(7, 3, 'What is 9 * 9?', '81', '72', '63', '54', '81', null),
+(7, 4, 'Which planet is closest to the sun?', 'Earth', 'Mars', 'Mercury', 'Venus', 'Mercury', null),
+(7, 5, 'Who wrote "The Great Gatsby"?', 'Ernest Hemingway', 'F. Scott Fitzgerald', 'J.D. Salinger', 'John Steinbeck', 'F. Scott Fitzgerald', null),
+(7, 6, 'What is the largest continent?', 'Africa', 'Asia', 'Europe', 'North America', 'Asia', null),
+
+-- Insert questions for Quiz 8
+(8, 1, 'What is the capital of Brazil?', 'Buenos Aires', 'Lima', 'Rio de Janeiro', 'Brasília', 'Brasília', null),
+(8, 2, 'What is the chemical symbol for calcium?', 'Ca', 'Cl', 'C', 'Cu', 'Ca', null),
+(8, 3, 'What is 12 - 4?', '6', '7', '8', '9', '8', null),
+(8, 4, 'What is the largest desert in the world?', 'Sahara', 'Gobi', 'Arctic', 'Antarctic', 'Antarctic', null),
+(8, 5, 'Who painted "Starry Night"?', 'Claude Monet', 'Pablo Picasso', 'Vincent van Gogh', 'Leonardo da Vinci', 'Vincent van Gogh', null),
+(8, 6, 'What is the process of plants making food using sunlight?', 'Photosynthesis', 'Respiration', 'Transpiration', 'Fermentation', 'Photosynthesis', null),
+(8, 7, 'What is the main gas in the Earth’s atmosphere?', 'Oxygen', 'Hydrogen', 'Carbon Dioxide', 'Nitrogen', 'Nitrogen', null),
+
+-- Insert questions for Quiz 9
+(9, 1, 'What is the capital of Russia?', 'Moscow', 'St. Petersburg', 'Novosibirsk', 'Yekaterinburg', 'Moscow', null),
+(9, 2, 'What is the chemical symbol for iron?', 'Ir', 'In', 'I', 'Fe', 'Fe', null),
+(9, 3, 'What is 7 * 7?', '48', '49', '50', '51', '49', null),
+(9, 4, 'Which planet is known as the Blue Planet?', 'Earth', 'Neptune', 'Uranus', 'Mars', 'Earth', null),
+(9, 5, 'Who wrote "Hamlet"?', 'Charles Dickens', 'Jane Austen', 'Mark Twain', 'William Shakespeare', 'William Shakespeare', null),
+(9, 6, 'What is the freezing point of water?', '0°C', '32°C', '100°C', '50°C', '0°C', null),
+(9, 7, 'What is the powerhouse of the cell?', 'Nucleus', 'Ribosome', 'Mitochondria', 'Chloroplast', 'Mitochondria', null),
+(9, 8, 'What is the largest mammal?', 'Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus', 'Blue Whale', null),
+
+-- Insert questions for Quiz 10
+(10, 1, 'What is the capital of India?', 'Mumbai', 'Delhi', 'New Delhi', 'Bangalore', 'New Delhi', null),
+(10, 2, 'What is the chemical symbol for chlorine?', 'Ch', 'Cl', 'Co', 'Cr', 'Cl', null),
+(10, 3, 'What is 15 + 5?', '18', '19', '20', '21', '20', null),
+(10, 4, 'What is the smallest ocean in the world?', 'Indian', 'Atlantic', 'Arctic', 'Pacific', 'Arctic', null),
+(10, 5, 'Who wrote "Pride and Prejudice"?', 'Emily Brontë', 'Charlotte Brontë', 'Jane Austen', 'Mary Shelley', 'Jane Austen', null),
+(10, 6, 'What is the process by which plants lose water?', 'Transpiration', 'Photosynthesis', 'Respiration', 'Fermentation', 'Transpiration', null),
+
+-- Insert questions for Quiz 11
+(11, 1, 'What is the capital of China?', 'Beijing', 'Shanghai', 'Hong Kong', 'Guangzhou', 'Beijing', null),
+(11, 2, 'What is the chemical symbol for magnesium?', 'Mg', 'Mn', 'Mt', 'Ma', 'Mg', null),
+(11, 3, 'What is 14 / 2?', '6', '7', '8', '9', '7', null),
+(11, 4, 'Which planet is known as the Morning Star?', 'Venus', 'Mars', 'Mercury', 'Jupiter', 'Venus', null),
+(11, 5, 'Who is the author of "Harry Potter"?', 'J.R.R. Tolkien', 'George R.R. Martin', 'J.K. Rowling', 'Rick Riordan', 'J.K. Rowling', null),
+(11, 6, 'What is the largest country by area?', 'Canada', 'China', 'Russia', 'USA', 'Russia', null),
+(11, 7, 'What is the term for animals that eat both plants and animals?', 'Herbivore', 'Carnivore', 'Omnivore', 'Insectivore', 'Omnivore', null),
+
+-- Insert questions for Quiz 12
+(12, 1, 'What is the capital of South Korea?', 'Seoul', 'Pyongyang', 'Busan', 'Incheon', 'Seoul', null),
+(12, 2, 'What is the chemical symbol for sulfur?', 'S', 'Su', 'Sf', 'Sl', 'S', null),
+(12, 3, 'What is 16 - 8?', '6', '7', '8', '9', '8', null),
+(12, 4, 'What is the largest island in the world?', 'Greenland', 'Madagascar', 'Borneo', 'Australia', 'Greenland', null),
+(12, 5, 'Who painted the "Last Supper"?', 'Michelangelo', 'Raphael', 'Leonardo da Vinci', 'Donatello', 'Leonardo da Vinci', null),
+(12, 6, 'What is the term for the study of weather?', 'Astronomy', 'Biology', 'Meteorology', 'Geology', 'Meteorology', null),
+(12, 7, 'What is the hardest natural substance?', 'Gold', 'Silver', 'Iron', 'Diamond', 'Diamond', null),
+(12, 8, 'What is the main component of the sun?', 'Oxygen', 'Hydrogen', 'Helium', 'Carbon', 'Hydrogen', null),
+
+-- Insert questions for Quiz 13
+(13, 1, 'What is the capital of Egypt?', 'Cairo', 'Alexandria', 'Giza', 'Luxor', 'Cairo', null),
+(13, 2, 'What is the chemical symbol for gold?', 'Au', 'Ag', 'Pt', 'Pb', 'Au', null),
+(13, 3, 'What is 11 + 9?', '18', '19', '20', '21', '20', null),
+(13, 4, 'What is the tallest mountain in the world?', 'K2', 'Kangchenjunga', 'Lhotse', 'Mount Everest', 'Mount Everest', null),
+(13, 5, 'Who wrote "To Kill a Mockingbird"?', 'Harper Lee', 'F. Scott Fitzgerald', 'Ernest Hemingway', 'Mark Twain', 'Harper Lee', null),
+(13, 6, 'What is the process of cell division?', 'Mitosis', 'Meiosis', 'Binary fission', 'Photosynthesis', 'Mitosis', null),
+(13, 7, 'What is the smallest unit of life?', 'Cell', 'Atom', 'Molecule', 'Organ', 'Cell', null),
+
+-- Insert questions for Quiz 14
+(14, 1, 'What is the capital of Argentina?', 'Buenos Aires', 'Santiago', 'Lima', 'Montevideo', 'Buenos Aires', null),
+(14, 2, 'What is the chemical symbol for silver?', 'Si', 'Ag', 'Al', 'Au', 'Ag', null),
+(14, 3, 'What is 20 - 15?', '3', '4', '5', '6', '5', null),
+(14, 4, 'What is the smallest bone in the human body?', 'Femur', 'Stapes', 'Ulna', 'Scapula', 'Stapes', null),
+(14, 5, 'Who wrote "The Odyssey"?', 'Homer', 'Virgil', 'Ovid', 'Sappho', 'Homer', null),
+(14, 6, 'What is the study of plants called?', 'Zoology', 'Geology', 'Botany', 'Mycology', 'Botany', null),
+(14, 7, 'What is the most abundant gas in the Earth’s atmosphere?', 'Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Hydrogen', 'Nitrogen', null),
+(14, 8, 'What is the main ingredient in traditional Japanese miso soup?', 'Miso paste', 'Soy sauce', 'Tofu', 'Nori', 'Miso paste', null),
+
+-- Insert questions for Quiz 15
+(15, 1, 'What is the capital of Thailand?', 'Bangkok', 'Phuket', 'Chiang Mai', 'Pattaya', 'Bangkok', null),
+(15, 2, 'What is the chemical symbol for aluminum?', 'Al', 'Am', 'Au', 'Ag', 'Al', null),
+(15, 3, 'What is 8 * 8?', '56', '64', '72', '80', '64', null),
+(15, 4, 'What is the largest organ in the human body?', 'Heart', 'Liver', 'Skin', 'Lungs', 'Skin', null),
+(15, 5, 'Who wrote "The Hobbit"?', 'J.R.R. Tolkien', 'C.S. Lewis', 'George R.R. Martin', 'J.K. Rowling', 'J.R.R. Tolkien', null),
+(15, 6, 'What is the chemical formula for table salt?', 'NaCl', 'KCl', 'CaCl', 'MgCl', 'NaCl', null),
+(15, 7, 'What is the main component of the Earth’s core?', 'Nickel', 'Iron', 'Magnesium', 'Aluminum', 'Iron', null),
+
+-- Insert questions for Quiz 16
+(16, 1, 'What is the capital of Spain?', 'Barcelona', 'Madrid', 'Seville', 'Valencia', 'Madrid', null),
+(16, 2, 'What is the chemical symbol for zinc?', 'Z', 'Zn', 'Zc', 'Zx', 'Zn', null),
+(16, 3, 'What is 13 + 7?', '19', '20', '21', '22', '20', null),
+(16, 4, 'What is the longest bone in the human body?', 'Tibia', 'Fibula', 'Femur', 'Humerus', 'Femur', null),
+(16, 5, 'Who wrote "Moby Dick"?', 'Herman Melville', 'Nathaniel Hawthorne', 'Edgar Allan Poe', 'Mark Twain', 'Herman Melville', null),
+(16, 6, 'What is the process of water changing from a liquid to a gas?', 'Condensation', 'Precipitation', 'Evaporation', 'Sublimation', 'Evaporation', null),
+(16, 7, 'What is the most common gas in the Earth’s atmosphere?', 'Oxygen', 'Nitrogen', 'Carbon Dioxide', 'Hydrogen', 'Nitrogen', null),
+(16, 8, 'What is the main ingredient in traditional Indian curry?', 'Garam masala', 'Cumin', 'Turmeric', 'Curry powder', 'Curry powder', null);
 
  INSERT INTO Income (tax, amount, createdAt, DayPaid, [status], tutorID)
 VALUES 

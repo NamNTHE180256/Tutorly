@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.SubjectDAO;
 import DAO.UserDAO;
 import DAO.TutorDAO;
 import Model.User;
@@ -24,6 +25,7 @@ public class TutorRegisterServlet extends HttpServlet {
 
     private final TutorDAO tutorDAO = new TutorDAO();
     private final UserDAO userDAO = new UserDAO();
+    private final SubjectDAO sDAO = new SubjectDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,14 +46,15 @@ public class TutorRegisterServlet extends HttpServlet {
                 user.setEmail(email);
                 user.setPassword(userDAO.computeMD5Hash(request.getParameter("password")));
                 user.setRole("tutor");
-
+                Subject subjectName = sDAO.getSubjectById(Integer.parseInt(request.getParameter("subject-id")));
                 Tutor tutor = new Tutor();
                 tutor.setName(request.getParameter("full-name"));
                 tutor.setGender("Male".equals(request.getParameter("gender")));
                 Subject subject = new Subject();
                 subject.setId(Integer.parseInt(request.getParameter("subject-id")));
                 tutor.setSubject(subject);
-
+                session.setAttribute("name", tutor.getName());
+                session.setAttribute("subject", subjectName.getName());
                 session.setAttribute("user", user);
                 session.setAttribute("tutor", tutor);
                 response.sendRedirect("View/register2.jsp");
@@ -87,12 +90,17 @@ public class TutorRegisterServlet extends HttpServlet {
                 tutor.setEdu(request.getParameter("school"));
             }
             session.setAttribute("tutor", tutor);
+            response.sendRedirect("View/registerCalendar.jsp");
+        } else if ("6".equals(step)) {
+            Tutor tutor = (Tutor) session.getAttribute("tutor");
+            String[] availability = request.getParameterValues("availability");
+            String Linkmeet = request.getParameter("link-meet");
+            tutor.setLinkmeet(Linkmeet);
+            session.setAttribute("availability", availability);
             response.sendRedirect("View/register5.jsp");
-            
         } else if ("5".equals(step)) {
             Tutor tutor = (Tutor) session.getAttribute("tutor");
             tutor.setBio(request.getParameter("introduction"));
-            
 
             try {
                 // Save the user and tutor in the database only after completing the final step
@@ -105,11 +113,18 @@ public class TutorRegisterServlet extends HttpServlet {
                 tutor.setPrice(0);
                 tutor.setBank("Not process");
                 tutor.setStatus("Pending");
-                tutor.setLinkmeet("null");
                 boolean success = tutorDAO.insertTutor(tutor);
 
                 // Log the success status
                 Logger.getLogger(TutorRegisterServlet.class.getName()).log(Level.INFO, "Tutor insert success: " + success);
+
+                // Store tutor availability
+                String[] availability = (String[]) session.getAttribute("availability");
+                if (availability != null) {
+                    for (String sessionId : availability) {
+                        tutorDAO.insertTutorAvailability(tutor.getId(), sessionId, "Available");
+                    }
+                }
 
                 // Invalidate the session to clear the attributes
                 session.invalidate();
@@ -117,7 +132,7 @@ public class TutorRegisterServlet extends HttpServlet {
                 Logger.getLogger(TutorRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            request.setAttribute("message", tutor.toString());
+            request.setAttribute("message", "Registration successful! Wait for email. Click OK to comeback to Login.");
             request.getRequestDispatcher("View/register5.jsp").forward(request, response);
         }
     }

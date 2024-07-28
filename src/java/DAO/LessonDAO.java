@@ -321,6 +321,14 @@ public class LessonDAO extends DBContext {
         return getLessonsWithId(sql, learnerId);
     }
 
+        public Vector<Lesson> getLessonsByTutorId(int tutorId) {
+        String sql = "  SELECT L.* \n"
+                + "FROM Lesson L \n"
+                + "JOIN Class C ON L.classId = C.id \n"
+                + "WHERE C.tutorId = ? AND C.status != 'finished' \n"
+                + "ORDER BY L.date;";
+        return getLessonsWithId(sql, tutorId);
+    }
     // Get lessons by class ID
     public Vector<Lesson> getLessonsByClassId(int classId) {
         String sql = "SELECT * FROM Lesson WHERE classId = ?";

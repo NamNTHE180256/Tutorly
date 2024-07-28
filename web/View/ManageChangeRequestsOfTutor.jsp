@@ -58,7 +58,7 @@
             </div>
         </div>
 
-      
+
 
         <c:if test="${empty requestScope.trial && empty requestScope.cancel}">
             <div class="blankslate">

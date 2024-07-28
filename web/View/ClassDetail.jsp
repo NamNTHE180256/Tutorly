@@ -353,6 +353,8 @@
                 </div>
             </div>
         </main>
-
+<span>
+            <%@ include file = "Footer.jsp" %>
+        </span>
     </body>
 </html>

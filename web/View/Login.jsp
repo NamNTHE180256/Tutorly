@@ -30,7 +30,7 @@
             <div class="row h-100">
                 <div class="col-md-6 d-flex justify-content-center align-items-center bg-white text-dark position-relative left-half">
                     <div class="logo-container">
-                        <a href="../DashboardController"><img style="width: 100px;margin: -10% 1px;" src="${pageContext.request.contextPath}/Pictures/LOGO_TUTORLY.png" class="logo" alt="Brand Logo" /></a>
+                        <a href="../DashboardController"><img style="width: 130px;" src="${pageContext.request.contextPath}/Pictures/LOGO_TUTORLY.png" class="logo" alt="Brand Logo" /></a>
                     </div>
                     <div class="login-container mt-5">
                         <h1 style=" font-family: 'Poppins', sans-serif;font-weight: 700;
@@ -80,7 +80,7 @@
                                 <p>Find Tutor</p>
                                 <p><b>Find Future</b></p>
                                 <p style="margin-left: 42px; font-weight:bold; margin-top: -24px;">
-                                    With <img src="${pageContext.request.contextPath}/Pictures/LOGO_TUTORLY.png" alt="Tutorly Logo" />
+                                    With <img style="width: 160px;" src="${pageContext.request.contextPath}/Pictures/LOGO_TUTORLY.png" alt="Tutorly Logo" />
                                 </p>
                             </div>
                         </div>
@@ -91,5 +91,7 @@
                 </div>
             </div>
         </div>
+        
     </body>
+    
 </html>

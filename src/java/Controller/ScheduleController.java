@@ -61,9 +61,9 @@ public class ScheduleController extends HttpServlet {
             LessonDAO lDAO = new LessonDAO();
             MaterialDAO mDAO = new MaterialDAO();
             QuizDAO aDAO = new QuizDAO();
-            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(1);
+            Vector<Lesson> lesson_vector = lDAO.getLessonsByLearnerId(user.getId());
             LearnerDAO leDAO = new LearnerDAO();
-            Learner linfo = leDAO.getStudentById(1);
+            Learner linfo = leDAO.getStudentById(user.getId());
 
             if (service == null || service.isEmpty()) {
                 request.setAttribute("linfo", linfo);

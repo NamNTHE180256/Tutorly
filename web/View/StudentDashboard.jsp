@@ -106,6 +106,6 @@
                 </div>
             </div>
         </main>
-        <%@ include file="tutor-footer.jsp" %>
+        
     </body>
 </html>

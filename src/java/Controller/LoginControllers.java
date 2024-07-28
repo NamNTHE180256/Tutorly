@@ -110,7 +110,7 @@ public class LoginControllers extends HttpServlet {
                     // Save information in the session
                     session.setAttribute("learner", learner);
                     session.setAttribute("user", userLogin);
-                    response.sendRedirect("TutorController");
+                    response.sendRedirect("DashboardController?type=learner"+"&learnerid="+learner.getId());
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
 
                     Tutor tutor = tDao.getTutorById(userLogin.getId());

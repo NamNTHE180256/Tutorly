@@ -86,7 +86,7 @@ public class ReadCookiesServlet extends HttpServlet {
         // Redirect to the appropriate page based on u  ser role
         if (user != null && user.getRole() != null) {
             if (user.getRole().equalsIgnoreCase("Learner")) {
-                request.getRequestDispatcher("TutorController").forward(request, response);
+                response.sendRedirect("DashboardController?type=learner" + "&learnerid=" + learner.getId());
             } else if (user.getRole().equalsIgnoreCase("tutor")) {
                 response.sendRedirect("../Tutorly/DashboardController?type=tutor&tutorid=" + tutor.getId());
             } else {

@@ -11,6 +11,7 @@ import DAO.VideoDAO;
 import Model.AClass;
 import Model.Learner;
 import Model.Material;
+import Model.User;
 import Model.Video;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Vector;
@@ -42,11 +44,17 @@ public class MaterialController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session1 = request.getSession();
+         User user = (User) session1.getAttribute("user");
+        if (user == null) {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
         AClassDAO cDAO = new AClassDAO();
         MaterialDAO mDAO = new MaterialDAO();
         VideoDAO vdao = new VideoDAO();
         LearnerDAO leDAO = new LearnerDAO();
-        Learner linfo = leDAO.getStudentById(1);
+        Learner linfo = leDAO.getStudentById(user.getId());
         Vector<AClass> class_vector = cDAO.getClassesByLearnerId(linfo.getId());
         String service = request.getParameter("service");
         String classid = request.getParameter("classid");

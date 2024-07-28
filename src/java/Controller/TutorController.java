@@ -61,45 +61,45 @@ public class TutorController extends HttpServlet {
             Vector<Subject> subject_vector = sDAO.getSubjects("SELECT * FROM Subject");
             //Vector<TutorAvailability> tutortvailability_vector = taDao.getAvailableSessions();
 
-
-    String service = request.getParameter("service");
-    if (service != null && !service.isEmpty()) {
-        // Check for subject filter
-        String subject_id = request.getParameter("id");
-        if (subject_id != null && !subject_id.isEmpty()) {
-            tutor_vector = tDAO.getTutors("SELECT t.*, "
-                    + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
-                    + "FROM Tutor t "
-                    + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                    + "WHERE t.subjectId = " + subject_id);
-        }
-
-        // Check for price filter
-        String price_raw = request.getParameter("price");
-        if (price_raw != null && !price_raw.isEmpty()) {
-            try {
-                int price = Integer.parseInt(price_raw);
-                String priceFilter = "";
-                switch (price) {
-                    case 1:
-                        priceFilter = "t.price < 200000";
-                        break;
-                    case 2:
-                        priceFilter = "t.price BETWEEN 200000 AND 400000";
-                        break;
-                    case 3:
-                        priceFilter = "t.price > 400000";
-                        break;
+            String service = request.getParameter("service");
+            if (service != null && !service.isEmpty()) {
+                // Check for subject filter
+                String subject_id = request.getParameter("id");
+                if (subject_id != null && !subject_id.isEmpty()) {
+                    tutor_vector = tDAO.getTutors("SELECT t.*, \n"
+                            + "       CASE WHEN t.status = 'Active' and st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status\n"
+                            + "FROM Tutor t\n"
+                            + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId\n"
+                            + "WHERE t.subjectId = " + subject_id + "\n"
+                            + "and t.status = 'Active'");
                 }
-                tutor_vector = tDAO.getTutors("SELECT t.*, "
-                        + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
-                        + "FROM Tutor t "
-                        + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                        + "WHERE " + priceFilter);
-            } catch (NumberFormatException e) {
-                // Handle error gracefully
-            }
-        }
+
+                // Check for price filter
+                String price_raw = request.getParameter("price");
+                if (price_raw != null && !price_raw.isEmpty()) {
+                    try {
+                        int price = Integer.parseInt(price_raw);
+                        String priceFilter = "";
+                        switch (price) {
+                            case 1:
+                                priceFilter = "t.price < 200000";
+                                break;
+                            case 2:
+                                priceFilter = "t.price BETWEEN 200000 AND 400000";
+                                break;
+                            case 3:
+                                priceFilter = "t.price > 400000";
+                                break;
+                        }
+                        tutor_vector = tDAO.getTutors("SELECT t.*, \n"
+                                + "       CASE WHEN t.status = 'Active' and st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status\n"
+                                + "FROM Tutor t\n"
+                                + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId\n"
+                                + "WHERE " + priceFilter + " and t.status = 'Active';");
+                    } catch (NumberFormatException e) {
+                        // Handle error gracefully
+                    }
+                }
 
                 // Check for session filter
                 String session_raw = request.getParameter("session");
@@ -111,30 +111,31 @@ public class TutorController extends HttpServlet {
                             case 1:
                                 sql = "SELECT DISTINCT t.id, t.subjectId, t.name, t.gender, t.image, "
                                         + "CAST(t.bio AS nvarchar(max)) AS bio, t.edu, t.price, t.bank, t.status, "
-                                        + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                                        + "CASE WHEN t.status = 'Active' AND st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
                                         + "FROM Tutor t "
                                         + "JOIN TutorAvailability ta ON ta.tutorId = t.id "
                                         + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                                        + "WHERE ta.sessionId LIKE '%1%' OR ta.sessionId LIKE '%2%'";
+                                        + "WHERE t.status = 'Active' AND (ta.sessionId LIKE '%1%' OR ta.sessionId LIKE '%2%')";
                                 break;
                             case 2:
                                 sql = "SELECT DISTINCT t.id, t.subjectId, t.name, t.gender, t.image, "
                                         + "CAST(t.bio AS nvarchar(max)) AS bio, t.edu, t.price, t.bank, t.status, "
-                                        + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                                        + "CASE WHEN t.status = 'Active' AND st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
                                         + "FROM Tutor t "
                                         + "JOIN TutorAvailability ta ON ta.tutorId = t.id "
                                         + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                                        + "WHERE ta.sessionId LIKE '%3%' OR ta.sessionId LIKE '%4%'";
+                                        + "WHERE t.status = 'Active' AND (ta.sessionId LIKE '%3%' OR ta.sessionId LIKE '%4%')";
                                 break;
                             case 3:
                                 sql = "SELECT DISTINCT t.id, t.subjectId, t.name, t.gender, t.image, "
                                         + "CAST(t.bio AS nvarchar(max)) AS bio, t.edu, t.price, t.bank, t.status, "
-                                        + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
+                                        + "CASE WHEN t.status = 'Active' AND st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
                                         + "FROM Tutor t "
                                         + "JOIN TutorAvailability ta ON ta.tutorId = t.id "
                                         + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                                        + "WHERE ta.sessionId LIKE '%5%'";
+                                        + "WHERE t.status = 'Active' AND ta.sessionId LIKE '%5%'";
                                 break;
+
                         }
                         if (!sql.isEmpty()) {
                             tutor_vector = tDAO.getTutors(sql);
@@ -174,11 +175,15 @@ public class TutorController extends HttpServlet {
                 // Check for name filter
                 String name = request.getParameter("tutorname");
                 if (name != null && !name.isEmpty()) {
-                    tutor_vector = tDAO.getTutors("SELECT t.*, "
-                            + "CASE WHEN st.tutorId IS NOT NULL THEN 'saved' ELSE 'unsaved' END AS save_status "
-                            + "FROM Tutor t "
-                            + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId "
-                            + "WHERE t.name LIKE N'%" + name + "%'");
+                    tutor_vector = tDAO.getTutors("SELECT t.*, \n"
+                            + "       CASE \n"
+                            + "           WHEN st.tutorId IS NOT NULL THEN 'saved' \n"
+                            + "           ELSE 'unsaved' \n"
+                            + "       END AS save_status \n"
+                            + "FROM Tutor t \n"
+                            + "LEFT JOIN (SELECT DISTINCT tutorId FROM SavedTutor) st ON t.id = st.tutorId \n"
+                            + "WHERE t.status = 'Active' \n"
+                            + "AND t.name LIKE N'%" + name + "%'");
                 }
             }
 
@@ -198,7 +203,7 @@ public class TutorController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

@@ -4,6 +4,7 @@
  */
 package Model;
 
+import DAO.ManagerDAO;
 import DAO.UserDAO;
 
 /**
@@ -50,7 +51,8 @@ public class Manager {
     }
 
     public int getApprovedTutor() {
-        return approvedTutor;
+        ManagerDAO mDao = new ManagerDAO();
+        return mDao.ActionByManagerID(id, "approve");
     }
 
     public void setApprovedTutor(int approvedTutor) {
@@ -58,7 +60,8 @@ public class Manager {
     }
 
     public int getRejectedTutor() {
-        return rejectedTutor;
+        ManagerDAO mDao = new ManagerDAO();
+        return mDao.ActionByManagerID(id, "reject");
     }
 
     public void setRejectedTutor(int rejectedTutor) {
@@ -66,7 +69,8 @@ public class Manager {
     }
 
     public int getBlockedTutor() {
-        return blockedTutor;
+        ManagerDAO mDao = new ManagerDAO();
+        return mDao.ActionByManagerID(id, "block");
     }
 
     public void setBlockedTutor(int blockedTutor) {

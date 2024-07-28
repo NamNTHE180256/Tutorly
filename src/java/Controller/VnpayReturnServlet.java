@@ -112,11 +112,6 @@ public class VnpayReturnServlet extends HttpServlet {
         String session_id = (String) session.getAttribute("session");
         String totallesson = (String) session.getAttribute("totallesson");
 
-        System.out.println("Registering official class with:");
-        System.out.println("Tutor ID: " + tutor_id);
-        System.out.println("Learner ID: " + learner_id);
-        System.out.println("Session ID: " + session_id);
-        System.out.println("Total Lesson: " + totallesson);
 
         if (tutor_id == null || learner_id == null || session_id == null || totallesson == null) {
             resp.getWriter().write("Missing parameters for registering class");

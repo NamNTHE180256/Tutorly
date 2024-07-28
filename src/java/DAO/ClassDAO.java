@@ -46,6 +46,21 @@ public class ClassDAO extends DBContext {
         return null;
     }
     
+    public int countClassesByLearnerId(int learnerId) {
+        String sql = "SELECT COUNT(*) AS class_count FROM Class WHERE learnerId = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, learnerId);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("class_count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
     public Vector<AClass> getClassesByTutorId(int tutorId) {
         Vector<AClass> classes = new Vector<>();
         LearnerDAO lDao = new LearnerDAO();

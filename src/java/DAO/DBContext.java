@@ -22,7 +22,6 @@ public class DBContext {
             String userName = "sa";
 
           
-
             String password = "17022004";
 
             String url = "jdbc:sqlserver://localhost:1433;databaseName=Tutorly";

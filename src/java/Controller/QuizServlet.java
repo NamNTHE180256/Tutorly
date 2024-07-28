@@ -135,7 +135,7 @@ public class QuizServlet extends HttpServlet {
             quiz.setFileName(filePart.getSubmittedFileName());
             quiz.setFilePath("path/to/save/" + filePart.getSubmittedFileName());
             quiz.setCreatedAt(new Date());
-            quiz.setStatus("Pending");
+            quiz.setStatus("Todo");
             quiz.setQuizTime(0); // Initially set to 0, will be updated later
             quiz.setNumberOfTimeDone(0); // Ensure it's initialized to 0
 

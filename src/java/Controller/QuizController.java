@@ -6,6 +6,7 @@ package Controller;
 
 import DAO.QuizDAO;
 import DAO.LearnerDAO;
+import DAO.LessonDAO;
 import Model.Quiz;
 import Model.Learner;
 import Model.User;
@@ -50,7 +51,7 @@ public class QuizController extends HttpServlet {
             String service = request.getParameter("service");
             QuizDAO aDAO = new QuizDAO();
             LearnerDAO lDAO = new LearnerDAO();
-            Learner linfo = lDAO.getStudentById(1);
+            Learner linfo = lDAO.getStudentById(user.getId());
             if (service == null || service.isEmpty()) {
                 Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(user.getId());
                 Vector<Quiz> classQuizDone = aDAO.getQuizByLearnerIdAndStatusDone(user.getId());

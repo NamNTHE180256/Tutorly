@@ -251,6 +251,7 @@
                 document.getElementById("joinClass").addEventListener("click", function () {
                     window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
                 });
+            });
 
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

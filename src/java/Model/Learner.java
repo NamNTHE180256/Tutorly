@@ -4,6 +4,7 @@
  */
 package Model;
 
+import DAO.ClassDAO;
 import DAO.UserDAO;
 
 /**
@@ -54,6 +55,10 @@ public class Learner {
         return uDAO.getUserById(id);
     }
 
+    public int getTotalClasses() {
+        ClassDAO cDao = new ClassDAO();
+        return cDao.countClassesByLearnerId(id);
+    }
     @Override
     public String toString() {
         return "Learner{" + "id=" + id + ", name=" + name + ", image=" + image + '}';

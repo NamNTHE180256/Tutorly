@@ -152,7 +152,7 @@
                                                 data-email="${manager.getUserInfo().email}">
                                             Update
                                         </button>
-                                        <a href="ManagerController?action=details&managerId=${manager.id}" class="btn btn-outline-primary btn-sm">Details</a>
+                                        
                                     </td>
                                 </tr>
                             </c:forEach>

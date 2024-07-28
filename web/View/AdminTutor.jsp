@@ -91,7 +91,7 @@
                         <h3></h3>
                     </div>
                 </div>
-                <table class="table">
+                <table class="table table-hover">
                     <thead style="background-color: #0E3C6E; color: white;">
                         <tr>
                             <th>Tutor ID</th>
@@ -127,6 +127,11 @@
                                                 ${tutor.status} <i class="fa-regular fa-clock"></i>
                                             </span>
                                         </c:when>
+                                        <c:when test="${tutor.status == 'Blocked'}">
+                                            <span class="status-blocked">
+                                                ${tutor.status} <i class="fa-regular fa-circle-xmark"></i>
+                                            </span>
+                                        </c:when>
                                     </c:choose>
                                 </td>
                                 <td>
@@ -152,7 +157,7 @@
                             </div>
                             <div class="modal-footer d-flex justify-content-between">
                                 <div id="modalActions"></div>
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -166,44 +171,113 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function loadTutorDetails(tutorId) {
-        $.ajax({
-            url: 'TutorModal', // URL to fetch tutor details
-            type: 'GET',
-            data: { id: tutorId },
-            success: function (response) {
-                // Populate the modal content with the response
-                $('#tutorDetailModal .modal-body').html(response);
+            $.ajax({
+                url: 'TutorModal', // URL to fetch tutor details
+                type: 'GET',
+                data: { id: tutorId },
+                success: function (response) {
+                    // Populate the modal content with the response
+                    $('#tutorDetailModal .modal-body').html(response);
 
-                // Extract the tutor status from the hidden element
-                var status = $('#tutorDetailModal .modal-body #tutorStatus').text().trim();
+                    // Extract the tutor status from the hidden element
+                    var status = $('#tutorDetailModal .modal-body #tutorStatus').text().trim();
 
-                // Update modal actions
-                var modalActions = '';
-                if (status === 'Pending') {
-                    modalActions = `
-                        <div class="d-flex justify-content-between">
-                            <button type="button" id="approveButton" class="btn btn-outline-success flex-grow-1 mr-2">Approve</button>
-                            <button type="button" id="rejectButton" class="btn btn-outline-warning flex-grow-1 ml-2">Reject</button>
-                        </div>`;
+                    // Update modal actions
+                    var modalActions = '';
+                    if (status === 'Pending') {
+                        modalActions = `
+                            <div class="d-flex justify-content-between">
+                                <button type="button" id="approveButton" class="btn btn-outline-success flex-grow-1 mr-2">Approve</button>
+                                <button type="button" id="rejectButton" class="btn btn-outline-warning flex-grow-1 ml-2">Reject</button>
+                            </div>`;
+                    } else if (status === 'Active') {
+                        modalActions = `
+                            <div class="d-flex justify-content-between">
+                                <button type="button" id="blockButton" class="btn btn-outline-danger flex-grow-1">Block</button>
+                            </div>`;
+                    } else if (status === 'Blocked') {
+                        modalActions = `
+                            <div class="d-flex justify-content-between">
+                                <button type="button" id="reactivateButton" class="btn btn-outline-success flex-grow-1">Re-active</button>
+                            </div>`;
+                    }
+                    $('#modalActions').html(modalActions);
+
+                    // Set the onclick handlers
+                    if (status === 'Pending') {
+                        $('#approveButton').on('click', function() {
+                            approveTutor(tutorId);
+                        });
+                        $('#rejectButton').on('click', function() {
+                            rejectTutor(tutorId);
+                        });
+                    } else if (status === 'Active') {
+                        $('#blockButton').on('click', function() {
+                            blockTutor(tutorId);
+                        });
+                    } else if (status === 'Blocked') {
+                        $('#reactivateButton').on('click', function() {
+                            reactivateTutor(tutorId);
+                        });
+                    }
+
+                    // Show the modal
+                    $('#tutorDetailModal').modal('show');
+                },
+                error: function (error) {
+                    console.log('Error loading tutor details:', error);
                 }
-                $('#modalActions').html(modalActions);
+            });
+        }
 
-                // Set the onclick handlers
-                $('#approveButton').on('click', function() {
-                    approveTutor(tutorId);
+        function blockTutor(tutorId) {
+            var reason = prompt('Please enter the reason for blocking this tutor:');
+            if (reason) {
+                $.ajax({
+                    url: '/Tutorly/BLockTutor', // Ensure this URL matches the servlet's URL pattern
+                    type: 'POST',
+                    data: { id: tutorId, reason: reason },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            $('#tutorStatus' + tutorId).html(
+                                '<span class="status-blocked">Blocked <i class="fa-regular fa-circle-xmark"></i></span>'
+                            );
+                            $('#tutorDetailModal').modal('hide');
+                        } else {
+                            alert('Failed to block tutor');
+                        }
+                    },
+                    error: function (error) {
+                        console.log('Error blocking tutor:', error);
+                        alert('Error blocking tutor');
+                    }
                 });
-                $('#rejectButton').on('click', function() {
-                    rejectTutor(tutorId);
-                });
-
-                // Show the modal
-                $('#tutorDetailModal').modal('show');
-            },
-            error: function (error) {
-                console.log('Error loading tutor details:', error);
             }
-        });
-    }
+        }
+
+        function reactivateTutor(tutorId) {
+            if (confirm('Are you sure you want to reactivate this tutor?')) {
+                $.ajax({
+                    url: 'ReactiveTutor', // Ensure this URL matches the servlet's URL pattern for reactivation
+                    type: 'POST',
+                    data: { id: tutorId },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            $('#tutorStatus' + tutorId).html(
+                                '<span class="status-active">Active <i class="fa-regular fa-circle-check"></i></span>'
+                            );
+                            $('#tutorDetailModal').modal('hide');
+                        } else {
+                            alert('Failed to reactivate tutor');
+                        }
+                    },
+                    error: function (error) {
+                        console.log('Error reactivating tutor:', error);
+                        alert('Error reactivating tutor');
+                    }
+                });
+            }
+        }
 
 
 

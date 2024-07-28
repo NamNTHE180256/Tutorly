@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
 import DAO.AClassDAO;
@@ -33,7 +32,11 @@ public class ViewClassnew extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        String error = (String) request.getAttribute("error");
+        if (error == null || error.isEmpty()) {
+            request.setAttribute("error", error);
 
+        }
         if (user == null) {
             response.sendRedirect("View/Login.jsp");
             return;
@@ -60,7 +63,7 @@ public class ViewClassnew extends HttpServlet {
         AClassDAO aClassDAO = new AClassDAO();
         SessionDAO sessionDAO = new SessionDAO();
 
-        Vector<AClass> classes =(status == null) ? aClassDAO.getClassesByLearnerId(learnerId) :aClassDAO.getClassesByLearnerIdAndStatus(learnerId, status);
+        Vector<AClass> classes = (status == null) ? aClassDAO.getClassesByLearnerId(learnerId) : aClassDAO.getClassesByLearnerIdAndStatus(learnerId, status);
         Map<Integer, Session> sessionData = getSessionData(classes, sessionDAO);
         Map<Integer, Double> progressMap = getProgressMap(classes, aClassDAO);
         Map<Integer, Integer> aMap = getAttendance(classes, aClassDAO);

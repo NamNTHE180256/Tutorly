@@ -95,8 +95,8 @@
                             <p><strong>Status:</strong> ${requestScope.lesson.getStatus()}</p>
                             <p><strong>Meet URL:</strong></p>
                         </div>
-                        <div class="details-col text-right">
-                            <button id="joinClass" class="btn btn-primary">Enter Class</button>
+                        <div style="    MARGIN-TOP: 143PX;" class="details-col text-right">
+                            <button  id="joinClass" class="btn btn-primary">Enter Class</button>
                         </div>
                     </div>
                     <div class="Quiz mt-3">
@@ -230,7 +230,7 @@
                                 <label for="fileName">Name</label>
                                 <input type="text" id="fileName" class="form-control" name="fileName" placeholder="Enter a file's name">
                                 <label for="file" class="mt-2">Choose File</label>
-                                <input type="text" name="linkYtb" id="file" name="file" class="form-control">
+                                <input placeholder="Must be Link Youtube" type="text" name="linkYtb" id="file" name="file" class="form-control">
                             </div>
                             <button style="display: block; margin: 0 auto;" type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -243,48 +243,43 @@
         </div>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                document.getElementById("viewButton").addEventListener("click", function () {
-                    window.location.href = "Material?classid=${requestScope.lesson.getAClass().getId()}&slotid=${requestScope.lesson.getId()}&action=getall";
-                });
+            document.getElementById("viewButton").addEventListener("click", function () {
+            window.location.href = "Material?classid=${requestScope.lesson.getAClass().getId()}&slotid=${requestScope.lesson.getId()}&action=getall";
+            });
             });
             document.addEventListener("DOMContentLoaded", function () {
-                document.getElementById("joinClass").addEventListener("click", function () {
-                    window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
-                });
+            document.getElementById("joinClass").addEventListener("click", function () {
+            window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
             });
-
-
+            });
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        // Sự kiện khi bấm nút View để xem tài liệu
-                                        document.getElementById("viewButton").addEventListener("click", function () {
-                                            window.location.href = "Material?classid=${requestScope.lesson.getAClass().getId()}&slotid=${requestScope.lesson.getId()}&action=getall";
-                                        });
-
-                                        // Sự kiện khi bấm nút "Enter Class" để tham gia lớp học
-                                        document.getElementById("joinClass").addEventListener("click", function () {
-                                            window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
-                                        });
-
-                                        // Sự kiện khi bấm nút "View" để hiển thị quiz
-                                        document.getElementById("viewQuizButton").addEventListener("click", function () {
-                                            var lessonId = ${requestScope.lesson.getId()};
-                                            var classId = ${requestScope.lesson.getAClass().getId()};
-
-                                            // Gửi yêu cầu AJAX đến servlet để lấy dữ liệu quiz
-                                            $.ajax({
-                                                url: 'QuizAction',
-                                                method: 'GET',
-                                                data: {lessonId: lessonId, classId: classId, action: 'getQuestions'},
-                                                success: function (response) {
-                                                    console.log(response); // Log the response to inspect its structure
-                                                    var tableBody = $('#questionsTable tbody');
-                                                    tableBody.empty();
-                                                    response.questions.forEach(function (question) {
-                                                        var row = `<tr>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Sự kiện khi bấm nút View để xem tài liệu
+                    document.getElementById("viewButton").addEventListener("click", function () {
+            window.location.href = "Material?classid=${requestScope.lesson.getAClass().getId()}&slotid=${requestScope.lesson.getId()}&action=getall";
+            });
+            // Sự kiện khi bấm nút "Enter Class" để tham gia lớp học
+            document.getElementById("joinClass").addEventListener("click", function () {
+            window.location.href = "${requestScope.lesson.getAClass().getTutor().getLinkmeet()}";
+            });
+            // Sự kiện khi bấm nút "View" để hiển thị quiz
+            document.getElementById("viewQuizButton").addEventListener("click", function () {
+            var lessonId = ${requestScope.lesson.getId()};
+            var classId = ${requestScope.lesson.getAClass().getId()};
+            // Gửi yêu cầu AJAX đến servlet để lấy dữ liệu quiz
+            $.ajax({
+            url: 'QuizAction',
+                    method: 'GET',
+                    data: {lessonId: lessonId, classId: classId, action: 'getQuestions'},
+                    success: function (response) {
+                    console.log(response); // Log the response to inspect its structure
+                    var tableBody = $('#questionsTable tbody');
+                    tableBody.empty();
+                    response.questions.forEach(function (question) {
+                    var row = `<tr>
                                    <td>${question.number}</td>
                                    <td>${question.questionText}</td>
                                    <td>${question.answerA}</td>
@@ -297,53 +292,52 @@
                                        <button class="btn btn-danger btn-sm delete-question" data-id="${question.quizId}">Delete</button>
                                    </td>
                                </tr>`;
-                                                        tableBody.append(row);
-                                                    });
-                                                    $('#quizTime').val(response.quizTime);
-                                                    $('#quizModal').modal('show'); // Hiển thị modal sau khi cập nhật dữ liệu
-                                                },
-                                                error: function (xhr, status, error) {
-                                                    console.error("AJAX error:", status, error);
-                                                }
-                                            });
-                                        });
-
-                                        // Sự kiện khi bấm nút "Save" để lưu quiz
-                                        $('#saveQuizButton').on('click', function () {
-                                            var quizTime = $('#quizTime').val();
-                                            var questions = [];
-                                            $('#questionsTable tbody tr').each(function () {
-                                                var question = {
-                                                    quizId: $(this).find('.edit-question').data('id'),
-                                                    number: $(this).find('td').eq(0).text(),
-                                                    questionText: $(this).find('td').eq(1).text(),
-                                                    answerA: $(this).find('td').eq(2).text(),
-                                                    answerB: $(this).find('td').eq(3).text(),
-                                                    answerC: $(this).find('td').eq(4).text(),
-                                                    answerD: $(this).find('td').eq(5).text(),
-                                                    correctAnswer: $(this).find('td').eq(6).text()
-                                                };
-                                                questions.push(question);
-                                            });
-                                            $.ajax({
-                                                url: 'QuizAction',
-                                                method: 'POST',
-                                                data: {
-                                                    action: 'saveQuiz',
-                                                    quizTime: quizTime,
-                                                    questions: JSON.stringify(questions)
-                                                },
-                                                success: function () {
-                                                    $('#quizModal').modal('hide');
-                                                    location.reload();
-                                                }
-                                            });
-                                        });
-                                    });
-
-                                    function takeQuiz(lessonId, classId) {
-                                        window.location.href = "QuizServlet?lessonId=" + lessonId + "&classId=" + classId + "&action=takeQuiz";
-                                    }
-        </script>
+                    tableBody.append(row);
+                    });
+                    $('#quizTime').val(response.quizTime);
+                    $('#quizModal').modal('show'); // Hiển thị modal sau khi cập nhật dữ liệu
+                    },
+                    error: function (xhr, status, error) {
+                    console.error("AJAX error:", status, error);
+                    }
+            });
+            });
+            // Sự kiện khi bấm nút "Save" để lưu quiz
+            $('#saveQuizButton').on('click', function () {
+            var quizTime = $('#quizTime').val();
+            var questions = [];
+            $('#questionsTable tbody tr').each(function () {
+            var question = {
+            quizId: $(this).find('.edit-question').data('id'),
+                    number: $(this).find('td').eq(0).text(),
+                    questionText: $(this).find('td').eq(1).text(),
+                    answerA: $(this).find('td').eq(2).text(),
+                    answerB: $(this).find('td').eq(3).text(),
+                    answerC: $(this).find('td').eq(4).text(),
+                    answerD: $(this).find('td').eq(5).text(),
+                    correctAnswer: $(this).find('td').eq(6).text()
+            };
+            questions.push(question);
+            });
+            $.ajax({
+            url: 'QuizAction',
+                    method: 'POST',
+                    data: {
+                    action: 'saveQuiz',
+                            quizTime: quizTime,
+                            questions: JSON.stringify(questions)
+                    },
+                    success: function () {
+                    $('#quizModal').modal('hide');
+                    location.reload();
+                    }
+            });
+            });
+                        });
+                        
+                            function takeQuiz(lessonId, classId) {
+                    window.location.href = "QuizServlet?lessonId=" + lessonId + "&classId=" + classId + "&action=takeQuiz";
+                        }
+                        </script>
     </body>
 </html>

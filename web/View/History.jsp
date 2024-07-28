@@ -105,9 +105,20 @@
                                         <td>${fn:substring(l.session.startTime, 0, 5)}</td>
                                         <td><fmt:formatDate value="${l.date}" pattern="dd/MM/yyyy"/></td>
                                         <td class="${l.status eq 'Finished' ? 'text-success' : 'text-warning'}">${l.status}</td>
-                                        <td><a href="lessonDetailControllers?classid=${l.getAClass().id}&lessonId=${l.getId()}" class="btn btn-primary">View lesson details</a></td>
+
+                                        <td>
+                                            <a href="lessonDetailControllers?classid=${l.getAClass().id}&lessonId=${l.getId()}" class="btn btn-primary">View lesson details</a>
+                                            <c:if test="${l.status eq 'Scheduled'}">
+                                                <a href="history?service=takeAttendance&lessonId=${l.getId()}&classId=${l.getAClass().id}">
+                                                    <button type="button" class="btn btn-outline-success">Take attendance</button>
+                                                </a>
+
+                                            </c:if>
+                                        </td>
+
                                     </tr>
                                 </c:forEach>
+
                             </tbody>
                         </table>
                         <c:if test="${empty lessons}">
@@ -117,10 +128,10 @@
                 </div>
             </div>
         </div>
-       
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        
+
     </body>
 </html>

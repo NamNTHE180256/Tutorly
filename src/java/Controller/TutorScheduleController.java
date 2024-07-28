@@ -1,165 +1,144 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 
-import DAO.AClassDAO;
+package Controller;
+
+import DAO.LearnerDAO;
 import DAO.LessonDAO;
+import DAO.MaterialDAO;
+import DAO.QuizDAO;
 import DAO.TutorDAO;
-import Model.AClass;
+import DAO.VideoDAO;
+import Model.Learner;
 import Model.Lesson;
+import Model.Material;
+import Model.Quiz;
 import Model.Tutor;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Vector;
+import Model.User;
+import Model.Video;
 import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Vector;
 
-@WebServlet(name = "TutorScheduleController", urlPatterns = {"/TutorScheduleController"})
+/**
+ *
+ * @author TRANG
+ */
+@WebServlet(name="TutorScheduleController", urlPatterns={"/TutorScheduleController"})
 public class TutorScheduleController extends HttpServlet {
-
-    private List<String> generateWeekOptions() {
-        List<String> weeks = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfOutput = new SimpleDateFormat("dd/MM/yyyy");
-
-        // Generate 5 weeks in the past
-        calendar.setTime(new Date());
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        for (int i = 5; i > 0; i--) {
-            calendar.add(Calendar.DATE, -7); // Move to the previous Monday
-            String startDate = sdfInput.format(calendar.getTime());
-            calendar.add(Calendar.DATE, 6); // Move to Sunday of that week
-            String endDate = sdfInput.format(calendar.getTime());
-            try {
-                String formattedWeek = sdfOutput.format(sdfInput.parse(startDate)) + " to " + sdfOutput.format(sdfInput.parse(endDate));
-                weeks.add(formattedWeek);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            calendar.add(Calendar.DATE, -6); // Move back to Monday
+    MaterialDAO mdao = new MaterialDAO();
+    VideoDAO vdao = new VideoDAO();
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session1 = request.getSession();
+        User user = (User) session1.getAttribute("user");
+        if (user == null) {
+            request.setAttribute("errorMessage", "you dont have permission to access this page");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
+        if (user.getRole().equalsIgnoreCase("tutor")) {
+            String service = request.getParameter("service");
+            response.setContentType("text/html;charset=UTF-8");
+            LessonDAO lDAO = new LessonDAO();
+            MaterialDAO mDAO = new MaterialDAO();
+            QuizDAO aDAO = new QuizDAO();
+            Vector<Lesson> lesson_vector = lDAO.getLessonsByTutorId(user.getId());
+            LearnerDAO leDAO = new LearnerDAO();
+            //Learner linfo = leDAO.getStudentById(user.getId());
+            TutorDAO tDAO = new TutorDAO();
+            Tutor tinfor = tDAO.getTutorById(user.getId());
+            if (service == null || service.isEmpty()) {
+                request.setAttribute("linfo", tDAO);
+                request.setAttribute("lesson_vector", lesson_vector);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorSchedule.jsp");
+                dispatcher.forward(request, response);
+            } else if (service.equals("viewLessonDetail")) {
+                int lessonid = Integer.parseInt(request.getParameter("lessonid"));
+                int classid = Integer.parseInt(request.getParameter("classid"));
+                Lesson lesson = lDAO.getLessonById(lessonid);
+                ArrayList<Material> list = mDAO.getAllMaterialWithID(classid, lessonid);
+                ArrayList<Video> listVideo = vdao.getAllVideoWithID(classid, lessonid);
+                Vector<Quiz> Quizoflesson = aDAO.getTodoQuizByLessonId(lessonid);
+                Vector<Material> document = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "document");
+                Vector<Material> book = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "book");
+                Vector<Material> video = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "video/record");
+                Vector<Material> slide = mDAO.getMaterialsByLessonIdAndFileType(lessonid, "slide");
+                request.setAttribute("service", "viewLessonDetail");
+                request.setAttribute("document", document);
+                request.setAttribute("book", book);
+                request.setAttribute("video", video);
+                request.setAttribute("slotid", lessonid);
+                request.setAttribute("classid", classid);
+                request.setAttribute("lesson", lesson);
+                request.setAttribute("listvideo", listVideo);
+                request.setAttribute("listmaterial", list);
+                request.setAttribute("slide", slide);
+                request.setAttribute("Quizoflesson", Quizoflesson);
+                request.setAttribute("linfo", tDAO);
+                request.setAttribute("lesson_vector", lesson_vector);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("View/TutorSchedule.jsp");
+                dispatcher.forward(request, response);
 
-        // Reset to the start of the current week (Monday)
-        calendar.setTime(new Date());
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-
-        // Generate current week
-        String currentStartDate = sdfInput.format(calendar.getTime());
-        calendar.add(Calendar.DATE, 6); // Move to Sunday
-        String currentEndDate = sdfInput.format(calendar.getTime());
-        try {
-            String formattedWeek = sdfOutput.format(sdfInput.parse(currentStartDate)) + " to " + sdfOutput.format(sdfInput.parse(currentEndDate));
-            weeks.add(formattedWeek);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Generate 5 weeks in the future
-        for (int i = 0; i < 5; i++) {
-            calendar.add(Calendar.DATE, 1); // Move to next Monday
-            String startDate = sdfInput.format(calendar.getTime());
-            calendar.add(Calendar.DATE, 6); // Move to Sunday
-            String endDate = sdfInput.format(calendar.getTime());
-            try {
-                String formattedWeek = sdfOutput.format(sdfInput.parse(startDate)) + " to " + sdfOutput.format(sdfInput.parse(endDate));
-                weeks.add(formattedWeek);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                request.setAttribute("errorMessage", "you dont have permission to access this page");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
             }
-            calendar.add(Calendar.DATE, 1); // Move to next Monday
         }
+    } 
 
-        // Sort the weeks to ensure past weeks are in ascending order
-        weeks.sort((w1, w2) -> {
-            try {
-                Date d1 = sdfOutput.parse(w1.split(" to ")[0]);
-                Date d2 = sdfOutput.parse(w2.split(" to ")[0]);
-                return d1.compareTo(d2);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return 0;
-            }
-        });
-
-        return weeks;
-    }
-
-    private String[] getCurrentWeekDates() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        String startDate = sdf.format(calendar.getTime());
-        calendar.add(Calendar.DATE, 6); // Move to Sunday
-        String endDate = sdf.format(calendar.getTime());
-
-        return new String[]{startDate, endDate};
-    }
-
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        Tutor tutor = (Tutor) session.getAttribute("tutor"); // Get tutorId from session
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
-        LessonDAO lessonDAO = new LessonDAO();
-        TutorDAO tutorDAO = new TutorDAO();
-        AClassDAO aClassDAO = new AClassDAO();
-
-        Vector<Lesson> lessons;
-
-        String selectedWeek = request.getParameter("selectedWeek");
-        if (selectedWeek != null && !selectedWeek.isEmpty()) {
-            String[] dates = selectedWeek.split(" to ");
-            SimpleDateFormat sdfInput = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                String startDate = sdfOutput.format(sdfInput.parse(dates[0]));
-                String endDate = sdfOutput.format(sdfInput.parse(dates[1]));
-                lessons = lessonDAO.getLessonsByTutorIdAndDateRange(tutor.getId(), startDate, endDate);
-            } catch (Exception e) {
-                e.printStackTrace();
-                lessons = new Vector<>();
-            }
-        } else {
-            // Use current week as default
-            String[] currentWeekDates = getCurrentWeekDates();
-            String startDate = currentWeekDates[0];
-            String endDate = currentWeekDates[1];
-            lessons = lessonDAO.getLessonsByTutorIdAndDateRange(tutor.getId(), startDate, endDate);
-            selectedWeek = startDate + " to " + endDate;
-        }
-
-        Vector<AClass> classes = aClassDAO.displayAllClasses();
-        List<String> weeks = generateWeekOptions();
-
-        request.setAttribute("weeks", weeks);
-        request.setAttribute("selectedWeek", selectedWeek);
-        request.setAttribute("lessons", lessons);
-        request.setAttribute("tutor", tutor);
-        request.setAttribute("classes", classes);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/View/TutorSchedule.jsp");
-        dispatcher.forward(request, response);
-    }
-
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    throws ServletException, IOException {
+        processRequest(request, response);
     }
 
+    /** 
+     * Returns a short description of the servlet.
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
-        return "Tutor Schedule Controller";
-    }
+        return "Short description";
+    }// </editor-fold>
+
 }

@@ -29,8 +29,9 @@ public class SubjectDAO extends DBContext {
             PreparedStatement state = connection.prepareStatement(sql);
             ResultSet rs = state.executeQuery();
             if (rs.next()) {
-                String name = rs.getString(2);
-                Subject subject = new Subject(id, name);
+                int idsubject = rs.getInt("id");
+                String name = rs.getString("name");
+                Subject subject = new Subject(idsubject, name);
                 return subject;
             }
         } catch (SQLException ex) {

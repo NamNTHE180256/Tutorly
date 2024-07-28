@@ -166,13 +166,10 @@
                     <!-- Change session -->
                     <a class="nav-link" href="submit-change-session-request"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Change session</button></a>
                 </li>
-                <li class="nav-item navmenuitem">
-                    <!-- Student Request -->
-                    <a class="nav-link" href="learner-change-requests"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">My Request</button></a>
-                </li>
-                <li class="nav-item navmenuitem">
+              
+                    <li class="nav-item navmenuitem">
                     <!-- View Tutor Request -->
-                    <a class="nav-link" href="manage-tutor-request"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Tutor Request</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/RequestControllerForLearner"><button style="background-color: #0E3C6E; color: white" type="button" class="btn"> Request</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->

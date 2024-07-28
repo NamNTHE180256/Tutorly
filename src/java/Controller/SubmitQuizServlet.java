@@ -79,8 +79,10 @@ public class SubmitQuizServlet extends HttpServlet {
         session.removeAttribute("timeLeft");
         if (assignmentId != null) {
             int numberOfTimeDone = assignmentDAO.getNumberOfTimeDoneByQuizId(assignmentId);
+            String formattedScoreStr = String.format("%.1f", score);
+            float formattedScore = Float.parseFloat(formattedScoreStr);
             numberOfTimeDone++;
-            assignmentDAO.updateQuizDetails(assignmentId, score, "done", numberOfTimeDone, startedOn, completedOn, timeTakenSeconds);
+            assignmentDAO.updateQuizDetails(assignmentId, formattedScore, "done", numberOfTimeDone, startedOn, completedOn, timeTakenSeconds);
         }
 
         request.getRequestDispatcher("View/ReviewQuiz.jsp").forward(request, response);

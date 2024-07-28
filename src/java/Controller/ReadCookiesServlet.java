@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpSession;
 /**
  * Servlet implementation class ReadCookiesServlet
  */
-@WebServlet(name = "ReadCookiesServlet", urlPatterns = {"/ReadCookiesServlet"})
+    @WebServlet(name = "ReadCookiesServlet", urlPatterns = {"/ReadCookiesServlet"})
 public class ReadCookiesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

@@ -611,7 +611,6 @@
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h4 class="m-0">${ratings.size()} Reviews</h4>
                             </div>
-                            <!-- Star Counter Section -->
                             <div class="row">
                                 <div class="col-md-6">
                                     <table class="stars-counters">
@@ -625,24 +624,26 @@
                                                     <td class="progress-bar-container">
                                                         <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                                                             <div class="fit-progressbar-background">
-                                                                <c:set var="starPercentage" value="0" />
-                                                                <c:forEach var="ratecount" items="${ratecount}">
-                                                                    <c:if test="${ratecount.rate == star}">
-                                                                        <c:set var="starPercentage" value="${ratecount.percentage}" />
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                                <span class="progress-fill" style="width: ${starPercentage}%;"></span>
+                                                                <c:choose>
+                                                                    <c:when test="${ratecount[star - 1] != null}">
+                                                                        <span class="progress-fill" style="width: ${ratecount[star - 1].percentage}%;"></span>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <span class="progress-fill" style="width: 0%;"></span>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="star-num">
-                                                        <c:set var="starCount" value="0" />
-                                                        <c:forEach var="ratecount" items="${ratecount}">
-                                                            <c:if test="${ratecount.rate == star}">
-                                                                <c:set var="starCount" value="${ratecount.count}" />
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        (${starCount})
+                                                        <c:choose>
+                                                            <c:when test="${ratecount[star - 1] != null}">
+                                                                (${ratecount[star - 1].count})
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                (0)
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -657,7 +658,8 @@
                             <ul>
                                 <li>
                                     <c:forEach var="rating" items="${ratings}">
-                                        <div class="d-flex"><div class="left">
+                                        <div class="d-flex">
+                                            <div class="left">
                                                 <span>
                                                     <img src="image/${rating.learner.image}" class="profile-pict-img img-fluid" alt="${rating.learner.name}'s photo" />
                                                 </span>
@@ -704,7 +706,8 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner"><c:forEach items="${suggesttutor_vector}" var="s">
+                                <div class="carousel-inner">
+                                    <c:forEach items="${suggesttutor_vector}" var="s">
                                         <div class="carousel-item active">
                                             <div class="profile-card" style="background-color: #0E3C6E">
                                                 <div class="image">
@@ -748,7 +751,8 @@
                                             <c:choose>
                                                 <c:when test="${tutorRatings.NewTutor == null}">
 
-                                                    <div class="rating mt-2"><span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
+                                                    <div class="rating mt-2">
+                                                        <span class="rate" style="font-size: 25px; display: inline-flex;"> <i class="fa-solid fa-star text-warning"></i><h3>${tutorRatings.avgRate}</h3></span>
 
                                                         <p class="ratedby" style="font-size: 10px;">rated by ${tutorRatings.rateCount} learner(s)</p>
                                                     </div>
@@ -790,19 +794,20 @@
 
                                 </div>
                             </div>
-
+                                                
                         </nav>
-
-                    </div><div class="buttons ">
-                        <div class="d-grid gap-2">
-                            <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
-                            <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
+                        
+                    </div> 
+                      <div class="buttons ">
+                            <div class="d-grid gap-2">
+                                <a href="RegisterTrialCotroller?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%;background-color: #0E3C6E" class="btn btn-primary" type="button">Book trial lesson</button></a>
+                                <a href="RegisterClassController?tutor_id=${tutor.id}" style="color:white"><button style="width: 100%; background-color: #A2A2A2" class="btn btn-primary" type="button">Register class</button></a>
+                            </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
+                                                <script type="text/javascript">
             window.onload = function () {
                 setTimeout(function () {
                     var successAlert = document.getElementById('successAlert');
@@ -840,12 +845,12 @@
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
-                            alert('Data sent successfully!');
+                            //alert('Data sent successfully!');
                         }
                     };
 
                     xhttp.onerror = function () {
-                        alert('Request failed');
+                        //alert('Request failed');
                     };
 
                     xhttp.open("POST", "SavedTutorController", true);
@@ -878,14 +883,14 @@
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        alert(tId);
-                        alert(lID);
-                        alert('Data removed successfully!');
+                        //alert(tId);
+                        //alert(lID);
+                        //alert('Data removed successfully!');
                     }
                 };
 
                 xhttp.onerror = function () {
-                    alert('Request failed');
+                    //alert('Request failed');
                 };
 
                 xhttp.open("POST", "SavedTutorController", true);

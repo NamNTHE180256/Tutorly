@@ -125,9 +125,6 @@
                                 <img class="tutor_profile_image" src="${pageContext.request.contextPath}/image/${tutor.image}">
                             </a>
                         </li>
-                        <li class="nav-item me-3">
-                            <a href="${pageContext.request.contextPath}/logout"><p class="nav-link tutorname">Logout</p></a>
-                        </li>
                     </ul>
                 </div>
             </div>

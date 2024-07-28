@@ -320,13 +320,22 @@ public class LessonDAO extends DBContext {
                 + "ORDER BY L.date;";
         return getLessonsWithId(sql, learnerId);
     }
+<<<<<<< HEAD
   public Vector<Lesson> getLessonsByTutorId(int learnerId) {
+=======
+
+        public Vector<Lesson> getLessonsByTutorId(int tutorId) {
+>>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
         String sql = "  SELECT L.* \n"
                 + "FROM Lesson L \n"
                 + "JOIN Class C ON L.classId = C.id \n"
                 + "WHERE C.tutorId = ? AND C.status != 'finished' \n"
                 + "ORDER BY L.date;";
+<<<<<<< HEAD
         return getLessonsWithId(sql, learnerId);
+=======
+        return getLessonsWithId(sql, tutorId);
+>>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
     }
     // Get lessons by class ID
     public Vector<Lesson> getLessonsByClassId(int classId) {
@@ -380,7 +389,16 @@ public class LessonDAO extends DBContext {
         }
         return lessons;
     }
-
+    
+//    public Vector<Lesson> getLessonsByTutorId(int learnerId) {
+//        String sql = "  SELECT L.* \n"
+//                + "FROM Lesson L \n"
+//                + "JOIN Class C ON L.classId = C.id \n"
+//                + "WHERE C.tutorId = ? AND C.status != 'finished' \n"
+//                + "ORDER BY L.date;";
+//        return getLessonsWithId(sql, learnerId);
+//    }
+    
     public static void main(String[] args) {
         LessonDAO lessonDAO = new LessonDAO();
 

@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -70,11 +72,38 @@ public class UpdateTimeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int timeLeft = Integer.parseInt(request.getParameter("timeLeft"));
-        session.setAttribute("timeLeft", timeLeft);
+        String action = request.getParameter("action");
+
+        if ("updateTime".equals(action)) {
+            int timeLeft = Integer.parseInt(request.getParameter("timeLeft"));
+            session.setAttribute("timeLeft", timeLeft);
+        } else if ("saveAnswer".equals(action)) {
+            int questionNumber = Integer.parseInt(request.getParameter("questionNumber"));
+            String answer = request.getParameter("answer");
+            session.setAttribute("answer" + questionNumber, answer);
+
+            List<Integer> completedQuestions = (List<Integer>) session.getAttribute("completedQuestions");
+            if (completedQuestions == null) {
+                completedQuestions = new ArrayList<>();
+            }
+            if (!completedQuestions.contains(questionNumber)) {
+                completedQuestions.add(questionNumber);
+            }
+            session.setAttribute("completedQuestions", completedQuestions);
+        } else if ("resetQuiz".equals(action)) {
+            session.removeAttribute("timeLeft");
+            Integer questionCount = (Integer) session.getAttribute("questionCount");
+            if (questionCount != null) {
+                for (int i = 1; i <= questionCount; i++) {
+                    session.removeAttribute("answer" + i);
+                }
+            }
+            session.removeAttribute("completedQuestions");
+            session.setAttribute("quizStatus", "todo");
+        }
+
     }
 
     /**

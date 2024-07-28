@@ -1,9 +1,11 @@
 package Controller;
 
 import DAO.LearnerDAO;
+import DAO.ManagerDAO;
 import DAO.TutorDAO;
 import DAO.UserDAO;
 import Model.Learner;
+import Model.Manager;
 import Model.Tutor;
 import Model.User;
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class ReadCookiesServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
+        ManagerDAO mDao = new ManagerDAO();
         LearnerDAO ldao = new LearnerDAO();
         UserDAO udao = new UserDAO();
         Learner learner = null;
@@ -61,15 +64,25 @@ public class ReadCookiesServlet extends HttpServlet {
                     String userId = cookie.getValue();
                     int uid = Integer.parseInt(userId);
                     user = udao.getUserById(uid);
-
+                    System.out.println(user);
                     // Save user information in the session
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
+                }
+                if ("managerId".equals(cookie.getName())) {
+                    String managerId = cookie.getValue();
+                    int uid = Integer.parseInt(managerId);
+                    Manager manager = mDao.getManagerById(uid);
+
+                    // Save user information in the session
+                    HttpSession session = request.getSession();
+                    session.setAttribute("manager", manager);
                 }
 
                 // Check and handle userId cookie
             }
         }
+
         if (learner != null && tutor == null) {
             user = udao.getUserById(learner.getId());
         } else if (tutor != null && learner == null) {
@@ -86,9 +99,13 @@ public class ReadCookiesServlet extends HttpServlet {
         // Redirect to the appropriate page based on u  ser role
         if (user != null && user.getRole() != null) {
             if (user.getRole().equalsIgnoreCase("Learner")) {
-                request.getRequestDispatcher("TutorController").forward(request, response);
+                response.sendRedirect("DashboardController?type=learner" + "&learnerid=" + learner.getId());
             } else if (user.getRole().equalsIgnoreCase("tutor")) {
                 response.sendRedirect("../Tutorly/DashboardController?type=tutor&tutorid=" + tutor.getId());
+            } else if (user.getRole().equalsIgnoreCase("admin") && tutor == null && learner == null) {
+                response.sendRedirect("AdminController?action=dashboard");
+            } else if (user.getRole().equalsIgnoreCase("manager")) {
+                response.sendRedirect("AdminController?action=tutor");    
             } else {
                 request.setAttribute("messageError", "Unknown role!");
                 request.getRequestDispatcher("View/Login.jsp").forward(request, response);

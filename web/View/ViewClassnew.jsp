@@ -29,7 +29,7 @@
                     <jsp:include page="TutorHeader.jsp"/>
                 </c:when>
                 <c:otherwise>
-                    <jsp:include page="SearchTutorHeader.jsp"/>
+                    <jsp:include page="StudentHeader.jsp"/>
                 </c:otherwise>
             </c:choose>
         </header>
@@ -173,5 +173,5 @@
 
             </div>
         </div>
-    </body>
+            </body>
 </html>

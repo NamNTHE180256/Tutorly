@@ -151,5 +151,10 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 951e3e6a1fc140a10343ec1eade9c80223a07c8a
     </body>
 </html>

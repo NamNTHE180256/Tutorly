@@ -8,6 +8,7 @@ import DAO.ManagerDAO;
 import DAO.TutorDAO;
 import Model.ManageTutor;
 import Model.Manager;
+import Model.Tutor;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.File;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.SimpleEmail;
 
 /**
  *
@@ -76,22 +83,93 @@ public class ApproveTutor extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         int tutorId = Integer.parseInt(request.getParameter("id"));
+        TutorDAO tutorDao = new TutorDAO();
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
-        if (manager != null) {
-            ManagerDAO mDao = new ManagerDAO();
-            ManageTutor mt = new ManageTutor(tutorId, manager.getId(), "approve");
-            mDao.AddManageTutor(mt);
-        }
-        TutorDAO tutorDao = new TutorDAO();
-        tutorDao.setStatus(tutorId, "Active");
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"status\":\"success\"}");
-    }
 
+        try {
+            if (manager != null) {
+                ManagerDAO mDao = new ManagerDAO();
+                ManageTutor mt = new ManageTutor(tutorId, manager.getId(), "approve");
+                mDao.AddManageTutor(mt);
+            }
+            tutorDao.setStatus(tutorId, "Active");
+            Tutor tutor = tutorDao.getTutorById(tutorId);
+            // Email Configuration
+            String emailUsername = "ducanhqbz@gmail.com";
+            String emailPassword = "pfeb gdjy vrnu tiva";
+            String recipientEmail = "namlin118@gmail.com";
+
+            HtmlEmail email = new HtmlEmail();
+            email.setHostName("smtp.gmail.com");
+            email.setSmtpPort(587);
+            email.setAuthenticator(new DefaultAuthenticator(emailUsername, emailPassword));
+            email.setStartTLSEnabled(true);
+            email.setFrom(emailUsername, "Tutorly.com");
+            email.setSubject("[Tutorly] Your Tutor Application has been Approved.");
+            email.setCharset("UTF-8");
+
+            String emailContent = "<html>"
+                                + "<head>"
+                                + "<style>"
+                                + "body { font-family: Arial, sans-serif; color: black; }"
+                                + ".header { font-size: 18px; font-weight: bold; }"
+                                + ".content { margin-top: 20px; color: black; }"
+                                + ".footer { margin-top: 30px; font-size: 14px; color: black; }"
+                                + ".footer p { margin: 0; color: black; }"
+                                + ".footer .address { margin-top: 10px; color: black; }"
+                                + ".footer .logo { margin-top: 20px; color: black; }"
+                                + ".green { color: green; }"
+                                + "</style>"
+                                + "</head>"
+                                + "<body>"
+                                + "<p class='header'>Dear <strong>" + tutor.getName() + "</strong>,</p>"
+                                + "<div class='content'>"
+                                + "<p>Congratulations! Your application to become a tutor on <strong>Tutorly</strong> has been <i class='green'>APPROVED</i>.</p>"
+                                + "<p><i>Note: This is an auto-generated email, please do not reply.</i></p>"
+                                + "</div>"
+                                + "<div class='footer'>"
+                                + "<p>Sincerely,</p>"
+                                + "<p><strong>Tutorly Team</strong></p>"
+                                + "<div class='address'>"
+                                + "<p>Phone: +84 123 456 789</p>"
+                                + "</div>"
+                                + "<div class='logo'>"
+                                + "<img src='cid:logo' />"
+                                + "</div>"
+                                + "</div>"
+                                + "</body>"
+                                + "</html>";
+
+            email.setHtmlMsg(emailContent);
+
+            // Correctly specify the path to the logo image
+            File logoFile = new File(getServletContext().getRealPath("/image/LOGO_Main.png")); // Ensure this path is correct
+            if (!logoFile.exists()) {
+                throw new RuntimeException("Logo file does not exist at path: " + logoFile.getAbsolutePath());
+            }
+            email.embed(logoFile, "logo");
+
+            email.addTo(recipientEmail);
+            email.send();
+
+            // If email is sent successfully, send a success response
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\":\"success\"}");
+
+        } catch (EmailException e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"status\":\"error\", \"message\":\"Failed to send email.\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"status\":\"error\", \"message\":\"An unexpected error occurred.\"}");
+        }
+    }
     /**
      * Returns a short description of the servlet.
      *

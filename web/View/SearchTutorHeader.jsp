@@ -97,9 +97,7 @@
                     <div class="d-flex align-items-center flex-column flex-lg-row">
                         <ul class="navbar-nav ml-auto">
                             <!-- Notification from system or tutor -->
-                            <li class="nav-item">
-                                <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-solid fa-bell head_icon"></i></a></button>
-                            </li>
+                            
                             <!-- Message from tutor -->
                             <li class="nav-item">
                                 <button style="background: white; border: 1px white;"><a class="nav-link" href="#"><i class="fa-regular fa-message head_icon"></i></a></button>
@@ -169,13 +167,13 @@
                     <!-- Save list -->
                     <a class="nav-link" href="${pageContext.request.contextPath}/SavedTutorController"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Save list tutors</button></a>
                 </li>
-                <li class="nav-item navmenuitem">
-                    <!-- View classes -->
+<!--                <li class="nav-item navmenuitem">
+                     View classes 
                     <a class="nav-link" href="StdudentDashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
-                </li>
+                </li>-->
                 <li class="nav-item navmenuitem">
                     <!-- Class -->
-                    <a class="nav-link" href="ViewClassnew"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Class</button></a>
+                    <a class="nav-link" href="ViewClassnew"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
                 </li>
             </ul>
         </nav>

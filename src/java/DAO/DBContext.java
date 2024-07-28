@@ -4,11 +4,16 @@
  */
 package DAO;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 
 /**
  *
@@ -35,4 +40,8 @@ public class DBContext {
     public Connection getConnection(){
         return connection;
     }
+    
+    
 }
+
+

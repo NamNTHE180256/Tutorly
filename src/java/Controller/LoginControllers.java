@@ -1,9 +1,11 @@
 package Controller;
 
 import DAO.LearnerDAO;
+import DAO.ManagerDAO;
 import DAO.TutorDAO;
 import DAO.UserDAO;
 import Model.Learner;
+import Model.Manager;
 import Model.Tutor;
 import Model.User;
 import java.io.IOException;
@@ -26,7 +28,7 @@ import java.util.regex.Pattern;
  */
 @WebServlet(name = "LoginControllers", urlPatterns = {"/Login"})
 public class LoginControllers extends HttpServlet {
-
+    
     private UserDAO userDao = new UserDAO();
 
     /**
@@ -86,13 +88,13 @@ public class LoginControllers extends HttpServlet {
         String password = request.getParameter("password");
         LearnerDAO ldao = new LearnerDAO();
         TutorDAO tDao = new TutorDAO();
-
+        
         if (password != null && email != null) {
             User userLogin = userDao.Login(email, password);
-
+            
             if (userLogin != null) {
                 clearPreviousCookies(request, response);
-
+                
                 if (userLogin.getRole().equalsIgnoreCase("Learner")) {
                     Learner learner = ldao.getLearnerById(userLogin.getId());
 
@@ -112,9 +114,9 @@ public class LoginControllers extends HttpServlet {
                     session.setAttribute("user", userLogin);
                     response.sendRedirect("DashboardController?type=learner"+"&learnerid="+learner.getId());
                 } else if (userLogin.getRole().equalsIgnoreCase("tutor")) {
-
+                    
                     Tutor tutor = tDao.getTutorById(userLogin.getId());
-
+                    
                     if (tutor != null) {
                         if (tutor.getStatus().equalsIgnoreCase("active")) {
                             // Create cookies for tutor
@@ -127,7 +129,7 @@ public class LoginControllers extends HttpServlet {
                             // Add cookies to the response
                             response.addCookie(tutorCookie);
                             response.addCookie(userCookie);
-
+                            
                             session.setAttribute("tutor", tutor);
                             session.setAttribute("user", userLogin);
 
@@ -142,9 +144,26 @@ public class LoginControllers extends HttpServlet {
                         request.setAttribute("messageError", "Tutor not found!");
                         request.getRequestDispatcher("View/Login.jsp").forward(request, response);
                     }
-                } else {
-                    session.setAttribute("user", userLogin);
+                } else if (userLogin.getRole().equalsIgnoreCase("admin")) {
+                    // Create cookies for tutor
+
+                    Cookie userCookie = new Cookie("userId", String.valueOf(userLogin.getId()));
+                    userCookie.setMaxAge(60 * 60); // 1 h
+                    response.addCookie(userCookie);
+                    session.setAttribute("admin", userLogin);
                     response.sendRedirect("AdminController?action=dashboard");
+                } else {
+                    ManagerDAO mDao = new ManagerDAO();
+                    Manager manager = mDao.getManagerById(userLogin.getId());
+                    Cookie userCookie = new Cookie("userId", String.valueOf(userLogin.getId()));
+                    Cookie ManagerCookie = new Cookie("managerId", String.valueOf(userLogin.getId()));
+                    userCookie.setMaxAge(60 * 60); // 1 h
+                    ManagerCookie.setMaxAge(60 * 60);
+                    response.addCookie(userCookie);
+                    response.addCookie(userCookie);
+                    
+                    session.setAttribute("manager", manager);
+                    response.sendRedirect("AdminController?action=tutor");
                 }
             } else {
                 request.setAttribute("messageError", "Incorrect email or password!");
@@ -152,9 +171,9 @@ public class LoginControllers extends HttpServlet {
             }
         }
     }
-
+    
     private void clearPreviousCookies(HttpServletRequest request, HttpServletResponse response) {
-
+        
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -165,14 +184,14 @@ public class LoginControllers extends HttpServlet {
             }
         }
     }
-
+    
     public boolean checkEmail(String email) {
         String EMAIL_PATTERN = "^[\\w.-]+@(gmail\\.com|lookup\\.com)$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
+    
     public String computeMD5Hash(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

@@ -5,16 +5,8 @@
 package Controller;
 
 import DAO.AClassDAO;
-import DAO.QuizDAO;
-import DAO.LearnerDAO;
-import DAO.LessonDAO;
-import DAO.TutorDAO;
-import Model.AClass;
-import Model.Quiz;
-import Model.Learner;
-import Model.Lesson;
-import Model.User;
-import jakarta.servlet.RequestDispatcher;
+import DAO.CancelClassDao;
+import Model.RequestCancel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -22,15 +14,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
- * @author asus
+ * @author Acer
  */
-@WebServlet(name = "ClassDetail", urlPatterns = {"/ClassDetail"})
-public class ClassDetail extends HttpServlet {
+@WebServlet(name = "TutorResponseCancelRequest", urlPatterns = {"/TutorResponseCancelRequest"})
+public class TutorResponseCancelRequest extends HttpServlet {
+
+    CancelClassDao ccDao = new CancelClassDao();
+    AClassDAO acdao = new AClassDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,30 +37,40 @@ public class ClassDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-            response.setContentType("text/html;charset=UTF-8");
 
-            int classId = Integer.parseInt(request.getParameter("classId"));
+        String action = request.getParameter("action");
+        String cancelIdParam = request.getParameter("cancelId");
+        String tutorId = request.getParameter("tutorId");
+        String startDate = request.getParameter("startDate");
+        try {
+            int cancelId = Integer.parseInt(cancelIdParam);
 
-            LessonDAO lDAO = new LessonDAO();
-            QuizDAO aDAO = new QuizDAO();
-            Vector<Quiz> classQuizToDo = aDAO.getQuizByLearnerIdAndStatusTodo(classId);
-            Vector<Lesson> lesson_vector = lDAO.getLessonsByClassId(classId);
+            if (action.equalsIgnoreCase("approve")) {
+                ArrayList<RequestCancel> listCancel = ccDao.getALlRequestWithTutorID(Integer.parseInt(tutorId));
 
-            LearnerDAO leDAO = new LearnerDAO();
-            Learner linfo = leDAO.getStudentById(classId);
+                boolean status = ccDao.updateCancelRequestStatus(cancelId, "accepted");
+                if (status == true) {
+                    int total = acdao.UpdateStatusClass("finished", ccDao.getRequestWithID(cancelId).getAClass().getId());
+                    if (total > 0) {
+                        int x = ccDao.updateClassStatusAccp(cancelId, startDate);
+                        request.setAttribute("cancel", listCancel);
+                        response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=cancelClass&tutorid=" + Integer.parseInt(tutorId));
+                    }
+                }
+            } else if (action.equalsIgnoreCase("deny")) {
+                ArrayList<RequestCancel> listCancel = ccDao.getALlRequestWithTutorID(Integer.parseInt(tutorId));
+                boolean status = ccDao.updateCancelRequestStatus(cancelId, "denied");
+                if (status == true) {
+                    int y = ccDao.updateClassStatusDenied(cancelId, startDate);
+                    request.setAttribute("cancel", listCancel);
+                    response.sendRedirect("../Tutorly/RequestControllersForTutor?requestType=cancelClass&tutorid=" + Integer.parseInt(tutorId));
+                }
+            }
 
-            AClassDAO classDAO = new AClassDAO();
-            AClass aClass = classDAO.getClassById(classId);
-
-            request.setAttribute("linfo", linfo);
-            request.setAttribute("todoQuiz", classQuizToDo.size());
-            request.setAttribute("lesson_vector", lesson_vector);
-            request.setAttribute("aClass", aClass);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("View/ClassDetail.jsp");
-            dispatcher.forward(request, response);
-       
+            // Reload the list of requests after the action
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid Cancel ID format");
+        }
 
     }
 

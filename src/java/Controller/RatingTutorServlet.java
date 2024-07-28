@@ -4,11 +4,14 @@
  */
 package Controller;
 
+import DAO.AClassDAO;
 import DAO.LearnerDAO;
 import DAO.RatingDAO;
 import DAO.TutorDAO;
+import Model.AClass;
 import Model.Learner;
 import Model.Rating;
+import Model.Subject;
 import Model.Tutor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,7 +67,20 @@ public class RatingTutorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int classId = Integer.parseInt(request.getParameter("classId"));
+
+        AClassDAO classDAO = new AClassDAO();
+        AClass aClass = classDAO.getClassById(classId);
+        int learnerId = aClass.getLearner().getId();
+        Tutor tutor = aClass.getTutor();
+        Subject subject = tutor.getSubject();
+        int tutorId = tutor.getId();
+        request.setAttribute("classId", classId);
+        request.setAttribute("tutorName", tutor.getName());
+        request.setAttribute("subject", subject.getName());
+        request.setAttribute("learnerId", learnerId);
+        request.setAttribute("tutorId", tutorId);
+        request.getRequestDispatcher("View/RatingTutor.jsp").forward(request, response);
     }
 
     /**
@@ -79,6 +95,7 @@ public class RatingTutorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int ratingValue = Integer.parseInt(request.getParameter("rating"));
+        int classId = Integer.parseInt(request.getParameter("classId"));
         String review = request.getParameter("review");
         int learnerId = Integer.parseInt(request.getParameter("learnerId"));
         int tutorId = Integer.parseInt(request.getParameter("tutorId"));
@@ -108,6 +125,7 @@ public class RatingTutorServlet extends HttpServlet {
             message = "Error: " + e.getMessage();
 
         }
+        request.setAttribute("classId", classId);
         request.setAttribute("success", success);
         request.setAttribute("message", message);
         request.getRequestDispatcher("View/RatingTutor.jsp").forward(request, response);

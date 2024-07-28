@@ -40,9 +40,7 @@
     </head>
     <body>
         <header>
-
             <%@ include file="SearchTutorHeader.jsp" %>
-
         </header>
 
         <div class="container-fluid" style="margin-bottom: 20px">
@@ -58,7 +56,7 @@
             </div>
         </div>
 
-        <c:if test="${empty requestScope.trial}">
+        <c:if test="${empty requestScope.trial && empty requestScope.cancel}">
             <div class="blankslate">
                 <img style="width: 200px" src="image/Click.png" />
                 <div class="blankslate-body">
@@ -68,7 +66,9 @@
                     </p>
                 </div>
                 <div class="blankslate-actions">
-                    <a class="nav-link" href="../Tutorly/DashboardController?type=learner&learnerid=${sessionScope.learner.getId()}"><button class="btn btn-default" style="background-color: #0E3C6E; color: white;" type="button">Back to Dashboard</button></a>
+                    <a class="nav-link" href="../Tutorly/DashboardController?type=learner&learnerid=${sessionScope.learner.id}">
+                        <button class="btn btn-default" style="background-color: #0E3C6E; color: white;" type="button">Back to Dashboard</button>
+                    </a>
                 </div>
             </div>
         </c:if>
@@ -80,9 +80,7 @@
                         <th>Learner</th>
                         <th>Subject</th>
                         <th>Total Session</th>
-
                         <th>Start Date</th>
-
                         <th>End Date</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -95,10 +93,42 @@
                             <td>${trial.subject.name}</td>
                             <td>${trial.totalSession}</td>
                             <td><fmt:formatDate value="${trial.startDate}" pattern="yyyy-MM-dd"/></td>
-
                             <td><fmt:formatDate value="${trial.endDate}" pattern="yyyy-MM-dd"/></td>
                             <td>${trial.status}</td>
                             <td></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+
+        <c:if test="${not empty requestScope.cancel}">
+            <table class="table table-bordered table-hover table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Subject</th>
+                        <th>Tutor</th>
+                        <th>StartDate</th>
+                        <th>EndDate</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="cancel" items="${requestScope.cancel}">
+                        <tr>
+                            <td>${cancel.id}</td>
+                            <td>${cancel.AClass.getSubject().getName()}</td>
+                            <td>${cancel.AClass.getTutor().getName()}</td>
+                            <td>${cancel.AClass.getStartDate()}</td>
+                            <td>${cancel.AClass.getEndDate()}</td>
+                            <td>${cancel.getStatus()}</td>
+                            <td>   <form method="post" action="${pageContext.request.contextPath}/CancelClassController">
+                            <input type="hidden" name="cancelId" value="${cancel.id}" />
+                          
+                            <button type="submit" class="btn btn-danger">Cancel Request</button>
+                        </form> 
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -117,12 +147,9 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
-        <%@ include file = "tutor-footer.jsp" %>
+        <%@ include file="tutor-footer.jsp" %>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
-
     </body>
 </html>

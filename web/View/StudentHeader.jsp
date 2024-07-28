@@ -217,9 +217,9 @@
                     <!-- Student Request -->
                     <a class="nav-link" href="learner-change-requests"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">My Request</button></a>
                 </li>
-                <li class="nav-item navmenuitem">
+                    <li class="nav-item navmenuitem">
                     <!-- View Tutor Request -->
-                    <a class="nav-link" href="manage-tutor-request"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Tutor Request</button></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/RequestControllerForLearner"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Tutor Request</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
                     <!-- Save list -->
@@ -230,8 +230,8 @@
                     <a class="nav-link" href="StdudentDashboard"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">View Class</button></a>
                 </li>
                 <li class="nav-item navmenuitem">
-                    <!-- History -->
-                    <a class="nav-link" href="history"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">History</button></a>
+                    <!-- View class -->
+                    <a class="nav-link" href="ViewClassnew"><button style="background-color: #0E3C6E; color: white" type="button" class="btn">Class</button></a>
                 </li>
             </ul>
         </nav>

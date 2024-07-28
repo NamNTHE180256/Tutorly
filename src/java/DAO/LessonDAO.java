@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 
 public class LessonDAO extends DBContext {
 
-
     SessionDAO sdao = new SessionDAO();
     ClassDAO cdao = new ClassDAO();
 
@@ -45,7 +44,7 @@ public class LessonDAO extends DBContext {
                 System.out.println(date);
                 String status = rs.getString("status");
                 System.out.println(status);
-                
+
                 lesson = new Lesson(id, aclass, session, date, status);
 
                 // Set other fields of Lesson object here as per your database schema
@@ -68,7 +67,7 @@ public class LessonDAO extends DBContext {
             query.append("""
                 SELECT s.* FROM Lesson s 
                 JOIN Class c ON c.id = s.classId
-                WHERE tutorId = ? AND date < GETDATE()""");
+                WHERE tutorId = ? """);
 
             params.add(tutorId);
             if (classId != null) {
@@ -100,7 +99,7 @@ public class LessonDAO extends DBContext {
             query.append("""
                 SELECT s.* FROM Lesson s 
                 JOIN Class c ON c.id = s.classId
-                WHERE learnerId = ? AND date < GETDATE()""");
+                WHERE learnerId = ? """);
 
             params.add(learnerId);
             if (classId != null) {
@@ -268,7 +267,7 @@ public class LessonDAO extends DBContext {
         int n = 0;
         String sql = "INSERT INTO Lesson (classId, sessionId, date, status) VALUES (?, ?, ?, ?)";
         try {
-            PreparedStatement pre = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, lesson.getAClass().getId());
             pre.setString(2, lesson.getSession().getId());
             pre.setDate(3, new java.sql.Date(lesson.getDate().getTime()));
@@ -335,6 +334,37 @@ public class LessonDAO extends DBContext {
         return getLessonsWithId(sql, classId);
     }
 
+    public int getFinishedLessonCount(int classId) {
+        String sql = "SELECT COUNT(*) AS finishedCount FROM Lesson WHERE classId = ? AND status = 'Finished'";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, classId);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("finishedCount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    // Method to get the total lesson count for a class
+    public int getTotalLessonCount(int classId) {
+        String sql = "SELECT COUNT(*) AS totalCount FROM Lesson WHERE classId = ?";
+        try {
+            PreparedStatement state = connection.prepareStatement(sql);
+            state.setInt(1, classId);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("totalCount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
     // Fetch lessons with an ID parameter
     private Vector<Lesson> getLessonsWithId(String sql, int id) {
         Vector<Lesson> lessons = new Vector<>();
@@ -354,9 +384,8 @@ public class LessonDAO extends DBContext {
     public static void main(String[] args) {
         LessonDAO lessonDAO = new LessonDAO();
 
-
         // Example: Fetch lessons by class ID
-        Vector<Lesson> lessonsByClass =lessonDAO.getLessonsByTutorId(8);
+        Vector<Lesson> lessonsByClass = lessonDAO.getLessonsByClassId(3);
         for (Lesson lesson : lessonsByClass) {
             System.out.println(lesson);
         }
@@ -372,7 +401,9 @@ public class LessonDAO extends DBContext {
 //        Vector<Lesson> learnerLessons = lessonDAO.getLessonsByLearnerId(learnerId);
 //        for (Lesson lesson : learnerLessons) {
 //            System.out.println(lesson.getAClass().getTutor().getName());
-System.out.println();
-        }
+        
+
+        System.out.println("1:" + lessonDAO.getLessonsByTutorId(8));
     }
 
+}

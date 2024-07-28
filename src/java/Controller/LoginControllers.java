@@ -130,11 +130,14 @@ public class LoginControllers extends HttpServlet {
 
                             session.setAttribute("tutor", tutor);
                             session.setAttribute("user", userLogin);
-                            response.sendRedirect("../Tutorly/DashboardController?type=tutor&tutorid=" + tutor.getId());
+
+                            response.sendRedirect("ViewClassnew");
+
                         } else {
                             request.setAttribute("messageError", "This Account does not Activated by Admin");
                             request.getRequestDispatcher("View/Login.jsp").forward(request, response);
                         }
+
                     } else {
                         request.setAttribute("messageError", "Tutor not found!");
                         request.getRequestDispatcher("View/Login.jsp").forward(request, response);

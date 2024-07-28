@@ -49,6 +49,7 @@ public class Tutor {
         this.status = status;
     }
 
+
     public Tutor(int id, Subject subject, String name, boolean gender, String image, String bio, String edu, float price, String bank, String status, String linkmeet) {
         this.id = id;
         this.subject = subject;
@@ -169,7 +170,7 @@ public class Tutor {
 
     @Override
     public String toString() {
-        return "Tutor{" + "id=" + id + ", subject=" + subject + ", name=" + name + ", gender=" + gender + ", image=" + image + ", bio=" + bio + ", edu=" + edu + ", price=" + price + ", bank=" + bank + ", status=" + status + '}';
+        return "Tutor{" + "id=" + id + ", subject=" + subject.getId() + ", name=" + name + ", gender=" + gender + ", image=" + image + ", bio=" + bio + ", edu=" + edu + ", price=" + price + ", bank=" + bank + ", status=" + status + ", Linkmeet: "+ Linkmeet + "}";
     }
 
 }

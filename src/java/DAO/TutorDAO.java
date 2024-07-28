@@ -117,6 +117,9 @@ public class TutorDAO extends DBContext {
         }
         return tutors;
     }
+   
+    
+    
 
     public Tutor getTutorById(int id) {
         Tutor tutor = null;
@@ -510,11 +513,9 @@ public class TutorDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        TutorDAO t = new TutorDAO();
-
-        int subjectId = 15;
-        int id = 9;
-        t.deleteTutor(14);
+        
+       TutorDAO tdao = new TutorDAO();
+        System.out.println(tdao.getTutorById(8));
     }
 
     public boolean insertTutorAvailability(int tutorId, String sessionId, String status) {

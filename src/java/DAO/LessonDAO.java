@@ -297,6 +297,20 @@ public class LessonDAO extends DBContext {
         return n;
     }
 
+    public int updateLessonStatus(int lessonId, String newStatus) {
+        int n = 0;
+        String sql = "UPDATE Lesson SET status = ? WHERE id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, newStatus);
+            pre.setInt(2, lessonId);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
     // Method to delete a lesson
     public int removeLesson(int lessonId) {
         int n = 0;

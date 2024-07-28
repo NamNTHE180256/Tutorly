@@ -37,30 +37,60 @@ public class HistoryController extends HttpServlet {
         Learner learner = (Learner) session.getAttribute("learner");
         Tutor tutor = (Tutor) session.getAttribute("tutor");
         String classParam = request.getParameter("class");
+        String service = request.getParameter("service");
 
-        Integer classId = Integer.parseInt(request.getParameter("classId"));
+        Integer classId = null;
+        if (request.getParameter("classId") != null) {
+            try {
+                classId = Integer.parseInt(request.getParameter("classId"));
+            } catch (NumberFormatException e) {
+                response.sendRedirect("View/Error.jsp");
+                return;
+            }
+        }
 
+        LessonDAO ldao = new LessonDAO();
         AClassDAO aClassDAO = new AClassDAO();
+
         if (user == null) {
             response.sendRedirect("View/Login.jsp");
-        } else {
-            List<Lesson> lessons = new ArrayList<>();
-            List<AClass> list = new ArrayList<>();
-            LessonDAO ldao = new LessonDAO();
-            if (tutor != null) {
-                list = aClassDAO.getClassesByTutorId(tutor.getId());
+            return;
+        }
+
+        List<Lesson> lessons = new ArrayList<>();
+        List<AClass> list = new ArrayList<>();
+
+        if (tutor != null) {
+            list = aClassDAO.getClassesByTutorId(tutor.getId());
+            if (classId != null) {
                 lessons = ldao.getLessonForTutor(tutor.getId(), classId);
-            } else if (learner != null) {
-                list = aClassDAO.getClassesByLearnerId(learner.getId());
+            }
+        } else if (learner != null) {
+            list = aClassDAO.getClassesByLearnerId(learner.getId());
+            if (classId != null) {
                 lessons = ldao.getLessonForLearner(learner.getId(), classId);
             }
-            list.forEach(System.out::println);
-            System.out.println(list.size());
-            request.setAttribute("list", list);
-            request.setAttribute("lessons", lessons);
-            request.setAttribute("classParam", classParam);
-            request.getRequestDispatcher("View/History.jsp").forward(request, response);
+        } 
+        
+        if (service != null && !service.isEmpty()) {
+            try {
+                request.setAttribute("list", list);
+                request.setAttribute("lessons", lessons);
+                request.setAttribute("classParam", classParam);
+                Integer lessonId = Integer.parseInt(request.getParameter("lessonId"));
+                ldao.updateLessonStatus(lessonId, "Finished");
+                request.getRequestDispatcher("View/History.jsp").forward(request, response);
+                return;
+            } catch (NumberFormatException e) {
+                response.sendRedirect("View/Error.jsp");
+                return;
+            }
         }
+
+        request.setAttribute("list", list);
+        request.setAttribute("lessons", lessons);
+        request.setAttribute("classParam", classParam);
+        request.getRequestDispatcher("View/History.jsp").forward(request, response);
 
     }
 

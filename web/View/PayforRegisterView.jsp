@@ -198,12 +198,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <p>InvoiceID</p>
-                                            </td>
-                                            <td>1wq2344335</td>
-                                        </tr>
+                                        
                                         <tr>
                                             <td>
                                                 <p >Session</p>

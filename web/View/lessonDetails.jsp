@@ -230,7 +230,7 @@
                                 <label for="fileName">Name</label>
                                 <input type="text" id="fileName" class="form-control" name="fileName" placeholder="Enter a file's name">
                                 <label for="file" class="mt-2">Choose File</label>
-                                <input type="text" name="linkYtb" id="file" name="file" class="form-control">
+                                <input placeholder="Must be Link Youtube" type="text" name="linkYtb" id="file" name="file" class="form-control">
                             </div>
                             <button style="display: block; margin: 0 auto;" type="submit" class="btn btn-primary">Submit</button>
                         </form>

@@ -6,6 +6,7 @@ package DAO;
 
 import Model.AClass;
 import Model.Learner;
+import Model.Subject;
 import Model.Tutor;
 import java.util.Date;
 import java.util.Vector;
@@ -24,6 +25,8 @@ import java.util.logging.Logger;
  * @author TRANG
  */
 public class AClassDAO extends DBContext {
+
+    SubjectDAO sdao = new SubjectDAO();
 
     public Vector<AClass> displayAllClasses() {
         Vector<AClass> vector = new Vector<>();
@@ -61,24 +64,31 @@ public class AClassDAO extends DBContext {
             state.setInt(1, id);
             ResultSet rs = state.executeQuery();
             if (rs.next()) {
+                int idCLass = rs.getInt("id");
                 int learnerId = rs.getInt("learnerId");
                 int tutorId = rs.getInt("tutorId");
                 int totalSession = rs.getInt("totalSession");
                 Date startDate = rs.getDate("startDate");
                 Date endDate = rs.getDate("endDate");
                 String status = rs.getString("status");
-
+                int subjectId = rs.getInt("subjectId");
+                System.out.println(subjectId);
+                Subject subject = sdao.getSubjectById(subjectId);
                 Learner learner = new LearnerDAO().getStudentById(learnerId); // Assuming LearnerDAO is implemented
                 Tutor tutor = new TutorDAO().getTutorById(tutorId); // Assuming TutorDAO is implemented
 
-                AClass aClass = new AClass(learner, tutor, totalSession, startDate, endDate, status);
-                aClass.setId(id);
+                AClass aClass = new AClass(learner, tutor, totalSession, startDate, endDate, status, subject);
+                aClass.setId(idCLass);
+                System.out.println(aClass.getSubject());
                 return aClass;
             }
         } catch (SQLException ex) {
             Logger.getLogger(AClassDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public AClassDAO() {
     }
 
     // Method to add a new class
@@ -126,7 +136,20 @@ public class AClassDAO extends DBContext {
         }
         return n;
     }
+   public int UpdateStatusClass(String status, int id) {
+        String sql = "UPDATE [dbo].[Class] SET [status] = ? WHERE id = ?";
+        int rowsUpdated = 0;
 
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, id);
+            rowsUpdated = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowsUpdated;
+    }
     // Method to delete a class
     public int removeClass(int classId) {
         int n = 0;
@@ -313,14 +336,6 @@ public class AClassDAO extends DBContext {
 
     }
 
-    public static void main(String[] args) {
-        AClassDAO aClassDAO = new AClassDAO();
-        Vector<AClass> classes = aClassDAO.getClassesByLearnerId(1);
-        for (AClass aClass : classes) {
-            System.out.println(aClass);
-        }
-    }
-
     public Vector<AClass> getClassesByLearnerIdAndStatus(int learnerId, String status) {
         Vector<AClass> vector = new Vector<>();
         String sql = "SELECT * FROM Class WHERE learnerId = ? AND status = ?";
@@ -351,7 +366,7 @@ public class AClassDAO extends DBContext {
     }
 
     public Vector<AClass> getClassesByTutorIdAndStatus(int tutorId, String status) {
-                Vector<AClass> vector = new Vector<>();
+        Vector<AClass> vector = new Vector<>();
         String sql = "SELECT * FROM Class WHERE tutorId = ? AND status = ?";
         try {
             PreparedStatement state = connection.prepareStatement(sql);
@@ -377,5 +392,10 @@ public class AClassDAO extends DBContext {
         }
         return vector;
 
+    }
+
+    public static void main(String[] args) {
+        AClassDAO dao = new AClassDAO();
+        System.out.println(dao.getClassById(1));
     }
 }

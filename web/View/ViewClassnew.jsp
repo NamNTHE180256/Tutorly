@@ -37,6 +37,30 @@
         <button style="margin: 15px; color: white; background: #0E3C6E" class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Status of class
         </button>
+        <c:if test="${requestScope.error eq 'Wait for Tutor Response'}">
+            </br>
+            <div class="alert alert-success" role="alert" id="successAlert">
+                <div class="d-flex gap-4">
+                    <span><i class="fa-solid fa-circle-check icon-success"></i></span>
+                    <div>
+                        ${requestScope.error}
+
+                    </div>
+                </div>
+            </div>
+        </c:if>
+             <c:if test="${requestScope.error eq 'gui it thoi thang lon'}">
+            </br>
+            <div class="alert alert-success" role="alert" id="successAlert">
+                <div class="d-flex gap-4">
+                    <span><i class="fa-solid fa-circle-check icon-success"></i></span>
+                    <div>
+                        ${requestScope.error}
+
+                    </div>
+                </div>
+            </div>
+        </c:if>
         <ul class="dropdown-menu" role="menu">
             <li><a class="dropdown-item" href="ViewClassnew">None (All classess) </a></li>
             <li>
@@ -111,7 +135,7 @@
                                             <a href="RatingTutorServlet?classId=${c.id}" type="button" class="btn btn-outline-warning">Rate tutor</a>
                                         </c:when>
                                         <c:when test="${sessionScope.user.role eq 'learner' && c.status ne 'finished'}">
-                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-${c.id}">
+                                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-${c.id}">
                                                 Cancel class
                                             </button>
                                             <div class="modal fade" id="exampleModal-${c.id}" tabindex="-1" aria-labelledby="exampleModalLabel-${c.id}" aria-hidden="true">
@@ -126,7 +150,9 @@
                                                                 ${c.tutor.name} - ${c.tutor.subject.name} -  <fmt:formatDate value="${c.startDate}" pattern="dd/MM/yyyy"/>
                                                             </div>
                                                             <div class="modal-footer">
+                                                                
                                                                 <input type="hidden" name="class_id" value="${c.id}">
+                                                            
                                                                 <button class="btn btn-primary" type="submit">Confirm</button>
                                                             </div>
                                                         </div>

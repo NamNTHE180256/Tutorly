@@ -93,5 +93,5 @@ public class TransactionDAO extends DBContext{
         );
         TransactionDAO tdao = new TransactionDAO();
         tdao.addTransaction(transaction);
-        System.out.println(tdao.getAllTransactions());
+        System.out.println(transactionDate);
 }}

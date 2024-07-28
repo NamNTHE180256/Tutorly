@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Model.Certificate;
 import Model.Session;
 import Model.Tutor;
 import Model.TutorAvailability;
@@ -445,6 +446,7 @@ public class TutorDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    
 
     public Vector<Tutor> RateTutors(double start, double end) {
         Vector<Tutor> vector = new Vector<>();
@@ -480,13 +482,39 @@ public class TutorDAO extends DBContext {
         }
         return vector;
     }
+    
+     public List<Certificate> getAllCertificatesByTutorId(int tutorId) {
+        List<Certificate> certificates = new ArrayList<>();
+        String query = "SELECT * FROM Certificate WHERE tutorId = ?";
+        
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, tutorId);
+            
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Certificate certificate = new Certificate();
+                    certificate.setId(resultSet.getInt("id"));
+                    certificate.setTutor(getTutorById(resultSet.getInt("tutorId")));
+                    certificate.setImage(resultSet.getString("image"));
+                    certificates.add(certificate);
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions
+        }
+        
+        return certificates;
+    }
 
     public static void main(String[] args) {
         TutorDAO t = new TutorDAO();
 
         int subjectId = 15;
         int id = 9;
-        System.out.println(t.getAllTutors());
+        t.deleteTutor(14);
     }
 
     public boolean insertTutorAvailability(int tutorId, String sessionId, String status) {
